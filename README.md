@@ -57,6 +57,12 @@ update on the bench. The legacy `homekey-esp32/` tree is an unchanged reference.
 [Historical workspace notes](README.history.md) preserve the earlier roadmap.
 Use the verified status above for the current release.
 
+## Related implementations and product comparisons
+
+[Competitor and implementation review](docs/aliro-competitors-2026-10-13.md)
+compares Aqara, Nuki, Schlage, esp-aliro, UltraWideLock and other vendor SDKs,
+with source links and practical priorities for this project.
+
 ## License and provenance
 
 Original Aliro application code uses [source-available commercial terms](LICENSE).

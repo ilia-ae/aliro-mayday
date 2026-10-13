@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "9cc509a97fd82dcc13a54b520570934927159ab5f9a152ef1c4a176b2de1320e"
+      "sha256": "86bb1d6d718d7d6323862d3cf5213b7991904f0802b693b44cc4a2a7a211a585"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -8549,6 +8549,10 @@
     {
       "path": "diagweb.py",
       "sha256": "a44b1b867e982d26619da7be260bdd42cdf27564eb197c18497355bd835fee90"
+    },
+    {
+      "path": "docs/aliro-competitors-2026-10-13.md",
+      "sha256": "3d991335ee46eb46ce6a1d0495dc4fb43206b2532297b5169c5fe5f770ef906f"
     },
     {
       "path": "docs/aliro-stdauth-finishing-roadmap.md",
