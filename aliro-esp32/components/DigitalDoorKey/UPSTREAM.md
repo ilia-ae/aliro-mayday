@@ -2,7 +2,9 @@
 
 Source: [rednblkx/DigitalDoorKey](https://github.com/rednblkx/DigitalDoorKey).
 Pinned revision: [80e4a1e14eab3646b62ab3bdad6d2ed01d399375](https://github.com/rednblkx/DigitalDoorKey/tree/80e4a1e14eab3646b62ab3bdad6d2ed01d399375).
-License: MIT, retained in LICENSE. Our changes to this component use MIT.
+License: MIT, retained in LICENSE. Our changes to the MIT sources use MIT.
+The imported `src/aliro/document_cbor/` cursor and its local hardening use ISC;
+its own LICENSE and UPSTREAM.md apply.
 
 Local patches:
 
@@ -21,11 +23,24 @@ Local patches:
   additions support valid unknown keys and mismatched document/device keys.
 - Whitespace cleanup in imported sources.
 
-**Access decision boundary:** upstream Step-up verifies issuer/device signatures,
-but currently lacks full IssuerSignedItem digest, validity, iteration and access
-policy validation. A successful upstream Step-up result is not sufficient to
-grant door access. The firmware adapter in `main/DDKAuthContext.cpp` rejects
-unknown endpoint keys and commits only already provisioned/cached credentials.
+**Access document validation:** local validation now checks standard issuer kid,
+ES256, P-256 device key, SHA-256 item digests in their namespaces, document/MSO
+types and versions, required validity fields, clock policy and stored issuer
+iteration. The parser accepts a bounded subset of deterministic CBOR and UTC
+dates at second precision. Unvalidated x5chain and unsupported critical COSE
+headers are rejected. A document cannot supply its own trusted current time.
+
+**Access decision boundary:** this is a provisioned-issuer-key validator, not
+certificate-chain validation or full AccessData interpretation. Schedules,
+ReaderRuleIds and critical access extensions still need application policy.
+Unknown library endpoints require an explicit post-validation authorization
+callback. The firmware does not provide that callback and independently rejects
+unknown endpoint keys; existing Matter-provisioned/cached credentials stay usable.
+Issuer/endpoint iteration fields are optional additions to the old NVS schema;
+stale persistent keys do not enter FastAuth. Existing local issuer IDs are kept.
+
+See `docs/aliro-porting-2026-10-13.md` in the repository root for scope,
+acceptance checks and the separate esp-aliro/UWB migration plan.
 
 The pinned upstream suite has two known failures in `aliro_ble_flow_test`:
 completion-status expectation and duplicate Time Sync callback count. They

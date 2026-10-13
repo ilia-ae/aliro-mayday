@@ -15,6 +15,7 @@ struct AliroStepUpResult {
     std::vector<uint8_t> endpoint_public_key;      // 65B from MSO deviceKey
     std::vector<std::vector<uint8_t>> documents;   // full document CBOR blobs
     std::vector<uint8_t> access_document_cbor;     // first doc with docType "aliro-a"
+    std::optional<uint64_t> access_iteration;
 };
 
 class AliroSecureContext;
@@ -38,8 +39,7 @@ private:
     std::vector<uint8_t> buildDeviceRequest(
         const std::vector<std::string>& doc_types,
         const std::map<std::string, bool>& scopes);
-    AliroStepUpResult parseDeviceResponse(ddk::span<const uint8_t> cbor);
-    bool extractDeviceKey(ddk::span<const uint8_t> payload,
-                          std::vector<uint8_t>& x_out,
-                          std::vector<uint8_t>& y_out);
+    AliroStepUpResult parseDeviceResponse(ddk::span<const uint8_t> cbor,
+                                         const std::map<std::string,bool>& scopes);
+
 };

@@ -23,6 +23,7 @@
 #include "aliro/AliroSecureContext.h"
 #include "aliro/SignalingBitmask.h"
 #include "BerTlv.h"
+#include "ddk/aliro/DocumentVerifier.h"
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -94,9 +95,11 @@ std::array<uint8_t, 32> pattern32(uint8_t base)
     return out;
 }
 
-StepUpMaterial test_material()
+StepUpMaterial test_material(const P256KeyPair& issuer, bool text_keys=false, bool omit_tag=false)
 {
-    return make_step_up_material(pattern32(0x10), pattern32(0x30), kIssuerId);
+    auto device=generate_p256_key(); std::array<uint8_t,32> y;
+    std::copy_n(device.pub.begin()+33,32,y.begin());
+    return make_step_up_material(device.pub_x,y,ddk::aliro::issuer_key_identifier(issuer.pub),text_keys,omit_tag);
 }
 
 // One full AliroStepUp exchange against the simulated endpoint. Returned via
@@ -172,7 +175,7 @@ TEST_CASE("AliroStepUp round-trips the reference DeviceRequest and parses the re
     auto issuer_key = generate_p256_key();
     REQUIRE(issuer_key.pub[0] == 0x04);  // keypair materialized
 
-    auto material = test_material();
+    auto material = test_material(issuer_key);
     material.sig = sign_cose_es256(issuer_key, material.protected_headers,
                                    material.payload);
 
@@ -189,25 +192,22 @@ TEST_CASE("AliroStepUp round-trips the reference DeviceRequest and parses the re
         // Real devices encode the MSO keys as digit text strings ("4" =
         // deviceKeyInfo, "1" = deviceKey) — the form in the reference's
         // fixtures — rather than ISO integers.
-        auto m = make_step_up_material(pattern32(0x10), pattern32(0x30),
-                                       kIssuerId, /*mso_text_keys=*/true);
+        auto m = test_material(issuer_key,true);
         m.sig = sign_cose_es256(issuer_key, m.protected_headers, m.payload);
         require_round_trip(issuer_key, m, /*text_keys=*/false);
     }
     SECTION("MSO payload without the tag-24 wrapper")
     {
-        auto m = make_step_up_material(pattern32(0x10), pattern32(0x30),
-                                       kIssuerId, /*mso_text_keys=*/true,
-                                       /*omit_tag24=*/true);
+        auto m = test_material(issuer_key,true,true);
         m.sig = sign_cose_es256(issuer_key, m.protected_headers, m.payload);
-        require_round_trip(issuer_key, m, /*text_keys=*/false);
+        REQUIRE_FALSE(run_step_up(issuer_key,m,false,{{"matter1",true}})->result.success);
     }
 }
 
 TEST_CASE("AliroStepUp rejects a tampered issuerAuth signature", "[aliro][step-up]")
 {
     auto issuer_key = generate_p256_key();
-    auto material = test_material();
+    auto material = test_material(issuer_key);
     material.sig.assign(64, 0xAB);
 
     auto ex = run_step_up(issuer_key, material, /*text_keys=*/false,
@@ -221,7 +221,7 @@ TEST_CASE("AliroStepUp rejects an empty scope map before sending any APDU",
           "[aliro][step-up]")
 {
     auto issuer_key = generate_p256_key();
-    auto material = test_material();
+    auto material = test_material(issuer_key);
     material.sig = sign_cose_es256(issuer_key, material.protected_headers,
                                    material.payload);
 

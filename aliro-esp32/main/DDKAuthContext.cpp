@@ -23,12 +23,14 @@ public:
         for (const auto& issuer : data.issuers) {
             ddk::Issuer entry;
             entry.id = issuer.issuer_id;
+            entry.access_iteration = issuer.access_iteration;
             entry.public_key = issuer.issuer_pk;
             entry.public_key_x = issuer.issuer_pk_x;
             for (const auto& endpoint : issuer.endpoints) {
                 if (aliro::credentials::revoked(data, endpoint.endpoint_pk)) continue;
                 ddk::Endpoint ep;
                 ep.id = endpoint.endpoint_id;
+                ep.access_iteration = endpoint.access_iteration;
                 ep.public_key = endpoint.endpoint_pk;
                 ep.public_key_x = endpoint.endpoint_pk_x;
                 ep.persistent_key = endpoint.endpoint_prst_k;
@@ -51,6 +53,7 @@ public:
             for (const auto& old : original.issuers)
                 if (old.issuer_pk == entry.public_key) { issuer = old; break; }
             issuer.issuer_id = entry.id;
+            issuer.access_iteration = entry.access_iteration;
             issuer.issuer_pk = entry.public_key;
             issuer.issuer_pk_x = entry.public_key_x;
             issuer.endpoints.clear();
@@ -60,6 +63,7 @@ public:
                     for (const auto& previous : old.endpoints)
                         if (previous.endpoint_pk == ep.public_key) endpoint = previous;
                 endpoint.endpoint_id = ep.id;
+                endpoint.access_iteration = ep.access_iteration;
                 endpoint.endpoint_pk = ep.public_key;
                 endpoint.endpoint_pk_x = ep.public_key_x;
                 endpoint.endpoint_prst_k = ep.persistent_key;
@@ -125,9 +129,9 @@ DDKAuthenticationContext::authenticate(KeyFlow requested) {
     auto outcome = profile->finalize(*impl_->session);
     if (!outcome || !outcome.issuer || !outcome.endpoint ||
         aliro::credentials::revoked(impl_->store.original, outcome.endpoint->public_key)) return failed;
-    // Upstream StepUp currently authenticates the issuer signature and device
-    // key, but does not validate IssuerSignedItem digests, validity or the
-    // access decision. It cannot authorize enrollment of an unknown device.
+    // Documents now have cryptographic/digest/validity checks, but AccessData
+    // schedules, reader rules and critical extensions still need application
+    // interpretation. Keep unknown devices denied until that policy exists.
     // Existing Matter-provisioned and legacy cached iPhone keys keep working.
     bool alreadyAuthorized = false;
     for (const auto& issuer : impl_->store.original.issuers)

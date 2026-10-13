@@ -93,6 +93,8 @@ set(DDK_SOURCES
     ${DDK_ROOT}/src/aliro/AliroKeySchedule.cpp
     ${DDK_ROOT}/src/aliro/AliroSecureContext.cpp
     ${DDK_ROOT}/src/aliro/AliroStepUp.cpp
+    ${DDK_ROOT}/src/aliro/DocumentVerifier.cpp
+    ${DDK_ROOT}/src/aliro/document_cbor/document_cbor.c
     ${DDK_ROOT}/src/aliro/ProfileFactory.cpp
     ${DDK_ROOT}/src/auth/AliroFastAuth.cpp
     ${DDK_ROOT}/src/auth/AliroStdAuth.cpp
@@ -167,6 +169,7 @@ foreach(t IN ITEMS
         aliro_standard_flow_test
         aliro_stepup_parser_test
         aliro_stepup_flow_test
+        aliro_document_validation_test
         aliro_ble_message_test
         aliro_ble_advertising_test
         aliro_ble_security_test

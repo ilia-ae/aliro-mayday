@@ -213,8 +213,30 @@ TEST_CASE("Existing seven-field endpoint NVS blobs still unlock through FastAuth
     REQUIRE(loaded.reader_id == before.reader_id);
     REQUIRE(loaded.issuers[0].endpoints[0].endpoint_prst_k == before.issuers[0].endpoints[0].endpoint_prst_k);
     REQUIRE(loaded.issuers[0].endpoints[0].credential_index == 0);
+    REQUIRE(loaded.issuers[0].access_iteration == 0);
+    REQUIRE(loaded.issuers[0].endpoints[0].access_iteration == 0);
     int saves = 0; REQUIRE(std::get<2>(run(loaded, rig.endpoint, saves)) == kFlowFAST);
     REQUIRE(saves == 0);
+}
+
+TEST_CASE("Document iteration state survives authentication export and reboot", "[firmware][migration]") {
+    test_nvs::reset(); FlowRig rig(true); auto data=legacyData(rig);
+    data.issuers[0].access_iteration=12;
+    data.issuers[0].endpoints[0].access_iteration=10;
+    rig.endpoint.scenario.serve_cryptogram=true;
+    int saves=0; REQUIRE(std::get<2>(run(data,rig.endpoint,saves))==kFlowFAST);
+    REQUIRE(data.issuers[0].access_iteration==12);
+    REQUIRE(data.issuers[0].endpoints[0].access_iteration==10);
+    rig.endpoint.scenario.serve_cryptogram=false;
+    REQUIRE(std::get<2>(run(data,rig.endpoint,saves))==kFlowSTANDARD);
+    REQUIRE(data.issuers[0].access_iteration==12);
+    REQUIRE(data.issuers[0].endpoints[0].access_iteration==10);
+    ReaderDataManager store; REQUIRE(store.begin()); REQUIRE(store.updateReaderData(data));
+    ReaderDataManager reboot; REQUIRE(reboot.begin()); auto loaded=reboot.getReaderDataCopy();
+    REQUIRE(loaded.issuers[0].access_iteration==12);
+    REQUIRE(loaded.issuers[0].endpoints[0].access_iteration==10);
+    REQUIRE(loaded.reader_gid==data.reader_gid);
+    REQUIRE(loaded.issuers[0].endpoints[0].endpoint_prst_k==data.issuers[0].endpoints[0].endpoint_prst_k);
 }
 
 TEST_CASE("Authoritative Matter slots remove a stale persisted NFC key at boot", "[firmware][revoke]") {

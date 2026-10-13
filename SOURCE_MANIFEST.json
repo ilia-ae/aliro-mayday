@@ -32,11 +32,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "86bb1d6d718d7d6323862d3cf5213b7991904f0802b693b44cc4a2a7a211a585"
+      "sha256": "7f90893ebdbd12896e0d616d9e90672d735be144dd12f9e8c2fdded8d49878c7"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "53934d545f497db3d23dc4351892b41417f26207a402a333caa92a1bc8bab96e"
+      "sha256": "53413664a1b2bb07043d0090b994951e3f4e7937b84edaca926249c9b9af1511"
     },
     {
       "path": "TODO.md",
@@ -76,7 +76,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/UPSTREAM.md",
-      "sha256": "130516628e5cc27627552f8569aac0c55ed9bb2e87f61dfe1b36965d479f7c88"
+      "sha256": "9c53e4310f584f6865cdf47bf36acb2fb536f592868c03b299a392cc4bf879f8"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/idf_component.yml",
@@ -136,7 +136,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/session/Session.h",
-      "sha256": "0ffc5e2f016eb05986a767652d367a24970653ed11235970b0de2e046388cbc8"
+      "sha256": "b4098a45f750f55ab5e11b4dcd1fb4a148325d62d5a867e90b49c6a1dacab4c9"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/store/CredentialStore.h",
@@ -144,11 +144,11 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/store/Endpoint.h",
-      "sha256": "608bad6bf33818ddd0a2db374af5662e2cab30afca98287745ada77db247f75e"
+      "sha256": "b92e46444a82d3f4374e4ceb7f248fbdab3a888afc32ae7a9b101d12ef440821"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/store/Issuer.h",
-      "sha256": "a756e668221c267584494bdfb19eb40681e3ad318038b6abd04b6cfe5f2f0e4e"
+      "sha256": "bf3294266d1f949a6b4fda544de3e3b768a3d9e50d6825a410467191ec05427c"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/store/ReaderIdentity.h",
@@ -256,7 +256,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/priv/aliro/AliroStepUp.h",
-      "sha256": "4e61991db537d99925e9889ba264f97893403828132f41e555acda852c868abd"
+      "sha256": "fc62b17fa0c6e754300505fc5bb833c9f37fc2338a38037a3892559ef5e3330c"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/priv/aliro/BleProfile.h",
@@ -320,7 +320,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/AliroStepUp.cpp",
-      "sha256": "f14ddd74998018e8eac846e6a202c870a348f158d32417ed705ff7fb79850c55"
+      "sha256": "6ad79bd237fb3202f8941dbaa26a767a460a9d1e4c1a81f3028c98f1edcc7868"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/BleAdvertising.cpp",
@@ -336,7 +336,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/Profile.cpp",
-      "sha256": "c20d3946edd20bb16f3ee7c2a2a4d232d38bfc24042eb221af7ab10a49fc1ba8"
+      "sha256": "7a2cf64e37db6a416cc506ff612d9bd38c368b1557f8beaaa3360c1b5b991aa2"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/ProfileFactory.cpp",
@@ -344,7 +344,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/auth/AliroFastAuth.cpp",
-      "sha256": "91c97f4def3dc99d9ac8aa0e777dff67cdb8bc40bb7a793fe01687a3fe4fb267"
+      "sha256": "9cc6067e3406d54f183499e202ad3ea2d7288a4061412aaace9aaafa6468d529"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/auth/AliroStdAuth.cpp",
@@ -436,7 +436,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/utils/CoseSign1.cpp",
-      "sha256": "a2482757d7eb9fb73f1a02c3efbd45f9d64b7e0b4863dd25c05c14a4d40efeb5"
+      "sha256": "d8431f5690f064f89e86cbc131797e2754ddd8a9035ea3d4beeddd930d8974a5"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/utils/HK_HomeKit.cpp",
@@ -452,7 +452,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/CMakeLists.txt",
-      "sha256": "4c3f35db5e9cf182630bbee7f015ef7e4a9e9865d254b83e8534341c936317b4"
+      "sha256": "dd23689ce42d7fe8c76b75eb95ed8f48df26f32fbbb894d333a9f67fb6a4927a"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_ble_advertising_test.cpp",
@@ -480,11 +480,11 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_stepup_flow_test.cpp",
-      "sha256": "948c8f1fe0dc31017d408e7fee42d8200420f4f6379f9f3e043add145ec73508"
+      "sha256": "d022f282c6854cfbeebec2ec52bdb1b156ac306b045ea00a1f7d4eb84dadc875"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_stepup_parser_test.cpp",
-      "sha256": "dd9d90ec4ee2587190849f3f788b3c7ca2d819ee2c81fd3123f22a962ff30d05"
+      "sha256": "a5fbc29cf79f92aca20f5ab58d8d9b4deb03863de52a0f4b27f68cc906607669"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_uwb_flow_test.cpp",
@@ -500,11 +500,11 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/aliro_test_endpoint.cpp",
-      "sha256": "5b9cb5015ff3dfdf96bb4c5fb90f4e5fb5f5957841a8b1159ff56d482a46237c"
+      "sha256": "1494d0a8f7a0398aa6931176a529e89b83abdd9170ffd5f3cd01ad2f5ecfd997"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/aliro_test_endpoint.hpp",
-      "sha256": "7ef22d18316b2538f2aaf2fb41f27ae93373464e1061b889718b11ee16f8db1c"
+      "sha256": "1535f35d9117e4e26c266b51e9ca8ca2e00f59f4037504074950e592f4238a0b"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/ble_loopback.cpp",
@@ -8128,7 +8128,7 @@
     },
     {
       "path": "aliro-esp32/main/DDKAuthContext.cpp",
-      "sha256": "cd848cc80710a012733d1caa07251b460c2665c8ad961a601ba34e502547df18"
+      "sha256": "dda0c2645dacd18a2580aa650d54992af6207fdffe67ce1a130d984dc6caa87b"
     },
     {
       "path": "aliro-esp32/main/DDKAuthContext.h",
@@ -8136,7 +8136,7 @@
     },
     {
       "path": "aliro-esp32/main/DDKReaderData.h",
-      "sha256": "be7622942ede5c9205a00db7c72fbbe60709fa9b149281ad2c0210bd75d4a636"
+      "sha256": "2fc778a71aad93e32605478008d7b9b31356d87b98ab7ffb89c9a1460f16c7d8"
     },
     {
       "path": "aliro-esp32/main/Diag.cpp",
@@ -8196,7 +8196,7 @@
     },
     {
       "path": "aliro-esp32/main/ReaderDataManager.cpp",
-      "sha256": "605d5815a07251a993cb9950172b03937e2a712cb9434752ea6763e54fc0feab"
+      "sha256": "b23c6c8544912ae73d69c1e0a6ad1a0d474f7f37ac4edc79f102830b880e072c"
     },
     {
       "path": "aliro-esp32/main/ReaderDataManager.hpp",
@@ -8248,7 +8248,7 @@
     },
     {
       "path": "aliro-esp32/tests/firmware_auth_test.cpp",
-      "sha256": "fe9c7f4696c4c6da1aff0d6dd0a2fb7237a80ad506863ff80a6ec3322ca8e99a"
+      "sha256": "f1f1e3e3bba6ad79d045e5e781ba765d52030a506def13be874c93b9509f413e"
     },
     {
       "path": "aliro-esp32/tests/stubs/esp_log.h",
@@ -8560,7 +8560,7 @@
     },
     {
       "path": "docs/ddk-update-2026-10-13.md",
-      "sha256": "2b967e4a2c35a562cd7b7e3224ae88a01c6bb260dbbe0d675fb762227e71321a"
+      "sha256": "3c6acd5ac40162a5e58834bd0a5c9b4dc8a5781ed4a231d6ccb90272999cf3ab"
     },
     {
       "path": "docs/documentation-changelog.md",
@@ -9321,6 +9321,38 @@
     {
       "path": "webui.py",
       "sha256": "529735694f4d3fc55e703a922e96ca07785e3baf4a379861890117b355ec9f7c"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/DocumentVerifier.h",
+      "sha256": "78b585e21501cea7c43f7d6954a464283bb12a0187445dc4e4bb501d1504146b"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/DocumentVerifier.cpp",
+      "sha256": "7dd5bce0339c1a369b7672edbcecd10ef7277f9073e3dab3d49b9e4ea089825e"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/LICENSE",
+      "sha256": "655fcdbeae1d8b0615a4ec79a12fd2dcdf85fd38d386a07dc82a9b4537f3f2ac"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/UPSTREAM.md",
+      "sha256": "3f939c9a449e5e4525a3a4e51f597c1130e9df2e78bbaf871351c8dbdd3dab34"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/document_cbor.c",
+      "sha256": "5b40784c6351810bcd2dc6e426cf5a0295107d8517096e5d684fd42f42c052fe"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/document_cbor.h",
+      "sha256": "2d515bc4a468ae47e9c994cf507502afe06cb518de742ad40c66f7df448fca00"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_document_validation_test.cpp",
+      "sha256": "7328b7692471a51421d858f4dfd35586bf1a1a9efaab908cb3a4cf86740cb0ac"
+    },
+    {
+      "path": "docs/aliro-porting-2026-10-13.md",
+      "sha256": "72b23dddaec1d0701027a2bc7addea9eb94e38f48a381335ed6a94c30e8fa978"
     }
   ],
   "omitted": [

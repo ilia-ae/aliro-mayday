@@ -1,6 +1,8 @@
 #include "aliro/AliroStepUp.h"
 #include "aliro/AliroSecureContext.h"
 #include "CoseSign1.h"
+#include "ddk/aliro/DocumentVerifier.h"
+#include "document_cbor/document_cbor.h"
 #include "BerTlv.h"
 #include "CommonCryptoUtils.h"
 #include "DDKLogging.h"
@@ -8,6 +10,7 @@
 #include <cbor.h>
 #include <cstdio>
 #include <cstring>
+#include <algorithm>
 #include "ddk/store/Issuer.h"
 
 namespace {
@@ -18,6 +21,7 @@ constexpr uint8_t kStepUpAid[] = {0xA0,0x00,0x00,0x09,0x09,0xAC,0xCE,0x55,0x02};
 
 bool text_string_equals(const CborValue& v, const char* s)
 {
+    if (!cbor_value_is_text_string(&v)) return false;
     size_t len = 0;
     if (cbor_value_get_string_length(&v, &len) != CborNoError) return false;
     if (len != std::strlen(s)) return false;
@@ -58,7 +62,8 @@ bool find_map_field(const CborValue* map, int64_t key, CborValue* out)
         }
         if (cbor_value_advance(&it) != CborNoError) return false;  // now at value
         CborValue value = it;
-        if (cbor_value_advance(&it) != CborNoError) return false;  // next key / end
+        if (cbor_value_skip_tag(&it) != CborNoError ||
+            cbor_value_advance(&it) != CborNoError) return false;  // next key / end
         if (match) { *out = value; return true; }
     }
     return false;
@@ -128,22 +133,26 @@ std::vector<uint8_t> AliroStepUp::buildDeviceRequest(
         cbor_encoder_close_container(&docArray, &docReq);
     }
     cbor_encoder_close_container(&rootMap, &docArray);
-    cbor_encoder_close_container(&root, &rootMap);
+    if (cbor_encoder_close_container(&root, &rootMap) != CborNoError) return {};
 
     size_t len = cbor_encoder_get_buffer_size(&root, buf);
     return std::vector<uint8_t>(buf, buf + len);
 }
 
-AliroStepUpResult AliroStepUp::parseDeviceResponse(ddk::span<const uint8_t> cbor)
+AliroStepUpResult AliroStepUp::parseDeviceResponse(ddk::span<const uint8_t> cbor,
+                                                  const std::map<std::string,bool>& scopes)
 {
     AliroStepUpResult result;
     CborParser parser;
     CborValue root;
 
-    if (cbor_parser_init(cbor.data(), cbor.size(), 0, &parser, &root)
+    if (!aliro_document_cbor_valid(cbor.data(), cbor.size()) ||
+        cbor_parser_init(cbor.data(), cbor.size(), 0, &parser, &root)
         != CborNoError || !cbor_value_is_map(&root))
         return result;
 
+    CborValue version;
+    if (!find_map_field(&root, 1, &version) || !text_string_equals(version, "1.0")) return result;
     // DeviceResponse: {1: version, 2: [documents], 3: status}
     CborValue status;
     int64_t st = -1;
@@ -170,7 +179,7 @@ AliroStepUpResult AliroStepUp::parseDeviceResponse(ddk::span<const uint8_t> cbor
         cbor_value_advance(&doc);
         const uint8_t* doc_end = doc.source.ptr;
         if (doc_end < doc_begin || doc_end > cbor.data() + cbor.size()) break;
-        result.documents.emplace_back(doc_begin, doc_end);
+        std::vector<uint8_t> document(doc_begin, doc_end);
 
         std::string doc_type;
         CborValue v;
@@ -178,137 +187,27 @@ AliroStepUpResult AliroStepUp::parseDeviceResponse(ddk::span<const uint8_t> cbor
         if (!find_map_field(&doc_item, 5, &v) || !text_value(v, doc_type) ||
             doc_type != kAccessDocType) continue;
 
-        // issuerSigned: {1: nameSpaces, 2: issuerAuth (COSE Sign1)}
-        CborValue issuer_signed;
-        if (!find_map_field(&doc_item, 1, &issuer_signed) ||
-            !cbor_value_is_map(&issuer_signed)) {
-            LOG(W, "Step-up document missing issuerSigned; skipping");
-            continue;
-        }
-        CborValue issuer_auth;
-        if (!find_map_field(&issuer_signed, 2, &issuer_auth) ||
-            !cbor_value_is_array(&issuer_auth)) {
-            LOG(W, "Step-up document missing issuerAuth; skipping");
-            continue;
-        }
-
-        auto cose = CoseSign1::parse_from_iterator(&issuer_auth);
-        if (!cose) { LOG(W, "CoseSign1 parse failed; skipping document"); continue; }
-
-        // Match issuer by COSE unprotected header key 4 (issuer_id)
-        ddk::Issuer* found = nullptr;
-        if (cose->issuer_id && cose->issuer_id->size() == 8) {
-            for (auto& iss : session_.store().issuers()) {
-                if (iss.id.size() == 8 &&
-                    CommonCryptoUtils::constant_time_compare(
-                        iss.id, *cose->issuer_id)) {
-                    found = &iss; break;
-                }
+        std::vector<std::string> requested;
+        for (const auto& scope : scopes) requested.push_back(scope.first);
+        for (auto& issuer : session_.store().issuers()) {
+            ddk::aliro::DocumentPolicy policy;
+            policy.current_time = session_.config().step_up_current_time;
+            policy.access_iteration = issuer.access_iteration;
+            auto verified = ddk::aliro::verify_access_document(document, issuer.public_key,
+                                                              policy, requested);
+            if (!verified) continue;
+            if (!result.success) {
+                result.access_document_cbor = document;
+                result.documents.push_back(document);
+                result.issuer = &issuer;
+                result.endpoint_public_key = std::move(verified->device_public_key);
+                result.access_iteration = verified->iteration;
+                result.success = true;
+                break;
             }
-        }
-        if (!found) { LOG(W, "No matching issuer; skipping document"); continue; }
-
-        std::vector<uint8_t> x, y;
-        if (!extractDeviceKey(cose->payload, x, y) ||
-            x.size() != 32 || y.size() != 32) {
-            LOG(W, "deviceKey extraction failed; skipping document");
-            LOG_HEX(V, "StepUp COSE payload", cose->payload);
-            continue;
-        }
-
-        if (!CoseSign1::verify(*cose, CoseAlgorithm::ES256,
-                               found->public_key)) {
-            LOG(W, "ES256 verification failed; skipping document"); continue;
-        }
-
-        if (!result.success) {
-            result.access_document_cbor = result.documents.back();
-            result.issuer = found;
-            result.endpoint_public_key.reserve(1 + x.size() + y.size());
-            result.endpoint_public_key.push_back(0x04);
-            result.endpoint_public_key.insert(
-                result.endpoint_public_key.end(), x.begin(), x.end());
-            result.endpoint_public_key.insert(
-                result.endpoint_public_key.end(), y.begin(), y.end());
-            result.success = true;
         }
     }
     return result;
-}
-
-bool AliroStepUp::extractDeviceKey(ddk::span<const uint8_t> payload,
-                                    std::vector<uint8_t>& x_out,
-                                    std::vector<uint8_t>& y_out)
-{
-    CborParser parser; CborValue it;
-    if (cbor_parser_init(payload.data(), payload.size(), 0, &parser, &it)
-        != CborNoError)
-        return false;
-
-    std::vector<uint8_t> mso;
-    CborValue root;
-    if (cbor_value_is_tag(&it)) {
-        CborTag tag;
-        cbor_value_get_tag(&it, &tag);
-        if (tag != 24 || cbor_value_advance(&it) != CborNoError ||
-            !cbor_value_is_byte_string(&it))
-            return false;
-        size_t len = 0;
-        cbor_value_get_string_length(&it, &len);
-        mso.resize(len);
-        cbor_value_copy_byte_string(&it, mso.data(), &len, nullptr);
-    } else if (cbor_value_is_byte_string(&it)) {
-        size_t len = 0;
-        cbor_value_get_string_length(&it, &len);
-        mso.resize(len);
-        cbor_value_copy_byte_string(&it, mso.data(), &len, nullptr);
-    }
-
-    CborParser mso_parser;
-    if (!mso.empty()) {
-        if (cbor_parser_init(mso.data(), mso.size(), 0, &mso_parser, &root)
-            != CborNoError || !cbor_value_is_map(&root))
-            return false;
-    } else if (cbor_value_is_map(&it)) {
-        root = it;
-    } else {
-        return false;
-    }
-
-    CborValue key_info;
-    if (!find_map_field(&root, 4, &key_info) || !cbor_value_is_map(&key_info)) {
-        if (cbor_value_map_find_value(&root, "deviceKeyInfo", &key_info)
-                != CborNoError || !cbor_value_is_map(&key_info))
-            return false;
-    }
-
-    CborValue key_map;
-    if (!find_map_field(&key_info, 1, &key_map) || !cbor_value_is_map(&key_map)) {
-        if (cbor_value_map_find_value(&key_info, "deviceKey", &key_map)
-                != CborNoError || !cbor_value_is_map(&key_map))
-            return false;
-    }
-
-    CborValue x_val, y_val;
-    if (!find_map_field(&key_map, -2, &x_val) || !cbor_value_is_byte_string(&x_val))
-        return false;
-    if (!find_map_field(&key_map, -3, &y_val) || !cbor_value_is_byte_string(&y_val))
-        return false;
-
-    size_t x_len = 0, y_len = 0;
-    if (cbor_value_get_string_length(&x_val, &x_len) != CborNoError ||
-        cbor_value_get_string_length(&y_val, &y_len) != CborNoError)
-        return false;
-    x_out.resize(x_len);
-    y_out.resize(y_len);
-    if ((x_len > 0 &&
-         cbor_value_copy_byte_string(&x_val, x_out.data(), &x_len, nullptr)
-            != CborNoError) ||
-        (y_len > 0 &&
-         cbor_value_copy_byte_string(&y_val, y_out.data(), &y_len, nullptr)
-            != CborNoError))
-        return false;
-    return true;
 }
 
 AliroStepUpResult AliroStepUp::run(
@@ -324,7 +223,10 @@ AliroStepUpResult AliroStepUp::run(
         LOG(W, "Step-up: signaling bitmap indicates no retrievable documents");
         return {};
     }
-    if (scopes.empty()) {
+    if (scopes.empty() || scopes.size() > 8 ||
+        std::any_of(scopes.begin(), scopes.end(), [](const auto& entry) {
+            return entry.first.empty() || entry.first.size() > 32;
+        })) {
         LOG(E, "Step-up: empty scope map");
         return {};
     }
@@ -333,6 +235,7 @@ AliroStepUpResult AliroStepUp::run(
         selectStepUpAid();
 
     auto request = buildDeviceRequest(doc_types, scopes);
+    if (request.empty()) return {};
 
     // Encrypt + SessionData wrap + 0x53 TLV + ENVELOPE + decrypt —
     auto plaintext = ctx_.envelope(session_, request, max_command_data_size_);
@@ -342,5 +245,5 @@ AliroStepUpResult AliroStepUp::run(
     }
 
     LOG_HEX(V, "StepUp DeviceResponse", *plaintext);
-    return parseDeviceResponse(*plaintext);
+    return parseDeviceResponse(*plaintext, scopes);
 }

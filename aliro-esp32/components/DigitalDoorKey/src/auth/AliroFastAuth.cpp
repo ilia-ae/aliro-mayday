@@ -31,6 +31,8 @@ FastAuthResult AliroFastAuth::attest(const std::vector<uint8_t>& cryptogram)
     for (auto& issuer : store.issuers()) {
         for (auto& endpoint : issuer.endpoints) {
             if (endpoint.persistent_key.empty()) continue;
+            if (endpoint.access_iteration < issuer.access_iteration &&
+                issuer.access_iteration - endpoint.access_iteration >= 8) continue;
             auto result = schedule.derive_fast(
                 input, endpoint.public_key_x, endpoint.persistent_key);
             std::array<uint8_t,32> sk{};

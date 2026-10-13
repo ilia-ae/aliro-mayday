@@ -33,6 +33,8 @@ ddk::SessionConfig stepup_config()
 {
     ddk::SessionConfig config;
     config.target_flow = ddk::Flow::StepUp;
+    // This test application's AccessData policy explicitly grants the synthetic item.
+    config.authorize_step_up_enrollment = [](auto, auto, auto){ return true; };
     config.step_up_scopes = std::map<std::string, bool>{{"matter1", true}};
     return config;
 }

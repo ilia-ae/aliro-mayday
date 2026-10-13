@@ -334,7 +334,9 @@ bool ReaderDataManager::addIssuerIfNotExists(const std::vector<uint8_t>& issuerI
  */
 
 void ReaderDataManager::pack_hkEndpoint_t(msgpack_packer* pk, const hkEndpoint_t& endpoint) {
-    msgpack_pack_map(pk, 9);
+    msgpack_pack_map(pk, 10);
+    msgpack_pack_str_with_body(pk, "access_iteration", 16);
+    msgpack_pack_uint64(pk, endpoint.access_iteration);
     msgpack_pack_str_with_body(pk, "credential_index", 16);
     msgpack_pack_uint16(pk, endpoint.credential_index);
     msgpack_pack_str_with_body(pk, "credential_type", 15);
@@ -418,6 +420,8 @@ void ReaderDataManager::unpack_hkEndpoint_t(msgpack_object obj, hkEndpoint_t& en
     if (obj_map.count("last_used_at") && obj_map["last_used_at"].type == MSGPACK_OBJECT_POSITIVE_INTEGER) {
       endpoint.last_used_at = obj_map["last_used_at"].via.u64;
     }
+    if (obj_map.count("access_iteration") && obj_map["access_iteration"].type == MSGPACK_OBJECT_POSITIVE_INTEGER)
+        endpoint.access_iteration = obj_map["access_iteration"].via.u64;
     if (obj_map.count("credential_index") && obj_map["credential_index"].type == MSGPACK_OBJECT_POSITIVE_INTEGER)
         endpoint.credential_index = obj_map["credential_index"].via.u64;
     if (obj_map.count("credential_type") && obj_map["credential_type"].type == MSGPACK_OBJECT_POSITIVE_INTEGER)
@@ -456,7 +460,9 @@ void ReaderDataManager::unpack_hkEndpoint_t(msgpack_object obj, hkEndpoint_t& en
  * @param issuer The issuer object whose fields will be serialized into the packer.
  */
 void ReaderDataManager::pack_hkIssuer_t(msgpack_packer* pk, const hkIssuer_t& issuer) {
-    msgpack_pack_map(pk, 5);
+    msgpack_pack_map(pk, 6);
+    msgpack_pack_str_with_body(pk, "access_iteration", 16);
+    msgpack_pack_uint64(pk, issuer.access_iteration);
     msgpack_pack_str_with_body(pk, "credential_index", 16);
     msgpack_pack_uint16(pk, issuer.credential_index);
 
@@ -523,6 +529,8 @@ void ReaderDataManager::unpack_hkIssuer_t(msgpack_object obj, hkIssuer_t& issuer
       auto integer_view = msgpack_elements | std::ranges::views::transform([](const msgpack_object& o){return o.via.u64;});
       issuer.issuer_id.assign(integer_view.begin(), integer_view.end());
     }
+    if (obj_map.count("access_iteration") && obj_map["access_iteration"].type == MSGPACK_OBJECT_POSITIVE_INTEGER)
+        issuer.access_iteration = obj_map["access_iteration"].via.u64;
     if (obj_map.count("credential_index") && obj_map["credential_index"].type == MSGPACK_OBJECT_POSITIVE_INTEGER)
         issuer.credential_index = obj_map["credential_index"].via.u64;
     if (obj_map.count("publicKey") && obj_map["publicKey"].type == MSGPACK_OBJECT_ARRAY) {

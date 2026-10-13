@@ -1,7 +1,7 @@
 # aliro.mayday
 
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
-DoorLock provisioning and local administration. This repository is a clean
+DoorLock provisioning and local administration. This repository began as a clean
 source snapshot dated **13 October 2026**, with new Git history.
 
 ## Verified status
@@ -10,13 +10,15 @@ source snapshot dated **13 October 2026**, with new Git history.
   was offline during the October update; the new build still needs real
   iPhone regression tests and Samsung Wallet validation through SmartThings.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
-  Sixteen firmware regression scenarios pass, covering old iPhone records,
+  Seventeen firmware regression scenarios pass, covering old iPhone records,
   signature rejection, credential revocation, reboot and persistence failures.
 - DigitalDoorKey is pinned to
   `80e4a1e14eab3646b62ab3bdad6d2ed01d399375`; local patches are documented in
   [UPSTREAM.md](aliro-esp32/components/DigitalDoorKey/UPSTREAM.md).
-- Unknown device keys are rejected. Step-up enrollment remains disabled until
-  full access-document and access-policy validation is implemented.
+- Step-up checks issuer kid/signature, device binding, signed item digests,
+  validity and stored iteration. Unknown device keys stay rejected while
+  application AccessData policy and certificate-chain support remain unfinished.
+  [Porting notes](docs/aliro-porting-2026-10-13.md) explain the supported subset.
 - This is a development prototype. Aliro certification, Samsung/Google Wallet
   compatibility and a physical relay output are not established by this release.
   BLE/UWB access transport is not enabled in this firmware; Matter BLE

@@ -5,6 +5,7 @@
 #include "ddk/transport/ApduChannel.h"
 #include "ddk/session/Flow.h"
 #include <array>
+#include <functional>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -25,6 +26,11 @@ struct SessionConfig {
     // Opt-in compatibility for the Apple 0x0009 profile used by existing
     // commissioned readers. Never downgrade a device advertising 0x0100.
     bool allow_legacy_apple_v9 = false;
+    std::optional<int64_t> step_up_current_time;
+    // Called only after issuer/device signatures and document validation.
+    // Enrollment also requires the application's AccessData interpretation.
+    std::function<bool(span<const uint8_t>, span<const uint8_t>, span<const uint8_t>)>
+        authorize_step_up_enrollment;
 };
 
 struct Transcript {

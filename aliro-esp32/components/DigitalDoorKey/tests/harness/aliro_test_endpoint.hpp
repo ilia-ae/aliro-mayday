@@ -83,6 +83,7 @@ struct StepUpMaterial {
     std::vector<uint8_t> sig;        // 64B raw r||s
     std::vector<uint8_t> protected_headers;  // bstr {1: -7}
     std::vector<uint8_t> payload;    // tag24(MSO)
+    std::vector<uint8_t> item;       // tag24(IssuerSignedItem)
 };
 
 // mso_text_keys: MSO/deviceKeyInfo keys as digit text strings ("4"/"1") —

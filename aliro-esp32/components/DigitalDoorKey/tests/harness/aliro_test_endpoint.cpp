@@ -3,6 +3,7 @@
 #include "aliro/AliroKeySchedule.h"
 #include "aliro/Profile.h"
 #include "CommonCryptoUtils.h"
+#include "ddk/aliro/DocumentVerifier.h"
 #include "CoseSign1.h"
 #include "BerTlv.h"
 #include "TLV8.hpp"
@@ -71,8 +72,12 @@ std::vector<uint8_t> tlv53(const std::vector<uint8_t>& value)
     std::vector<uint8_t> out{0x53};
     if (value.size() < 0x80) {
         out.push_back(static_cast<uint8_t>(value.size()));
-    } else {
+    } else if (value.size() <= 0xFF) {
         out.push_back(0x81);
+        out.push_back(static_cast<uint8_t>(value.size()));
+    } else {
+        out.push_back(0x82);
+        out.push_back(static_cast<uint8_t>(value.size() >> 8));
         out.push_back(static_cast<uint8_t>(value.size()));
     }
     out.insert(out.end(), value.begin(), value.end());
@@ -211,9 +216,11 @@ void encode_issuer_auth(CborEncoder* parent, const StepUpMaterial& m)
     cbor_encoder_create_array(parent, &arr, 4);
     cbor_encode_byte_string(&arr, m.protected_headers.data(),
                             m.protected_headers.size());
-    cbor_encoder_create_map(&arr, &unprot, 1);
+    cbor_encoder_create_map(&arr, &unprot, m.issuer_id.empty()?0:1);
+    if (!m.issuer_id.empty()) {
     cbor_encode_int(&unprot, 4);  // issuer id (key identifier)
     cbor_encode_byte_string(&unprot, m.issuer_id.data(), m.issuer_id.size());
+    }
     cbor_encoder_close_container(&arr, &unprot);
     cbor_encode_byte_string(&arr, m.payload.data(), m.payload.size());
     cbor_encode_byte_string(&arr, m.sig.data(), m.sig.size());
@@ -245,30 +252,59 @@ StepUpMaterial make_step_up_material(const std::array<uint8_t, 32>& device_x,
         }
     };
 
-    uint8_t mso_buf[256];
-    CborEncoder e, mso_map, ki_map, key_map;
+    // A complete signed item. The digest covers the tag-24 wrapper as sent.
+    uint8_t item_buf[256], tagged_buf[300];
+    CborEncoder e, item_map, access;
+    cbor_encoder_init(&e,item_buf,sizeof(item_buf),0);
+    cbor_encoder_create_map(&e,&item_map,4);
+    enc_mso_key(&item_map,1); cbor_encode_uint(&item_map,0);
+    enc_mso_key(&item_map,2);
+    const uint8_t random[16]={0}; cbor_encode_byte_string(&item_map,random,sizeof(random));
+    enc_mso_key(&item_map,3); cbor_encode_text_stringz(&item_map,"matter1");
+    enc_mso_key(&item_map,4); cbor_encoder_create_map(&item_map,&access,1);
+    cbor_encode_uint(&access,0); cbor_encode_uint(&access,1);
+    cbor_encoder_close_container(&item_map,&access); cbor_encoder_close_container(&e,&item_map);
+    size_t item_len=cbor_encoder_get_buffer_size(&e,item_buf);
+    cbor_encoder_init(&e,tagged_buf,sizeof(tagged_buf),0);
+    cbor_encode_tag(&e,24); cbor_encode_byte_string(&e,item_buf,item_len);
+    size_t tagged_len=cbor_encoder_get_buffer_size(&e,tagged_buf);
+    m.item.assign(tagged_buf,tagged_buf+tagged_len);
+    uint8_t digest[32];
+    mbedtls_md(mbedtls_md_info_from_type(MBEDTLS_MD_SHA256),m.item.data(),m.item.size(),digest);
+
+    uint8_t mso_buf[700];
+    CborEncoder mso_map, ki_map, key_map, digest_ns, digest_ids, validity;
     cbor_encoder_init(&e, mso_buf, sizeof(mso_buf), 0);
-    cbor_encoder_create_map(&e, &mso_map, 2);
-    enc_mso_key(&mso_map, 4);  // deviceKeyInfo
+    cbor_encoder_create_map(&e, &mso_map, 7);
+    enc_mso_key(&mso_map,1); cbor_encode_text_stringz(&mso_map,"1.0");
+    enc_mso_key(&mso_map,2); cbor_encode_text_stringz(&mso_map,"SHA-256");
+    enc_mso_key(&mso_map,3); cbor_encoder_create_map(&mso_map,&digest_ns,1);
+    cbor_encode_text_stringz(&digest_ns,"aliro-a"); cbor_encoder_create_map(&digest_ns,&digest_ids,1);
+    cbor_encode_uint(&digest_ids,0); cbor_encode_byte_string(&digest_ids,digest,sizeof(digest));
+    cbor_encoder_close_container(&digest_ns,&digest_ids); cbor_encoder_close_container(&mso_map,&digest_ns);
+    enc_mso_key(&mso_map, 4);
     cbor_encoder_create_map(&mso_map, &ki_map, 1);
-    enc_mso_key(&ki_map, 1);   // deviceKey
+    enc_mso_key(&ki_map, 1);
     cbor_encoder_create_map(&ki_map, &key_map, 4);
-    cbor_encode_int(&key_map, 1);  cbor_encode_int(&key_map, 2);   // kty: EC2
-    cbor_encode_int(&key_map, -1); cbor_encode_int(&key_map, 1);   // crv: P-256
-    cbor_encode_int(&key_map, -2);
-    cbor_encode_byte_string(&key_map, m.x.data(), m.x.size());
-    cbor_encode_int(&key_map, -3);
-    cbor_encode_byte_string(&key_map, m.y.data(), m.y.size());
-    cbor_encoder_close_container(&ki_map, &key_map);
-    cbor_encoder_close_container(&mso_map, &ki_map);
-    enc_mso_key(&mso_map, 5);
-    cbor_encode_text_stringz(&mso_map, "aliro-a");
-    cbor_encoder_close_container(&e, &mso_map);
-    size_t mso_len = cbor_encoder_get_buffer_size(&e, mso_buf);
+    cbor_encode_int(&key_map, 1); cbor_encode_int(&key_map, 2);
+    cbor_encode_int(&key_map, -1); cbor_encode_int(&key_map, 1);
+    cbor_encode_int(&key_map, -2); cbor_encode_byte_string(&key_map,m.x.data(),m.x.size());
+    cbor_encode_int(&key_map, -3); cbor_encode_byte_string(&key_map,m.y.data(),m.y.size());
+    cbor_encoder_close_container(&ki_map,&key_map); cbor_encoder_close_container(&mso_map,&ki_map);
+    enc_mso_key(&mso_map,5); cbor_encode_text_stringz(&mso_map,"aliro-a");
+    enc_mso_key(&mso_map,6); cbor_encoder_create_map(&mso_map,&validity,3);
+    for (const auto& d : std::vector<std::pair<int,const char*>>{
+        {1,"2026-10-13T00:00:00Z"},{2,"2025-01-01T00:00:00Z"},{3,"2030-01-01T00:00:00Z"}}) {
+        enc_mso_key(&validity,d.first); cbor_encode_tag(&validity,0); cbor_encode_text_stringz(&validity,d.second);
+    }
+    cbor_encoder_close_container(&mso_map,&validity);
+    enc_mso_key(&mso_map,7); cbor_encode_boolean(&mso_map,false);
+    cbor_encoder_close_container(&e,&mso_map);
+    size_t mso_len=cbor_encoder_get_buffer_size(&e,mso_buf);
 
     // payload = tag24(MSO), or the MSO map encoding directly when the tag is
     // omitted (the lenient form extractDeviceKey accepts).
-    uint8_t payload_buf[300];
+    uint8_t payload_buf[800];
     cbor_encoder_init(&e, payload_buf, sizeof(payload_buf), 0);
     if (!omit_tag24) {
         cbor_encode_tag(&e, 24);
@@ -320,7 +356,20 @@ std::vector<uint8_t> build_step_up_device_response(const StepUpMaterial& m,
         cbor_encoder_create_map(parent, &doc_map, 2);
         text ? cbor_encode_text_stringz(&doc_map, "1")
              : cbor_encode_int(&doc_map, 1);  // issuerSigned
-        cbor_encoder_create_map(&doc_map, &is_map, 1);
+        cbor_encoder_create_map(&doc_map, &is_map, 2);
+        text ? cbor_encode_text_stringz(&is_map,"1") : cbor_encode_int(&is_map,1);
+        CborEncoder namespaces, items;
+        cbor_encoder_create_map(&is_map,&namespaces,1);
+        cbor_encode_text_stringz(&namespaces,"aliro-a"); cbor_encoder_create_array(&namespaces,&items,1);
+        cbor_encode_tag(&items,24);
+        CborParser item_parser; CborValue item_value;
+        cbor_parser_init(m.item.data(),m.item.size(),0,&item_parser,&item_value);
+        cbor_value_advance(&item_value);
+        size_t inner_size=0; cbor_value_get_string_length(&item_value,&inner_size);
+        std::vector<uint8_t> inner(inner_size);
+        cbor_value_copy_byte_string(&item_value,inner.data(),&inner_size,nullptr);
+        cbor_encode_byte_string(&items,inner.data(),inner.size());
+        cbor_encoder_close_container(&namespaces,&items); cbor_encoder_close_container(&is_map,&namespaces);
         text ? cbor_encode_text_stringz(&is_map, "2")
              : cbor_encode_int(&is_map, 2);   // issuerAuth (COSE_Sign1, inline)
         encode_issuer_auth(&is_map, m);
@@ -659,7 +708,7 @@ void AliroTestEndpoint::build_step_up_response()
     std::copy_n(docKey.pub.begin() + 1, 32, device_x.begin());
     std::copy_n(docKey.pub.begin() + 33, 32, device_y.begin());
 
-    auto material = make_step_up_material(device_x, device_y, issuer_id);
+    auto material = make_step_up_material(device_x, device_y, ddk::aliro::issuer_key_identifier(issuer_key.pub));
     material.sig = scenario.corrupt_step_up_signature
         ? std::vector<uint8_t>(64, 0xAB)
         : sign_cose_es256(issuer_key, material.protected_headers, material.payload);

@@ -121,7 +121,8 @@ struct hkEndpoint_t
   std::vector<uint8_t> endpoint_pk_x;
   std::vector<uint8_t> endpoint_prst_k;
   uint16_t credential_index = 0; // optional in the existing MessagePack schema
-  uint8_t credential_type = 0;   // Matter 7/8; 0 = issuer-authorized/cached key
+  uint8_t credential_type = 0; // Matter 7/8; 0 = issuer-authorized/cached key
+  uint64_t access_iteration = 0;
   // hkEnrollments_t enrollments;
 };
 
@@ -132,6 +133,7 @@ struct hkIssuer_t
   std::vector<uint8_t> issuer_pk_x;
   std::vector<hkEndpoint_t> endpoints;
   uint16_t credential_index = 0;
+  uint64_t access_iteration = 0;
 };
 
 struct readerData_t

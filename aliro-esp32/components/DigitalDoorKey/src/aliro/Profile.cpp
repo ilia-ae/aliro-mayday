@@ -221,8 +221,22 @@ FlowState Profile::step(Session& session, FlowState current)
                   return hash.size() >= 8 && std::equal(stdAuth.key_slot.begin(),
                       stdAuth.key_slot.end(), hash.begin());
                 }());
-          if (step.success && presented_key_matches &&
+          const bool authorized_enrollment = foundEndpoint != nullptr ||
+              (session.config().authorize_step_up_enrollment && step.success &&
+               presented_key_matches && standard.verify_device_signature(
+                   step.endpoint_public_key, stdAuth.device_signature) &&
+               session.config().authorize_step_up_enrollment(step.issuer->public_key,
+                   step.endpoint_public_key, step.access_document_cbor));
+          if (step.success && (foundEndpoint == nullptr || foundIssuer == step.issuer) &&
+              presented_key_matches && authorized_enrollment &&
               standard.verify_device_signature(step.endpoint_public_key, stdAuth.device_signature)) {
+            if (step.access_iteration && *step.access_iteration > step.issuer->access_iteration) {
+              step.issuer->access_iteration = *step.access_iteration;
+              for (auto& endpoint : step.issuer->endpoints)
+                if (endpoint.access_iteration < *step.access_iteration &&
+                    *step.access_iteration - endpoint.access_iteration >= 8)
+                  endpoint.persistent_key.clear();
+            }
             flowUsed = ddk::kFlowATTESTATION;
             foundIssuer = step.issuer;
             step_up_access_document_ = step.access_document_cbor;
@@ -256,6 +270,7 @@ FlowState Profile::step(Session& session, FlowState current)
             foundEndpoint->persistent_key.assign(Kpersistent.begin(), Kpersistent.end());
             LOG_HEX(D, "StepUp Provisioned Persistent Key",
                     foundEndpoint->persistent_key);
+            if (step.access_iteration) foundEndpoint->access_iteration = *step.access_iteration;
             foundEndpoint->aliro.documents = step.documents;
           } else if (session.config().target_flow == Flow::StepUp && !stdAuth) {
             flowUsed = ddk::kFlowFailed;

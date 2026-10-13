@@ -20,6 +20,9 @@ project license. Keep their copyright and license texts with redistributions.
   upstream test changes: rednblkx/DigitalDoorKey,
   [MIT](aliro-esp32/components/DigitalDoorKey/LICENSE). See its UPSTREAM.md for
   the pinned revision and local changes.
+- Exception inside DigitalDoorKey: `src/aliro/document_cbor/` adapts
+  UltraWideLock's portable CBOR cursor under its retained [ISC license](aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/LICENSE).
+  The pinned source and modifications are recorded in that directory's UPSTREAM.md.
 - `aliro-site/`: [source-available commercial terms](aliro-site/LICENSE).
 
 External ESP-IDF, esp-matter, connectedhomeip, Arduino, component-manager and
