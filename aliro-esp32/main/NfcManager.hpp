@@ -57,6 +57,7 @@ private:
         readerData_t readerData;
         std::function<bool(std::vector<uint8_t>&, std::vector<uint8_t>&, bool)> nfcFn;
         std::function<bool(const readerData_t&)> saveFn;
+    std::function<bool(const readerData_t&)> savePolicyFn;
         DDKAuthenticationContext* ctx = nullptr;
         uint32_t generation = 0;
         uint64_t revision = 0;

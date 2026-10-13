@@ -122,8 +122,8 @@ TEST_CASE("Unknown or incorrectly signed credentials never save", "[firmware][de
     }
 }
 
-TEST_CASE("Step-up does not grant an unknown device access even with a trusted signature", "[firmware][stepup]") {
-    for (int attack : {0,1,2,3}) {
+TEST_CASE("Step-up refuses invalid issuer, device signatures and document binding", "[firmware][stepup]") {
+    for (int attack : {1,2,3}) {
         FlowRig rig(false);
         rig.endpoint.scenario.unknown_endpoint_key = true;
         rig.endpoint.scenario.serve_step_up = true;
@@ -230,11 +230,11 @@ TEST_CASE("Document iteration state survives authentication export and reboot", 
     rig.endpoint.scenario.serve_cryptogram=false;
     REQUIRE(std::get<2>(run(data,rig.endpoint,saves))==kFlowSTANDARD);
     REQUIRE(data.issuers[0].access_iteration==12);
-    REQUIRE(data.issuers[0].endpoints[0].access_iteration==10);
+    REQUIRE(data.issuers[0].endpoints[0].access_iteration==12);
     ReaderDataManager store; REQUIRE(store.begin()); REQUIRE(store.updateReaderData(data));
     ReaderDataManager reboot; REQUIRE(reboot.begin()); auto loaded=reboot.getReaderDataCopy();
     REQUIRE(loaded.issuers[0].access_iteration==12);
-    REQUIRE(loaded.issuers[0].endpoints[0].access_iteration==10);
+    REQUIRE(loaded.issuers[0].endpoints[0].access_iteration==12);
     REQUIRE(loaded.reader_gid==data.reader_gid);
     REQUIRE(loaded.issuers[0].endpoints[0].endpoint_prst_k==data.issuers[0].endpoints[0].endpoint_prst_k);
 }

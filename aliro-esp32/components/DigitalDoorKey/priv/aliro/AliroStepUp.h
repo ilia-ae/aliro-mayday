@@ -11,6 +11,8 @@ namespace ddk {
 
 struct AliroStepUpResult {
     bool success = false;
+    bool revocation_processed = false;
+    std::vector<std::vector<uint8_t>> revocation_issuers;
     ddk::Issuer* issuer = nullptr;                 // matched by issuer_id
     std::vector<uint8_t> endpoint_public_key;      // 65B from MSO deviceKey
     std::vector<std::vector<uint8_t>> documents;   // full document CBOR blobs

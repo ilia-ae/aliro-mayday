@@ -15,6 +15,64 @@ const char* ReaderDataManager::NVS_KEY = "READERDATA";
  *
  * Initializes the manager with no open NVS handle and marks it as not initialized.
  */
+namespace {
+void packBytes(msgpack_packer* pk,const std::vector<uint8_t>& bytes) {
+    msgpack_pack_bin(pk,bytes.size());
+    if (!bytes.empty()) msgpack_pack_bin_body(pk,bytes.data(),bytes.size());
+}
+void packRevocations(msgpack_packer* pk,const ddk::aliro::RevocationState& state) {
+    msgpack_pack_map(pk,2);
+    msgpack_pack_str_with_body(pk,"iteration",9); msgpack_pack_uint64(pk,state.iteration);
+    msgpack_pack_str_with_body(pk,"entries",7); msgpack_pack_array(pk,state.entries.size());
+    for (const auto& entry:state.entries) {
+        msgpack_pack_map(pk,4);
+        msgpack_pack_str_with_body(pk,"hash",4); packBytes(pk,entry.public_key_hash);
+        msgpack_pack_str_with_body(pk,"id",2); packBytes(pk,entry.id);
+        msgpack_pack_str_with_body(pk,"expiry",6);
+        if (entry.expiry) msgpack_pack_uint32(pk,*entry.expiry); else msgpack_pack_nil(pk);
+        msgpack_pack_str_with_body(pk,"iteration",9); msgpack_pack_uint64(pk,entry.iteration);
+    }
+}
+bool readMap(msgpack_object obj,std::map<std::string,msgpack_object>& map,size_t count) {
+    if (obj.type!=MSGPACK_OBJECT_MAP || obj.via.map.size!=count) return false;
+    for (uint32_t i=0;i<obj.via.map.size;i++) {
+        auto& pair=obj.via.map.ptr[i];
+        if (pair.key.type!=MSGPACK_OBJECT_STR) return false;
+        std::string key(pair.key.via.str.ptr,pair.key.via.str.size);
+        if (!map.emplace(key,pair.val).second) return false;
+    }
+    return true;
+}
+bool unpackRevocations(msgpack_object obj,ddk::aliro::RevocationState& state) {
+    std::map<std::string,msgpack_object> map;
+    if (!readMap(obj,map,2) || !map.count("iteration") || !map.count("entries") ||
+        map["iteration"].type!=MSGPACK_OBJECT_POSITIVE_INTEGER || map["entries"].type!=MSGPACK_OBJECT_ARRAY ||
+        map["entries"].via.array.size>64) return false;
+    ddk::aliro::RevocationState result; result.iteration=map["iteration"].via.u64;
+    for (uint32_t i=0;i<map["entries"].via.array.size;i++) {
+        std::map<std::string,msgpack_object> fields;
+        if (!readMap(map["entries"].via.array.ptr[i],fields,4) ||
+            !fields.count("hash") || !fields.count("id") || !fields.count("expiry") || !fields.count("iteration")) return false;
+        ddk::aliro::RevocationEntry entry;
+        for (auto key:{"hash","id"}) {
+            const auto& value=fields[key];
+            if (value.type!=MSGPACK_OBJECT_BIN || value.via.bin.size>(key[0]=='h'?32u:16u)) return false;
+            auto& bytes=key[0]=='h'?entry.public_key_hash:entry.id;
+            if (value.via.bin.size) bytes.assign(value.via.bin.ptr,value.via.bin.ptr+value.via.bin.size);
+        }
+        if ((!entry.public_key_hash.empty() && entry.public_key_hash.size()!=32) ||
+            (entry.public_key_hash.empty() && entry.id.empty()) || fields["iteration"].type!=MSGPACK_OBJECT_POSITIVE_INTEGER) return false;
+        entry.iteration=fields["iteration"].via.u64;
+        if (fields["expiry"].type!=MSGPACK_OBJECT_NIL) {
+            if (fields["expiry"].type!=MSGPACK_OBJECT_POSITIVE_INTEGER || fields["expiry"].via.u64>UINT32_MAX) return false;
+            entry.expiry=static_cast<uint32_t>(fields["expiry"].via.u64);
+        }
+        result.entries.push_back(std::move(entry));
+    }
+    state=std::move(result); return true;
+}
+}
+
 ReaderDataManager::ReaderDataManager() : m_isInitialized(false) {
 }
 
@@ -101,11 +159,51 @@ bool ReaderDataManager::commitAuthentication(const readerData_t& data, uint64_t 
     m_readerData = std::move(previous);
     return false;
 }
+bool ReaderDataManager::commitDocumentPolicy(const readerData_t& data,uint64_t expectedRevision,
+                                             uint64_t& committedRevision) {
+    std::lock_guard<std::mutex> lock(m_readerDataMutex);
+    if (m_revision!=expectedRevision) return false;
+    auto previous=m_readerData;
+    for (auto& issuer:m_readerData.issuers) {
+        auto incoming=std::find_if(data.issuers.begin(),data.issuers.end(),
+            [&](const auto& i){return i.issuer_pk==issuer.issuer_pk && i.issuer_id==issuer.issuer_id;});
+        if (incoming==data.issuers.end()) continue;
+        issuer.revocations=incoming->revocations;
+        issuer.document_policy_valid=incoming->document_policy_valid;
+        issuer.access_iteration=incoming->access_iteration;
+        for (auto& endpoint:issuer.endpoints) {
+            auto ep=std::find_if(incoming->endpoints.begin(),incoming->endpoints.end(),
+                [&](const auto& e){return e.endpoint_pk==endpoint.endpoint_pk;});
+            if (ep==incoming->endpoints.end()) continue;
+            endpoint.document_bound=ep->document_bound; endpoint.access_document=ep->access_document;
+            endpoint.access_iteration=ep->access_iteration;
+            if (ep->endpoint_prst_k.empty()) endpoint.endpoint_prst_k.clear();
+        }
+    }
+    committedRevision=++m_revision;
+    if (saveLocked()) return true;
+    // Policy failure must not undo a new denial or apply an unpersisted grant.
+    // Keep the union of revocations and block each affected issuer until a
+    // successfully stored, verified policy document recovers it.
+    for (auto& issuer:m_readerData.issuers) {
+        auto old=std::find_if(previous.issuers.begin(),previous.issuers.end(),
+            [&](const auto& i){return i.issuer_pk==issuer.issuer_pk && i.issuer_id==issuer.issuer_id;});
+        if (old==previous.issuers.end()) continue;
+        issuer.revocations.iteration=old->revocations.iteration;
+        for (const auto& entry:old->revocations.entries)
+            if (std::find(issuer.revocations.entries.begin(),issuer.revocations.entries.end(),entry)==issuer.revocations.entries.end())
+                issuer.revocations.entries.push_back(entry);
+        issuer.document_policy_valid=false;
+        for (auto& endpoint:issuer.endpoints) endpoint.endpoint_prst_k.clear();
+    }
+    return false;
+}
 bool ReaderDataManager::authorizationCurrent(const std::vector<uint8_t>& issuerId,
-    const std::vector<uint8_t>& endpointId, uint64_t expectedRevision) const {
+    const std::vector<uint8_t>& endpointId, uint64_t expectedRevision,std::optional<int64_t> currentTime) const {
     std::lock_guard<std::mutex> lock(m_readerDataMutex);
     return m_revision == expectedRevision &&
-        aliro::credentials::find(m_readerData, issuerId, endpointId) != nullptr;
+        aliro::credentials::find(m_readerData, issuerId, endpointId) != nullptr &&
+        aliro::documents::allowed(m_readerData,issuerId,endpointId,currentTime);
 }
 
 /**
@@ -334,7 +432,11 @@ bool ReaderDataManager::addIssuerIfNotExists(const std::vector<uint8_t>& issuerI
  */
 
 void ReaderDataManager::pack_hkEndpoint_t(msgpack_packer* pk, const hkEndpoint_t& endpoint) {
-    msgpack_pack_map(pk, 10);
+    msgpack_pack_map(pk, 12);
+    msgpack_pack_str_with_body(pk,"document_bound",14); if (endpoint.document_bound) msgpack_pack_true(pk); else msgpack_pack_false(pk);
+    msgpack_pack_str_with_body(pk,"access_document",15);
+    msgpack_pack_bin(pk,endpoint.access_document.size());
+    if (!endpoint.access_document.empty()) msgpack_pack_bin_body(pk,endpoint.access_document.data(),endpoint.access_document.size());
     msgpack_pack_str_with_body(pk, "access_iteration", 16);
     msgpack_pack_uint64(pk, endpoint.access_iteration);
     msgpack_pack_str_with_body(pk, "credential_index", 16);
@@ -412,6 +514,15 @@ void ReaderDataManager::unpack_hkEndpoint_t(msgpack_object obj, hkEndpoint_t& en
         }
     }
 
+    if (auto found=obj_map.find("document_bound"); found!=obj_map.end())
+        endpoint.document_bound=found->second.type!=MSGPACK_OBJECT_BOOLEAN || found->second.via.boolean;
+    if (auto found=obj_map.find("access_document"); found!=obj_map.end()) {
+        const auto& value=found->second;
+        if (value.type==MSGPACK_OBJECT_BIN && value.via.bin.size<=4096) {
+            endpoint.access_document.assign(value.via.bin.ptr,value.via.bin.ptr+value.via.bin.size);
+            if (!endpoint.access_document.empty()) endpoint.document_bound=true;
+        } else endpoint.document_bound=true;
+    }
     if (obj_map.count("endpointId") && obj_map["endpointId"].type == MSGPACK_OBJECT_ARRAY) {
       auto msgpack_elements = std::ranges::subrange(obj_map["endpointId"].via.array.ptr, obj_map["endpointId"].via.array.ptr + obj_map["endpointId"].via.array.size);
       auto integer_view = msgpack_elements | std::ranges::views::transform([](const msgpack_object& o){return o.via.u64;});
@@ -460,7 +571,10 @@ void ReaderDataManager::unpack_hkEndpoint_t(msgpack_object obj, hkEndpoint_t& en
  * @param issuer The issuer object whose fields will be serialized into the packer.
  */
 void ReaderDataManager::pack_hkIssuer_t(msgpack_packer* pk, const hkIssuer_t& issuer) {
-    msgpack_pack_map(pk, 6);
+    msgpack_pack_map(pk, 8);
+    msgpack_pack_str_with_body(pk,"document_policy_valid",21);
+    if (issuer.document_policy_valid) msgpack_pack_true(pk); else msgpack_pack_false(pk);
+    msgpack_pack_str_with_body(pk,"revocations",11); packRevocations(pk,issuer.revocations);
     msgpack_pack_str_with_body(pk, "access_iteration", 16);
     msgpack_pack_uint64(pk, issuer.access_iteration);
     msgpack_pack_str_with_body(pk, "credential_index", 16);
@@ -524,6 +638,10 @@ void ReaderDataManager::unpack_hkIssuer_t(msgpack_object obj, hkIssuer_t& issuer
         }
     }
 
+    if (auto found=obj_map.find("document_policy_valid"); found!=obj_map.end())
+        issuer.document_policy_valid=found->second.type==MSGPACK_OBJECT_BOOLEAN && found->second.via.boolean;
+    if (auto found=obj_map.find("revocations"); found!=obj_map.end())
+        if (!unpackRevocations(found->second,issuer.revocations)) issuer.document_policy_valid=false;
     if (obj_map.count("issuerId") && obj_map["issuerId"].type == MSGPACK_OBJECT_ARRAY) {
       auto msgpack_elements = std::ranges::subrange(obj_map["issuerId"].via.array.ptr, obj_map["issuerId"].via.array.ptr + obj_map["issuerId"].via.array.size);
       auto integer_view = msgpack_elements | std::ranges::views::transform([](const msgpack_object& o){return o.via.u64;});

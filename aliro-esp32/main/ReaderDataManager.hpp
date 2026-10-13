@@ -4,6 +4,7 @@
 #include <functional>
 #include <nvs.h>
 #include "DDKReaderData.h"
+#include "DocumentAccessOps.hpp"
 #include "msgpack/object.h"
 #include "msgpack/pack.h"
 
@@ -50,9 +51,11 @@ public:
     bool mutateReaderData(const std::function<void(readerData_t&)>& change);
     bool commitAuthentication(const readerData_t& data, uint64_t expectedRevision,
                               uint64_t& committedRevision);
+    bool commitDocumentPolicy(const readerData_t& data,uint64_t expectedRevision,uint64_t& committedRevision);
     bool authorizationCurrent(const std::vector<uint8_t>& issuerId,
                               const std::vector<uint8_t>& endpointId,
-                              uint64_t expectedRevision) const;
+                              uint64_t expectedRevision,
+                              std::optional<int64_t> currentTime=aliro::documents::wallClock()) const;
 
     /**
      * @brief Provides convenient read-only access to the reader group identifier.

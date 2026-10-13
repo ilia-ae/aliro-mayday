@@ -13,8 +13,8 @@ cmake --build /tmp/aliro-ddk-tests --parallel
 ctest --test-dir /tmp/aliro-ddk-tests --output-on-failure
 ```
 
-The initial build downloads pinned Catch2, mbedTLS, libsodium and tinycbor test
-dependencies. On macOS, select a compatible SDK if the default SDK/linker pair
+The initial build downloads pinned Catch2, mbedTLS and libsodium test
+dependencies. The parser is the same vendored tinycbor used by the firmware. On macOS, select a compatible SDK if the default SDK/linker pair
 fails; pass `-DCMAKE_OSX_SYSROOT=<SDK>` to configure and `SDKROOT=<SDK>` to build.
 
 The pinned upstream has two known failures in `aliro_ble_flow_test`, outside the
@@ -32,3 +32,15 @@ the device credential / disable its user and verify rejection before and after
 reboot. Restore and reprovision explicitly. Finally test Samsung Wallet through
 the available SmartThings hub. Keep pairing, reader identity and old firmware
 available for rollback; do not erase flash or burn security eFuses in this test.
+
+Document access and signed-revocation coverage is described in
+[the policy notes](../../docs/aliro-access-policy-2026-10-14.md).
+To instrument the protocol, real firmware adapter/NVS serializer, tinycbor and
+msgpack parsers, configure with `-DDDK_ENABLE_SANITIZERS=ON` and rebuild. On macOS:
+
+```sh
+UBSAN_OPTIONS=halt_on_error=1 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /tmp/aliro-ddk-tests --output-on-failure -E '^aliro_ble_flow_test$'
+```
+
+LeakSanitizer is unavailable on this macOS runtime; the run checks AddressSanitizer
+and UndefinedBehaviorSanitizer errors. The normal build defaults to sanitizers off.

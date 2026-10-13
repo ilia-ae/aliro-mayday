@@ -10,7 +10,9 @@ class DDKAuthenticationContext {
 public:
     using Nfc = std::function<bool(std::vector<uint8_t>&, std::vector<uint8_t>&, bool)>;
     using Save = std::function<bool(const readerData_t&)>;
-    DDKAuthenticationContext(DigitalKeyType, const Nfc&, readerData_t&, const Save&);
+    using Clock = std::function<std::optional<int64_t>()>;
+    DDKAuthenticationContext(DigitalKeyType, const Nfc&, readerData_t&, const Save&,
+        const Save& savePolicy = {}, const Clock& clock = {}, const ddk::aliro::AccessPolicy& access = {});
     ~DDKAuthenticationContext();
     void setSelectResponse(const std::vector<uint8_t>& response);
     std::tuple<std::vector<uint8_t>, std::vector<uint8_t>, KeyFlow> authenticate(KeyFlow);

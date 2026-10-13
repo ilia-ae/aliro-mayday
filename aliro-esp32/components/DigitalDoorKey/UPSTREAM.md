@@ -30,14 +30,28 @@ iteration. The parser accepts a bounded subset of deterministic CBOR and UTC
 dates at second precision. Unvalidated x5chain and unsupported critical COSE
 headers are rejected. A document cannot supply its own trusted current time.
 
-**Access decision boundary:** this is a provisioned-issuer-key validator, not
-certificate-chain validation or full AccessData interpretation. Schedules,
-ReaderRuleIds and critical access extensions still need application policy.
-Unknown library endpoints require an explicit post-validation authorization
-callback. The firmware does not provide that callback and independently rejects
-unknown endpoint keys; existing Matter-provisioned/cached credentials stay usable.
-Issuer/endpoint iteration fields are optional additions to the old NVS schema;
-stale persistent keys do not enter FastAuth. Existing local issuer IDs are kept.
+**Access decision:** the firmware now supplies document authorization and
+per-authentication policy callbacks. AccessData version/action/rules and known
+reader rules are checked; unsupported schedules, unknown reader-rule references
+and critical access extensions deny the affected element. Unknown non-critical
+and non-access extensions do not grant rights. Document-bound keys retain their
+signed document and re-check validity, policy and revocation during Fast/Standard
+and at the final Matter gate. The firmware requires an available wall clock for
+document-based grants while preserving independent legacy iPhone credentials.
+
+**Signed revocation:** aliro-r forbids deviceKeyInfo; verified Overwrite/Update
+changes are kept per issuer and applied independently of successful device
+access. Revision-checked policy persistence prevents stale authentication from
+restoring a revoked key. Storage failure keeps denials in RAM and requires a
+verified full snapshot to recover. Optional NVS fields preserve old records.
+No certificate-chain trust is inferred; x5chain remains unsupported and rejected.
+
+Apple v9 framing and normal Fast behavior remain unchanged. Modern advertised
+revocation uses Standard/Step-up, and stale independently provisioned persistent
+keys can re-establish their epoch through authenticated Standard.
+
+See [document access and revocation notes](../../../docs/aliro-access-policy-2026-10-14.md)
+in the repository root for the supported optional features and acceptance checks.
 
 See `docs/aliro-porting-2026-10-13.md` in the repository root for scope,
 acceptance checks and the separate esp-aliro/UWB migration plan.

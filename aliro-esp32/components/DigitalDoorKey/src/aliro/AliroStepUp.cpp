@@ -2,6 +2,7 @@
 #include "aliro/AliroSecureContext.h"
 #include "CoseSign1.h"
 #include "ddk/aliro/DocumentVerifier.h"
+#include "ddk/aliro/DocumentAccess.h"
 #include "document_cbor/document_cbor.h"
 #include "BerTlv.h"
 #include "CommonCryptoUtils.h"
@@ -185,14 +186,29 @@ AliroStepUpResult AliroStepUp::parseDeviceResponse(ddk::span<const uint8_t> cbor
         CborValue v;
         // A signed revocation document is never an enrollment grant.
         if (!find_map_field(&doc_item, 5, &v) || !text_value(v, doc_type) ||
-            doc_type != kAccessDocType) continue;
+            (doc_type != kAccessDocType && doc_type != kRevocationDocType)) continue;
 
         std::vector<std::string> requested;
         for (const auto& scope : scopes) requested.push_back(scope.first);
         for (auto& issuer : session_.store().issuers()) {
             ddk::aliro::DocumentPolicy policy;
-            policy.current_time = session_.config().step_up_current_time;
+            policy.current_time = session_.config().document_clock ? session_.config().document_clock() :
+                session_.config().step_up_current_time;
+            policy.revocation_iteration=issuer.revocations.iteration;
             policy.access_iteration = issuer.access_iteration;
+            if (doc_type==kRevocationDocType) {
+                auto revoked=ddk::aliro::verify_revocation_document(document,issuer.public_key,policy);
+                auto previous=issuer.revocations;
+                if (revoked && ddk::aliro::apply_revocation_document(*revoked,issuer.revocations,policy.current_time,
+                        !issuer.document_policy_valid)) {
+                    issuer.document_policy_valid=true;
+                    if (!(previous==issuer.revocations)) session_.store().save();
+                    result.revocation_processed=true;
+                    result.revocation_issuers.push_back(issuer.public_key);
+                    break;
+                }
+                continue;
+            }
             auto verified = ddk::aliro::verify_access_document(document, issuer.public_key,
                                                               policy, requested);
             if (!verified) continue;

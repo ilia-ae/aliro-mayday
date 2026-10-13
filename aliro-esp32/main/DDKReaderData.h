@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <vector>
+#include "ddk/aliro/DocumentAccess.h"
 
 typedef enum {
   kAliro = 0x00,
@@ -123,6 +124,8 @@ struct hkEndpoint_t
   uint16_t credential_index = 0; // optional in the existing MessagePack schema
   uint8_t credential_type = 0; // Matter 7/8; 0 = issuer-authorized/cached key
   uint64_t access_iteration = 0;
+  bool document_bound = false;
+  std::vector<uint8_t> access_document;
   // hkEnrollments_t enrollments;
 };
 
@@ -134,6 +137,8 @@ struct hkIssuer_t
   std::vector<hkEndpoint_t> endpoints;
   uint16_t credential_index = 0;
   uint64_t access_iteration = 0;
+  ddk::aliro::RevocationState revocations;
+  bool document_policy_valid = true;
 };
 
 struct readerData_t

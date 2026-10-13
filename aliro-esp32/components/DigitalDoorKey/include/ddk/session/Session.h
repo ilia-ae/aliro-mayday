@@ -16,6 +16,8 @@
 namespace ddk {
 
 class CredentialStore;
+struct Issuer;
+struct Endpoint;
 
 struct SessionConfig {
     Flow target_flow = Flow::Fast;
@@ -27,10 +29,13 @@ struct SessionConfig {
     // commissioned readers. Never downgrade a device advertising 0x0100.
     bool allow_legacy_apple_v9 = false;
     std::optional<int64_t> step_up_current_time;
+    std::function<std::optional<int64_t>()> document_clock;
     // Called only after issuer/device signatures and document validation.
-    // Enrollment also requires the application's AccessData interpretation.
+    // Checks new enrollment and refreshed documents on known credentials;
+    // the application must interpret AccessData before accepting either.
     std::function<bool(span<const uint8_t>, span<const uint8_t>, span<const uint8_t>)>
         authorize_step_up_enrollment;
+    std::function<bool(const Issuer&,const Endpoint&)> authorize_authenticated_endpoint;
 };
 
 struct Transcript {

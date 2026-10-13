@@ -48,11 +48,12 @@ set_target_properties(sodium PROPERTIES
     IMPORTED_LOCATION ${FETCHCONTENT_BASE_DIR}/libsodium/lib/libsodium.a
     INTERFACE_INCLUDE_DIRECTORIES ${FETCHCONTENT_BASE_DIR}/libsodium/include)
 
-# tinycbor — CBOR encode/decode (same version as the IDF managed component).
-FetchContent_Declare(tinycbor
-    GIT_REPOSITORY https://github.com/intel/tinycbor.git
-    GIT_TAG        v0.6.0
-    GIT_SHALLOW    TRUE)
+# Use the exact vendored parser compiled by the ESP-IDF firmware, including its
+# local safety fixes. A separately fetched version is not equivalent validation.
+set(tinycbor_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../cbor/tinycbor)
+if(NOT EXISTS "${tinycbor_SOURCE_DIR}/src/cborparser.c")
+    message(FATAL_ERROR "The firmware's vendored tinycbor source is required")
+endif()
 
 # Catch2 v3 — test framework for the new flow tests.
 set(CATCH_INSTALL_EXTRAS OFF CACHE BOOL "" FORCE)
@@ -62,11 +63,9 @@ FetchContent_Declare(catch2
     GIT_TAG        v3.7.1
     GIT_SHALLOW    TRUE)
 
-FetchContent_MakeAvailable(mbedtls tinycbor catch2)
+FetchContent_MakeAvailable(mbedtls catch2)
 
-# tinycbor v0.6.0 has no CMakeLists.txt at its repo root (Makefile-based
-# upstream build), so FetchContent populated the sources without creating
-# a target. Build the parser/encoder into a static lib here.
+# Build the firmware's vendored parser/encoder into the host static library.
 file(GLOB TINYCBOR_SOURCES ${tinycbor_SOURCE_DIR}/src/*.c)
 add_library(tinycbor STATIC ${TINYCBOR_SOURCES})
 target_include_directories(tinycbor PUBLIC ${tinycbor_SOURCE_DIR}/src)
@@ -94,6 +93,7 @@ set(DDK_SOURCES
     ${DDK_ROOT}/src/aliro/AliroSecureContext.cpp
     ${DDK_ROOT}/src/aliro/AliroStepUp.cpp
     ${DDK_ROOT}/src/aliro/DocumentVerifier.cpp
+    ${DDK_ROOT}/src/aliro/DocumentAccess.cpp
     ${DDK_ROOT}/src/aliro/document_cbor/document_cbor.c
     ${DDK_ROOT}/src/aliro/ProfileFactory.cpp
     ${DDK_ROOT}/src/auth/AliroFastAuth.cpp
@@ -111,6 +111,16 @@ target_include_directories(ddk_under_test PUBLIC
 target_include_directories(ddk_under_test PRIVATE ${DDK_ROOT}/priv)
 target_link_libraries(ddk_under_test PUBLIC mbedcrypto sodium tinycbor)
 add_dependencies(ddk_under_test libsodium)
+
+option(DDK_ENABLE_SANITIZERS "Check document/transport and firmware memory safety" OFF)
+if(DDK_ENABLE_SANITIZERS)
+    if(NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        message(FATAL_ERROR "DDK_ENABLE_SANITIZERS requires GCC or Clang")
+    endif()
+    target_compile_options(ddk_under_test PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+    target_compile_options(tinycbor PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+    target_link_options(ddk_under_test INTERFACE -fsanitize=address,undefined)
+endif()
 
 # --- Shared flow-test harness (simulated Aliro endpoint) --------------------
 # The BLE additions reuse the same endpoint: a loopback BleLink pair plus a
@@ -156,10 +166,15 @@ target_include_directories(msgpack-c PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/firmware-msgpack/include/msgpack>)
 add_executable(firmware_auth_test
     ${FIRMWARE_TESTS}/firmware_auth_test.cpp ${FIRMWARE_TESTS}/stubs/nvs.cpp
+    ${FIRMWARE_TESTS}/document_policy_test.cpp
     ${FIRMWARE_MAIN}/DDKAuthContext.cpp ${FIRMWARE_MAIN}/ReaderDataManager.cpp)
 target_include_directories(firmware_auth_test PRIVATE ${FIRMWARE_MAIN} ${FIRMWARE_TESTS}/stubs)
 target_link_libraries(firmware_auth_test PRIVATE aliro_test_harness firmware_msgpack Catch2::Catch2WithMain)
 add_test(NAME firmware_auth_test COMMAND firmware_auth_test)
+if(DDK_ENABLE_SANITIZERS)
+    target_compile_options(msgpack-c PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+    target_compile_options(firmware_auth_test PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+endif()
 
 # Catch2 tests — the Fast/Standard flow tests, the step-up parser unit
 # tests, the full step-up flow, and the BLE transport/flow tests, all
@@ -170,6 +185,7 @@ foreach(t IN ITEMS
         aliro_stepup_parser_test
         aliro_stepup_flow_test
         aliro_document_validation_test
+        aliro_access_policy_test
         aliro_ble_message_test
         aliro_ble_advertising_test
         aliro_ble_security_test

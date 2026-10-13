@@ -10,15 +10,18 @@ source snapshot dated **13 October 2026**, with new Git history.
   was offline during the October update; the new build still needs real
   iPhone regression tests and Samsung Wallet validation through SmartThings.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
-  Seventeen firmware regression scenarios pass, covering old iPhone records,
+  Thirty-six firmware regression scenarios pass, covering old iPhone records,
   signature rejection, credential revocation, reboot and persistence failures.
 - DigitalDoorKey is pinned to
   `80e4a1e14eab3646b62ab3bdad6d2ed01d399375`; local patches are documented in
   [UPSTREAM.md](aliro-esp32/components/DigitalDoorKey/UPSTREAM.md).
-- Step-up checks issuer kid/signature, device binding, signed item digests,
-  validity and stored iteration. Unknown device keys stay rejected while
-  application AccessData policy and certificate-chain support remain unfinished.
-  [Porting notes](docs/aliro-porting-2026-10-13.md) explain the supported subset.
+- Step-up validates signed AccessData before learning a device key from a
+  provisioned issuer. Cached document keys re-check current permissions and expiry.
+  Signed `aliro-r` revocations are stored independently of successful device access
+  and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.md)
+  describe strict handling of unsupported schedules/extensions and missing clocks.
+- Existing Apple v9 framing, identity, pairing and independent iPhone keys are
+  preserved. Actual hardware regression remains required.
 - This is a development prototype. Aliro certification, Samsung/Google Wallet
   compatibility and a physical relay output are not established by this release.
   BLE/UWB access transport is not enabled in this firmware; Matter BLE

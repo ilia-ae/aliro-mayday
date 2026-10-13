@@ -93,6 +93,11 @@ void NfcManager::initAuthPrecompute() {
       invalidateAuthCache();
       return true;
     };
+    m_authPool[i].savePolicyFn = [this,cached](const readerData_t& data) {
+      bool saved=m_readerDataManager.commitDocumentPolicy(data,cached->revision,cached->revision);
+      invalidateAuthCache();
+      return saved;
+    };
     AuthCtxCacheItem* item = &m_authPool[i];
     xQueueSend(m_authCtxFreeQueue, &item, 0);
   }
@@ -194,7 +199,7 @@ void NfcManager::authPrecomputeTask() {
     // 2026-02-11). The upstream NfcManager keeps kHomeKey hard-coded; we flip to
     // kAliro because (a) Apple Wallet on iOS 18+ uses the Aliro path, and
     // (b) Samsung Wallet only speaks Aliro — see README "Testing rig" section.
-    item->ctx = new (std::nothrow) DDKAuthenticationContext(kAliro, item->nfcFn, item->readerData, item->saveFn);
+    item->ctx = new (std::nothrow) DDKAuthenticationContext(kAliro, item->nfcFn, item->readerData, item->saveFn,item->savePolicyFn);
     auto stopTime = std::chrono::high_resolution_clock::now();
     const auto durationMs =
         std::chrono::duration_cast<std::chrono::milliseconds>(stopTime - startTime).count();
@@ -633,7 +638,11 @@ void NfcManager::handleHomeKeyAuth() {
             invalidateAuthCache();
             return true;
         };
-        DDKAuthenticationContext authCtx(kAliro, nfcFn, readerData, saveFn);
+        DDKAuthenticationContext::Save savePolicyFn=[this,&revision](const readerData_t& data) {
+            bool saved=m_readerDataManager.commitDocumentPolicy(data,revision,revision);
+            invalidateAuthCache(); return saved;
+        };
+        DDKAuthenticationContext authCtx(kAliro,nfcFn,readerData,saveFn,savePolicyFn);
         // Pass the FCI Proprietary Template parsed from the SELECT-AID
         // response into the auth context. Required by Aliro §8.3.1.13 —
         // baked into the HKDF salt for session-key derivation.
