@@ -1,0 +1,388 @@
+{
+  "date": "2026-10-13",
+  "scanner": "Gitleaks 8.30.1",
+  "scan_mode": "directory with decoding and archive depth 2",
+  "candidates": 47,
+  "new_candidates_since_history_audit": 0,
+  "known_local_wifi_and_telegram_values_found": 0,
+  "git_history_included": false,
+  "note": "This review applies to the listed file hashes. It is not a blanket ignore for keys or vendor paths. No formal security certification is claimed.",
+  "findings": [
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_encrypted_img/test_apps/main/certs/test_rsa_private_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "cb04e54844a56ae2357ad2bb2f74a9f5086541f128ae2114f0411a44189c89f3",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_encrypted_img/examples/pre_encrypted_ota/main/tests/certs/prvtkey.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "d0ee3a0f10ec49f4f30b94c267eba715c7d0e87a27523565d2fa3ad378e41f86",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/examples/esp_secure_cert_app/esp_secure_cert_config_examples.csv",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "47671fd549dd604fee54e3a300580e1f136529d0916e5783f7b1419e9b26c1d1",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/esp_diag_data_store/test/test_data_store.c",
+      "line": 221,
+      "unchanged_from_audited_master": true,
+      "sha256": "2cb30c56b09ee39072759a9f9f58938896b5cb6cb557b3ebb2bcc5ca0436de7c",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/esp_diag_data_store/test/test_data_store.c",
+      "line": 235,
+      "unchanged_from_audited_master": true,
+      "sha256": "2cb30c56b09ee39072759a9f9f58938896b5cb6cb557b3ebb2bcc5ca0436de7c",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_encrypted_img/examples/pre_encrypted_ota/rsa_key/private.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "1c6a2f805ecc9e7890e3c2881d8a276c3299543b83f0bc1fffde2d0a8f8ae842",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/examples/esp_secure_cert_ota_example/certs/ca_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "d5e58dba315a1a8cdf72d5976ebfa67b050ae011db3e6b2a73a0cf4d79f845ba",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/examples/esp_secure_cert_ota_example/rsa_keys/private.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "5261f351792587883fc5d4224e66e2a82edbaf1bf20a4605c094b9fe5329ef29",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/examples/esp_secure_cert_app/client.key",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "1ece337c07f0d5bb6f08f8e7719049596c8a3885ed87c6c24b91e61ec0dbb3f6",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/nvs_legacy/input_data/priv_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "40aeea5accede04238c13add409ccd9da5c0311471a7349bc82ded2bc2547cad",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/nvs/input_data/priv_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "40aeea5accede04238c13add409ccd9da5c0311471a7349bc82ded2bc2547cad",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/cust_flash_legacy/input_data/priv_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "707e5e9692da82b41a854618b88f65ee39387ef8ec0b23811c5d2f23bc4bcc00",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/cust_flash/input_data/priv_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "707e5e9692da82b41a854618b88f65ee39387ef8ec0b23811c5d2f23bc4bcc00",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/cust_flash_tlv/input_data/priv_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "1b0663bef46ff48320701e49c415c9ac024d2701e5686b5cdc4a151b8a3fb9b5",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/tools/tests/input_data/client.key",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "1ece337c07f0d5bb6f08f8e7719049596c8a3885ed87c6c24b91e61ec0dbb3f6",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/tools/tests/input_data/esp_secure_cert_config_examples.csv",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "47671fd549dd604fee54e3a300580e1f136529d0916e5783f7b1419e9b26c1d1",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/secure_verification/input_data/priv_key.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "c1dcb7cfcaa45412c3612f1d20fa0cd11fa320a935514c59b0de2a4c0abaf4a7",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/qemu_test/secure_verification/secure_boot.key",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "b015216a3a2144e34052f90a0931795aeccc90cc94173c8becbe00c7cdde876f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/docs/esp_secure_cert_tools/configure_esp_secure_cert_csv.md",
+      "line": 115,
+      "unchanged_from_audited_master": true,
+      "sha256": "0203e28cd9d0279556ec75c69b4b05dd3a9499ddb5de5eea9bb019ab9d12c055",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/tools/tests/input_data/esp_secure_cert_parsed_data_expected/contents/privkey_2_0.pem",
+      "line": 1,
+      "unchanged_from_audited_master": true,
+      "sha256": "c1dcb7cfcaa45412c3612f1d20fa0cd11fa320a935514c59b0de2a4c0abaf4a7",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "private-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/tools/tests/input_data/esp_secure_cert_parsed_data_expected/tlv_entries_raw.txt",
+      "line": 117,
+      "unchanged_from_audited_master": true,
+      "sha256": "5975121646f2bb1d824437056aac3b87e93aac86a498b71bf6c96ce3035e1704",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/main/secure_verification/test_secure_verification.c",
+      "line": 43,
+      "unchanged_from_audited_master": true,
+      "sha256": "717e4a6c7c2fc18259478805775aa2d30d0ef8cca14ff44d48ddf1dc2b4a8c78",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/esp_secure_cert_mgr/test_apps/main/crypto/test_esp_secure_cert_crypto.c",
+      "line": 90,
+      "unchanged_from_audited_master": true,
+      "sha256": "9e5cd22a9a83fe26d892749825aa434753592e4a46e689924e9e9c8203285f97",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/ipcrypt.c",
+      "line": 95,
+      "unchanged_from_audited_master": true,
+      "sha256": "18a176903ef74ec30ab06cdd06d84eb5870d9a7741938edb6c64bc850c6e1c8f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/ipcrypt.c",
+      "line": 111,
+      "unchanged_from_audited_master": true,
+      "sha256": "18a176903ef74ec30ab06cdd06d84eb5870d9a7741938edb6c64bc850c6e1c8f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/ipcrypt.c",
+      "line": 131,
+      "unchanged_from_audited_master": true,
+      "sha256": "18a176903ef74ec30ab06cdd06d84eb5870d9a7741938edb6c64bc850c6e1c8f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/ipcrypt.c",
+      "line": 153,
+      "unchanged_from_audited_master": true,
+      "sha256": "18a176903ef74ec30ab06cdd06d84eb5870d9a7741938edb6c64bc850c6e1c8f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/ipcrypt.c",
+      "line": 170,
+      "unchanged_from_audited_master": true,
+      "sha256": "18a176903ef74ec30ab06cdd06d84eb5870d9a7741938edb6c64bc850c6e1c8f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/ipcrypt.c",
+      "line": 191,
+      "unchanged_from_audited_master": true,
+      "sha256": "18a176903ef74ec30ab06cdd06d84eb5870d9a7741938edb6c64bc850c6e1c8f",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/keygen.c",
+      "line": 16,
+      "unchanged_from_audited_master": true,
+      "sha256": "9bc9f35129bd1575150c7d74d4326bad8f3ba4eb8035eb8ae89d3175cc55f1c4",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/keygen.c",
+      "line": 24,
+      "unchanged_from_audited_master": true,
+      "sha256": "9bc9f35129bd1575150c7d74d4326bad8f3ba4eb8035eb8ae89d3175cc55f1c4",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/keygen.c",
+      "line": 25,
+      "unchanged_from_audited_master": true,
+      "sha256": "9bc9f35129bd1575150c7d74d4326bad8f3ba4eb8035eb8ae89d3175cc55f1c4",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/keygen.c",
+      "line": 26,
+      "unchanged_from_audited_master": true,
+      "sha256": "9bc9f35129bd1575150c7d74d4326bad8f3ba4eb8035eb8ae89d3175cc55f1c4",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/test/default/keygen.c",
+      "line": 27,
+      "unchanged_from_audited_master": true,
+      "sha256": "9bc9f35129bd1575150c7d74d4326bad8f3ba4eb8035eb8ae89d3175cc55f1c4",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 4,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 4,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 4,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 4,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 4,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 4,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    },
+    {
+      "rule": "generic-api-key",
+      "file": "aliro-esp32/components/libsodium/libsodium/dist-build/emscripten.sh",
+      "line": 5,
+      "unchanged_from_audited_master": true,
+      "sha256": "90464b1bc814fe2df00f199c5fa9d58cd58ed0640e62b67d61b49d494e08fdb0",
+      "classification": "previously audited upstream fixture or marker; unchanged file"
+    }
+  ]
+}

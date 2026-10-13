@@ -1,0 +1,37 @@
+# Patch against homekey-esp32/main/NfcManager.cpp.
+#
+# Adds a second ECP2 annotation emitted in the polling loop so phones
+# running our Android SmartKey app match a Polling Loop Filter and get
+# routed to the custom AID even when another wallet is default.
+#
+# Line numbers are illustrative — verify against the live file before
+# applying.  The polling loop ECP emit is near NfcManager.cpp:405
+# (per the research agent: the line doing InCommunicateThru with the
+# HomeKey reader GID CRC).
+
+--- a/main/NfcManager.cpp
++++ b/main/NfcManager.cpp
+@@ -400,10 +400,22 @@ void NfcManager::pollingTask() {
+         }
+
+-        // Emit HomeKey ECP annotation (existing behaviour).
++        // Emit HomeKey ECP annotation (existing behaviour).
+         std::vector<uint8_t> res;
+         m_nfc->InCommunicateThru(
+             std::vector<uint8_t>(m_ecpData.begin(), m_ecpData.end()),
+             res, 50);
++
++        // Emit SmartKey ECP2 annotation — phones with our app installed
++        // match this via their PollingLoopFilter and pre-empt Google
++        // Wallet before any APDU exchange.
++        static const std::vector<uint8_t> kSmartKeyEcp = {
++            smartkey::ECP2_ANNOTATION.begin(),
++            smartkey::ECP2_ANNOTATION.end()
++        };
++        std::vector<uint8_t> skRes;
++        m_nfc->InCommunicateThru(kSmartKeyEcp, skRes, 50);
++        (void)skRes;  // ignore reply — this is a broadcast-style frame
+
+         pn532::Status passiveTargetFound =
+             m_nfc->InListPassiveTarget(PN532_MIFARE_ISO14443A,
+                                        uid, sens_res, sel_res, 500);

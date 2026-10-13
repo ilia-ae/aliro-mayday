@@ -1,0 +1,20 @@
+name = "aliro-mayday-software"
+main = "worker/src/index.ts"
+compatibility_date = "2026-04-06"
+
+[build]
+command = "cd frontend && npm install --prefer-offline --no-audit --no-fund && npm run build"
+
+# Static SPA assets via Cloudflare Workers Static Assets. The Worker is a
+# thin pass-through — everything static is served without invoking it.
+#
+# html_handling = "none" disables CF's automatic /index.html → / 307
+# redirect. Angular's Service Worker fetches /index.html as its index
+# during navigation; with the redirect in place, Safari caches the 307 in
+# the SW Cache API and replays it indefinitely, hanging the page.
+# See mayday.software/wrangler.toml — same fix.
+[assets]
+directory = "frontend/dist/aliro-mayday-software/browser"
+not_found_handling = "single-page-application"
+html_handling = "none"
+binding = "ASSETS"

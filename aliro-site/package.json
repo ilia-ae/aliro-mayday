@@ -1,0 +1,14 @@
+{
+    "name": "aliro-mayday-software-root",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "build": "cd frontend && npm install --prefer-offline --no-audit --no-fund && npm run build",
+        "deploy": "npm run build && wrangler deploy",
+        "dev": "wrangler dev"
+    },
+    "devDependencies": {
+        "@cloudflare/workers-types": "^4.20250101.0",
+        "wrangler": "^3.99.0"
+    }
+}

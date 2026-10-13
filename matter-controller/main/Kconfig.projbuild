@@ -1,0 +1,8 @@
+menu "Matter controller Wi-Fi"
+    config MATTER_CONTROLLER_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+    config MATTER_CONTROLLER_WIFI_PASSWORD
+        string "Wi-Fi password"
+        default ""
+endmenu

@@ -1,0 +1,84 @@
+[project]
+name = "pm3-diy-lock"
+version = "0.1.0"
+description = "DIY lock MVP on Proxmark3 (+ Apple HomeKey ECP reader helper)"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Ilia Arestov", email = "razqqm@gmail.com" }]
+license = { text = "MIT" }
+urls = { Homepage = "https://ilia.ae", Source = "https://github.com/ilia-ae/aliro-mayday" }
+keywords = ["proxmark3", "rfid", "nfc", "apple", "homekey", "lock"]
+dependencies = [
+    "pyserial>=3.5",              # optional, used for port-busy detection
+    "fastapi>=0.115.0",           # web UI for the lock + diagweb dashboard
+    "uvicorn>=0.30.0",            # ASGI server
+    "python-telegram-bot>=21.0",  # diagbot — Telegram diagnostics
+    "python-dotenv>=1.0",         # loads TELEGRAM_* from .env
+    "segno>=1.6",                 # diagbot — QR PNG generation (pure-Python)
+    "esptool>=5.2.0",
+]
+
+[project.scripts]
+pm3-lock    = "lock_mvp:main"
+pm3-homekey = "homekey_reader:main"
+pm3-webui   = "webui:main"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+    "pytest>=8.0.0",
+]
+
+[build-system]
+requires    = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Flat layout — both scripts live at repo root for now.
+[tool.hatch.build.targets.wheel]
+packages = []
+only-include = ["lock_mvp.py", "homekey_reader.py", "webui.py", "diagweb.py", "diagbot.py"]
+sources = ["."]
+
+# ---------------- Ruff (linter + formatter) ----------------
+[tool.ruff]
+line-length    = 100
+target-version = "py310"
+extend-exclude = [".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "ANN", # flake8-annotations
+    "RUF", # ruff-specific
+]
+ignore = [
+    "ANN401",            # Any is fine for payload helpers
+    "E501",              # handled by formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN", "SIM"]
+
+# ---------------- mypy ----------------
+[tool.mypy]
+python_version         = "3.10"
+warn_return_any        = true
+warn_unused_configs    = true
+disallow_untyped_defs  = true
+disallow_incomplete_defs = true
+check_untyped_defs     = true
+no_implicit_optional   = true
+strict_equality        = true
+
+# ---------------- pytest ----------------
+[tool.pytest.ini_options]
+testpaths       = ["tests"]
+pythonpath      = ["."]
+addopts         = ["-ra", "--strict-markers", "-q"]
+filterwarnings  = ["error"]

@@ -1,0 +1,11 @@
+## matter-controller — Component-manager manifest.
+##
+## esp-matter is provided via EXTRA_COMPONENT_DIRS (sourced from
+## esp-matter/export.sh). Only registry deps go here.
+
+dependencies:
+  idf:
+    version: ">=5.2"
+  # WS2812 driver for the on-board RGB LED (GPIO48) used by led_indicator.cpp.
+  espressif/led_strip:
+    version: "^3.0.0"

@@ -1,0 +1,13 @@
+# Patch against homekey-esp32/main/CMakeLists.txt.
+# Adds SmartKeyHandler.cpp to the firmware build.
+
+--- a/main/CMakeLists.txt
++++ b/main/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ idf_component_register(
+     SRCS
+         "main.cpp"
++        "SmartKeyHandler.cpp"
+         "ConfigManager.cpp"
+         "ConsoleLogSinker.cpp"
+         "HKServices.cpp"

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HCE service descriptor for SmartKey protocol v1.
+    See /PROTOCOL.md for wire format.
+
+    - aid-filter F0534D52544B4559 ("F0SMRTKEY") — our protocol AID
+    - polling-loop-filter matches our ECP2 annotation:
+          6A 02 ?? 02 04 FE ED FA CE 00 01
+      via regex — isPattern=true
+    - shouldDefaultToObserveMode lets Android 15+ capture the tap before
+      the default wallet (Google/Samsung) claims it
+    - requireDeviceUnlock=false because unlock is gated inside the app
+      via BiometricPrompt bound to the signing key
+-->
+<host-apdu-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/service_desc"
+    android:requireDeviceUnlock="false"
+    android:requireDeviceScreenOn="false"
+    android:shouldDefaultToObserveMode="true">
+
+    <aid-group
+        android:description="@string/aid_group_desc"
+        android:category="other">
+        <aid-filter android:name="F0534D52544B4559" />
+    </aid-group>
+
+    <polling-loop-filter
+        android:name="^6a02..0204feedface0001.*$"
+        android:isPattern="true"
+        android:autoTransact="true" />
+
+</host-apdu-service>

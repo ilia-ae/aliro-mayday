@@ -1,0 +1,20 @@
+# ESP-IDF build artefacts
+build/
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components/
+
+# CMake/ESP-IDF tooling noise
+.cache/
+compile_commands.json
+.idf_build_props/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Matter auth files (generated per commissioning session; don't commit)
+chip_tool_config.*.ini

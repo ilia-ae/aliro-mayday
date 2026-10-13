@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartKey</string>
+    <string name="service_desc">SmartKey NFC key</string>
+    <string name="aid_group_desc">SmartKey protocol v1</string>
+    <string name="placeholder_title">SmartKey</string>
+    <string name="placeholder_body">Android HCE companion key for the homekey-esp32 reader. Pairing UI is not implemented yet — see README.md.</string>
+</resources>

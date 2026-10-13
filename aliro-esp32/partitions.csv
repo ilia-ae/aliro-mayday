@@ -1,0 +1,37 @@
+# ESP32-S3-WROOM-1 N8R8 → 8 MB flash, 8 MB PSRAM.
+# Matter + DDK transaction + PN532 driver pushes the app close to 2 MB,
+# so each OTA slot is sized at 2.5 MB (was 1.875 MB) to give head-room
+# for upcoming NFC tap orchestrator, web UI, and Telegram client.
+#
+# Layout:
+#   0x009000  nvs        (24 KB)   esp-idf default NVS
+#   0x00F000  phy_init   (4 KB)
+#   0x010000  otadata    (8 KB)
+#   0x012000  nvs_keys   (4 KB, encrypted)
+#   0x020000  ota_0      (2.5 MB)
+#   0x2A0000  ota_1      (2.5 MB)
+#   0x520000  aliro_nvs  (64 KB)   Aliro reader signing/verification keys
+#   0x530000  fctry      (24 KB)   Matter factory data (DAC, CD, …)
+#   0x536000  matter_kvs (40 KB)   Matter persistent KVS (fabric, ACL)
+#   0x540000  spiffs     (1.75 MB) LittleFS — bundled web UI assets
+#                                  (Svelte build output from data/dist/)
+#   0x700000  — free —             ~1 MB reserved
+#
+# Name,      Type, SubType, Offset,    Size,       Flags
+nvs,         data, nvs,     0x9000,    0x6000,
+phy_init,    data, phy,     0xf000,    0x1000,
+otadata,     data, ota,     0x10000,   0x2000,
+nvs_keys,    data, nvs_keys,0x12000,   0x1000,     encrypted
+ota_0,       app,  ota_0,   0x20000,   0x280000,
+ota_1,       app,  ota_1,   0x2A0000,  0x280000,
+aliro_nvs,   data, nvs,     0x520000,  0x10000,
+fctry,       data, nvs,     0x530000,  0x6000,
+matter_kvs,  data, nvs,     0x536000,  0xA000,
+spiffs,      data, spiffs,  0x540000,  0x1C0000,
+# Coredump partition — esp_core_dump writes a snapshot of crashed task
+# state + registers + stack here on PANIC/WDT. Read it back over WiFi
+# with the admin_panel /api/coredump endpoint and decode via
+# `idf.py coredump-info -c <dump.bin> build/aliro_esp32.elf`. Without
+# this, panics surface only on the USB-serial UART which is unreachable
+# once the device is deployed on-wall.
+coredump,    data, coredump,0x700000,  0x10000,

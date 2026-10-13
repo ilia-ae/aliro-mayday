@@ -1,0 +1,44 @@
+FILE(GLOB_RECURSE app_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.*)
+if(ESP_PLATFORM)
+if(CONFIG_DDK_PROTOCOL_ALIRO)
+    # This firmware's transport is PN532 NFC. BLE/UWB are not enabled here;
+    # their implementations remain available to the upstream host tests.
+    list(FILTER app_sources EXCLUDE REGEX "/src/aliro/Ble")
+    list(FILTER app_sources EXCLUDE REGEX "/src/transport/Ble")
+    list(FILTER app_sources EXCLUDE REGEX "/src/homekey/")
+    list(FILTER app_sources EXCLUDE REGEX "/src/auth/(HK|Attestation)")
+    list(FILTER app_sources EXCLUDE REGEX "/src/crypto/(ScbSecureChannel|ISO18013SecureContext)\\.cpp")
+    list(FILTER app_sources EXCLUDE REGEX "/src/utils/(ndef|HK_HomeKit)\\.cpp")
+elseif(CONFIG_DDK_PROTOCOL_HOMEKEY)
+    list(FILTER app_sources EXCLUDE REGEX "/src/aliro/")
+    list(FILTER app_sources EXCLUDE REGEX "/src/auth/Aliro")
+    list(FILTER app_sources EXCLUDE REGEX "/src/crypto/GcmSecureChannel\\.cpp")
+    list(FILTER app_sources EXCLUDE REGEX "/src/utils/BerTlv\\.cpp")
+    list(FILTER app_sources EXCLUDE REGEX "/src/transport/Ble")
+endif()
+idf_component_register(
+        SRCS ${app_sources}
+        REQUIRES nvs_flash
+        PRIV_REQUIRES mbedtls libsodium cbor
+        INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+        PRIV_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/priv)
+      target_compile_definitions(${COMPONENT_LIB} PRIVATE "-DLOG_LOCAL_LEVEL=ESP_LOG_DEBUG")
+else()
+project(HK-HomeKit-Lib)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(FetchContent)
+
+FetchContent_Declare(
+    tinycbor
+    GIT_REPOSITORY https://github.com/intel/tinycbor.git
+    GIT_TAG        main
+)
+
+FetchContent_MakeAvailable(tinycbor)
+add_library(HK-HomeKit-Lib STATIC ${app_sources})
+target_include_directories(HK-HomeKit-Lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/include/ddk)
+target_include_directories(HK-HomeKit-Lib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/priv)
+target_link_libraries(HK-HomeKit-Lib mbedtls mbedcrypto sodium tinycbor)
+endif()

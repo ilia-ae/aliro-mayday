@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>aliro.mayday — ключ от двери в вашем телефоне</title>
+        <base href="/" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Открывайте двери телефоном. Цифровой ключ живёт в Apple Wallet, Google Wallet и Samsung Wallet — приложение не нужно. Контроллер на базе открытого стандарта Aliro 1.0." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://aliro.mayday.software/" />
+        <meta name="theme-color" content="#fdfdfd" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
+        <meta name="color-scheme" content="light dark" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://aliro.mayday.software/" />
+        <meta property="og:title" content="aliro.mayday — ключ от двери в вашем телефоне" />
+        <meta property="og:description" content="Открывайте двери телефоном. Цифровой ключ живёт в Apple Wallet, Google Wallet и Samsung Wallet." />
+        <meta property="og:image" content="https://aliro.mayday.software/og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="aliro.mayday — ключ от двери в вашем телефоне" />
+        <meta property="og:locale" content="ru_RU" />
+        <meta property="og:locale:alternate" content="en_US" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="aliro.mayday — ключ от двери в вашем телефоне" />
+        <meta name="twitter:description" content="Открывайте двери телефоном. Цифровой ключ живёт в Apple Wallet, Google Wallet и Samsung Wallet." />
+        <meta name="twitter:image" content="https://aliro.mayday.software/og.png" />
+
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        <!-- hreflang: same URL hosts both languages, switched by ?lang=
+             query param. Listing both lets search engines surface the
+             right locale per visitor. -->
+        <link rel="alternate" href="https://aliro.mayday.software/" hreflang="ru" />
+        <link rel="alternate" href="https://aliro.mayday.software/?lang=en" hreflang="en" />
+        <link rel="alternate" href="https://aliro.mayday.software/" hreflang="x-default" />
+
+        <!-- JSON-LD structured data: Product (the controller) authored by
+             a Person (the owner). Helps search engines render rich-snippet
+             cards instead of plain link results. -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": "aliro.mayday",
+                "description": "Aliro 1.0 access controller built on ESP32 and PN532. Plugs into Apple Home, Google Home, and SmartThings as a Matter DoorLock — and accepts keys from Apple Wallet, Google Wallet, and Samsung Wallet.",
+                "image": "https://aliro.mayday.software/og.png",
+                "url": "https://aliro.mayday.software/",
+                "category": "Access control / smart lock controller",
+                "brand": { "@type": "Brand", "name": "aliro.mayday" },
+                "manufacturer": {
+                    "@type": "Person",
+                    "name": "Ilia Arestov",
+                    "url": "https://ilia.ae/en/",
+                    "email": "aliro.mayday@ilia.ae"
+                }
+            }
+        </script>
+
+        <!-- Resolve theme + language before paint to avoid FOUC.
+             Must stay inline in <head> so it runs before the body renders. -->
+        <script>
+            (function () {
+                try {
+                    var root = document.documentElement;
+                    var q = new URLSearchParams(location.search);
+                    // ?theme=light|dark|auto — explicit override (used for
+                    // screenshots and direct-link sharing). Persists so the
+                    // Angular ThemeService picks it up too.
+                    var queryTheme = q.get('theme');
+                    if (queryTheme === 'light' || queryTheme === 'dark' || queryTheme === 'auto') {
+                        localStorage.setItem('aliro-theme', queryTheme);
+                    }
+                    var savedTheme = localStorage.getItem('aliro-theme');
+                    var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    // Three modes: 'light' / 'dark' force the result, 'auto'
+                    // (or no saved value) follows prefers-color-scheme.
+                    var dark =
+                        savedTheme === 'dark' ||
+                        ((savedTheme === 'auto' || !savedTheme) && systemDark);
+                    if (dark) root.classList.add('app-dark');
+
+                    var queryLang = q.get('lang');
+                    if (queryLang === 'en' || queryLang === 'ru') {
+                        localStorage.setItem('aliro-lang', queryLang);
+                    }
+                    var savedLang = localStorage.getItem('aliro-lang');
+                    var browserLang = (navigator.language || 'ru').slice(0, 2).toLowerCase();
+                    var lang = savedLang === 'en' || savedLang === 'ru'
+                        ? savedLang
+                        : (browserLang === 'en' ? 'en' : 'ru');
+                    root.lang = lang;
+                } catch (e) {}
+            })();
+        </script>
+    </head>
+    <body>
+        <app-root></app-root>
+    </body>
+</html>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0a0a0b"/>
+  <!-- Accent stripe -->
+  <rect x="0" y="0" width="8" height="630" fill="#22a45e"/>
+  <!-- Monogram in the header next to the wordmark -->
+  <g transform="translate(80 120)">
+    <rect width="72" height="72" rx="16" fill="#00723a"/>
+    <path d="M20 55 L36 18 L52 55 M27 43 L45 43"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="6"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="180" y="180"
+        font-family="Helvetica, Arial, sans-serif"
+        font-weight="700"
+        font-size="84"
+        fill="#eaeaec">aliro<tspan fill="#22a45e">.</tspan>mayday</text>
+  <!-- Tagline -->
+  <text x="80" y="320"
+        font-family="Helvetica, Arial, sans-serif"
+        font-weight="500"
+        font-size="48"
+        fill="#eaeaec">Ключ от двери —</text>
+  <text x="80" y="380"
+        font-family="Helvetica, Arial, sans-serif"
+        font-weight="500"
+        font-size="48"
+        fill="#eaeaec">в вашем телефоне.</text>
+  <!-- Secondary line -->
+  <text x="80" y="450"
+        font-family="Helvetica, Arial, sans-serif"
+        font-weight="400"
+        font-size="26"
+        fill="#9b9ba3">Контроллер доступа · Aliro 1.0 · Apple · Google · Samsung</text>
+  <!-- Domain -->
+  <text x="80" y="560"
+        font-family="Helvetica, Arial, sans-serif"
+        font-weight="500"
+        font-size="24"
+        fill="#22a45e">aliro.mayday.software</text>
+</svg>

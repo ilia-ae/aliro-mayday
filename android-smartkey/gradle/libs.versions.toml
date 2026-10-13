@@ -1,0 +1,36 @@
+[versions]
+agp = "8.7.3"
+kotlin = "2.1.0"
+coreKtx = "1.15.0"
+activityCompose = "1.9.3"
+composeBom = "2025.01.00"
+biometric = "1.2.0-alpha05"
+bouncycastle = "1.79"
+cameraX = "1.4.1"
+mlkitBarcode = "17.3.0"
+room = "2.6.1"
+junit = "4.13.2"
+
+[libraries]
+androidx-core-ktx           = { group = "androidx.core",               name = "core-ktx",                 version.ref = "coreKtx" }
+androidx-activity-compose   = { group = "androidx.activity",           name = "activity-compose",         version.ref = "activityCompose" }
+androidx-compose-bom        = { group = "androidx.compose",            name = "compose-bom",              version.ref = "composeBom" }
+androidx-ui                 = { group = "androidx.compose.ui",         name = "ui" }
+androidx-ui-tooling         = { group = "androidx.compose.ui",         name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui",         name = "ui-tooling-preview" }
+androidx-material3          = { group = "androidx.compose.material3",  name = "material3" }
+androidx-biometric          = { group = "androidx.biometric",          name = "biometric",                version.ref = "biometric" }
+bouncycastle                = { group = "org.bouncycastle",            name = "bcprov-jdk18on",           version.ref = "bouncycastle" }
+camerax-core                = { group = "androidx.camera",             name = "camera-core",              version.ref = "cameraX" }
+camerax-camera2             = { group = "androidx.camera",             name = "camera-camera2",           version.ref = "cameraX" }
+camerax-lifecycle           = { group = "androidx.camera",             name = "camera-lifecycle",         version.ref = "cameraX" }
+camerax-view                = { group = "androidx.camera",             name = "camera-view",              version.ref = "cameraX" }
+mlkit-barcode               = { group = "com.google.mlkit",            name = "barcode-scanning",         version.ref = "mlkitBarcode" }
+room-runtime                = { group = "androidx.room",               name = "room-runtime",             version.ref = "room" }
+room-ktx                    = { group = "androidx.room",               name = "room-ktx",                 version.ref = "room" }
+junit                       = { group = "junit",                       name = "junit",                    version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application",                 version.ref = "agp" }
+kotlin-android      = { id = "org.jetbrains.kotlin.android",            version.ref = "kotlin" }
+kotlin-compose      = { id = "org.jetbrains.kotlin.plugin.compose",     version.ref = "kotlin" }

@@ -1,0 +1,490 @@
+{
+    "meta": {
+        "title": "aliro.mayday — your door key lives in your phone",
+        "description": "Open doors with your phone. The digital key lives in Apple Wallet, Google Wallet, and Samsung Wallet — no separate app needed. An access controller built on the open Aliro 1.0 standard."
+    },
+    "nav": {
+        "lang_other": "RU",
+        "lang_aria_label": "Switch to Russian",
+        "menu_aria_label": "Navigation menu",
+        "theme_switch_to_light": "Switch to light theme",
+        "theme_switch_to_dark": "Switch to dark theme",
+        "theme_switch_to_auto": "Switch to system theme",
+        "skip_to_content": "Skip to content",
+        "jump_nav_label": "Page sections",
+        "migration": "Migration",
+        "about": "About",
+        "plan": "Plan",
+        "source": "Source",
+        "faq": "FAQ",
+        "contact": "Contact"
+    },
+    "hero": {
+        "eyebrow": "Open standard · 2026",
+        "title": "Your door key lives in your phone",
+        "lede": "No keychains, fobs, or plastic cards. The digital key lives in Apple Wallet, Google Wallet, or Samsung Wallet — right next to your boarding passes and payment cards.",
+        "cta_primary": "Get in touch",
+        "cta_secondary": "Source release"
+    },
+    "steps": {
+        "title": "How it works",
+        "1": {
+            "title": "Receive the key",
+            "text": "The property owner sends you a digital key and your phone saves it to Wallet — just like a boarding pass. One tap, Face ID confirmation, done."
+        },
+        "2": {
+            "title": "Tap the phone on the reader",
+            "text": "No app to open. No codes or passwords. Face ID or fingerprint confirms it's you — and the key itself never leaves your phone's secure chip."
+        },
+        "3": {
+            "title": "Door opens",
+            "text": "Everything happens locally: phone and reader talk directly. No internet, no cloud — the lock works even when Wi-Fi is down."
+        }
+    },
+    "wallets": {
+        "title": "Works with every major wallet",
+        "apple": { "name": "Apple Wallet", "devices": "iPhone · Apple Watch" },
+        "google": { "name": "Google Wallet", "devices": "Android · Wear OS" },
+        "samsung": { "name": "Samsung Wallet", "devices": "Galaxy · Samsung Knox" }
+    },
+    "why": {
+        "title": "Why this beats a dedicated app",
+        "1": {
+            "title": "Already on your phone",
+            "text": "Wallet ships on every modern smartphone. No extra app to install, no account to create, no new password to remember."
+        },
+        "2": {
+            "title": "Hardware-level security",
+            "text": "The private key lives in a dedicated cryptographic chip inside your phone (Secure Element, Samsung Knox). It can't be copied even if the phone is stolen."
+        },
+        "3": {
+            "title": "Works offline",
+            "text": "Lock and phone communicate directly, with no server in the middle. Elevators, basements, network outages — all irrelevant."
+        },
+        "4": {
+            "title": "One open standard",
+            "text": "Aliro is an open standard from the Connectivity Standards Alliance (February 2026), backed by Apple, Google, Samsung, ASSA ABLOY, Aqara, and others. One key works with any certified lock."
+        }
+    },
+    "use": {
+        "title": "Where it fits",
+        "items": {
+            "home": "Apartments and private homes",
+            "office": "Offices and commercial buildings",
+            "hotel": "Hotels and short-term rentals",
+            "coworking": "Co-working and shared spaces"
+        }
+    },
+    "migration": {
+        "title": "Gradual migration, no big-bang switch",
+        "lede": "You don't have to put your whole workforce on phones in one day. The controller reads existing cards from day one — your legacy fleet works alongside digital keys in the wallet. Employees migrate at whatever pace fits: one today, ten tomorrow, no \"everyone at once\".",
+        "1": {
+            "title": "Install the controller",
+            "text": "The existing card fleet keeps working unchanged. Employees notice nothing — same cards, same doors, same ritual."
+        },
+        "2": {
+            "title": "Import the card database",
+            "text": "Card UIDs load into the controller as a single list (CSV / HTTP API). From that moment on, event log, card-to-employee mapping, lost-card alerts, and analytics turn on — same as for digital keys."
+        },
+        "3": {
+            "title": "Migrate one at a time",
+            "text": "An employee receives a digital key in Apple, Google, or Samsung Wallet whenever it suits them. The old card keeps working in parallel until you disable it yourself in the admin UI. No company-wide migration deadlines."
+        },
+        "formats": "Supported formats: MIFARE Classic 1K/4K, MIFARE DESFire EV1/EV2/EV3, NTAG21x, ISO 14443A/B, FeliCa, HID Prox 125 kHz via external module."
+    },
+    "standard": {
+        "title": "About the Aliro standard",
+        "lede": "Not a pilot and not a prototype. Aliro is the product of years of work by 220+ companies and two mature technologies — Apple HomeKey and CCC CarKey — merged into a single open standard.",
+        "timeline_title": "How the standard came to be",
+        "timeline": {
+            "1": {
+                "year": "2022",
+                "text": "Inside the Connectivity Standards Alliance (CSA) — the non-profit IoT-manufacturer alliance — a working group starts on a unified access protocol, building on the proven Apple HomeKey and automotive CCC CarKey approaches."
+            },
+            "2": {
+                "year": "2023",
+                "text": "On November 9, the CSA publicly announces Aliro. Around 200 member companies are already on board: Apple, Google, Samsung, ASSA ABLOY, Allegion, NXP, Infineon, and others. The stated goal — make the phone a universal key."
+            },
+            "3": {
+                "year": "2026",
+                "text": "On February 26, Aliro 1.0 ships — a 195-page specification freely available from the CSA site. The ecosystem is now 220+ companies. The first certified locks begin rolling out."
+            }
+        },
+        "tech_title": "What's inside",
+        "tech": {
+            "1": {
+                "title": "Asymmetric cryptography",
+                "text": "ECDSA on the P-256 curve for mutual authentication between phone and lock. The private key never leaves the phone's secure chip (Secure Element or Samsung Knox) — it can't be copied, even with device access."
+            },
+            "2": {
+                "title": "Secure channel",
+                "text": "AES-GCM with separate keys per direction and monotonic message counters. Any attempt to replay an older message or inject a forged one is rejected cryptographically."
+            },
+            "3": {
+                "title": "NFC, BLE, and UWB",
+                "text": "Tap at the reader (NFC), approach-and-wake (BLE), walk-through hands-free (BLE + UWB). UWB measures physical distance to the phone — relay attacks that forward signals from elsewhere don't work."
+            },
+            "4": {
+                "title": "Cloud-free",
+                "text": "Phone and lock communicate directly over ISO 7816 APDUs. No server in the loop — better privacy and no single point of failure: the internet can be down and the lock still opens."
+            }
+        },
+        "ecosystem_title": "Key ecosystem participants",
+        "ecosystem_text": "Apple · Google · Samsung · ASSA ABLOY · Allegion · Kastle Systems · Last Lock · Aqara · NXP · Infineon · Qualcomm · STMicroelectronics — plus 200+ more lock, chip, and smartphone manufacturers.",
+        "ecosystem_more": "+ 200 more lock, chip, and smartphone makers",
+        "refs_title": "Read for yourself",
+        "refs": {
+            "csa": "Aliro page on the CSA site",
+            "spec": "Full Aliro 1.0 specification (PDF)",
+            "faq": "Official CSA FAQ",
+            "matter": "Matter DoorLock cluster with the ALIRO feature",
+            "kormax": "Independent protocol research (kormax/aliro)",
+            "nordic": "Nordic reference firmware on nRF SDK"
+        },
+        "disclaimer": "aliro.mayday is built against the public Aliro 1.0 specification and is compatible with it. We are not a CSA-certified product — the CSA certification program is optional, paid, and not required to implement the standard. We do not use the \"Works with Aliro\" mark and make no claim to it, but the protocol implementation, APDU commands, cryptography, and the Matter DoorLock cluster integration follow the spec exactly.",
+        "source": "Source: Connectivity Standards Alliance"
+    },
+    "stack": {
+        "title": "Technology stack",
+        "lede": "What the controller is built on and what it plugs into — open standards, proven silicon, and the integrations people actually use.",
+        "groups": {
+            "standards": "Standards and protocols",
+            "hardware": "Hardware and crypto",
+            "integrations": "External systems"
+        },
+        "items": {
+            "aliro": { "name": "Aliro 1.0", "tag": "CSA access-control standard" },
+            "matter": { "name": "Matter 1.4+", "tag": "DoorLock cluster with the ALIRO feature" },
+            "iso7816": { "name": "ISO 7816", "tag": "APDU commands over NFC" },
+            "nfc": { "name": "NFC", "tag": "Tap at the reader (primary)" },
+            "ble": { "name": "Bluetooth LE", "tag": "Approach-and-wake" },
+            "uwb": { "name": "UWB", "tag": "Hands-free entry (later)" },
+            "esp32": { "name": "ESP32-S3", "tag": "Main microcontroller" },
+            "pn532": { "name": "PN532", "tag": "NFC front-end over SPI" },
+            "ecdsa": { "name": "ECDSA P-256", "tag": "Mutual authentication" },
+            "aesgcm": { "name": "AES-GCM", "tag": "Secure channel" },
+            "mqtt": { "name": "MQTT", "tag": "Telemetry and alerts" },
+            "http": { "name": "HTTP + WebSocket API", "tag": "Local control" },
+            "telegram": { "name": "Telegram", "tag": "Bot + Mini App" },
+            "prometheus": { "name": "Prometheus", "tag": "Metrics" },
+            "grafana": { "name": "Grafana", "tag": "Ready-made dashboards" },
+            "homeassistant": { "name": "Home Assistant", "tag": "Automations" },
+            "frigate": { "name": "Frigate NVR", "tag": "Camera-recording triggers" },
+            "onvif": { "name": "ONVIF / Hikvision / Dahua", "tag": "Direct camera integration" }
+        }
+    },
+    "integrations": {
+        "title": "More than a reader — it's a controller",
+        "lede": "Built into your infrastructure: Telegram alerts, camera recordings on every access event, analytics, and remote control via API and MQTT.",
+        "1": {
+            "title": "Remote control",
+            "text": "Lock and unlock from a Telegram bot, a Mini App, or through the HTTP API. Works from anywhere in the world."
+        },
+        "2": {
+            "title": "Real-time alerts",
+            "text": "Who opened the door and when, denied attempts, key-probing tries — everything arrives in Telegram at the right priority."
+        },
+        "3": {
+            "title": "Video surveillance",
+            "text": "Triggers camera recording on every access event. Frigate, UniFi Protect, Hikvision, Dahua, any NVR with webhooks, or via Home Assistant."
+        },
+        "4": {
+            "title": "Attack detection",
+            "text": "Detects replay attempts, NFC relay attacks, and case tampering — with a critical-severity alert in real time."
+        },
+        "5": {
+            "title": "Analytics and metrics",
+            "text": "Prometheus metrics, ready-made Grafana dashboards, a full event log. See who enters most often, when load peaks, where latency spikes."
+        },
+        "6": {
+            "title": "Your own ecosystem",
+            "text": "MQTT for home automation, Matter for Apple Home / Google Home / SmartThings, HTTP API for your own scripts and integrations."
+        }
+    },
+    "roadmap": {
+        "title": "Work plan",
+        "lede": "Seven steps from hardware to a production-ready controller. Timings are approximate — broad strokes, April through October 2026, about six months total.",
+        "status": {
+            "done": "Done",
+            "active": "In progress",
+            "planned": "Planned",
+            "goal": "Goal"
+        },
+        "1": {
+            "title": "Hardware and platform",
+            "eta": "Done · April 2026",
+            "text": "ESP32-S3 + PN532 rig validated, esp-matter skeleton builds and boots. Ready to move on to Aliro logic."
+        },
+        "2": {
+            "title": "Matter + Aliro transaction",
+            "eta": "~4–6 weeks · May–June 2026",
+            "text": "DoorLock cluster with the ALIRO feature — provisioning from Apple Home, Google Home, SmartThings. A crypto-verified NFC tap unlocks the door."
+        },
+        "3": {
+            "title": "Real-device validation",
+            "eta": "~2 weeks · July 2026",
+            "text": "iPhone tap via Apple Wallet and Samsung Fold 7 tap via Samsung Wallet. Both wallets must work against the same controller."
+        },
+        "4": {
+            "title": "Control plane",
+            "eta": "~4–6 weeks · July–August 2026",
+            "text": "HTTP API with a WebSocket event stream, a Telegram bot for alerts and commands, replay/relay-attack and case-tamper detection."
+        },
+        "5": {
+            "title": "Integrations",
+            "eta": "~3 weeks · August 2026",
+            "text": "Camera-recording triggers — Frigate, UniFi Protect, Home Assistant. Prometheus metrics, ready-made Grafana dashboards."
+        },
+        "6": {
+            "title": "Backend bridge",
+            "eta": "~4 weeks · September 2026",
+            "text": "The aliro-bridge Node.js service: hosts the Telegram bot, serves the Mini App for remote control, aggregates long-term analytics."
+        },
+        "7": {
+            "title": "Production rollout",
+            "eta": "~4–6 weeks · October 2026",
+            "text": "Security audit, OTA updates over Matter, field trials, tested behaviour on network loss and power-loss scenarios."
+        }
+    },
+    "comparison": {
+        "title": "Compared to commercial alternatives",
+        "lede": "A quick look at what aliro.mayday offers next to a typical proprietary smart lock (Aqara U200, Schlage Encode, Yale Assure, Level, etc.). Details vary model to model — this is the broad picture.",
+        "headers": {
+            "feature": "Feature",
+            "aliro_mayday": "aliro.mayday",
+            "proprietary": "Typical lock"
+        },
+        "marks": {
+            "yes": "Yes",
+            "partial": "Partial",
+            "no": "No"
+        },
+        "rows": {
+            "open_standards": "Open standards and protocols",
+            "matter": "Matter DoorLock standard",
+            "cross_wallet": "Apple + Google + Samsung Wallet",
+            "legacy_cards": "Legacy cards (MIFARE / DESFire / HID) — keep working in parallel",
+            "offline": "Works without internet",
+            "self_hosted": "Fully self-hostable",
+            "http_api": "Local HTTP API for automations",
+            "telegram": "Built-in Telegram integration",
+            "cctv_triggers": "Camera-recording triggers on event",
+            "tamper_alerts": "Replay / relay / case-tamper detection",
+            "prometheus": "Prometheus metrics + Grafana dashboards"
+        },
+        "footnote": "\"Partial\" means the capability exists on some vendors or works in a limited mode (e.g., only through one specific cloud)."
+    },
+    "competitors": {
+        "title": "Concrete alternatives on the market",
+        "lede": "Aliro 1.0 only shipped in February 2026 — most mass-market smart locks are still on proprietary stacks and only speak Apple Home Key. What they get right, and where aliro.mayday fills the gaps.",
+        "strengths_label": "What they bring",
+        "advantages_label": "Where aliro.mayday is stronger",
+        "footnote": "Prices are approximate US retail (early 2026); they vary by region and bundle.",
+        "aqara_u200": {
+            "strengths_1": "Apple Home Key via Matter",
+            "strengths_2": "Polished iOS UX at a moderate price",
+            "strengths_3": "Apple Home / Google Home / SmartThings",
+            "advantages_1": "Aliro — keys in Google Wallet and Samsung Wallet, not only Apple",
+            "advantages_2": "No Aqara cloud required — fully local operation",
+            "advantages_3": "Telegram, MQTT, Prometheus, CCTV triggers out of the box"
+        },
+        "schlage_encode": {
+            "strengths_1": "Apple Home Key (Encode Plus)",
+            "strengths_2": "Wi-Fi built in — no separate hub",
+            "strengths_3": "Allegion — large, established brand",
+            "advantages_1": "Aliro 1.0 — Schlage has not announced support yet",
+            "advantages_2": "No Schlage Home cloud — local-first architecture",
+            "advantages_3": "Open local HTTP API plus Prometheus and Grafana"
+        },
+        "yale_assure": {
+            "strengths_1": "Apple Home Key (with the Smart Module)",
+            "strengths_2": "Swappable modules — Wi-Fi, Z-Wave, Matter",
+            "strengths_3": "ASSA ABLOY — founding CSA Aliro member",
+            "advantages_1": "No Yale Access app — full self-contained stack",
+            "advantages_2": "Local integrations: MQTT, Telegram, webhooks, CCTV",
+            "advantages_3": "Open hardware and specs, source on request"
+        },
+        "level_bolt": {
+            "strengths_1": "Apple Home Key (Lock+)",
+            "strengths_2": "Invisible design — entire lock fits inside the door",
+            "strengths_3": "Matter supported",
+            "advantages_1": "Aliro — multi-vendor wallets, not only Apple",
+            "advantages_2": "No Level Home cloud — no server needed",
+            "advantages_3": "3–4× cheaper, plus open hardware"
+        }
+    },
+    "privacy": {
+        "title": "Your data",
+        "lede": "The controller is built local-first. By default, nothing leaves your device. Any outbound integration happens only when you explicitly enable it.",
+        "1": {
+            "title": "The key never leaves your phone",
+            "text": "The private cryptographic key lives inside your phone's secure chip (Apple Secure Element, Samsung Knox). Neither we nor the lock vendor have physical access to it."
+        },
+        "2": {
+            "title": "No cloud accounts",
+            "text": "No signup, no email binding, no payment card. Phone and lock talk directly — we have nowhere to register you in the first place."
+        },
+        "3": {
+            "title": "Event log and alerts stay local",
+            "text": "Who opened the door and when lives in the controller's own non-volatile memory. Suspicious attempts — replay, relay, key brute-force, card probing — are detected on-device and pushed to the owner through whichever channel you've enabled (Telegram, MQTT, webhooks). Nothing leaves the device unless you turn that channel on."
+        },
+        "4": {
+            "title": "Verifiable architecture",
+            "text": "The Aliro 1.0 protocol is open and documented in the 195-page CSA specification. The controller source is currently shared on request — for security audit and lab implementation; the public release is planned for October 2026 after field testing. Commercial use (selling devices, integration into paid products, OEM) is licensed separately — write to aliro.mayday@ilia.ae."
+        }
+    },
+    "faq": {
+        "title": "Frequently asked questions",
+        "1": {
+            "q": "Do I need internet to unlock the door?",
+            "a": "No. Phone and lock communicate directly over NFC (or BLE + UWB in newer modes). No Wi-Fi, no 4G, no server in the loop. Internet is only needed for the initial key provisioning into your wallet and for remote features like the Telegram bot."
+        },
+        "2": {
+            "q": "What if my phone is dead?",
+            "a": "Apple Wallet Express Mode keeps the iPhone responsive to the lock for about 5 hours after the battery dies — same as a transit card. Samsung has a similar Power Reserve. If the battery is fully drained, the owner usually has a backup path: physical key, PIN pad, or a trusted neighbour / concierge."
+        },
+        "3": {
+            "q": "I lost my phone — can someone open my door?",
+            "a": "No. The key requires biometrics (Face ID or fingerprint) before it will release a signature. Even if the SIM is removed and the phone is unlocked by passcode, Wallet still won't hand over the key without your face or finger. And if you revoke the key via Find My / Google Find or remove it from Wallet on a new device, the lock will refuse it on the next tap."
+        },
+        "4": {
+            "q": "Which locks are compatible?",
+            "a": "Any lock certified to the Aliro 1.0 standard — the list of vendors grows monthly (ASSA ABLOY, Allegion, Aqara, Kastle, Last Lock). Or our own controller on ESP32 + PN532 — you can build it yourself or buy a finished unit once available."
+        },
+        "5": {
+            "q": "Can someone intercept the NFC signal and open the lock?",
+            "a": "Classic replay attacks (record and replay later) and relay attacks (forward the signal over distance) are blocked cryptographically: every transaction is signed with a fresh, one-time keypair. On top of that, UWB measures the phone's physical distance, and our controller flags latency anomalies as alerts."
+        },
+        "6": {
+            "q": "Can I build this myself?",
+            "a": "For yourself at home — yes, freely. Hardware is straightforward: ESP32-S3 DevKitC (~$10) + PN532 module (~$5) + a relay or electromechanical lock. Source is currently shared on request for audit and assembly; public release is October 2026, after which you'll be able to clone, build, study, audit, and submit pull requests. If you later want to sell devices based on it or deploy commercially — that's commercial use and terms are at aliro.mayday@ilia.ae."
+        },
+        "7": {
+            "q": "Can I use this commercially?",
+            "a": "Yes, under a paid commercial licence. Selling devices, deploying in offices / hotels / commercial buildings, integrating into a paid product, white-label, OEM — all on the table. Pricing is typically per-device, revenue-share, or a flat licence fee, depending on volume and scenario. Write to aliro.mayday@ilia.ae or reach out via ilia.ae to discuss terms."
+        },
+        "8": {
+            "q": "If Wi-Fi goes down — does Matter / Telegram break, does the lock stop opening?",
+            "a": "No. NFC unlock does not depend on Wi-Fi, Matter, or any cloud. This is an intentional design choice. Only the remote features (analytics, Telegram push, Home Assistant scenes) pause — they reconnect automatically the moment the network comes back."
+        }
+    },
+    "source": {
+        "title": "Source release",
+        "lede": "Right now the code is shared on request — for audit, research, and partners. Public release is tied to roadmap completion: after the security audit and field testing.",
+        "target_label": "Public release target:",
+        "target_date": "October 31, 2026",
+        "aria_label": "Countdown to public source release",
+        "released": "Done — sources are public.",
+        "open_repo": "Open repository",
+        "request_cta": "Get early access",
+        "request_subject": "Early access request for aliro.mayday source · access-code: SOURCE-EN-2026",
+        "units": {
+            "days": "days",
+            "hours": "hours",
+            "minutes": "minutes",
+            "seconds": "seconds"
+        }
+    },
+    "changelog": {
+        "title": "What's new",
+        "1": {
+            "date": "2026-04-24",
+            "title": "Site launched",
+            "text": "Landing page at aliro.mayday.software: RU + EN, dark/light theme, roadmap, FAQ, comparison, contacts. Source on request until public release in October 2026, commercial use by paid licence (aliro.mayday@ilia.ae)."
+        },
+        "2": {
+            "date": "2026-04-23",
+            "title": "Aliro access controller — positioning shift",
+            "text": "Project scope expanded from \"Aliro reader\" to \"access controller\": HTTP API, MQTT, Telegram, CCTV triggers, Prometheus, tamper detection."
+        },
+        "3": {
+            "date": "2026-04-23",
+            "title": "aliro-esp32 skeleton on ESP-IDF + esp-matter",
+            "text": "Firmware scaffold: Matter commissioning over BLE, Wi-Fi transport, NVS encryption. Ready for DoorLock cluster implementation."
+        },
+        "4": {
+            "date": "2026-02-26",
+            "title": "Aliro 1.0 released",
+            "text": "CSA published the final 195-page spec. From that moment, development pivoted from Apple HomeKey to Aliro."
+        }
+    },
+    "contact": {
+        "title": "Get in touch",
+        "lede": "Interested in using this, need customisation, want to collaborate, or just have a question — reach out directly. Usual reply time is under 24 hours.",
+        "email_label": "Email",
+        "mayday_label": "Main site",
+        "mayday_host": "ilia.ae",
+        "mayday_url": "https://ilia.ae/en/"
+    },
+    "privacy_page": {
+        "title": "Privacy policy",
+        "subtitle": "Version of April 28, 2026",
+        "lede": "Short, no legal noise. The aliro.mayday.software site is built to collect a minimum from visitors — ideally zero.",
+        "sections": {
+            "data": {
+                "title": "What data we collect",
+                "body": "Nothing automatic. The site does not load analytics, advertising pixels, or external trackers. There is no cookie banner because there are no cookies."
+            },
+            "local": {
+                "title": "What is stored locally in your browser",
+                "body": "Only two settings in localStorage: the chosen theme (light/dark) and language (RU/EN). This data never leaves your device and exists solely so the page renders the same way on your next visit. You can clear it via browser settings at any time."
+            },
+            "email": {
+                "title": "Email and inquiries",
+                "body": "If you write to aliro.mayday@ilia.ae we see your address and message. We use this data only to reply to your inquiry. We do not share with third parties, do not subscribe you to mailings, do not add you to marketing databases."
+            },
+            "third_parties": {
+                "title": "Third parties",
+                "body": "The site is hosted on Cloudflare Workers — Cloudflare sees technical request data (IP, User-Agent) at the network level like any CDN. Their policy applies separately. Beyond that, no other third-party services are loaded on the site."
+            },
+            "controller": {
+                "title": "The controller itself",
+                "body": "The aliro.mayday controller operates locally and does not send any access-event data anywhere by default. Any integration (MQTT, Telegram, webhooks) is enabled by the owner explicitly — details in the \"Your data\" section on the homepage."
+            }
+        },
+        "contact": "Questions — to",
+        "back_link": "← Back to homepage"
+    },
+    "qr": {
+        "eyebrow": "Business card",
+        "tagline": "Tap your phone to open the door. No app needed.",
+        "scanHint": "Scan with another phone",
+        "codeAlt": "QR code linking to aliro.mayday.software",
+        "shareTitle": "Share the site",
+        "shareNative": "Share",
+        "shareCopy": "Copy",
+        "shareCopied": "Copied",
+        "shareTelegram": "Telegram",
+        "shareWhatsApp": "WhatsApp",
+        "shareX": "X",
+        "shareLinkedIn": "LinkedIn",
+        "shareFacebook": "Facebook",
+        "shareVK": "VK",
+        "shareEmail": "Email",
+        "shareEmailSubject": "aliro.mayday — door key in your phone",
+        "shareMessage": "aliro.mayday — open doors with a key from Apple, Google, or Samsung Wallet. Open standard, no app.",
+        "linksTitle": "Quick links",
+        "linkSite": "Open the site",
+        "linkContact": "Get in touch",
+        "linkAbout": "About the standard",
+        "linkPrivacy": "Privacy"
+    },
+    "footer": {
+        "copyright_holder": "Ilia Arestov",
+        "copyright": "© 2026 Ilia Arestov",
+        "rights": "All rights reserved",
+        "commercial": "Source on request · public release October 2026 · commercial use by paid licence",
+        "tagline": "Aliro 1.0 access controller — open doors with a key from Apple, Google, or Samsung Wallet.",
+        "nav_label": "Sections",
+        "docs_label": "Resources",
+        "privacy_link": "Privacy",
+        "site_label": "ilia.ae",
+        "site_url": "https://ilia.ae/en/"
+    },
+    "status": {
+        "title": "What we're building",
+        "p1": "An Aliro access controller built on ESP32 and PN532. Plugs into Apple Home, Google Home, and SmartThings as a standard Matter lock — and accepts keys from all three wallets.",
+        "p2": "Active development. Source is on request now; public release in October 2026.",
+        "cta": "Request source access →"
+    }
+}

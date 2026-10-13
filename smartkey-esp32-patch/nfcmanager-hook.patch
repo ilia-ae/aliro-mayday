@@ -1,0 +1,76 @@
+# Patch against homekey-esp32/main/NfcManager.cpp (subtree @ commit 1e9c69b).
+#
+# This is a sketch of the integration points.  Apply this only after
+# manually reviewing against the actual file — line numbers and exact
+# variable names will likely drift.  The Research agent mapped the
+# HomeKey SELECT at or near line 438-443.
+#
+# Apply with: patch -p1 < nfcmanager-hook.patch  (from inside homekey-esp32/)
+
+--- a/main/NfcManager.cpp
++++ b/main/NfcManager.cpp
+@@ -7,6 +7,7 @@
+ #include "pn532_hal/spi.hpp"
+ #include "soc/gpio_num.h"
+ #include "NfcManager.hpp"
++#include "SmartKeyHandler.hpp"
+
+ @@ -430,8 +431,8 @@ void NfcManager::handleTagPresence(const std::vector<uint8_t>& uid,
+                                     uint16_t atqa, uint8_t sak) {
+-    // Try HomeKey SELECT first.
++    // === Try Apple HomeKey AID first ===
+     uint8_t selectAppletCmd[] = {
+         0x00, 0xA4, 0x04, 0x00, 0x07,
+         0xA0, 0x00, 0x00, 0x08, 0x58, 0x01, 0x01,
+         0x00
+     };
+     std::vector<uint8_t> selResp;
+     auto sw = m_nfc->InDataExchange(
+         std::vector<uint8_t>(selectAppletCmd,
+                              selectAppletCmd + sizeof(selectAppletCmd)),
+         selResp);
+     if (sw == pn532::SUCCESS && selResp.size() >= 2 &&
+         selResp[selResp.size() - 2] == 0x90 &&
+         selResp[selResp.size() - 1] == 0x00) {
+         handleHomeKeyAuth(uid, atqa, sak);
+         return;
+     }
++
++    // === SmartKey (custom Android) — try our AID if HomeKey didn't apply ===
++    {
++        uint8_t skSel[] = {
++            0x00, 0xA4, 0x04, 0x00, 0x08,
++            0xF0, 0x53, 0x4D, 0x52, 0x54, 0x4B, 0x45, 0x59,
++            0x00
++        };
++        std::vector<uint8_t> skResp;
++        auto skSw = m_nfc->InDataExchange(
++            std::vector<uint8_t>(skSel, skSel + sizeof(skSel)), skResp);
++
++        if (skSw == pn532::SUCCESS && skResp.size() >= 2 &&
++            skResp[skResp.size() - 2] == 0x90 &&
++            skResp[skResp.size() - 1] == 0x00) {
++
++            ESP_LOGI(TAG, "SmartKey AID selected");
++
++            // SELECT returned 9000 — phone accepted our AID.  Run the
++            // AUTH round-trip per PROTOCOL.md v1: reader sends nonce,
++            // phone replies with (ep_id, ts, tag).
++            auto exch = [this](const std::vector<uint8_t>& req,
++                                std::vector<uint8_t>& resp) -> esp_err_t {
++                return m_nfc->InDataExchange(req, resp) == pn532::SUCCESS
++                           ? ESP_OK : ESP_FAIL;
++            };
++            const smartkey::EndpointRecord* matched = nullptr;
++            if (m_smartKey.runAuthTap(exch, &matched) == smartkey::AuthResult::OK) {
++                // TODO: actuate lock via LockManager, publish MQTT/events
++                //       with source="smartkey", endpoint=matched->label.
++                ESP_LOGI(TAG, "SmartKey OK, would unlock now");
++            }
++            return;
++        }
++    }
++    // === /SmartKey ===
+
+     handleGenericTag(uid, atqa, sak);
+ }

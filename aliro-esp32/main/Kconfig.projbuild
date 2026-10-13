@@ -1,0 +1,40 @@
+menu "Aliro Lock — optional peripherals"
+
+config ALIRO_BYTEBUTTON_PANEL
+    bool "Enable M5Stack Unit ByteButton (8 buttons + 9 RGB LEDs over I2C)"
+    default n
+    help
+        Compile and link the ByteButtonPanel driver. Wired on I2C
+        (SDA=GPIO8, SCL=GPIO9, addr 0x47). Without this, the panel
+        sources are not built and app_main never references them, so
+        the lock binary stays smaller and there's no chance of an I2C
+        bus init touching otherwise unused GPIOs.
+
+        Behaviour when enabled:
+          - BTN0 toggles LockState (same UX as an Aliro NFC tap).
+          - LED 0 mirrors LockState (orange=Locked / green=Unlocked /
+            white=Unlatched / blue=NotFullyLocked).
+          - LED 8 (corner status diode) shows system health: green
+            pulse=healthy, orange=paired-but-no-Aliro-reader,
+            red=no-fabric.
+          - Other buttons / LEDs are reserved for phase 2.
+
+config ALIRO_OLED_PANEL
+    bool "Enable M5Stack Unit OLED 1.3\" SH1107 (128x64 status display)"
+    default n
+    help
+        Compile and link the OledPanel driver. Wired on the same I2C
+        port as ByteButton (PORT.A: SDA=GPIO8, SCL=GPIO9, addr 0x3C).
+        Both can coexist — they share the I2cBus singleton.
+
+        Behaviour when enabled:
+          - 8 lines of live status: lock state, WiFi SSID/RSSI/IP,
+            Matter fabric count, Aliro reader status, last action,
+            uptime, free heap.
+          - 2Hz refresh.
+          - Hooks into NFC/Matter callbacks to surface "last tap" /
+            "last unlock" / "last lock" with source.
+        Without this flag, OledPanel.cpp is not compiled and the
+        binary is ~12KB smaller.
+
+endmenu

@@ -1,0 +1,74 @@
+## Component-manager manifest.
+##
+## esp-matter is NOT pulled via component-manager — it's expected to be
+## cloned separately and exposed via EXTRA_COMPONENT_DIRS in the root
+## CMakeLists.txt (sourcing esp-matter/export.sh sets this up).
+##
+## This file exists so other component-manager deps can be added later
+## (e.g. a PN532 driver package from the registry, when/if we publish).
+
+dependencies:
+  idf:
+    version: ">=5.2"
+  # u8g2 is vendored under components/u8g2/ (not on Espressif registry).
+  # `serialization.hpp` (alpaca wrapper) — used by NfcManager publishing
+  # NfcEvent payloads on the event_bus.
+  espp/serialization:
+    version: "^1.0.22"
+  # esp_littlefs — admin_panel WebServerManager + ConfigManager use it to
+  # serve the bundled web UI assets (data/dist/) and to persist binary
+  # certificate blobs alongside NVS. Same package as homekey-esp32 uses.
+  joltwallet/littlefs:
+    version: "^1.20.1"
+  # ----- override_path block ----------------------------------------------
+  # arduino-esp32 (3.3.x) and esp-matter pin different versions of every
+  # shared "espressif/*" component (esp_insights, rmaker_common,
+  # esp_diagnostics, libsodium, cbor, mdns, json_*, etc). Component-manager
+  # version-solver can't satisfy both at once. Workaround: vendor every
+  # shared dep locally under components/ and use override_path to force
+  # both consumers to the local copy — bypasses registry version-solving
+  # entirely. The vendored versions are whatever was last fetched from the
+  # registry and are known to compile against esp-matter; arduino-esp32
+  # accepts whatever local copy is present.
+  #
+  # NOTE: led_strip is also vendored locally (rednblkx-style WS2812 driver
+  # for lock-state LED) so we override here too — keeping a registry pull
+  # would race with the vendored copy.
+  espressif/led_strip:
+    override_path: "../components/led_strip"
+  espressif/libsodium:
+    override_path: "../components/libsodium"
+  espressif/cbor:
+    override_path: "../components/cbor"
+  espressif/esp_insights:
+    override_path: "../components/esp_insights"
+  espressif/rmaker_common:
+    override_path: "../components/rmaker_common"
+  espressif/esp_diagnostics:
+    override_path: "../components/esp_diagnostics"
+  espressif/esp_diag_data_store:
+    override_path: "../components/esp_diag_data_store"
+  espressif/mdns:
+    override_path: "../components/mdns"
+  espressif/json_parser:
+    override_path: "../components/json_parser"
+  espressif/json_generator:
+    override_path: "../components/json_generator"
+  espressif/jsmn:
+    override_path: "../components/jsmn"
+  espressif/esp_rcp_update:
+    override_path: "../components/esp_rcp_update"
+  espressif/esp_secure_cert_mgr:
+    override_path: "../components/esp_secure_cert_mgr"
+  espressif/esp_delta_ota:
+    override_path: "../components/esp_delta_ota"
+  espressif/esp_encrypted_img:
+    override_path: "../components/esp_encrypted_img"
+  espressif/esp-serial-flasher:
+    override_path: "../components/esp-serial-flasher"
+  # arduino-esp32 — pulled in as Component for the WebServerManager APIs
+  # (WiFi class, ETH.h, GPIO_IS_VALID_GPIO, Pixel NeoPixel). Autostart is
+  # OFF (CONFIG_AUTOSTART_ARDUINO=n) so our esp-idf app_main keeps the
+  # entry point; setup()/loop() never run.
+  espressif/arduino-esp32:
+    version: "^3.3.5"

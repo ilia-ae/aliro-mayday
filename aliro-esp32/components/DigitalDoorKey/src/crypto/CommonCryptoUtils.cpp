@@ -1,0 +1,337 @@
+#include "CommonCryptoUtils.h"
+
+#include <array>
+#include <cstdio>
+#include <string>
+
+#include "mbedtls_compat.h"
+#include <psa/crypto.h>
+#include "DDKLogging.h"
+#include "mbedtls_compat.h"
+#include <psa/crypto.h>
+
+#include "mbedtls_compat.h"
+#include <psa/crypto.h>
+#if defined(CONFIG_IDF_CMAKE)
+#include <esp_random.h>
+#else
+#include "sodium.h"
+#endif
+
+namespace CommonCryptoUtils
+{
+  const char* TAG = "CCUtils";
+
+  int esp_rng(void *, uint8_t *buf, size_t len)
+  {
+    #if defined(CONFIG_IDF_CMAKE)
+    esp_fill_random(buf, len);
+    #else
+    randombytes(buf, len);
+    #endif
+    return 0;
+  }
+
+  bool constant_time_compare(const uint8_t* a, const uint8_t* b, size_t len) {
+      uint8_t diff = 0;
+      for (size_t i = 0; i < len; ++i) {
+          diff |= (a[i] ^ b[i]);
+      }
+      return diff == 0;
+  }
+
+  bool constant_time_compare(const std::vector<uint8_t>& a, const std::vector<uint8_t>& b) {
+      return a.size() == b.size() && constant_time_compare(a.data(), b.data(), a.size());
+  }
+
+  // --- ECC Utilities ---
+
+  std::vector<uint8_t> decryptAesGcm(const std::vector<uint8_t> &ciphertext, const std::array<uint8_t,32> &key,
+  const std::array<uint8_t,12> &iv, ddk::span<const uint8_t> aad) {
+    if (ciphertext.size() < 16) {
+      LOG(E, "Ciphertext too short for GCM (needs at least 16 bytes for tag)");
+      return {};
+    }
+
+    LOG(D, "%s", redactHex("sk_device", key.data(), key.size()).c_str());
+
+    GcmGuard gcm_ctx;
+
+    int ret = mbedtls_gcm_setkey(gcm_ctx, MBEDTLS_CIPHER_ID_AES, key.data(), 256);
+    if (ret != 0) {
+      LOG(E, "mbedtls_gcm_setkey failed: %d", ret);
+      return {};
+    }
+
+    size_t ciphertext_len = ciphertext.size() - 16;
+    const unsigned char* tag = ciphertext.data() + ciphertext_len;
+
+    std::vector<uint8_t> plaintext(ciphertext_len);
+
+    ret = mbedtls_gcm_auth_decrypt(gcm_ctx, ciphertext_len,
+                                    iv.data(), 12,  // 12-byte IV
+                                    aad.empty() ? nullptr : aad.data(), aad.size(),
+                                    tag, 16,  // 16-byte tag
+                                    ciphertext.data(), plaintext.data());
+
+    if (ret != 0) {
+      LOG(E, "mbedtls_gcm_auth_decrypt failed: %d", ret);
+      return {};
+    }
+
+    return plaintext;
+  }
+
+std::vector<uint8_t> encryptAesGcm(
+    const std::vector<uint8_t>& plaintext,
+    const std::array<uint8_t, 32>& key,
+    const std::array<uint8_t, 12>& iv,
+    ddk::span<const uint8_t> aad)
+{
+    GcmGuard gcm_ctx;
+    int ret = mbedtls_gcm_setkey(gcm_ctx, MBEDTLS_CIPHER_ID_AES, key.data(), 256);
+    if (ret != 0) {
+        LOG(E, "mbedtls_gcm_setkey failed: %d", ret);
+        return {};
+    }
+
+    std::vector<uint8_t> ciphertext(plaintext.size());
+    std::array<uint8_t,16> tag{};
+
+    ret = mbedtls_gcm_crypt_and_tag(gcm_ctx,
+        MBEDTLS_GCM_ENCRYPT,
+        plaintext.size(),
+        iv.data(), 12,
+        aad.empty() ? nullptr : aad.data(), aad.size(),
+        plaintext.data(),
+        ciphertext.data(),
+        16, tag.data());
+
+    if (ret != 0) {
+        LOG(E, "mbedtls_gcm_crypt_and_tag failed: %d", ret);
+        return {};
+    }
+
+    ciphertext.insert(ciphertext.end(), tag.begin(), tag.end());
+    return ciphertext;  // ciphertext || 16-byte tag — same layout decryptAesGcm parses
+}
+
+  /**
+   * The function performs an elliptic curve Diffie-Hellman key exchange to compute a shared key between
+   * the reader and the endpoint.
+   *
+   * @param outBuf The `outBuf` parameter is a pointer to a buffer where the computed shared key will be
+   * stored. It should be allocated with enough space to hold `oLen` bytes.
+   * @param oLen oLen is the length of the output buffer (outBuf) where the shared key will be written.
+   */
+  void get_shared_key(const std::array<uint8_t,32> &key1, const std::array<uint8_t,65> &key2, uint8_t *outBuf, size_t oLen)
+  {
+    EcpGroupGuard grp;
+    MpiGuard reader_ephemeral_private_key;
+    MpiGuard shared_key;
+    EcpPointGuard endpoint_ephemeral_public_key;
+
+    // Initialize the elliptic curve group (e.g., SECP256R1)
+    mbedtls_ecp_group_load(grp, MBEDTLS_ECP_DP_SECP256R1);
+
+    // Set the reader's ephemeral private key
+    int mpi_read = mbedtls_mpi_read_binary(reader_ephemeral_private_key, key1.data(), key1.size());
+
+    if(mpi_read != 0){
+      LOG(E, "mpi_read - %d", mpi_read);
+      return;
+    }
+
+    // Set the endpoint's ephemeral public key
+    int ecp_read = mbedtls_ecp_point_read_binary(grp, endpoint_ephemeral_public_key, key2.data(), key2.size());
+    if(ecp_read != 0){
+      LOG(E, "ecp_read - %d", ecp_read);
+      return;
+    }
+
+    // Perform key exchange
+    int ecdh_compute_shared = mbedtls_ecdh_compute_shared(grp, shared_key, endpoint_ephemeral_public_key, reader_ephemeral_private_key,
+                                esp_rng, NULL);
+    if(ecdh_compute_shared != 0){
+      LOG(E, "ecdh_compute_shared - %d", ecdh_compute_shared);
+      return;
+    }
+
+    int mpi_write = mbedtls_mpi_write_binary(shared_key, outBuf, oLen);
+    if(mpi_write != 0){
+      LOG(E, "mpi_write - %d", mpi_write);
+      return;
+    }
+  }
+
+  /**
+   * The function generates an ephemeral key pair using the secp256r1 elliptic curve and returns the
+   * private and public keys as vectors of uint8_t.
+   *
+   * @return The function `generateEphemeralKey` returns a tuple containing two vectors of type
+   * `uint8_t`. The first vector `bufPriv` contains the private key generated, and the second vector
+   * `bufPub` contains the public key generated.
+   */
+  std::tuple<std::vector<uint8_t>, std::vector<uint8_t>> generateEphemeralKey()
+  {
+    EcpKeyPairGuard ephemeral;
+    int gen_key = mbedtls_ecp_gen_key(MBEDTLS_ECP_DP_SECP256R1, ephemeral, esp_rng, NULL);
+    if(gen_key != 0){
+      LOG(E, "gen_key - %d", gen_key);
+      return std::make_tuple(std::vector<uint8_t>(), std::vector<uint8_t>());
+    }
+    std::vector<uint8_t> bufPriv(32, 0);
+    size_t d_size = mbedtls_mpi_size(&ephemeral.kp.MBEDTLS_PRIVATE(d));
+    if (d_size > 32) {
+      LOG(E, "gen_key - scalar longer than 32 bytes");
+      return std::make_tuple(std::vector<uint8_t>(), std::vector<uint8_t>());
+    }
+    int mpi_write = mbedtls_mpi_write_binary(&ephemeral.kp.MBEDTLS_PRIVATE(d),
+                                             bufPriv.data() + (32 - d_size), d_size);
+    if(mpi_write != 0){
+      LOG(E, "mpi_write - %d", mpi_write);
+      return std::make_tuple(std::vector<uint8_t>(), std::vector<uint8_t>());
+    }
+    std::vector<uint8_t> bufPub(MBEDTLS_ECP_MAX_PT_LEN);
+    size_t olen = 0;
+    int ecp_write = mbedtls_ecp_point_write_binary(&ephemeral.kp.MBEDTLS_PRIVATE(grp), &ephemeral.kp.MBEDTLS_PRIVATE(Q), MBEDTLS_ECP_PF_UNCOMPRESSED, &olen, bufPub.data(), bufPub.capacity());
+    if(!ecp_write){
+      LOG(D, "%s", redactHex("Ephemeral public key", bufPub.data(), olen).c_str());
+    } else{
+      LOG(E, "ecp_write - %d", ecp_write);
+      return std::make_tuple(std::vector<uint8_t>(), std::vector<uint8_t>());
+    }
+    bufPub.resize(olen);
+    return std::make_tuple(std::move(bufPriv), std::move(bufPub));
+  }
+
+  /**
+   * The function `get_x` takes a public key as input, converts it to a point on an elliptic curve,
+   * extracts the X coordinate of the point, and returns it as a vector of bytes.
+   *
+   * @param pubKey The `pubKey` parameter is a reference to a `std::vector<uint8_t>` object, which
+   * represents a public key. It is passed by reference so that the function can read the key and perform
+   * operations on it without making a copy of the data.
+   *
+   * @return a std::vector<uint8_t> object, which contains the X coordinate of the given public key.
+   */
+  std::vector<uint8_t> get_x(const std::array<uint8_t, 65> &pubKey)
+  {
+    EcpGroupGuard grp;
+    EcpPointGuard point;
+    mbedtls_ecp_group_load(grp, MBEDTLS_ECP_DP_SECP256R1);
+    int ecp_read = mbedtls_ecp_point_read_binary(grp, point, pubKey.data(), pubKey.size());
+    if(ecp_read != 0)
+      LOG(E, "ecp_read - %d", ecp_read);
+    std::vector<uint8_t> X(32, 0);
+    size_t buffer_size_x = mbedtls_mpi_size(&point.pt.MBEDTLS_PRIVATE(X));
+    if (buffer_size_x > 32) {
+      LOG(E, "get_x - coordinate longer than 32 bytes");
+      return {};
+    }
+    int ecp_write = mbedtls_mpi_write_binary(&point.pt.MBEDTLS_PRIVATE(X),
+                                             X.data() + (32 - buffer_size_x),
+                                             buffer_size_x);
+    if(ecp_write != 0)
+      LOG(E, "ecp_write - %d", ecp_write);
+    LOG(V, "%s, %s", redactHex("PublicKey", pubKey.data(), pubKey.size()).c_str(), redactHex("X Coordinate", X.data(), X.size()).c_str());
+    return X;
+  }
+
+  /**
+   * The function `signSharedInfo` takes in data and a key, performs a SHA256 hash on the data, and then
+   * signs the hash with the key using the ECDSA algorithm.
+   *
+   * @param data A pointer to the data that needs to be signed.
+   * @param dataLen The parameter `dataLen` represents the length of the `data` array, which is the input
+   * data that needs to be signed.
+   * @param key The "key" parameter is a pointer to an array of uint8_t values that represents the key
+   * used for signing the data. The "keyLen" parameter specifies the length of the key array.
+   * @param keyLen The parameter `keyLen` represents the length of the key in bytes.
+   *
+   * @return a std::vector<uint8_t> object, which contains the signature point generated by signing the
+   * shared information using the provided data and key.
+   */
+  std::vector<uint8_t> signSharedInfo(const uint8_t *data, const size_t dataLen, const uint8_t *key, const size_t keyLen)
+  {
+    EcpKeyPairGuard keypair;
+    MpiGuard sigMpi1, sigMpi2;
+
+    uint8_t hash[32];
+
+    mbedtls_md(mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), data, dataLen, hash);
+
+    int ecp_read = mbedtls_ecp_read_key(MBEDTLS_ECP_DP_SECP256R1, keypair, key, keyLen);
+    if(ecp_read != 0){
+      LOG(E, "ecp_read - %d", ecp_read);
+      return std::vector<uint8_t>();
+    }
+    int ecdsa_sign = mbedtls_ecdsa_sign_det_ext(&keypair.kp.MBEDTLS_PRIVATE(grp), sigMpi1, sigMpi2, &keypair.kp.MBEDTLS_PRIVATE(d), hash, keyLen, MBEDTLS_MD_SHA256, esp_rng, NULL);
+    if(ecdsa_sign != 0){
+      LOG(E, "ecdsa_sign - %d", ecdsa_sign);
+      return std::vector<uint8_t>();
+    }
+    std::vector<uint8_t> sigPoint(mbedtls_mpi_size(sigMpi1) + mbedtls_mpi_size(sigMpi2));
+    int ecp_write_1 = mbedtls_mpi_write_binary(sigMpi1, sigPoint.data(), mbedtls_mpi_size(sigMpi1));
+    if(ecp_write_1 != 0){
+      LOG(E, "ecp_write_1 - %d", ecp_write_1);
+      return std::vector<uint8_t>();
+    }
+    int ecp_write_2 = mbedtls_mpi_write_binary(sigMpi2, sigPoint.data() + mbedtls_mpi_size(sigMpi1), mbedtls_mpi_size(sigMpi2));
+    if(ecp_write_2 != 0){
+      LOG(E, "ecp_write_2 - %d", ecp_write_2);
+      return std::vector<uint8_t>();
+    }
+    return sigPoint;
+  }
+  std::vector<uint8_t> derive_public_key(const std::vector<uint8_t>& private_key)
+  {
+    CommonCryptoUtils::EcpKeyPairGuard keypair;
+    int ecp_key = mbedtls_ecp_read_key(MBEDTLS_ECP_DP_SECP256R1, keypair, private_key.data(), private_key.size());
+    if(ecp_key != 0){
+      LOG(E, "ecp_read_key - %d", ecp_key);
+      return {};
+    }
+    int ret = mbedtls_ecp_mul(&keypair.kp.MBEDTLS_PRIVATE(grp), &keypair.kp.MBEDTLS_PRIVATE(Q), &keypair.kp.MBEDTLS_PRIVATE(d), &keypair.kp.MBEDTLS_PRIVATE(grp).G, CommonCryptoUtils::esp_rng, NULL);
+    if (ret != 0) {
+      LOG(E, "mbedtls_ecp_mul - %d", ret);
+      return {};
+    }
+    size_t olenPub = 0;
+    std::vector<uint8_t> readerPublicKey(MBEDTLS_ECP_MAX_PT_LEN);
+    int write_ret = mbedtls_ecp_point_write_binary(&keypair.kp.MBEDTLS_PRIVATE(grp), &keypair.kp.MBEDTLS_PRIVATE(Q), MBEDTLS_ECP_PF_UNCOMPRESSED, &olenPub, readerPublicKey.data(), readerPublicKey.size());
+    if (write_ret != 0) {
+      LOG(E, "mbedtls_ecp_point_write_binary - %d", write_ret);
+      return {};
+    }
+    readerPublicKey.resize(olenPub);
+    return readerPublicKey;
+  }
+  std::vector<uint8_t> hash_identifier_sha1(const std::vector<uint8_t>& key) {
+    std::vector<uint8_t> hash(32, 0);
+    size_t hash_len = 0;
+    if (psa_hash_compute(PSA_ALG_SHA_1, key.data(), key.size(),
+                         hash.data(), 20, &hash_len) != PSA_SUCCESS) {
+      hash.assign(32, 0);
+    }
+    return hash;
+  }
+  std::vector<uint8_t> hash_identifier_sha256(const std::vector<uint8_t>& key) {
+    std::vector<unsigned char> hashable;
+    std::string prefix = "key-identifier";
+    hashable.insert(hashable.begin(), prefix.begin(), prefix.end());
+    hashable.insert(hashable.end(), key.begin(), key.end());
+
+    std::vector<uint8_t> hash(32, 0);
+
+    mbedtls_sha256_context ctx;
+    mbedtls_sha256_init(&ctx);
+    if (mbedtls_sha256_starts(&ctx, 0) == 0) {
+      mbedtls_sha256_update(&ctx, hashable.data(), hashable.size());
+      mbedtls_sha256_finish(&ctx, hash.data());
+    }
+    mbedtls_sha256_free(&ctx);
+
+    return hash;
+  }
+}

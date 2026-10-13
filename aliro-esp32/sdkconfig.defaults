@@ -1,0 +1,289 @@
+# Target: ESP32-S3 DevKitC (same rig as homekey-esp32, swap firmware only)
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_DDK_PROTOCOL_ALIRO=y
+# CONFIG_DDK_LOG_FULL_HEX is not set
+
+# Matter requires a larger main task stack and more event-loop headroom.
+# Bumped from 5120 → 16384 because admin_panel (ConfigManager + WebServer
+# + LockManager + MqttManager) all initialize on app_main and msgpack
+# decoding chains use deep stack frames. Below 16K we hit InstrFetchProhibited
+# panics on first boot, ~3.5K bytes into ConfigManager init.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=16384
+CONFIG_FREERTOS_HZ=1000
+
+# Bluetooth LE (NimBLE) — needed for Matter commissioning handshake.
+# BLE is turned off post-commissioning via ESP_MATTER_NVS.
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BT_CONTROLLER_ONLY=n
+
+# Disable classic BT — ESP32-S3 doesn't have it, but defaults flip this on
+# on other targets and cause linker errors if copied.
+CONFIG_BT_BLUEDROID_ENABLED=n
+
+# mbedTLS — Matter needs HKDF (session key derivation). Disabled by default
+# in ESP-IDF to save space; chip's CHIPCryptoPALmbedTLS.cpp pulls it in.
+CONFIG_MBEDTLS_HKDF_C=y
+
+# Matter Device Identity.
+#
+# Apple Home flow recap:
+#   - Test vendor 0xFFF1 / PID 0x8000 — Apple Home shows "Uncertified
+#     Accessory" warning, allows commissioning after user confirms. This
+#     is the recommended path for development.
+#   - Real registered VID like 0x1049 (Silicon Labs) — Apple Home does a
+#     DCL (Distributed Compliance Ledger) lookup. If our PID isn't in
+#     their certified product list, Apple Home outright rejects with
+#     "Unable to Add Accessory" before even reaching BLE.
+#
+# Going with the test vendor + a non-default PID (0x8001) so iCloud
+# doesn't dedupe against any previous 0x8000 cache.
+CONFIG_DEVICE_VENDOR_ID=0xFFF1
+CONFIG_DEVICE_PRODUCT_ID=0x8001
+
+# LwIP / mDNS — Matter transport is IPv6 link-local + mDNS discovery.
+CONFIG_LWIP_IPV6=y
+CONFIG_LWIP_IPV6_AUTOCONFIG=y
+CONFIG_LWIP_IPV6_DHCP6=y
+CONFIG_MDNS_TASK_STACK_SIZE=8192
+CONFIG_USE_MINIMAL_MDNS=n
+
+# Friendly device hostname. Used both for the DHCP "Hostname" option (lets
+# routers list us as "aliro" in their client UI) and as the default mDNS
+# A-record (`aliro.local`). Matter's own mDNS layer advertises additional
+# service records (`<hex64>._matter._tcp.local`) alongside this — no
+# conflict. Without this override our runtime `mdns_hostname_set("aliro")`
+# loses to Matter setting hostname to the MAC-derived form
+# (AABBCCDDEEFF.local), so the convenient `http://aliro.local/` URL never
+# resolves.
+CONFIG_LWIP_LOCAL_HOSTNAME="aliro"
+
+# Eliminate the tiT spinlock-on-accept deadlock that surfaced as
+# INT_WDT-300ms panic under high inbound TCP rate.
+# Root cause: the default `LWIP_TCPIP_TASK_AFFINITY_NO_AFFINITY` lets
+# tiT bounce between Core 0 and Core 1. WiFi is pinned to Core 0;
+# httpd has no affinity. When tiT lands on Core 1 while httpd is
+# already in the mbox xQueueGenericSend critical section on Core 0
+# (or vice versa), both spin on the same internal queue mux with
+# `xPortEnterCriticalTimeout(-1)` → infinite wait → INT_WDT 300ms.
+# Coredump signature was:
+#   spinlock_acquire timeout=-1
+#   xQueueGenericSend (mbox 0x3fce5b98)
+#   sys_mbox_trypost
+#   accept_function (lwip api_msg.c:589)
+#   tcp_process / tcp_input / ip4_input
+#   tcpip_thread
+# Pinning tiT to Core 0 (same core as WiFi RX) serialises all lwIP
+# queue operations on one core, no more cross-core race on the mbox
+# mux.
+# Tried CONFIG_LWIP_TCPIP_TASK_AFFINITY_CPU0=y to serialise lwIP queue
+# operations on one core. It made the device freeze during/after boot
+# (httpd became unreachable). Likely cause: tiT pinned to the SAME
+# core as WiFi (CONFIG_ESP_WIFI_TASK_PINNED_TO_CORE_0=y) created CPU
+# starvation under heavy RX. Leaving tiT with no-affinity for now.
+#
+# Core-locking-input alone routes packet-input through the core mutex
+# instead of internal spinlocks, which is what should help most.
+CONFIG_LWIP_TCPIP_CORE_LOCKING_INPUT=y
+
+# OTA-via-HTTP TCP window tuning. Defaults (TCP_WND_DEFAULT=5760,
+# TCP_RCV_BUF_DEFAULT=5760, TCPIP_RECVMBOX_SIZE=32, TCP_RECVMBOX_SIZE=6)
+# starve lwIP RX under sustained inbound throughput. Our 2.5 MB OTA
+# upload alternates 4 KB recv chunks with esp_ota_write flash-erase
+# pauses; if rx-mbox fills during a pause, lwIP throttles the TCP
+# window, curl backs off, and the upload stalls at 7-94 % depending
+# on exact timing. Per esp-idf v5.4 lwIP guide:
+CONFIG_LWIP_TCP_WND_DEFAULT=65535
+CONFIG_LWIP_TCP_RCV_BUF_DEFAULT=65535
+CONFIG_LWIP_TCP_RECVMBOX_SIZE=12
+CONFIG_LWIP_TCPIP_RECVMBOX_SIZE=64
+
+# mbedTLS allocator — must NOT be INTERNAL-only. Default ESP-IDF flips
+# CONFIG_MBEDTLS_INTERNAL_MEM_ALLOC=y, which forces every BIGNUM / ECDSA /
+# HKDF allocation into the ~30–40 KB of internal SRAM left after WiFi+BLE+
+# lwIP+Matter buffers. CASE Sigma2 generation OOMs at the BIGNUM step
+# (`mbedTLS error: BIGNUM - Memory allocation failed` → `CASE Session
+# establishment failed: ac` → 60s fail-safe → revert). DEFAULT_MEM_ALLOC
+# uses esp_idf heap_caps with PSRAM fallback for big allocations, which
+# is what we want on PSRAM-equipped ESP32-S3.
+# CONFIG_MBEDTLS_INTERNAL_MEM_ALLOC is not set
+CONFIG_MBEDTLS_DEFAULT_MEM_ALLOC=y
+# Free SSL in/out buffers between handshake phases — ~32 KB savings at
+# the moment Sigma2 needs BIGNUM workspace.
+CONFIG_MBEDTLS_DYNAMIC_BUFFER=y
+
+# Matter behavioural knobs — these have correct esp-matter Kconfig defaults
+# today, but pinning them explicitly so a future esp-matter bump cannot
+# silently flip behaviour the Apple Home flow depends on.
+#
+# PERSIST_SUBSCRIPTIONS — without it, after a reboot the device does NOT
+# attempt to resume the existing Apple Home subscription. The HomePod/Apple
+# TV keeps polling the dead subscription handle, and Home shows
+# "Not Responding" until SubscriptionMaxInterval × 3 (~60 min) expires.
+# Symptom in our serial log was: chip[DMG]: Failed to establish CASE for
+# subscription-resumption with error '32'. (esp-matter#1403, #679)
+CONFIG_ENABLE_PERSIST_SUBSCRIPTIONS=y
+
+# ICD (Intermittently Connected Device) — DoorLock spec lists it as a
+# possible SIT ICD, but ICD only makes sense for battery-powered devices.
+# Our reader is line-powered; ICD only adds latency. Leave OFF.
+# CONFIG_ENABLE_ICD_SERVER is intentionally NOT set.
+
+# NVS encryption — will be enabled alongside flash encryption in the
+# release build. Disabled for dev builds because the default
+# HMAC-eFuse-based path needs a valid CONFIG_NVS_SEC_HMAC_EFUSE_KEY_ID,
+# and flash-encryption-based NVS encryption needs flash encryption
+# itself enabled (which bricks USB re-flash). See TODO.md §7.6.
+# CONFIG_NVS_ENCRYPTION=y
+
+# PSRAM — mandatory for the Aliro stack. ESP32-S3-WROOM-1 N8R8 has 8 MB
+# octal PSRAM; without it the Matter stack + DDK auth precompute leave
+# only ~14 KB internal heap free, and iPhone PASE handshake OOMs (the
+# user-visible symptom is Apple Home stuck on "Adding accessory…").
+# IGNORE_NOTFOUND keeps the boot graceful if a different module is ever
+# swapped in (warns, then continues with internal RAM only).
+CONFIG_ESP32S3_SPIRAM_SUPPORT=y
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_TYPE_AUTO=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_BOOT_INIT=y
+CONFIG_SPIRAM_IGNORE_NOTFOUND=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_TRY_ALLOCATE_WIFI_LWIP=y
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=16384
+# Bumped 32K → 128K. mbedTLS BIGNUM (used in CASE Sigma2 generation:
+# P256 ECDSA + HKDF + HMAC) MUST allocate from internal SRAM, not PSRAM,
+# because BIGNUM operations are mass small allocations (<512 B) and
+# PSRAM access is too slow for crypto. With WiFi RX/TX (~30 KB) + BLE
+# (~20 KB) + lwIP (~15 KB) + Matter exchange manager already eating
+# internal SRAM during commissioning, only ~10–15 KB is left for
+# mbedTLS BIGNUM at the moment Sigma2 is generated. Symptom in the
+# serial log: `chip[CR]: mbedTLS error: BIGNUM - Memory allocation
+# failed` on (60451) followed by `CASE Session establishment failed:
+# ac` (CHIP_ERROR_NO_MEMORY) and 60-sec fail-safe timeout. 128 KB is
+# the value Espressif recommends for esp-matter on PSRAM-equipped
+# ESP32-S3 (matter examples / sdkconfig defaults of esp-matter
+# door_lock and lighting-app).
+CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL=131072
+
+# Flash size — physical chip is 16MB. Partitions.csv reaches 0x400000 (4MB)
+# today; we set flashsize=16MB so we can expand OTA slots / nvs without
+# a bootloader change later.
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+
+# Custom partitions (see partitions.csv). Default ESP-IDF partitions have
+# a 1 MB app slot which is ~500 KB too small for Matter.
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# OTA — Matter OTA Requestor cluster needs two app slots.
+CONFIG_ESP_HTTPS_OTA_DECRYPT_CB=n
+
+# Core dump to flash partition. Persists register state + stack of the
+# crashed task into the `coredump` partition on PANIC/WDT/abort, so the
+# crash signature is recoverable over WiFi (via admin_panel /api/coredump
+# or `esptool read_flash`) after the device boots back up. Required
+# because USB serial isn't reachable for an on-wall installation, and
+# the in-memory log ring only catches lines printed BEFORE the panic.
+CONFIG_ESP_COREDUMP_ENABLE_TO_FLASH=y
+CONFIG_ESP_COREDUMP_DATA_FORMAT_ELF=y
+CONFIG_ESP_COREDUMP_CHECKSUM_CRC32=y
+CONFIG_ESP_COREDUMP_LOGS=y
+CONFIG_ESP_COREDUMP_STACK_SIZE=1024
+
+# Optional dev conveniences (disable in production builds).
+# Re-enabled 2026-05-01 to recover lost WiFi creds via `matter esp wifi
+# connect ssid pwd`. The DOWNLOAD-mode crash on `matter ?` is a known
+# upstream esp-matter bug — avoid `?`, use exact command names. Disable
+# again for production.
+CONFIG_ENABLE_CHIP_SHELL=y
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+# Admin web panel (components/admin_panel) — vendored from rednblkx.
+#   HTTPD_WS_SUPPORT       — WebSocket frame send/recv on esp_http_server.
+#                            Used by /ws endpoint for live log stream + status.
+#   HTTPD_MAX_REQ_HDR_LEN  — basicAuth needs to read Authorization header.
+#   HTTPD_MAX_URI_LEN      — long /captive-portal redirect URLs from iOS.
+CONFIG_HTTPD_WS_SUPPORT=y
+CONFIG_HTTPD_MAX_REQ_HDR_LEN=1024
+CONFIG_HTTPD_MAX_URI_LEN=1024
+CONFIG_HTTPD_PURGE_BUF_LEN=8192
+
+# Arduino-ESP32 as Component — used by admin_panel WebServerManager for
+# WiFi/Ethernet/NeoPixel APIs. We disable Arduino's autostart so our
+# native esp-idf app_main owns the entry point; setup() and loop() are
+# never called. Only the Arduino libraries (WiFi, ETH, Pixel via Adafruit)
+# come along as static-linkable APIs.
+# esp_insights version conflict between arduino-esp32 (==1.2.2) and
+# esp-matter (^1.2.4) is resolved via override_path to a local vendored
+# copy under components/esp_insights — see main/idf_component.yml.
+CONFIG_AUTOSTART_ARDUINO=n
+CONFIG_ARDUINO_RUN_CORE0=y
+CONFIG_ARDUINO_LOOP_STACK_SIZE=8192
+
+# Arduino-ESP32 ships ~30 libraries (Matter, RainMaker, Insights, Zigbee,
+# OpenThread, BluetoothSerial, …). Selective compilation lets us build
+# only what admin_panel needs: WiFi (for AP/STA control + scan from
+# WebServerManager) and its transitive deps Network, NetworkClientSecure.
+# The Arduino Matter library can't compile alongside esp-matter (own
+# Matter.h conflicts with esp_matter.h include path); selective
+# compilation skips it cleanly.
+CONFIG_ARDUINO_SELECTIVE_COMPILATION=y
+# Enabled (admin_panel needs these)
+CONFIG_ARDUINO_SELECTIVE_WiFi=y
+CONFIG_ARDUINO_SELECTIVE_Network=y
+CONFIG_ARDUINO_SELECTIVE_NetworkClientSecure=y
+CONFIG_ARDUINO_SELECTIVE_FS=y
+# Everything else disabled (Kconfig defaults to y otherwise — we want
+# the smallest Arduino footprint, and several libs (Matter, Insights,
+# RainMaker, Zigbee, ESP_SR) conflict with our esp-matter / esp-idf stack).
+CONFIG_ARDUINO_SELECTIVE_ArduinoOTA=n
+CONFIG_ARDUINO_SELECTIVE_AsyncUDP=n
+CONFIG_ARDUINO_SELECTIVE_BLE=n
+CONFIG_ARDUINO_SELECTIVE_BluetoothSerial=n
+CONFIG_ARDUINO_SELECTIVE_DNSServer=n
+CONFIG_ARDUINO_SELECTIVE_EEPROM=n
+CONFIG_ARDUINO_SELECTIVE_ESP_SR=n
+CONFIG_ARDUINO_SELECTIVE_ESPmDNS=n
+CONFIG_ARDUINO_SELECTIVE_Ethernet=n
+CONFIG_ARDUINO_SELECTIVE_FFat=n
+CONFIG_ARDUINO_SELECTIVE_HTTPClient=n
+CONFIG_ARDUINO_SELECTIVE_Hash=n
+CONFIG_ARDUINO_SELECTIVE_Insights=n
+CONFIG_ARDUINO_SELECTIVE_LittleFS=n
+CONFIG_ARDUINO_SELECTIVE_Matter=n
+CONFIG_ARDUINO_SELECTIVE_NetBIOS=n
+CONFIG_ARDUINO_SELECTIVE_OpenThread=n
+CONFIG_ARDUINO_SELECTIVE_PPP=n
+CONFIG_ARDUINO_SELECTIVE_Preferences=n
+CONFIG_ARDUINO_SELECTIVE_RainMaker=n
+CONFIG_ARDUINO_SELECTIVE_SD=n
+CONFIG_ARDUINO_SELECTIVE_SD_MMC=n
+CONFIG_ARDUINO_SELECTIVE_SPI=n
+CONFIG_ARDUINO_SELECTIVE_SPIFFS=n
+CONFIG_ARDUINO_SELECTIVE_SimpleBLE=n
+CONFIG_ARDUINO_SELECTIVE_Ticker=n
+CONFIG_ARDUINO_SELECTIVE_Update=n
+CONFIG_ARDUINO_SELECTIVE_WebServer=n
+CONFIG_ARDUINO_SELECTIVE_WiFiProv=n
+CONFIG_ARDUINO_SELECTIVE_Wire=n
+CONFIG_ARDUINO_SELECTIVE_Zigbee=n
+
+# Optional M5Stack Unit ByteButton I2C panel (8 buttons + 9 RGB LEDs).
+# Only compiled when set; the lock works fine without it. To disable for
+# production builds where the panel isn't physically present, comment
+# this out and rebuild — frees ~15KB flash and the I2C0 master.
+CONFIG_ALIRO_BYTEBUTTON_PANEL=y
+
+# Optional M5Stack Unit OLED 1.3" SH1107 status display, same PORT.A
+# I2C bus as ByteButton. Reverted to the hand-rolled SH1107 driver
+# (no u8g2) — the u8g2 swap-in starved esp-aes/mbedtls during Matter
+# init and produced a boot loop.
+CONFIG_ALIRO_OLED_PANEL=y
+
+# Flash encryption is DELIBERATELY OFF here. Turning it on bricks re-flash
+# via USB for dev. Enable only for release builds, after the Aliro reader
+# logic works end-to-end. See TODO.md §7.6 (security audit).
+# CONFIG_SECURE_FLASH_ENC_ENABLED=y

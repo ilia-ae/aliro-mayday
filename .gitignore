@@ -1,0 +1,44 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+*.trace
+*.log
+
+# uv / hatch build
+.uv/
+build/
+dist/
+*.egg-info/
+
+# Runtime data from lock_mvp.py / webui.py — contains real UIDs, don't leak
+allowlist.json
+events.jsonl
+state.json
+control.json
+
+# Local secrets (Telegram bot token, etc.) — never commit
+.env
+.env.local
+.env.*.local
+
+# tools
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+# CSA Aliro spec — license forbids redistribution. Download locally from
+# https://csa-iot.org/wp-content/uploads/2026/02/26-42802-001_Aliro_1.0_specification.pdf
+# (free, no registration required at time of writing).
+docs/aliro-1.0-specification.pdf
+docs/*.pdf
+
+# ESP-IDF / esp-matter build output (per-project .gitignores also cover this,
+# but belt-and-braces for any tree-wide tools that scan from root)
+**/build/
+**/managed_components/
+**/sdkconfig
+**/sdkconfig.old
+**/dependencies.lock
+
+# Generated browser-test metadata
+test-results/
