@@ -5,6 +5,7 @@
 #include "ddk/transport/ApduChannel.h"
 #include "ddk/session/Flow.h"
 #include <array>
+#include <functional>
 #include <cstdint>
 #include <map>
 #include <memory>
@@ -15,6 +16,8 @@
 namespace ddk {
 
 class CredentialStore;
+struct Issuer;
+struct Endpoint;
 
 struct SessionConfig {
     Flow target_flow = Flow::Fast;
@@ -25,6 +28,14 @@ struct SessionConfig {
     // Opt-in compatibility for the Apple 0x0009 profile used by existing
     // commissioned readers. Never downgrade a device advertising 0x0100.
     bool allow_legacy_apple_v9 = false;
+    std::optional<int64_t> step_up_current_time;
+    std::function<std::optional<int64_t>()> document_clock;
+    // Called only after issuer/device signatures and document validation.
+    // Checks new enrollment and refreshed documents on known credentials;
+    // the application must interpret AccessData before accepting either.
+    std::function<bool(span<const uint8_t>, span<const uint8_t>, span<const uint8_t>)>
+        authorize_step_up_enrollment;
+    std::function<bool(const Issuer&,const Endpoint&)> authorize_authenticated_endpoint;
 };
 
 struct Transcript {

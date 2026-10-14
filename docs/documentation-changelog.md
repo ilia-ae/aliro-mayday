@@ -69,6 +69,39 @@ Files:
 - `aliro-esp32/DEBUGGING.md`
 ```
 
+## 2026-10-14
+
+### Summary
+
+- Corrected stale firmware instructions after signed rights/revocation support;
+  added English/Russian versions of the current overview, firmware build/update,
+  policy, test guide and competitor review, with an explicit coverage index.
+
+### Root / repo contract
+
+- Updated main/PR status for the authorized public merge while retaining the
+  original source-release and hardware-acceptance limits. Clarified that the
+  generic host-tested Aliro core is not a completed Samsung Wallet integration.
+- `docs/README.md` separates current guides from untranslated historical/upstream
+  material and states that neither the CSA PDF nor a full Russian standard
+  translation is included.
+- `docs/repository-status-2026-10-14.md` records included source versus researched
+  SDKs, initial main/release versus draft PR, license scopes and remaining work.
+- Root README versions link current status; early roadmap/wire notes are marked
+  historical. The competitor review reflects the newly implemented policy subset.
+- Source integrity and current local documentation links gain automated checking.
+
+### `aliro-esp32/` docs
+
+- Follow-up Linux UBSan found a zero-length null memcpy in vendored TinyCBOR;
+  documented the minimal fix, canonical-bytes/size-accounting regression and
+  fresh firmware image hash. The application size remains unchanged.
+- Replaced obsolete enrollment-disabled status, broad SDK recommendations and
+  incorrect partition/PSRAM descriptions with tested SDK pins and current data.
+- Documented application-only compatibility testing, private backups, rollback
+  limitations, clock requirements and actual hardware acceptance gaps.
+- No firmware, identity, pairing or controller state changed in this doc revision.
+
 ## 2026-04-29
 
 ### Summary

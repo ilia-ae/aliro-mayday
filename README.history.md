@@ -1,5 +1,7 @@
 # apple-homekey-pm3-reader
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](docs/README.md) for verified behavior, build instructions and remaining acceptance work.
+
 Experimental smart-lock workspace. Aliro NFC on ESP32-S3 + PN532 is the
 active target. The iPhone path worked on the May 2026 bench; the controller is
 offline during the October update, so the updated firmware still needs real

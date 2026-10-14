@@ -296,8 +296,12 @@ static inline CborError append_to_buffer(CborEncoder *encoder, const void *data,
         return CborErrorOutOfMemory;
     }
 
-    memcpy(encoder->data.ptr, data, len);
-    encoder->data.ptr += len;
+    /* Empty strings may have a NULL payload. memcpy still requires non-NULL
+     * pointers at length zero; keep their already encoded header unchanged. */
+    if (len != 0) {
+        memcpy(encoder->data.ptr, data, len);
+        encoder->data.ptr += len;
+    }
 #endif
     return CborNoError;
 }

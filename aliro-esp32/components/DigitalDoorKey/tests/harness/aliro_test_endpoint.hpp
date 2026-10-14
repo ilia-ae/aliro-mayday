@@ -83,17 +83,27 @@ struct StepUpMaterial {
     std::vector<uint8_t> sig;        // 64B raw r||s
     std::vector<uint8_t> protected_headers;  // bstr {1: -7}
     std::vector<uint8_t> payload;    // tag24(MSO)
+    std::string doc_type="aliro-a";
+    std::vector<uint8_t> item;       // tag24(IssuerSignedItem)
 };
 
 // mso_text_keys: MSO/deviceKeyInfo keys as digit text strings ("4"/"1") —
 //   the form real devices and the Python reference's fixtures use — instead
 //   of ISO integers. omit_tag24: COSE payload carries the MSO map encoding
 //   directly, without the tag-24 wrapper.
+struct DocumentFixtureSpec {
+    std::vector<uint8_t> element_value;
+    std::string doc_type="aliro-a";
+    std::optional<uint64_t> iteration;
+    bool time_required=false;
+    bool include_device_key=true;
+};
 StepUpMaterial make_step_up_material(const std::array<uint8_t, 32>& device_x,
                                      const std::array<uint8_t, 32>& device_y,
                                      const std::vector<uint8_t>& issuer_id,
                                      bool mso_text_keys = false,
-                                     bool omit_tag24 = false);
+                                     bool omit_tag24 = false,
+                                     const DocumentFixtureSpec& spec = {});
 
 // ES256 over ["Signature1", protected, aad="", payload] — the issuerAuth
 // signature form CoseSign1::verify_es256 expects.
@@ -123,6 +133,7 @@ struct EndpointScenario {
     // AUTH0 response without the 0x86 endpoint ephemeral public key.
     bool malformed_auth0 = false;
     bool serve_step_up = false;
+    bool advertise_revocation = false;
     // AUTH1 signaling bitmap sets Bit2 → reader SHALL do the step-up AID
     // SELECT before the step-up phase.
     bool step_up_select_required = false;
@@ -180,6 +191,7 @@ public:
     int envelope_count = 0;
     int step_up_selects = 0;                   // step-up AID SELECTs answered
     std::vector<uint8_t> decrypted_device_request;
+    void set_step_up_response(std::vector<uint8_t> response) { step_up_response_cbor=std::move(response); }
     std::vector<uint8_t> served_document_cbor; // standalone doc encoding served
 
     // Key-schedule recording — lets tests recompute the expected Kpersistent.

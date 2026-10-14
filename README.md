@@ -1,7 +1,9 @@
 # aliro.mayday
 
+[Русский](README.ru.md) · [Documentation index](docs/README.md)
+
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
-DoorLock provisioning and local administration. This repository is a clean
+DoorLock provisioning and local administration. This repository began as a clean
 source snapshot dated **13 October 2026**, with new Git history.
 
 ## Verified status
@@ -10,13 +12,18 @@ source snapshot dated **13 October 2026**, with new Git history.
   was offline during the October update; the new build still needs real
   iPhone regression tests and Samsung Wallet validation through SmartThings.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
-  Sixteen firmware regression scenarios pass, covering old iPhone records,
+  Thirty-six firmware regression scenarios pass, covering old iPhone records,
   signature rejection, credential revocation, reboot and persistence failures.
 - DigitalDoorKey is pinned to
   `80e4a1e14eab3646b62ab3bdad6d2ed01d399375`; local patches are documented in
   [UPSTREAM.md](aliro-esp32/components/DigitalDoorKey/UPSTREAM.md).
-- Unknown device keys are rejected. Step-up enrollment remains disabled until
-  full access-document and access-policy validation is implemented.
+- Step-up validates signed AccessData before learning a device key from a
+  provisioned issuer. Cached document keys re-check current permissions and expiry.
+  Signed `aliro-r` revocations are stored independently of successful device access
+  and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.en.md)
+  describe strict handling of unsupported schedules/extensions and missing clocks.
+- Existing Apple v9 framing, identity, pairing and independent iPhone keys are
+  preserved. Actual hardware regression remains required.
 - This is a development prototype. Aliro certification, Samsung/Google Wallet
   compatibility and a physical relay output are not established by this release.
   BLE/UWB access transport is not enabled in this firmware; Matter BLE
@@ -26,6 +33,13 @@ The full host suite has two known upstream BLE-flow test failures;
 [testing notes](aliro-esp32/tests/README.md) explain the scope.
 [October update](docs/ddk-update-2026-10-13.md) records the changes and remaining
 hardware acceptance checks.
+
+Public `main` includes the document-policy fixes, signed revocation and bilingual
+guides integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1).
+The original source-snapshot prerelease remains unchanged. Publishing this source
+does not establish real-wallet compatibility or deploy firmware to a controller.
+[Repository readiness](docs/repository-status-2026-10-14.md#english) records
+what is included, translated and still awaiting verification.
 
 ## Build and test
 
@@ -59,7 +73,7 @@ Use the verified status above for the current release.
 
 ## Related implementations and product comparisons
 
-[Competitor and implementation review](docs/aliro-competitors-2026-10-13.md)
+[Competitor and implementation review](docs/aliro-competitors-2026-10-13.en.md)
 compares Aqara, Nuki, Schlage, esp-aliro, UltraWideLock and other vendor SDKs,
 with source links and practical priorities for this project.
 

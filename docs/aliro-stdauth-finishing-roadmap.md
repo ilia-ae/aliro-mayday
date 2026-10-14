@@ -1,5 +1,7 @@
 # Aliro StandardAuth — finishing the kAliro path
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](README.md) for verified behavior, build instructions and remaining acceptance work.
+
 Working roadmap for completing the Aliro Step-up authentication flow in
 `components/DigitalDoorKey`. Generated 2026-04-28 from a live tap-debug
 session against iPhone 16 Pro Max + Apple Wallet HomeKey-as-Aliro, then

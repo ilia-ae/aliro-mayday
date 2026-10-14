@@ -34,5 +34,8 @@ struct Endpoint {
     uint8_t  counter = 0;                 // "counter"        width preserved
     KeyType  key_type = KeyType::Secp256r1;
     AliroEndpointData aliro;
+    uint64_t access_iteration = 0;
+    bool document_bound = false;
+    std::vector<uint8_t> access_document;
 };
 }

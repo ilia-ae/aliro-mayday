@@ -14,6 +14,10 @@
 namespace {
 
 constexpr const char* TAG = "CoseSign1";
+CborError advance_complete(CborValue* v) {
+    const auto error=cbor_value_skip_tag(v);
+    return error==CborNoError ? cbor_value_advance(v) : error;
+}
 
 bool verify_es256(
     const CoseSign1::Parsed& parsed,
@@ -34,6 +38,7 @@ bool verify_es256(
     auto sig_struct = CoseSign1::build_sig_structure(
         parsed.protected_headers_encoded, external_aad, parsed.payload);
 
+    if (sig_struct.empty()) return false;
     uint8_t hash[32];
     mbedtls_md(mbedtls_md_info_from_type(MBEDTLS_MD_SHA256),
                sig_struct.data(), sig_struct.size(), hash);
@@ -109,7 +114,8 @@ std::optional<CoseSign1::Parsed> CoseSign1::parse(ddk::span<const uint8_t> cbor)
 
 std::optional<CoseSign1::Parsed> CoseSign1::parse_from_iterator(CborValue* it)
 {
-      if (!cbor_value_is_array(it))
+    size_t count=0;
+    if (!cbor_value_is_array(it) || cbor_value_get_array_length(it,&count)!=CborNoError || count!=4)
         return std::nullopt;
 
     CborValue elem;
@@ -143,7 +149,7 @@ std::optional<CoseSign1::Parsed> CoseSign1::parse_from_iterator(CborValue* it)
             if (cbor_value_is_integer(&map_it)) {
                 int key = 0;
                 cbor_value_get_int(&map_it, &key);
-                if (cbor_value_advance(&map_it) != CborNoError)
+                if (advance_complete(&map_it) != CborNoError)
                     return std::nullopt;
                 if (key == 4 && cbor_value_is_byte_string(&map_it)) {
                     size_t ilen = 0;
@@ -155,7 +161,7 @@ std::optional<CoseSign1::Parsed> CoseSign1::parse_from_iterator(CborValue* it)
                 }
             }
             if (cbor_value_at_end(&map_it)) break;
-            if (cbor_value_advance(&map_it) != CborNoError)
+            if (advance_complete(&map_it) != CborNoError)
                 return std::nullopt;
         }
         if (cbor_value_leave_container(&elem, &map_it) != CborNoError)
@@ -203,13 +209,13 @@ std::optional<CoseSign1::Parsed> CoseSign1::parse_from_iterator(CborValue* it)
                     if (cbor_value_is_integer(&map_it)) {
                         int key = 0;
                         cbor_value_get_int(&map_it, &key);
-                        if (cbor_value_advance(&map_it) != CborNoError) break;
+                        if (advance_complete(&map_it) != CborNoError) break;
                         if (key == 1 && cbor_value_is_integer(&map_it)) {
                             cbor_value_get_int(&map_it, &result.algorithm);
                         }
                     }
                     if (cbor_value_at_end(&map_it)) break;
-                    if (cbor_value_advance(&map_it) != CborNoError) break;
+                    if (advance_complete(&map_it) != CborNoError) break;
                 }
             }
         }
@@ -224,11 +230,11 @@ std::vector<uint8_t> CoseSign1::build_sig_structure(
     ddk::span<const uint8_t> payload)
 {
     // SigStructure = ["Signature1", protected_headers, external_aad, payload]
-    uint8_t buf[4096];
+    std::vector<uint8_t> buf(4096);
     CborEncoder enc;
     CborEncoder array;
 
-    cbor_encoder_init(&enc, buf, sizeof(buf), 0);
+    cbor_encoder_init(&enc, buf.data(), buf.size(), 0);
     cbor_encoder_create_array(&enc, &array, 4);
     cbor_encode_text_stringz(&array, "Signature1");
     cbor_encode_byte_string(&array,
@@ -237,10 +243,12 @@ std::vector<uint8_t> CoseSign1::build_sig_structure(
         external_aad.data(), external_aad.size());
     cbor_encode_byte_string(&array,
         payload.data(), payload.size());
-    cbor_encoder_close_container(&enc, &array);
+    if (cbor_encoder_close_container(&enc, &array) != CborNoError)
+        return {};
 
-    size_t encoded = cbor_encoder_get_buffer_size(&enc, buf);
-    return std::vector<uint8_t>(buf, buf + encoded);
+    size_t encoded = cbor_encoder_get_buffer_size(&enc, buf.data());
+    buf.resize(encoded);
+    return buf;
 }
 
 bool CoseSign1::verify(

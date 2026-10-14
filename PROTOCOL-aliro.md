@@ -1,13 +1,15 @@
 # Aliro reader wire spec (our implementation)
 
-Single source of truth for the ESP32-S3 Aliro reader in
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](docs/README.md) for verified behavior, build instructions and remaining acceptance work.
+
+Early wire-design notes for the ESP32-S3 Aliro reader in
 [aliro-esp32/](aliro-esp32/). Tracks CSA Aliro 1.0 (see
 `docs/aliro-1.0-specification.pdf` — local only, not committed).
 
-This document is the *implementation contract* — it pins down every
-choice the spec leaves to the vendor (NVS layout, partition names,
-ECP2 annotation, Matter attribute mapping, state-machine timings).
-Change this file whenever one of those choices changes.
+This historical document records early vendor choices. Some deferred features
+and storage/build assumptions were superseded. Current document-policy behavior
+is described in the linked October guide and implemented/tested in DigitalDoorKey
+and the firmware adapter; do not use the old tables as the current contract.
 
 ## 1. Transport + selection
 

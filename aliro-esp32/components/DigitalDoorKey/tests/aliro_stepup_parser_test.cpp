@@ -23,8 +23,10 @@
 #include "aliro/AliroSecureContext.h"
 #include "aliro/SignalingBitmask.h"
 #include "BerTlv.h"
+#include "ddk/aliro/DocumentVerifier.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <cbor.h>
 
 #include <array>
 #include <map>
@@ -33,6 +35,31 @@
 #include <vector>
 
 using namespace aliro_test;
+
+TEST_CASE("Empty CBOR strings preserve canonical bytes and size accounting",
+          "[cbor][step-up]")
+{
+    std::array<uint8_t, 3> output{};
+    CborEncoder encoder, array;
+    SECTION("exactly sized buffer") {
+        cbor_encoder_init(&encoder, output.data(), output.size(), 0);
+        REQUIRE(cbor_encoder_create_array(&encoder, &array, 2) == CborNoError);
+        REQUIRE(cbor_encode_byte_string(&array, nullptr, 0) == CborNoError);
+        REQUIRE(cbor_encode_text_string(&array, nullptr, 0) == CborNoError);
+        REQUIRE(cbor_encoder_close_container(&encoder, &array) == CborNoError);
+        REQUIRE(cbor_encoder_get_buffer_size(&encoder, output.data()) == 3);
+        REQUIRE((output == std::array<uint8_t, 3>{0x82, 0x40, 0x60}));
+    }
+    SECTION("header-only buffer still reports missing payload headers") {
+        cbor_encoder_init(&encoder, output.data(), 1, 0);
+        REQUIRE(cbor_encoder_create_array(&encoder, &array, 2) == CborNoError);
+        REQUIRE(cbor_encode_byte_string(&array, nullptr, 0) == CborErrorOutOfMemory);
+        REQUIRE(cbor_encode_text_string(&array, nullptr, 0) == CborErrorOutOfMemory);
+        REQUIRE(cbor_encoder_close_container(&encoder, &array) == CborErrorOutOfMemory);
+        REQUIRE(cbor_encoder_get_extra_bytes_needed(&encoder) == 2);
+        REQUIRE(output[0] == 0x82);
+    }
+}
 
 namespace {
 
@@ -94,9 +121,11 @@ std::array<uint8_t, 32> pattern32(uint8_t base)
     return out;
 }
 
-StepUpMaterial test_material()
+StepUpMaterial test_material(const P256KeyPair& issuer, bool text_keys=false, bool omit_tag=false)
 {
-    return make_step_up_material(pattern32(0x10), pattern32(0x30), kIssuerId);
+    auto device=generate_p256_key(); std::array<uint8_t,32> y;
+    std::copy_n(device.pub.begin()+33,32,y.begin());
+    return make_step_up_material(device.pub_x,y,ddk::aliro::issuer_key_identifier(issuer.pub),text_keys,omit_tag);
 }
 
 // One full AliroStepUp exchange against the simulated endpoint. Returned via
@@ -172,7 +201,7 @@ TEST_CASE("AliroStepUp round-trips the reference DeviceRequest and parses the re
     auto issuer_key = generate_p256_key();
     REQUIRE(issuer_key.pub[0] == 0x04);  // keypair materialized
 
-    auto material = test_material();
+    auto material = test_material(issuer_key);
     material.sig = sign_cose_es256(issuer_key, material.protected_headers,
                                    material.payload);
 
@@ -189,25 +218,22 @@ TEST_CASE("AliroStepUp round-trips the reference DeviceRequest and parses the re
         // Real devices encode the MSO keys as digit text strings ("4" =
         // deviceKeyInfo, "1" = deviceKey) — the form in the reference's
         // fixtures — rather than ISO integers.
-        auto m = make_step_up_material(pattern32(0x10), pattern32(0x30),
-                                       kIssuerId, /*mso_text_keys=*/true);
+        auto m = test_material(issuer_key,true);
         m.sig = sign_cose_es256(issuer_key, m.protected_headers, m.payload);
         require_round_trip(issuer_key, m, /*text_keys=*/false);
     }
     SECTION("MSO payload without the tag-24 wrapper")
     {
-        auto m = make_step_up_material(pattern32(0x10), pattern32(0x30),
-                                       kIssuerId, /*mso_text_keys=*/true,
-                                       /*omit_tag24=*/true);
+        auto m = test_material(issuer_key,true,true);
         m.sig = sign_cose_es256(issuer_key, m.protected_headers, m.payload);
-        require_round_trip(issuer_key, m, /*text_keys=*/false);
+        REQUIRE_FALSE(run_step_up(issuer_key,m,false,{{"matter1",true}})->result.success);
     }
 }
 
 TEST_CASE("AliroStepUp rejects a tampered issuerAuth signature", "[aliro][step-up]")
 {
     auto issuer_key = generate_p256_key();
-    auto material = test_material();
+    auto material = test_material(issuer_key);
     material.sig.assign(64, 0xAB);
 
     auto ex = run_step_up(issuer_key, material, /*text_keys=*/false,
@@ -221,7 +247,7 @@ TEST_CASE("AliroStepUp rejects an empty scope map before sending any APDU",
           "[aliro][step-up]")
 {
     auto issuer_key = generate_p256_key();
-    auto material = test_material();
+    auto material = test_material(issuer_key);
     material.sig = sign_cose_es256(issuer_key, material.protected_headers,
                                    material.payload);
 

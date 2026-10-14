@@ -30,7 +30,11 @@ FastAuthResult AliroFastAuth::attest(const std::vector<uint8_t>& cryptogram)
 
     for (auto& issuer : store.issuers()) {
         for (auto& endpoint : issuer.endpoints) {
-            if (endpoint.persistent_key.empty()) continue;
+            if (endpoint.persistent_key.empty() || !issuer.document_policy_valid) continue;
+            if (session_.config().authorize_authenticated_endpoint &&
+                !session_.config().authorize_authenticated_endpoint(issuer,endpoint)) continue;
+            if (endpoint.access_iteration < issuer.access_iteration &&
+                issuer.access_iteration - endpoint.access_iteration >= 8) continue;
             auto result = schedule.derive_fast(
                 input, endpoint.public_key_x, endpoint.persistent_key);
             std::array<uint8_t,32> sk{};
@@ -40,6 +44,10 @@ FastAuthResult AliroFastAuth::attest(const std::vector<uint8_t>& cryptogram)
             if (!plaintext.empty()) {
                 TLV8 tlv;
                 tlv.parse(plaintext.data(), plaintext.size());
+                const auto* signals=tlv.expect(0x5E);
+                if (!tlv.ok() || !signals || signals->value.size()!=2) continue;
+                if (t.protocol_version==std::array<uint8_t,2>{0x01,0x00} &&
+                    (signals->value[1]&0x02)) continue;
                 if (tlv.expect(0x5E) && tlv.expect(0x91) && tlv.expect(0x92)) {
                     return {&issuer, &endpoint, ddk::kFlowFAST,
                             result.exchange_sk_reader, result.exchange_sk_device,

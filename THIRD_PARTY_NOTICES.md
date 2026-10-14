@@ -9,7 +9,8 @@ Existing third-party permissions are preserved. They are not restricted by the
 project license. Keep their copyright and license texts with redistributions.
 
 - The PM3 Python package (`*.py` at the root and its `tests/`), and
-  `scripts/export-public-source.py`: [MIT](LICENSES/MIT.txt).
+  `scripts/export-public-source.py` and `scripts/verify-public-source.py`:
+  [MIT](LICENSES/MIT.txt).
 - `homekey-esp32/`: rednblkx/HomeKey-ESP32, [MIT](homekey-esp32/LICENSE).
 - Aliro's inherited `NfcManager.*`, `ReaderDataManager.*`, `DDKReaderData.h`,
   admin panel and Svelte UI: HomeKey-ESP32 / DigitalDoorKey, MIT; notices are
@@ -20,6 +21,9 @@ project license. Keep their copyright and license texts with redistributions.
   upstream test changes: rednblkx/DigitalDoorKey,
   [MIT](aliro-esp32/components/DigitalDoorKey/LICENSE). See its UPSTREAM.md for
   the pinned revision and local changes.
+- Exception inside DigitalDoorKey: `src/aliro/document_cbor/` adapts
+  UltraWideLock's portable CBOR cursor under its retained [ISC license](aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/LICENSE).
+  The pinned source and modifications are recorded in that directory's UPSTREAM.md.
 - `aliro-site/`: [source-available commercial terms](aliro-site/LICENSE).
 
 External ESP-IDF, esp-matter, connectedhomeip, Arduino, component-manager and

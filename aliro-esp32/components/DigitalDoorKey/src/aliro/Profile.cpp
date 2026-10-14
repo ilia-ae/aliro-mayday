@@ -164,6 +164,7 @@ FlowState Profile::step(Session& session, FlowState current)
     ddk::Issuer *foundIssuer = nullptr;
     ddk::Endpoint *foundEndpoint = nullptr;
     ddk::KeyFlow flowUsed = ddk::kFlowFailed;
+    bool revocation_failed=false;
     if (session.config().target_flow == Flow::Fast) {
       const tlv_t *crypt = Auth0Res.expect(kAuth0_Cryptogram);
       if (crypt != nullptr) {
@@ -200,7 +201,10 @@ FlowState Profile::step(Session& session, FlowState current)
       }
       auto* ctx = static_cast<AliroSecureContext*>(session.secure_context());
 
-      if (session.config().target_flow == Flow::StepUp ||
+      const bool modern_revocation = transcript.protocol_version==std::array<uint8_t,2>{0x01,0x00} &&
+          stdAuth.signaling_bitmap && ((*stdAuth.signaling_bitmap)[1]&0x02);
+      if (modern_revocation || (foundEndpoint && foundEndpoint->document_bound) ||
+          session.config().target_flow == Flow::StepUp ||
           (!stdAuth && stdAuth.endpoint_missing && session.config().step_up_standard_fail)) {
         if (ctx && ctx->step_up_channel()) {
           uint16_t bitmap = static_cast<uint16_t>(
@@ -221,8 +225,33 @@ FlowState Profile::step(Session& session, FlowState current)
                   return hash.size() >= 8 && std::equal(stdAuth.key_slot.begin(),
                       stdAuth.key_slot.end(), hash.begin());
                 }());
-          if (step.success && presented_key_matches &&
-              standard.verify_device_signature(step.endpoint_public_key, stdAuth.device_signature)) {
+          const auto* required_issuer=foundIssuer?foundIssuer:step.issuer;
+          revocation_failed = modern_revocation && (!required_issuer ||
+              std::find(step.revocation_issuers.begin(),step.revocation_issuers.end(),required_issuer->public_key)
+                  ==step.revocation_issuers.end());
+          const bool device_proven = step.success && presented_key_matches &&
+              standard.verify_device_signature(step.endpoint_public_key,stdAuth.device_signature);
+          if (device_proven && foundEndpoint && foundIssuer==step.issuer) {
+              // A signed, device-bound restriction must replace the old cached
+              // grant even when this transaction is denied by AccessData.
+              if (!foundEndpoint->document_bound || foundEndpoint->access_document!=step.access_document_cbor) {
+                  foundEndpoint->document_bound=true;
+                  foundEndpoint->access_document=step.access_document_cbor;
+              }
+          }
+          const bool document_allowed = device_proven &&
+              (session.config().authorize_step_up_enrollment ?
+               session.config().authorize_step_up_enrollment(step.issuer->public_key,
+                   step.endpoint_public_key,step.access_document_cbor) : foundEndpoint!=nullptr);
+          if (!revocation_failed && document_allowed &&
+              (foundEndpoint==nullptr || foundIssuer==step.issuer)) {
+            if (step.access_iteration && *step.access_iteration > step.issuer->access_iteration) {
+              step.issuer->access_iteration = *step.access_iteration;
+              for (auto& endpoint : step.issuer->endpoints)
+                if (endpoint.access_iteration < *step.access_iteration &&
+                    *step.access_iteration - endpoint.access_iteration >= 8)
+                  endpoint.persistent_key.clear();
+            }
             flowUsed = ddk::kFlowATTESTATION;
             foundIssuer = step.issuer;
             step_up_access_document_ = step.access_document_cbor;
@@ -256,6 +285,9 @@ FlowState Profile::step(Session& session, FlowState current)
             foundEndpoint->persistent_key.assign(Kpersistent.begin(), Kpersistent.end());
             LOG_HEX(D, "StepUp Provisioned Persistent Key",
                     foundEndpoint->persistent_key);
+            foundEndpoint->document_bound=true;
+            foundEndpoint->access_document=step.access_document_cbor;
+            if (step.access_iteration) foundEndpoint->access_iteration = *step.access_iteration;
             foundEndpoint->aliro.documents = step.documents;
           } else if (session.config().target_flow == Flow::StepUp && !stdAuth) {
             flowUsed = ddk::kFlowFailed;
@@ -265,8 +297,10 @@ FlowState Profile::step(Session& session, FlowState current)
         }
       }
       if (foundEndpoint) {
-        if (flowUsed == ddk::kFlowSTANDARD)
+        if (flowUsed == ddk::kFlowSTANDARD) {
           foundEndpoint->persistent_key.assign(stdAuth.persistent_key.begin(), stdAuth.persistent_key.end());
+          if (!foundEndpoint->document_bound) foundEndpoint->access_iteration=foundIssuer->access_iteration;
+        }
         foundEndpoint->aliro.key_slot = stdAuth.key_slot;
         if (stdAuth.signaling_bitmap) {
           foundEndpoint->aliro.signaling_bitmask =
@@ -283,7 +317,10 @@ FlowState Profile::step(Session& session, FlowState current)
         store.save();
       }
     }
-    if (foundIssuer && foundEndpoint && flowUsed != ddk::kFlowFailed) {
+    if (foundIssuer && foundEndpoint && !revocation_failed && flowUsed != ddk::kFlowFailed &&
+        foundIssuer->document_policy_valid &&
+        (!session.config().authorize_authenticated_endpoint ||
+         session.config().authorize_authenticated_endpoint(*foundIssuer,*foundEndpoint))) {
       if (!complete(session, ReaderStatus::StateUnsecure)) {
         LOG(W, "Completion delivery failed; auth result stands");
       }
