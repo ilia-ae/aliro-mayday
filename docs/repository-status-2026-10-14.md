@@ -5,12 +5,12 @@
 ## English
 
 The public repository is [ilia-ae/aliro-mayday](https://github.com/ilia-ae/aliro-mayday).
-It has new Git history. The old repository remains private. `main` and the
-source-snapshot prerelease still describe the initial sanitized snapshot;
-[PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1) contains the newer document
-rights/revocation implementation and current documentation. The PR remains a
-draft while hardware acceptance is pending. A public source review is not a
-firmware release or Aliro certification.
+It has new Git history. The old repository remains private. Public `main` includes
+the document rights/revocation implementation and current bilingual documentation
+integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1). The original
+source-snapshot prerelease remains the initial sanitized snapshot. Hardware
+acceptance is still pending: merging source is not a firmware deployment or Aliro
+certification. The controller was not connected or flashed.
 
 | Included source | Current role and verification |
 | --- | --- |
@@ -59,12 +59,12 @@ translated; the standard's full Russian translation is absent. See the
 ## Русский
 
 Публичный репозиторий — [ilia-ae/aliro-mayday](https://github.com/ilia-ae/aliro-mayday).
-У него новая история Git. Старый репозиторий остаётся приватным. В `main`
-и source-snapshot prerelease пока исходный очищенный снимок. Новая проверка
-прав/отзыва и текущая документация находятся в
-[PR №1](https://github.com/ilia-ae/aliro-mayday/pull/1). Он остаётся черновиком
-до аппаратной приёмки. Публикация исходников не означает выпуск готовой прошивки
-или сертификацию Aliro.
+У него новая история Git. Старый репозиторий остаётся приватным. Публичный `main`
+включает проверку прав/отзыва и актуальные переводы, интегрированные через
+[PR №1](https://github.com/ilia-ae/aliro-mayday/pull/1). Прежний source-snapshot
+prerelease сохраняет исходный очищенный снимок. Аппаратная приёмка ещё нужна:
+слияние исходников не является прошивкой контроллера или сертификацией Aliro.
+Контроллер не подключался и не прошивался.
 
 | Включённые исходники | Назначение и степень проверки |
 | --- | --- |
@@ -108,3 +108,31 @@ Application image — 2 554 304 байт; запас OTA-раздела 2,56%.
 Актуальные обзор, сборка/возврат, политика, тесты и сравнение конкурентов есть
 на русском и английском. Исторические и upstream-документы переведены не все;
 полного русского перевода стандарта нет. См. [оглавление и покрытие](README.md).
+
+## Samsung Wallet: implemented core versus integration / Ядро и интеграция
+
+The generic Aliro 1.0 NFC engine, Matter reader/issuer/device credential operations
+and document rights/revocation are implemented and host-tested. Our controller
+has not issued a Samsung Wallet key through SmartThings or completed a real
+Samsung tap/revocation test. This is not a completed Samsung-specific integration.
+Samsung describes onboarding a compatible lock through SmartThings/Matter, then
+adding its key to Wallet; availability varies by device and region.
+[Official Samsung workflow](https://news.samsung.com/global/samsung-wallet-launches-digital-home-key-for-smart-door-locks).
+
+У нас реализованы и проверены на компьютере общий Aliro 1.0 NFC, операции Matter
+с reader/issuer/device credentials и проверка документов/отзыва. Но наш контроллер
+ещё не выдал ключ Samsung Wallet через SmartThings и не прошёл настоящий Samsung
+tap/отзыв. Законченной Samsung-интеграции пока нет. Samsung описывает добавление
+совместимого замка через SmartThings/Matter и последующую выдачу ключа Wallet;
+доступность зависит от устройства и региона.
+[Официальный сценарий Samsung](https://news.samsung.com/global/samsung-wallet-launches-digital-home-key-for-smart-door-locks).
+
+The next proof is SmartThings onboarding → Wallet key issuance → first/repeated
+NFC taps → clear/disabled-user/reboot rejection, with old iPhone keys preserved.
+An alternative SDK can help implement the protocol; its source availability
+does not prove that SmartThings will accept this reader or issue its Wallet key.
+
+Следующая проверка: добавление в SmartThings → выдача ключа Wallet → первый/повторные
+NFC taps → отказ после удаления/отключения пользователя/перезапуска, с сохранением
+старых ключей iPhone. Другой SDK может помочь с протоколом, но наличие его кода
+не доказывает, что SmartThings примет этот считыватель и выдаст ему Wallet key.

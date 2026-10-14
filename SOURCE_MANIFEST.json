@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "f8b496dc6cbc21725fa1202ab245b57938bbfaf8f372fe7c129041833282c845"
+      "sha256": "bb62314dd486786f64942dba57bc39dce75cc522d4c9654e9a02284387a7d3da"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -8564,7 +8564,7 @@
     },
     {
       "path": "docs/documentation-changelog.md",
-      "sha256": "b0c25a5cad912c699244ff4657814d892070f125f7b70df7c6d0da67470c7987"
+      "sha256": "444c3c3942155bf8d4e49e40a3214202f37be74826c5f77e523c09de70bcf3d5"
     },
     {
       "path": "docs/execution-plan.md",
@@ -9392,7 +9392,7 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "0f67d3affa933f593ba1f601019f0a07056f6806f6b50f1808bfb95b760a80ba"
+      "sha256": "5646837b27251b76ca8d133a18bfcdbfda79f54f3806443f0aa182b845e71bda"
     },
     {
       "path": "aliro-esp32/README.ru.md",
@@ -9416,7 +9416,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "f438b65b7380c420eda5064f191565543d311ac6ff202f83c376913a6c763251"
+      "sha256": "2e286b2fc67078380c2971916e93f87837e45c9a5af0ef1d03046c76695b4e5f"
     },
     {
       "path": "scripts/verify-public-source.py",

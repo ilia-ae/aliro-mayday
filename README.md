@@ -20,7 +20,7 @@ source snapshot dated **13 October 2026**, with new Git history.
 - Step-up validates signed AccessData before learning a device key from a
   provisioned issuer. Cached document keys re-check current permissions and expiry.
   Signed `aliro-r` revocations are stored independently of successful device access
-  and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.md)
+  and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.en.md)
   describe strict handling of unsupported schedules/extensions and missing clocks.
 - Existing Apple v9 framing, identity, pairing and independent iPhone keys are
   preserved. Actual hardware regression remains required.
@@ -34,9 +34,10 @@ The full host suite has two known upstream BLE-flow test failures;
 [October update](docs/ddk-update-2026-10-13.md) records the changes and remaining
 hardware acceptance checks.
 
-`main` and the source-snapshot prerelease retain the initial sanitized snapshot.
-The newer document-policy changes and these guides are in
-[draft PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1).
+Public `main` includes the document-policy fixes, signed revocation and bilingual
+guides integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1).
+The original source-snapshot prerelease remains unchanged. Publishing this source
+does not establish real-wallet compatibility or deploy firmware to a controller.
 [Repository readiness](docs/repository-status-2026-10-14.md#english) records
 what is included, translated and still awaiting verification.
 
@@ -72,7 +73,7 @@ Use the verified status above for the current release.
 
 ## Related implementations and product comparisons
 
-[Competitor and implementation review](docs/aliro-competitors-2026-10-13.md)
+[Competitor and implementation review](docs/aliro-competitors-2026-10-13.en.md)
 compares Aqara, Nuki, Schlage, esp-aliro, UltraWideLock and other vendor SDKs,
 with source links and practical priorities for this project.
 

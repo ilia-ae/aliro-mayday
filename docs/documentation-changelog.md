@@ -79,6 +79,9 @@ Files:
 
 ### Root / repo contract
 
+- Updated main/PR status for the authorized public merge while retaining the
+  original source-release and hardware-acceptance limits. Clarified that the
+  generic host-tested Aliro core is not a completed Samsung Wallet integration.
 - `docs/README.md` separates current guides from untranslated historical/upstream
   material and states that neither the CSA PDF nor a full Russian standard
   translation is included.
