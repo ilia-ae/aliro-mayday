@@ -9,7 +9,8 @@ Existing third-party permissions are preserved. They are not restricted by the
 project license. Keep their copyright and license texts with redistributions.
 
 - The PM3 Python package (`*.py` at the root and its `tests/`), and
-  `scripts/export-public-source.py`: [MIT](LICENSES/MIT.txt).
+  `scripts/export-public-source.py` and `scripts/verify-public-source.py`:
+  [MIT](LICENSES/MIT.txt).
 - `homekey-esp32/`: rednblkx/HomeKey-ESP32, [MIT](homekey-esp32/LICENSE).
 - Aliro's inherited `NfcManager.*`, `ReaderDataManager.*`, `DDKReaderData.h`,
   admin panel and Svelte UI: HomeKey-ESP32 / DigitalDoorKey, MIT; notices are

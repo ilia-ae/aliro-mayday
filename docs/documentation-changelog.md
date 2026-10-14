@@ -69,6 +69,33 @@ Files:
 - `aliro-esp32/DEBUGGING.md`
 ```
 
+## 2026-10-14
+
+### Summary
+
+- Corrected stale firmware instructions after signed rights/revocation support;
+  added English/Russian versions of the current overview, firmware build/update,
+  policy, test guide and competitor review, with an explicit coverage index.
+
+### Root / repo contract
+
+- `docs/README.md` separates current guides from untranslated historical/upstream
+  material and states that neither the CSA PDF nor a full Russian standard
+  translation is included.
+- `docs/repository-status-2026-10-14.md` records included source versus researched
+  SDKs, initial main/release versus draft PR, license scopes and remaining work.
+- Root README versions link current status; early roadmap/wire notes are marked
+  historical. The competitor review reflects the newly implemented policy subset.
+- Source integrity and current local documentation links gain automated checking.
+
+### `aliro-esp32/` docs
+
+- Replaced obsolete enrollment-disabled status, broad SDK recommendations and
+  incorrect partition/PSRAM descriptions with tested SDK pins and current data.
+- Documented application-only compatibility testing, private backups, rollback
+  limitations, clock requirements and actual hardware acceptance gaps.
+- No firmware, identity, pairing or controller state changed in this doc revision.
+
 ## 2026-04-29
 
 ### Summary

@@ -1,5 +1,7 @@
 # TODO
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](docs/README.md) for verified behavior, build instructions and remaining acceptance work.
+
 Short, step-by-step plan. Tick items as they're done.
 
 ## 1. Hardware bring-up ✅ DONE

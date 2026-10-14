@@ -1,5 +1,7 @@
 # Project Gap Analysis
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](README.md) for verified behavior, build instructions and remaining acceptance work.
+
 This file answers a practical question: what is still missing for the
 project to reach its stated goals?
 

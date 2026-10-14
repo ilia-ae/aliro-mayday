@@ -1,5 +1,7 @@
 # aliro.mayday
 
+[Русский](README.ru.md) · [Documentation index](docs/README.md)
+
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
 DoorLock provisioning and local administration. This repository began as a clean
 source snapshot dated **13 October 2026**, with new Git history.
@@ -31,6 +33,12 @@ The full host suite has two known upstream BLE-flow test failures;
 [testing notes](aliro-esp32/tests/README.md) explain the scope.
 [October update](docs/ddk-update-2026-10-13.md) records the changes and remaining
 hardware acceptance checks.
+
+`main` and the source-snapshot prerelease retain the initial sanitized snapshot.
+The newer document-policy changes and these guides are in
+[draft PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1).
+[Repository readiness](docs/repository-status-2026-10-14.md#english) records
+what is included, translated and still awaiting verification.
 
 ## Build and test
 

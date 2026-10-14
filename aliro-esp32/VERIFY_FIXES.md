@@ -1,5 +1,7 @@
 # Verification checklist — стабильность после фиксов 2026-05-15
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](../docs/README.md) for verified behavior, build instructions and remaining acceptance work.
+
 Каждый пункт отмечать `[x]` после прохождения + короткая заметка (uptime, число попыток, увиденное поведение).
 
 ## 1. Boot health

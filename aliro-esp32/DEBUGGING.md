@@ -1,5 +1,7 @@
 # Debugging aliro-esp32
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](../docs/README.md) for verified behavior, build instructions and remaining acceptance work.
+
 This is a layered system: Matter, WiFi, BLE, NFC (PN532), NVS, Aliro
 state machine. To debug a specific issue, you need to know **which layer
 to look at and how to read the right log lines**. This page is the map.

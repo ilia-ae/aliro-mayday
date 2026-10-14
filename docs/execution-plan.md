@@ -1,5 +1,7 @@
 # Execution Plan
 
+> Historical bring-up/roadmap reference. Its status and assumptions predate the October document-policy update. Use the [current documentation](README.md) for verified behavior, build instructions and remaining acceptance work.
+
 This is the shortest sensible path from the current repo state to a real
 Aliro controller proof on the existing hardware rig.
 

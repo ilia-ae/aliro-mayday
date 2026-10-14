@@ -1,5 +1,7 @@
 # NFC regression tests
 
+[Русский](README.ru.md) · [Documentation index](../../docs/README.md)
+
 These host tests compile the actual firmware adapter, credential operations and
 ReaderDataManager/NVS serializer. Only the hardware transport and ESP NVS API
 are substituted. They exercise cryptographic authentication, old persisted data,
