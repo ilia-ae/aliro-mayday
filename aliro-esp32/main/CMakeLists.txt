@@ -3,6 +3,7 @@ idf_component_register(
         "app_main.cpp"
         "Diag.cpp"
         "AliroDelegate.cpp"
+        "SystemClock.cpp"
         "DoorLockUserStubs.cpp"
         "LockHandlers.cpp"
         # Vendored from rednblkx/HomeKey-ESP32 — see "Reference firmware"

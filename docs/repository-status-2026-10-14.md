@@ -32,12 +32,12 @@ logs or CSA PDF is part of the snapshot. Each bundled license retains its scope;
 project-original code has commercial source-available terms, so the whole
 repository is not OSI Open Source.
 
-Verification covers 55 targeted scenarios: 36 firmware integration, nine
+Verification covers 77 targeted scenarios: 36 firmware integration, 22 provisioning, nine
 cryptographic document-validation and ten rights/revocation cases, plus one empty-CBOR encoder regression. The supported
-suite passes 14/14 executables with AddressSanitizer/UndefinedBehaviorSanitizer.
-The full suite is 14/15, with two known upstream BLE-flow failures. These do not
+suite passes 15/15 executables with AddressSanitizer/UndefinedBehaviorSanitizer.
+The full suite is 15/16, with two known upstream BLE-flow failures. These do not
 establish hardware timing, actual wallet behavior or power-loss durability.
-The application builds at 2,554,304 bytes, leaving 2.56% in its OTA slot.
+The application builds at 2,564,656 bytes, leaving 2.17% in its OTA slot.
 
 The repository now contains a GitHub Actions check for manifest/fixture integrity,
 current local documentation links and the supported host suite. It explicitly
@@ -86,12 +86,12 @@ prerelease сохраняет исходный очищенный снимок. 
 сохраняются; для собственного кода действуют commercial source-available условия,
 поэтому весь репозиторий не является OSI Open Source.
 
-Проверены 55 целевых сценариев: 36 интеграционных, девять криптографических
-и десять по правам/отзыву, плюс проверка пустых CBOR-строк. Поддерживаемые 14/14 executables проходят
-AddressSanitizer/UndefinedBehaviorSanitizer. Полный набор — 14/15: две известные
+Проверены 77 целевых сценариев: 36 интеграционных, 22 provisioning, девять криптографических
+и десять по правам/отзыву, плюс проверка пустых CBOR-строк. Поддерживаемые 15/15 executables проходят
+AddressSanitizer/UndefinedBehaviorSanitizer. Полный набор — 15/16: две известные
 ошибки upstream BLE-flow. Это не доказывает аппаратные тайминги, поведение
 настоящего кошелька или сохранение при внезапном отключении питания.
-Application image — 2 554 304 байт; запас OTA-раздела 2,56%.
+Application image — 2 564 656 байт; запас OTA-раздела 2,17%.
 
 Включена проверка GitHub Actions: manifest, хэши fixtures, локальные ссылки
 актуальных инструкций и поддерживаемый host-набор. Известный failing BLE-flow
@@ -136,3 +136,5 @@ does not prove that SmartThings will accept this reader or issue its Wallet key.
 NFC taps → отказ после удаления/отключения пользователя/перезапуска, с сохранением
 старых ключей iPhone. Другой SDK может помочь с протоколом, но наличие его кода
 не доказывает, что SmartThings примет этот считыватель и выдаст ему Wallet key.
+
+Samsung provisioning preparation and hardware acceptance: [English](samsung-bench-preparation-2026-10-14.en.md) / [Русский](samsung-bench-preparation-2026-10-14.md). The new callbacks are host-tested; actual Wallet issuance remains pending.

@@ -164,6 +164,9 @@ public:
     // Identity material, wired up by FlowRig.
     P256KeyPair endpoint_key{};               // static key; store must match
     std::array<uint8_t, 32> persistent_key{}; // pre-provisioned fast key
+    // Retain the device-side key derived by a completed Standard session.
+    // This models a phone's cache independently of the reader's saved state.
+    void retain_standard_persistent_key();
     std::array<uint8_t, 32> reader_pk_x{};    // reader static key X (provisioned out-of-band)
     // Interface byte fed into the key schedule — the BLE device harness
     // flips this to TransportKind::Ble so both sides derive identical keys.

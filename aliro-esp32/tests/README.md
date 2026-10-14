@@ -51,3 +51,8 @@ An extra encoder regression checks canonical empty byte/text strings and
 required-size accounting. The first Linux UBSan run found a zero-length null
 memcpy that macOS did not diagnose; the firmware and host vendor both carry
 [the same TinyCBOR fix](../components/cbor/LOCAL_PATCHES.md).
+
+`firmware_provisioning_test` compiles the actual AliroDelegate and DoorLockUserStubs
+with SDK boundary types and hardware hooks substituted. Its 22 cases exercise
+slot enumeration, key/reader grants, failure/rollback, old records, clock startup,
+Standard/Fast, reboot and revocation. See [Samsung bench preparation](../../docs/samsung-bench-preparation-2026-10-14.en.md).

@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CURRENT_DOCS = (
     "README.md", "README.ru.md", "THIRD_PARTY_NOTICES.md", "docs/README.md",
     "docs/repository-status-2026-10-14.md",
+    "docs/samsung-bench-preparation-2026-10-14.md",
+    "docs/samsung-bench-preparation-2026-10-14.en.md",
     "docs/aliro-access-policy-2026-10-14.md",
     "docs/aliro-access-policy-2026-10-14.en.md",
     "docs/aliro-competitors-2026-10-13.md",

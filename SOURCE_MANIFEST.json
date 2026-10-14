@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "bb62314dd486786f64942dba57bc39dce75cc522d4c9654e9a02284387a7d3da"
+      "sha256": "3d01cee3f51153fafdc4d0c00edb7c84a0f03b054825617f3b75987f01c96028"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "a9063524286653fb57bbcb0a624423c4b8797b12c64129867e09c40a298b21db"
+      "sha256": "282063bffec9173e515183d4e9351dbe4b0c8a8b3e45d5c04e354916f2bdd5da"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -452,7 +452,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/CMakeLists.txt",
-      "sha256": "572bba877231763d3d0b03ba0e067523f336b05dd8f1628994593da311e892e5"
+      "sha256": "9fdcecf8d577abfd8fb0842ba7f2903bd2e48c3c458c0f040cabc600e691a8a3"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_ble_advertising_test.cpp",
@@ -500,11 +500,11 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/aliro_test_endpoint.cpp",
-      "sha256": "2816780f11a8670445e429a6c6792fa03350e83317ade82ebc9aa18eba5a1fa4"
+      "sha256": "c9b9e4865f59e7ae93460b9e1fb7865b82aa170734d3ebd4ac06b7578cf10d78"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/aliro_test_endpoint.hpp",
-      "sha256": "25144a65660dff0916b897f8a4d4e031d4a2c3b3e9e73a828bd21649a5e58221"
+      "sha256": "902a1a5b4c0a57256da00545c185b6f3a953f1cde702787b7de89b3d63c534e6"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/ble_loopback.cpp",
@@ -8108,11 +8108,11 @@
     },
     {
       "path": "aliro-esp32/main/AliroDelegate.cpp",
-      "sha256": "7e7abceaa3e77b7cf479b6eb482c924d005512a2a0d33e0959b0a46f97652527"
+      "sha256": "47fbd9e27b51dd05b5dc11f8d09e8bb1fcb172be9995f8cf37f85478d7cbaf1d"
     },
     {
       "path": "aliro-esp32/main/AliroDelegate.h",
-      "sha256": "f0f9f090ff9f45ece858e847be5f5d05d7e1e8d17cfc4aedce02ed3f6e082418"
+      "sha256": "7ec97d50a6b059336c6ad84fddaa873c94c435b64fda6a6e000cf2468c101c82"
     },
     {
       "path": "aliro-esp32/main/ByteButtonPanel.cpp",
@@ -8124,7 +8124,7 @@
     },
     {
       "path": "aliro-esp32/main/CMakeLists.txt",
-      "sha256": "4535dc1d33760f8886de8b1be5fe3bf0cd591a6bc2adf269be83e04ba2c79124"
+      "sha256": "69c66e0b9c4564523fb50c06132ebb82063a9cb074955323dbc67b67e1598169"
     },
     {
       "path": "aliro-esp32/main/DDKAuthContext.cpp",
@@ -8152,7 +8152,7 @@
     },
     {
       "path": "aliro-esp32/main/DoorLockUserStubs.cpp",
-      "sha256": "09701ed0058680eab751b9c9d99b489acfc698bb978474d9bc59192dae6a5744"
+      "sha256": "73ec33729af2e2dbba91fc61fc03a0182d9ce3ce63cc708e8d4e6c0f95ff864f"
     },
     {
       "path": "aliro-esp32/main/I2cBus.cpp",
@@ -8176,7 +8176,7 @@
     },
     {
       "path": "aliro-esp32/main/NfcManager.cpp",
-      "sha256": "7b241c41737141844f3a0450a47c193f5c3e209ac2fe57cef3e886d76bcf907b"
+      "sha256": "23e6b1e165b6f37c001070bad32e9a21c7a19150cc41b2afbeb311f9b5feb9a9"
     },
     {
       "path": "aliro-esp32/main/NfcManager.hpp",
@@ -8184,7 +8184,7 @@
     },
     {
       "path": "aliro-esp32/main/OledPanel.cpp",
-      "sha256": "0ed6df145a7e83fe22126e31575a102ca4f12800cdbf27943da377fbb3a9249f"
+      "sha256": "4c3b2c9d1bd1670bc2d4a6e0b161d3c68d598b6064b3596cad4e1b3b2dee1d20"
     },
     {
       "path": "aliro-esp32/main/OledPanel.hpp",
@@ -8220,7 +8220,7 @@
     },
     {
       "path": "aliro-esp32/main/app_main.cpp",
-      "sha256": "6e63943781afae91de9b9048971a01f762637713670c0830c012028a2d68685d"
+      "sha256": "6b6d510462d301ddadc61810f3c905620ae4eb896a21335b8393cc4d90f22a08"
     },
     {
       "path": "aliro-esp32/main/eventStructs.hpp",
@@ -8244,7 +8244,7 @@
     },
     {
       "path": "aliro-esp32/tests/README.md",
-      "sha256": "edd326177babdd4ced8f978c12e1c478a5b52e04ddb23c8e2eba37b81b6c5cbc"
+      "sha256": "73b1faa99843396bbf51292873bcbe7fd43571d4c6b9f2568e123ca46b532867"
     },
     {
       "path": "aliro-esp32/tests/firmware_auth_test.cpp",
@@ -8256,11 +8256,11 @@
     },
     {
       "path": "aliro-esp32/tests/stubs/nvs.cpp",
-      "sha256": "f98712a7427fb50676db8a2163c2a281e655dca5ac165a3f3e7d52f473b7932f"
+      "sha256": "644fa4436618a0e30ffef16cd0d06cba2fda4365b9a0a45c79d34b04092f5482"
     },
     {
       "path": "aliro-esp32/tests/stubs/nvs.h",
-      "sha256": "a8ab60eae891da1146d1533273add398f03cb53f0cef54f7dae656ac33bec32b"
+      "sha256": "729d2b61210380075e236c7e5af4fab26e8e82cd387ae2190c70ebe6de06f9b4"
     },
     {
       "path": "aliro-esp32/tests/stubs/nvs_flash.h",
@@ -8564,7 +8564,7 @@
     },
     {
       "path": "docs/documentation-changelog.md",
-      "sha256": "444c3c3942155bf8d4e49e40a3214202f37be74826c5f77e523c09de70bcf3d5"
+      "sha256": "7e73c12de2036c3e1d098f42309ff4def5dafd3d76947a6aae52d25eebb98ba9"
     },
     {
       "path": "docs/execution-plan.md",
@@ -9384,7 +9384,7 @@
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
-      "sha256": "0e1668bd8582f8dabb572e81bc6ab2fde145175a17a5e2ad2310a9e1765b2abc"
+      "sha256": "41b798f7faf9fbd587804525052a9c58f042518b314edc6e1d36870a8960963c"
     },
     {
       "path": ".github/workflows/source-and-nfc.yml",
@@ -9392,23 +9392,23 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "5646837b27251b76ca8d133a18bfcdbfda79f54f3806443f0aa182b845e71bda"
+      "sha256": "a450968709efeee55ea71406970f3b7e3b5759b5efafa39fcd019bfb3f6f3469"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "9c1d5580b225242a6b21379460fed8c200704643b931eeb2dd1cd98228655e02"
+      "sha256": "399d3d071f41e4e811f0aeaf5737305d848c78c2888d9537a98f8a16e94601f1"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
-      "sha256": "4548a3e86cad0797032b0957e7a12b6bc802052f08afffef7e8304ebaa2608bc"
+      "sha256": "9dcf9b9e4cf57265105aa64da07c0e622f7a26c4a3e94d4207f0d5529521e715"
     },
     {
       "path": "docs/README.md",
-      "sha256": "88170ccb0bedc92a1cc85b9be4524259e9175041d0d36d8ae1a9c11625df0353"
+      "sha256": "f19f362825fcfb7cb51c77bf26e30184cdfc7ebaa9824e13817753ebd66aa1a8"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.en.md",
-      "sha256": "5e0daf90d7039b0ea0a74af6d4c6e00fccbc17b81a4e27401190af0ca4267b48"
+      "sha256": "7a1bd8a5eeebe9e23e75373cbfede475b626ef84e152e2e59cd63f24ae64dfce"
     },
     {
       "path": "docs/aliro-competitors-2026-10-13.en.md",
@@ -9416,15 +9416,83 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "2e286b2fc67078380c2971916e93f87837e45c9a5af0ef1d03046c76695b4e5f"
+      "sha256": "274f869ece0e504eec7e602c4520aab23715192a720813bd83a8a3b7e5bf7c16"
     },
     {
       "path": "scripts/verify-public-source.py",
-      "sha256": "6b7f4caa5839c4ee18d2460df19971906c580ad844e0be84c350a1a8c115210d"
+      "sha256": "c02c43dbeabbd3cb0b0a09cd00529109ad70303b005fd6459427b2867939add7"
     },
     {
       "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
       "sha256": "88533fdfb8cad632840efb0654cbe647bab8740236d75f1b67e71229bb95d0c9"
+    },
+    {
+      "path": "aliro-esp32/main/DoorLockStorageLimits.hpp",
+      "sha256": "904256108446f59730a4b8867a09439a9b4e504b645e0ec52fdf9b6e5dbae31f"
+    },
+    {
+      "path": "aliro-esp32/main/NfcManagerBridge.hpp",
+      "sha256": "8f0f3b0791a6894c896a5b6ada68bad3d8cbf14339aecd6518249ccbc23026db"
+    },
+    {
+      "path": "aliro-esp32/main/P256Validation.hpp",
+      "sha256": "882d29f107577425c5c04a3a21059ad284de1dd913d0ae8cb55152883f88bf09"
+    },
+    {
+      "path": "aliro-esp32/main/ReaderConfigStore.hpp",
+      "sha256": "c70212983b92dc3b30446019607443a3c9f1491ec2bef4b977c151a9c7f9efad"
+    },
+    {
+      "path": "aliro-esp32/main/SystemClock.cpp",
+      "sha256": "5efff4e864e7b750ecf5abba2af63d20d87f6b7b7790ea6bcf20638fa55d52a4"
+    },
+    {
+      "path": "aliro-esp32/main/SystemClock.hpp",
+      "sha256": "47362661d8c91ad523461aab5a383512435755cb64c3e513c5059c0a1dbcdcd7"
+    },
+    {
+      "path": "aliro-esp32/tests/provisioning_test.cpp",
+      "sha256": "84db8559d939893d63099ea54b8d0290098d646d6cbd58bcae3f633f20dfe033"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/app/clusters/door-lock-server/door-lock-delegate.h",
+      "sha256": "356412154041433789429549e88392194afbe3a8f7add3d15bc80f5a0d126819"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/app/clusters/door-lock-server/door-lock-server.h",
+      "sha256": "fa685b85e52f30214e33ea7d933dd3e3cceafae7e26c95e8d7b5d172979a6802"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/app/reporting/reporting.h",
+      "sha256": "fe94fbbc14eab8fb03d6c759daa0ddc02e880d3af747764e320b5d353718c9f1"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/clusters/DoorLock/AttributeIds.h",
+      "sha256": "5a96539e3328aeae8481540087ea33eb3c07475f200441bfd8924487b23a9a8c"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/clusters/DoorLock/ClusterId.h",
+      "sha256": "461d47c54904ac5cc73b90c936cc4d7b8c03c2b17e02f8813d1dcb515ffc2e9f"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/esp_random.h",
+      "sha256": "1daa6765137a874d00971755c941606021e5201740577242f698178f62647f40"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/esp_sntp.h",
+      "sha256": "55b725f3a3f0721de1a0521740ef4949ae095b86dedfc4a5161e03e72fcb6f87"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/provisioning_platform.cpp",
+      "sha256": "118751efd87e064b56b0cfec0fef6ee9efddb710f17722ebd4ecc0a817aeb2fe"
+    },
+    {
+      "path": "docs/samsung-bench-preparation-2026-10-14.en.md",
+      "sha256": "e7571c14b1bc504d9acf1fa75b012eeef037214bbbe87ee57108556795ee0e20"
+    },
+    {
+      "path": "docs/samsung-bench-preparation-2026-10-14.md",
+      "sha256": "10ec5fcb364743635dd9222fe59a9b364220b71d366e393256ab769b56077617"
     }
   ],
   "omitted": [

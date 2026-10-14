@@ -1,7 +1,9 @@
 #include "AliroDelegate.h"
 #include "Diag.h"
 #include "ReaderDataManager.hpp"
-#include "NfcManager.hpp"
+#include "NfcManagerBridge.hpp"
+#include "DoorLockStorageLimits.hpp"
+#include "ReaderConfigStore.hpp"
 #include "DDKReaderData.h"
 #include "ReaderCredentialOps.hpp"
 #include "ReaderIdentityOps.hpp"
@@ -42,10 +44,6 @@ constexpr size_t kSupportedExpeditedVersionCount =
 // Therefore *every* piece of Aliro reader state must be persistent.
 constexpr const char * kNs       = "aliro_cfg";
 constexpr const char * kKeySubId = "subId";        // 16 B blob
-constexpr const char * kKeySign  = "signKey";      // 32 B blob
-constexpr const char * kKeyVer   = "verKey";       // up to 65 B blob (length implicit)
-constexpr const char * kKeyGrpId = "grpId";        // 16 B blob (set iff present)
-constexpr const char * kKeyGrpRs = "grpRsKey";     // 16 B blob (set iff present)
 
 bool nvs_open_rw(nvs_handle_t & h)
 {
@@ -57,22 +55,6 @@ bool nvs_open_rw(nvs_handle_t & h)
     return true;
 }
 
-bool nvs_load_blob(nvs_handle_t h, const char * key, void * dst, size_t & inout_len)
-{
-    size_t len = inout_len;
-    esp_err_t err = nvs_get_blob(h, key, dst, &len);
-    if (err == ESP_ERR_NVS_NOT_FOUND) {
-        inout_len = 0;
-        return false;
-    }
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "nvs_get_blob(%s) err 0x%x", key, err);
-        inout_len = 0;
-        return false;
-    }
-    inout_len = len;
-    return true;
-}
 
 }  // namespace
 
@@ -81,76 +63,41 @@ AliroDelegate::AliroDelegate()
     nvs_handle_t h;
     bool nvs_ok = nvs_open_rw(h);
 
-    // 1) Reader Group Sub-Identifier — 16 bytes, generated once at first
-    //    boot and persisted forever. Spec mandates a stable value; iOS 26
-    //    reads it back to fingerprint the reader and rejects mismatches.
+    // Retain a valid lifetime sub-ID exactly. An unreadable existing value
+    // must not be replaced with a new random identity during an update.
     if (nvs_ok) {
-        size_t sub_len = sizeof(reader_group_sub_identifier_);
-        if (!nvs_load_blob(h, kKeySubId, reader_group_sub_identifier_, sub_len) ||
-            sub_len != sizeof(reader_group_sub_identifier_)) {
-            esp_fill_random(reader_group_sub_identifier_,
-                            sizeof(reader_group_sub_identifier_));
-            esp_err_t err = nvs_set_blob(h, kKeySubId, reader_group_sub_identifier_,
-                                         sizeof(reader_group_sub_identifier_));
-            if (err == ESP_OK) nvs_commit(h);
-            ESP_LOGI(TAG, "[delegate] sub-id generated fresh, persisted (err=0x%x)", err);
-        } else {
-            ESP_LOGI(TAG, "[delegate] sub-id loaded from NVS");
+        size_t length = sizeof(reader_group_sub_identifier_);
+        auto result = nvs_get_blob(h, kKeySubId, reader_group_sub_identifier_, &length);
+        if (result == ESP_OK && length == sizeof(reader_group_sub_identifier_)) {
+            sub_identifier_persisted_ = true;
+        } else if (result == ESP_ERR_NVS_NOT_FOUND) {
+            esp_fill_random(reader_group_sub_identifier_, sizeof(reader_group_sub_identifier_));
+            result = nvs_set_blob(h, kKeySubId, reader_group_sub_identifier_, sizeof(reader_group_sub_identifier_));
+            if (result == ESP_OK) result = nvs_commit(h);
+            sub_identifier_persisted_ = result == ESP_OK;
         }
-    } else {
-        // NVS unavailable — fall back to per-boot random (matches old behaviour).
-        esp_fill_random(reader_group_sub_identifier_,
-                        sizeof(reader_group_sub_identifier_));
-        ESP_LOGW(TAG, "[delegate] NVS unavailable; sub-id is per-boot only");
+        nvs_close(h);
     }
-
-    // 2) Reader signing key (secret, 32B) + verification key (public, up to 65B).
-    if (nvs_ok) {
-        size_t sk_len = sizeof(reader_signing_key_);
-        bool   sk_ok  = nvs_load_blob(h, kKeySign, reader_signing_key_, sk_len) &&
-                        sk_len == sizeof(reader_signing_key_);
-        size_t vk_len = sizeof(reader_verification_key_);
-        bool   vk_ok  = nvs_load_blob(h, kKeyVer, reader_verification_key_, vk_len) &&
-                        vk_len > 0 && vk_len <= sizeof(reader_verification_key_);
-        if (sk_ok && vk_ok) {
-            reader_verification_key_len_ = vk_len;
-            ESP_LOGI(TAG, "[delegate] reader keys loaded from NVS (verKey=%uB)",
-                     (unsigned)vk_len);
-        } else {
-            // Either missing or partial — leave zero, accessory not provisioned.
-            memset(reader_signing_key_, 0, sizeof(reader_signing_key_));
-            memset(reader_verification_key_, 0, sizeof(reader_verification_key_));
-            reader_verification_key_len_ = 0;
-            ESP_LOGI(TAG, "[delegate] no reader keys in NVS (sk_ok=%d vk_ok=%d)",
-                     sk_ok, vk_ok);
-        }
+    reader_config::Config config;
+    const auto loaded = reader_config::load(config);
+    reader_config_read_ok_ = loaded == reader_config::Load::Valid || loaded == reader_config::Load::Empty;
+    reader_config_valid_ = loaded == reader_config::Load::Valid;
+    if (reader_config_valid_) {
+        std::copy(config.signing.begin(), config.signing.end(), reader_signing_key_);
+        std::copy(config.verification.begin(), config.verification.end(), reader_verification_key_);
+        reader_verification_key_len_ = sizeof(reader_verification_key_);
+        std::copy(config.group.begin(), config.group.end(), reader_group_identifier_);
+        reader_group_id_set_ = true;
+        std::copy(config.resolving.begin(), config.resolving.end(), group_resolving_key_);
+        group_resolving_key_set_ = config.has_resolving_key;
     }
-
-    // 3) Reader group identifier (16B).
-    if (nvs_ok) {
-        size_t gid_len = sizeof(reader_group_identifier_);
-        if (nvs_load_blob(h, kKeyGrpId, reader_group_identifier_, gid_len) &&
-            gid_len == sizeof(reader_group_identifier_)) {
-            reader_group_id_set_ = true;
-            ESP_LOGI(TAG, "[delegate] reader group-id loaded from NVS");
-        }
-    }
-
-    // 4) Group resolving key (16B, optional).
-    if (nvs_ok) {
-        size_t grk_len = sizeof(group_resolving_key_);
-        if (nvs_load_blob(h, kKeyGrpRs, group_resolving_key_, grk_len) &&
-            grk_len == sizeof(group_resolving_key_)) {
-            group_resolving_key_set_ = true;
-            ESP_LOGI(TAG, "[delegate] group-resolving-key loaded from NVS");
-        }
-    }
-
-    if (nvs_ok) nvs_close(h);
+    ESP_LOGI(TAG, "[delegate] reader config valid=%d stable-sub-id=%d storage-ok=%d",
+        reader_config_valid_, sub_identifier_persisted_, reader_config_read_ok_);
 }
 
 CHIP_ERROR AliroDelegate::GetAliroReaderVerificationKey(chip::MutableByteSpan & out)
 {
+    if (!reader_config_read_ok_) return CHIP_ERROR_INTERNAL;
     if (reader_verification_key_len_ == 0) {
         // Not provisioned — return empty span so Apple sees "no reader yet".
         out.reduce_size(0);
@@ -180,6 +127,7 @@ CHIP_ERROR AliroDelegate::GetAliroReaderGroupIdentifier(chip::MutableByteSpan & 
 
 CHIP_ERROR AliroDelegate::GetAliroReaderGroupSubIdentifier(chip::MutableByteSpan & out)
 {
+    if (!sub_identifier_persisted_) return CHIP_ERROR_INTERNAL;
     if (out.size() < sizeof(reader_group_sub_identifier_)) {
         return CHIP_ERROR_BUFFER_TOO_SMALL;
     }
@@ -236,14 +184,14 @@ uint16_t AliroDelegate::GetNumberOfAliroCredentialIssuerKeysSupported()
 {
     // Apple Home appears to want at least one slot. We support several so
     // multiple HomeKit Home users can each hold their own credential issuer.
-    return 5;
+    return storage::issuer_keys;
 }
 
 uint16_t AliroDelegate::GetNumberOfAliroEndpointKeysSupported()
 {
     // Endpoint keys = per-device keys. 16 covers a small home (~5 people
     // with 2-3 Apple devices each). Spec only mandates >= 1.
-    return 16;
+    return storage::endpoint_keys;
 }
 
 CHIP_ERROR AliroDelegate::SetAliroReaderConfig(
@@ -258,62 +206,58 @@ CHIP_ERROR AliroDelegate::SetAliroReaderConfig(
              (unsigned)groupIdentifier.size(),
              groupResolvingKey.HasValue() ? "yes" : "no");
 
-    if (signingKey.size() != sizeof(reader_signing_key_)) {
-        ESP_LOGE(TAG, "[delegate] signingKey wrong size: %u (want %u)",
-                 (unsigned)signingKey.size(),
-                 (unsigned)sizeof(reader_signing_key_));
+    if (!sub_identifier_persisted_) return CHIP_ERROR_INTERNAL;
+    // NFC-only reader: the server rejects a GroupResolvingKey without ALBU.
+    // Validate the delegate boundary as well as the incoming Matter command.
+    if (signingKey.size() != 32 || verificationKey.size() != 65 || groupIdentifier.size() != 16 || !groupIdentifier.data() ||
+        groupResolvingKey.HasValue() || !keys::matchingKeyPair(signingKey.data(), signingKey.size(),
+                                                            verificationKey.data(), verificationKey.size()))
         return CHIP_ERROR_INVALID_ARGUMENT;
-    }
-    if (verificationKey.size() == 0 ||
-        verificationKey.size() > sizeof(reader_verification_key_)) {
-        ESP_LOGE(TAG, "[delegate] verificationKey wrong size: %u",
-                 (unsigned)verificationKey.size());
-        return CHIP_ERROR_INVALID_ARGUMENT;
-    }
-    if (groupIdentifier.size() != sizeof(reader_group_identifier_)) {
-        ESP_LOGE(TAG, "[delegate] groupIdentifier wrong size: %u (want 16)",
-                 (unsigned)groupIdentifier.size());
-        return CHIP_ERROR_INVALID_ARGUMENT;
-    }
-
-    memcpy(reader_signing_key_, signingKey.data(), sizeof(reader_signing_key_));
-    memcpy(reader_verification_key_, verificationKey.data(), verificationKey.size());
-    reader_verification_key_len_ = verificationKey.size();
-    memcpy(reader_group_identifier_, groupIdentifier.data(),
-           sizeof(reader_group_identifier_));
+    reader_config::Config previous;
+    previous.configured = reader_config_valid_;
+    previous.has_resolving_key = group_resolving_key_set_;
+    std::copy_n(reader_signing_key_,32,previous.signing.begin());
+    std::copy_n(reader_verification_key_,65,previous.verification.begin());
+    std::copy_n(reader_group_identifier_,16,previous.group.begin());
+    std::copy_n(group_resolving_key_,16,previous.resolving.begin());
+    const bool previously_synced = reader_data_synced_;
+    reader_config::Config config;
+    config.configured = true;
+    std::copy(signingKey.begin(), signingKey.end(), config.signing.begin());
+    std::copy(verificationKey.begin(), verificationKey.end(), config.verification.begin());
+    std::copy(groupIdentifier.begin(), groupIdentifier.end(), config.group.begin());
+    if (!reader_config::save(config)) return CHIP_ERROR_INTERNAL;
+    std::copy(config.signing.begin(), config.signing.end(), reader_signing_key_);
+    std::copy(config.verification.begin(), config.verification.end(), reader_verification_key_);
+    reader_verification_key_len_ = 65;
+    std::copy(config.group.begin(), config.group.end(), reader_group_identifier_);
     reader_group_id_set_ = true;
+    group_resolving_key_set_ = false;
+    memset(group_resolving_key_, 0, sizeof(group_resolving_key_));
+    reader_config_valid_ = true;
+    reader_config_read_ok_ = true;
 
-    if (groupResolvingKey.HasValue() &&
-        groupResolvingKey.Value().size() == sizeof(group_resolving_key_)) {
-        memcpy(group_resolving_key_, groupResolvingKey.Value().data(),
-               sizeof(group_resolving_key_));
-        group_resolving_key_set_ = true;
-    } else {
-        group_resolving_key_set_ = false;
-        memset(group_resolving_key_, 0, sizeof(group_resolving_key_));
+    // Mirror the keys into the rednblkx ReaderDataManager so NfcManager's
+    // DDK auth precompute can build an authentication context. Without
+    // this NfcManager keeps logging "reader not provisioned yet, retrying…".
+    reader_data_synced_ = syncToReaderDataManager();
+    if (!reader_data_synced_) {
+        // The NFC store rejected the update. Restore the previous reader
+        // record so an unconfigured commissioner can retry after the error.
+        const bool rolled_back = reader_config::save(previous);
+        std::copy(previous.signing.begin(),previous.signing.end(),reader_signing_key_);
+        std::copy(previous.verification.begin(),previous.verification.end(),reader_verification_key_);
+        reader_verification_key_len_ = previous.configured ? 65 : 0;
+        std::copy(previous.group.begin(),previous.group.end(),reader_group_identifier_);
+        reader_group_id_set_ = previous.configured;
+        std::copy(previous.resolving.begin(),previous.resolving.end(),group_resolving_key_);
+        group_resolving_key_set_ = previous.has_resolving_key;
+        reader_config_valid_ = previous.configured;
+        reader_config_read_ok_ = rolled_back;
+        reader_data_synced_ = rolled_back && previously_synced;
+        nfc::invalidateReader(nfc_manager_);
+        return CHIP_ERROR_INTERNAL;
     }
-
-    // Persist immediately. Apple iOS 26 will read these back on next CASE
-    // session and any inconsistency stalls "Access Codes" / "Set Up Home Key".
-    nvs_handle_t h;
-    if (nvs_open_rw(h)) {
-        nvs_set_blob(h, kKeySign, reader_signing_key_, sizeof(reader_signing_key_));
-        nvs_set_blob(h, kKeyVer,  reader_verification_key_, reader_verification_key_len_);
-        nvs_set_blob(h, kKeyGrpId, reader_group_identifier_,
-                     sizeof(reader_group_identifier_));
-        if (group_resolving_key_set_) {
-            nvs_set_blob(h, kKeyGrpRs, group_resolving_key_,
-                         sizeof(group_resolving_key_));
-        } else {
-            nvs_erase_key(h, kKeyGrpRs);
-        }
-        nvs_commit(h);
-        nvs_close(h);
-        ESP_LOGI(TAG, "[delegate] reader config persisted to NVS");
-    } else {
-        ESP_LOGE(TAG, "[delegate] FAILED to persist reader config — accessory will lose pairing on reboot");
-    }
-
     diag::note_aliro_phase("SetReaderConfig",
         groupResolvingKey.HasValue() ? "with-grpResolv" : "no-grpResolv");
     ESP_LOGI(TAG, "[delegate] SetAliroReaderConfig OK — reader provisioned");
@@ -322,17 +266,12 @@ CHIP_ERROR AliroDelegate::SetAliroReaderConfig(
     // between orange and green.
     lockind::set_locked();
 
-    // Mirror the keys into the rednblkx ReaderDataManager so NfcManager's
-    // DDK auth precompute can build an authentication context. Without
-    // this NfcManager keeps logging "reader not provisioned yet, retrying…".
-    syncToReaderDataManager();
 
     // ECP polling data and auth-cache must both be refreshed after every
     // key change. Upstream HomeKey-ESP32 wires this through HK_BUS_TOPIC
     // which we don't run; do it directly via the NfcManager pointer.
     if (nfc_manager_ != nullptr) {
-        nfc_manager_->updateEcpData();
-        nfc_manager_->invalidateAuthCacheExternal();
+        nfc::refreshReader(nfc_manager_);
         ESP_LOGI(TAG, "[delegate] NfcManager kicked: ECP data + auth cache refreshed");
     }
 
@@ -361,38 +300,32 @@ CHIP_ERROR AliroDelegate::ClearAliroReaderConfig()
     memset(group_resolving_key_, 0, sizeof(group_resolving_key_));
     group_resolving_key_set_ = false;
 
-    // Wipe NVS too. Sub-id deliberately stays — spec wants it to live for
-    // the lifetime of the lock so Apple Home re-recognises us across
-    // re-pairings.
-    nvs_handle_t h;
-    if (nvs_open_rw(h)) {
-        nvs_erase_key(h, kKeySign);
-        nvs_erase_key(h, kKeyVer);
-        nvs_erase_key(h, kKeyGrpId);
-        nvs_erase_key(h, kKeyGrpRs);
-        nvs_commit(h);
-        nvs_close(h);
-    }
+    reader_config_valid_ = false;
+    reader_data_synced_ = false;
+    // A durable clear marker takes precedence over retained legacy fields.
+    // The stable lifetime sub-ID is intentionally outside this record.
+    const bool saved = reader_config::save({});
+    reader_config_read_ok_ = saved;
+    // On an explicitly requested clear, remove obsolete fields too so an
+    // older firmware cannot rediscover a supposedly cleared reader config.
+    const bool legacy_cleared = saved && reader_config::eraseLegacy();
     diag::note_aliro_phase("ClearReaderConfig", "");
 
     // Wipe the readerData_t mirror too — NfcManager auth precompute will
     // then go idle and stop holding stale ECC public keys in RAM.
-    if (reader_data_sink_ != nullptr) {
-        reader_data_sink_->deleteAllReaderData();
-    }
+    const bool mirror_cleared = reader_data_sink_ == nullptr || reader_data_sink_->deleteAllReaderData();
     if (nfc_manager_ != nullptr) {
-        nfc_manager_->updateEcpData();
-        nfc_manager_->invalidateAuthCacheExternal();
+        nfc::refreshReader(nfc_manager_);
     }
-    return CHIP_NO_ERROR;
+    return saved && mirror_cleared && legacy_cleared ? CHIP_NO_ERROR : CHIP_ERROR_INTERNAL;
 }
 
 void AliroDelegate::setReaderDataSink(ReaderDataManager * rdm)
 {
     reader_data_sink_ = rdm;
-    if (rdm != nullptr && isProvisioned()) {
+    if (rdm != nullptr && reader_config_valid_ && sub_identifier_persisted_) {
         ESP_LOGI(TAG, "[delegate] reader data sink wired, initial sync");
-        syncToReaderDataManager();
+        reader_data_synced_ = syncToReaderDataManager();
     }
 }
 
@@ -401,19 +334,19 @@ void AliroDelegate::setNfcManager(NfcManager * nfc)
     nfc_manager_ = nfc;
     if (nfc != nullptr && isProvisioned()) {
         ESP_LOGI(TAG, "[delegate] NfcManager wired, refreshing ECP polling data");
-        nfc->updateEcpData();
+        nfc::refreshReader(nfc);
     }
 }
 
-void AliroDelegate::syncToReaderDataManager()
+bool AliroDelegate::syncToReaderDataManager()
 {
     if (reader_data_sink_ == nullptr) {
         ESP_LOGW(TAG, "[delegate] readerDataSink not wired yet — skipping sync");
-        return;
+        return true;
     }
-    if (!isProvisioned()) {
+    if (!reader_config_valid_ || !sub_identifier_persisted_) {
         ESP_LOGW(TAG, "[delegate] not provisioned — skipping sync");
-        return;
+        return false;
     }
 
     // Map AliroDelegate fields → DDK readerData_t. Field semantics (DDK
@@ -461,8 +394,10 @@ void AliroDelegate::syncToReaderDataManager()
                  (unsigned)rd.reader_sk.size(),
                  (unsigned)rd.reader_pk.size(),
                  (unsigned)rd.reader_gid.size());
+        return true;
     } else {
         ESP_LOGE(TAG, "[delegate] ReaderDataManager::updateReaderData failed");
+        return false;
     }
 }
 
@@ -491,7 +426,7 @@ std::vector<uint8_t> derive_id_from_pk(const chip::ByteSpan & pk)
 // Validate a 65-byte uncompressed P-256 public key (`0x04 ‖ X(32) ‖ Y(32)`).
 bool valid_uncompressed_pk(const chip::ByteSpan & pk)
 {
-    return pk.size() == 65 && pk.data()[0] == 0x04;
+    return keys::validPublicKey(pk.data(), pk.size());
 }
 
 }  // namespace
@@ -518,7 +453,7 @@ bool AliroDelegate::syncCredentialIssuerKey(uint16_t idx, chip::ByteSpan publicK
         found->credential_index = idx;
     });
     if (!saved) ESP_LOGE(TAG, "Issuer credential persistence failed");
-    if (nfc_manager_) nfc_manager_->invalidateAuthCacheExternal();
+    nfc::invalidateReader(nfc_manager_);
     return saved;
 }
 
@@ -563,7 +498,7 @@ bool AliroDelegate::syncCredentialEndpointKey(uint16_t idx, chip::ByteSpan publi
         data.issuers.front().endpoints.push_back(std::move(endpoint));
     });
     if (!saved) ESP_LOGE(TAG, "Endpoint credential persistence failed");
-    if (nfc_manager_) nfc_manager_->invalidateAuthCacheExternal();
+    nfc::invalidateReader(nfc_manager_);
     return saved;
 }
 
@@ -574,7 +509,7 @@ bool AliroDelegate::clearCredential(uint16_t idx, uint8_t type, chip::ByteSpan p
     const bool saved = reader_data_sink_->mutateReaderData([&](readerData_t& data) {
         credentials::revoke(data, type, idx, key);
     });
-    if (nfc_manager_) nfc_manager_->invalidateAuthCacheExternal();
+    nfc::invalidateReader(nfc_manager_);
     return saved;
 }
 
@@ -590,7 +525,7 @@ bool AliroDelegate::reconcileCredentials(const std::vector<credentials::Provisio
     const bool saved = reader_data_sink_->mutateReaderData([&](readerData_t& data) {
         credentials::reconcile(data, live);
     });
-    if (nfc_manager_) nfc_manager_->invalidateAuthCacheExternal();
+    nfc::invalidateReader(nfc_manager_);
     return saved;
 }
 

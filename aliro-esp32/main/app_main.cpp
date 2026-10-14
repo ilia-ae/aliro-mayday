@@ -26,6 +26,8 @@
 
 #include "Diag.h"
 #include "AliroDelegate.h"
+#include "DoorLockStorageLimits.hpp"
+#include "SystemClock.hpp"
 #include "NfcManager.hpp"
 #if CONFIG_ALIRO_BYTEBUTTON_PANEL
 #include "ByteButtonPanel.hpp"
@@ -662,9 +664,9 @@ extern "C" void app_main()
         namespace dl_attr = cluster::door_lock::attribute;
         namespace dl_cmd  = cluster::door_lock::command;
         namespace dl_evt  = cluster::door_lock::event;
-        dl_attr::create_number_of_total_users_supported(door_lock_cluster, 5);
+        dl_attr::create_number_of_total_users_supported(door_lock_cluster, aliro::storage::users);
         dl_attr::create_credential_rules_support(door_lock_cluster, 0x01); // Single
-        dl_attr::create_number_of_credentials_supported_per_user(door_lock_cluster, 3);
+        dl_attr::create_number_of_credentials_supported_per_user(door_lock_cluster, aliro::storage::credentials_per_user);
         dl_attr::create_expiring_user_timeout(door_lock_cluster, 0);
 
         // 3) USR-mandatory commands.
@@ -744,6 +746,7 @@ extern "C" void app_main()
         return;
     }
     ESP_LOGI(TAG, "[init] esp-matter started");
+    aliro::startSystemClock();
 
     // BasicInformation::ProductName / VendorName overridden via compile-
     // time defines (see main/CMakeLists.txt: CHIP_DEVICE_CONFIG_DEVICE_*).
@@ -926,7 +929,8 @@ extern "C" void app_main()
                 const auto scheduled = chip::DeviceLayer::PlatformMgr().ScheduleWork(
                     [](intptr_t arg) {
                         std::unique_ptr<EventHKTap> accepted(reinterpret_cast<EventHKTap*>(arg));
-                        if (!s_reader_data_manager.authorizationCurrent(accepted->issuerId,
+                        if (!aliro::instance().isProvisioned() ||
+                            !s_reader_data_manager.authorizationCurrent(accepted->issuerId,
                             accepted->endpointId, accepted->credentialRevision) ||
                             !aliro_user_access_allowed(s_reader_data_manager.getReaderDataCopy(),
                                 accepted->issuerId, accepted->endpointId)) {
