@@ -5,9 +5,9 @@
 Experimental ESP32-S3 + PN532 controller with Matter DoorLock provisioning,
 NVS credential storage and local administration. The iPhone Standard/Fast path
 worked on the May 2026 bench. The October update builds and passes the supported
-host suite; real iPhone regression and Samsung Wallet tests remain pending
-because the controller is offline. A logical unlock is tested; a physical relay
-output and Aliro certification are not established.
+host suite; real iPhone regression and Samsung Wallet tests remain pending.
+The updated application has not been installed. A logical unlock is tested;
+a physical relay output and Aliro certification are not established.
 
 ## Current implementation
 
@@ -85,7 +85,8 @@ There is little room for additional firmware code without another size review.
 ## Existing hardware and configuration
 
 The active bench target is ESP32-S3 + PN532 on SPI. Wiring and board variants
-are recorded in [hardware-reference.md](../docs/hardware-reference.md).
+are recorded in the [labelled wiring guide](../docs/wiring.en.md) and
+[hardware-reference.md](../docs/hardware-reference.md).
 `sdkconfig.defaults` enables optional octal PSRAM with ignore-not-found and
 currently selects 16 MB flash. Confirm the actual module's memory before a
 first installation. `partitions.csv` has two 2.5 MB OTA slots, separate
