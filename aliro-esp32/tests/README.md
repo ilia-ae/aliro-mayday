@@ -46,3 +46,8 @@ UBSAN_OPTIONS=halt_on_error=1 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /tmp/
 
 LeakSanitizer is unavailable on this macOS runtime; the run checks AddressSanitizer
 and UndefinedBehaviorSanitizer errors. The normal build defaults to sanitizers off.
+
+An extra encoder regression checks canonical empty byte/text strings and
+required-size accounting. The first Linux UBSan run found a zero-length null
+memcpy that macOS did not diagnose; the firmware and host vendor both carry
+[the same TinyCBOR fix](../components/cbor/LOCAL_PATCHES.md).

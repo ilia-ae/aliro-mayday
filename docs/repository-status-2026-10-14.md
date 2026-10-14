@@ -33,7 +33,7 @@ project-original code has commercial source-available terms, so the whole
 repository is not OSI Open Source.
 
 Verification covers 55 targeted scenarios: 36 firmware integration, nine
-cryptographic document-validation and ten rights/revocation cases. The supported
+cryptographic document-validation and ten rights/revocation cases, plus one empty-CBOR encoder regression. The supported
 suite passes 14/14 executables with AddressSanitizer/UndefinedBehaviorSanitizer.
 The full suite is 14/15, with two known upstream BLE-flow failures. These do not
 establish hardware timing, actual wallet behavior or power-loss durability.
@@ -87,7 +87,7 @@ translated; the standard's full Russian translation is absent. See the
 поэтому весь репозиторий не является OSI Open Source.
 
 Проверены 55 целевых сценариев: 36 интеграционных, девять криптографических
-и десять по правам/отзыву. Поддерживаемые 14/14 executables проходят
+и десять по правам/отзыву, плюс проверка пустых CBOR-строк. Поддерживаемые 14/14 executables проходят
 AddressSanitizer/UndefinedBehaviorSanitizer. Полный набор — 14/15: две известные
 ошибки upstream BLE-flow. Это не доказывает аппаратные тайминги, поведение
 настоящего кошелька или сохранение при внезапном отключении питания.

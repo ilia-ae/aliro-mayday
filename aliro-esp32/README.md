@@ -79,7 +79,7 @@ The `just aliro-build` helper assumes SDK installations under the user's usual
 
 The checked application image is **2,554,304 bytes**, with **67,136 bytes (2.56%)**
 free in a `0x280000` OTA slot. Its SHA-256 is
-`e4090fbe1b4e2220f4d8b8ab8e08a9f4d74ad20885fffe9fae7d0256ea8f19c2`.
+`989787603cdddd82647a82781082346ac1445126b1287eeab09269151ccf208f`.
 There is little room for additional firmware code without another size review.
 
 ## Existing hardware and configuration

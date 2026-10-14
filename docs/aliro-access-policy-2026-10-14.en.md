@@ -114,7 +114,7 @@ esp-matter 8d56152.
 
 The application image is **2,554,304 bytes**, leaving **67,136 bytes (2.56%)** in
 the existing OTA partition. SHA-256:
-`e4090fbe1b4e2220f4d8b8ab8e08a9f4d74ad20885fffe9fae7d0256ea8f19c2`.
+`989787603cdddd82647a82781082346ac1445126b1287eeab09269151ccf208f`.
 The targeted suite has **36 firmware integration cases**, **9 cryptographic
 document-validation cases** and **10 AccessData/revocation cases**. It compiles
 the actual adapter and NVS serializer and the firmware's vendored tinycbor.
@@ -128,3 +128,8 @@ hardware, then Samsung Wallet/SmartThings, preserving NVS and pairing.
 Source: [Aliro Specification 1.0, §7.3–7.6](https://csa-iot.org/wp-content/uploads/2026/02/26-42802-001_Aliro_1.0_specification.pdf).
 The [initial validator port](aliro-porting-2026-10-13.md) is historical first-stage
 context, not the current access-policy status.
+
+The additional Ubuntu/Clang run found a null-pointer memcpy for an empty CBOR
+payload. The fix preserves canonical bytes and required-size accounting; a
+separate regression checks both boundaries.
+[TinyCBOR patch](../aliro-esp32/components/cbor/LOCAL_PATCHES.md).

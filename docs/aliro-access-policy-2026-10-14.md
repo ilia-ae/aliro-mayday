@@ -112,7 +112,7 @@ functional failures (completion status и двойной Time Sync), BLE access
 transport не включён в прошивку. LeakSanitizer на данном macOS недоступен.
 ESP-IDF 5.4.4 / esp-matter 8d56152: firmware build успешен.
 Application image — 2554304 байт, свободно 67136 байт (2.56%)
-в прежнем OTA-разделе. SHA-256: `e4090fbe1b4e2220f4d8b8ab8e08a9f4d74ad20885fffe9fae7d0256ea8f19c2`. Набор включает
+в прежнем OTA-разделе. SHA-256: `989787603cdddd82647a82781082346ac1445126b1287eeab09269151ccf208f`. Набор включает
 36 firmware integration cases, 9 криптографических document-validation cases
 и 10 AccessData/revocation cases. Проверяются реальный adapter и NVS serializer,
 тот же vendored tinycbor, что в firmware, цепочки GET RESPONSE, права/clock/expiry,
@@ -124,3 +124,8 @@ iPhone на старом ключе и Samsung Wallet/SmartThings, с сохра
 
 Основа: [Aliro Specification 1.0, §7.3–7.6](https://csa-iot.org/wp-content/uploads/2026/02/26-42802-001_Aliro_1.0_specification.pdf).
 Исходный [порт валидатора](aliro-porting-2026-10-13.md) остаётся историей первого этапа.
+
+Дополнительная проверка на Ubuntu/Clang выявила вызов memcpy с нулевым
+указателем для пустого CBOR payload. Исправление сохраняет канонические байты
+и расчёт требуемого размера; отдельный регрессионный тест проверяет обе границы.
+[Описание патча TinyCBOR](../aliro-esp32/components/cbor/LOCAL_PATCHES.md).

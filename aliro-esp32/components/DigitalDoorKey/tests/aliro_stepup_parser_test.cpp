@@ -26,6 +26,7 @@
 #include "ddk/aliro/DocumentVerifier.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <cbor.h>
 
 #include <array>
 #include <map>
@@ -34,6 +35,31 @@
 #include <vector>
 
 using namespace aliro_test;
+
+TEST_CASE("Empty CBOR strings preserve canonical bytes and size accounting",
+          "[cbor][step-up]")
+{
+    std::array<uint8_t, 3> output{};
+    CborEncoder encoder, array;
+    SECTION("exactly sized buffer") {
+        cbor_encoder_init(&encoder, output.data(), output.size(), 0);
+        REQUIRE(cbor_encoder_create_array(&encoder, &array, 2) == CborNoError);
+        REQUIRE(cbor_encode_byte_string(&array, nullptr, 0) == CborNoError);
+        REQUIRE(cbor_encode_text_string(&array, nullptr, 0) == CborNoError);
+        REQUIRE(cbor_encoder_close_container(&encoder, &array) == CborNoError);
+        REQUIRE(cbor_encoder_get_buffer_size(&encoder, output.data()) == 3);
+        REQUIRE((output == std::array<uint8_t, 3>{0x82, 0x40, 0x60}));
+    }
+    SECTION("header-only buffer still reports missing payload headers") {
+        cbor_encoder_init(&encoder, output.data(), 1, 0);
+        REQUIRE(cbor_encoder_create_array(&encoder, &array, 2) == CborNoError);
+        REQUIRE(cbor_encode_byte_string(&array, nullptr, 0) == CborErrorOutOfMemory);
+        REQUIRE(cbor_encode_text_string(&array, nullptr, 0) == CborErrorOutOfMemory);
+        REQUIRE(cbor_encoder_close_container(&encoder, &array) == CborErrorOutOfMemory);
+        REQUIRE(cbor_encoder_get_extra_bytes_needed(&encoder) == 2);
+        REQUIRE(output[0] == 0x82);
+    }
+}
 
 namespace {
 

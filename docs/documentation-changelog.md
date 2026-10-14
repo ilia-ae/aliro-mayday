@@ -90,6 +90,9 @@ Files:
 
 ### `aliro-esp32/` docs
 
+- Follow-up Linux UBSan found a zero-length null memcpy in vendored TinyCBOR;
+  documented the minimal fix, canonical-bytes/size-accounting regression and
+  fresh firmware image hash. The application size remains unchanged.
 - Replaced obsolete enrollment-disabled status, broad SDK recommendations and
   incorrect partition/PSRAM descriptions with tested SDK pins and current data.
 - Documented application-only compatibility testing, private backups, rollback

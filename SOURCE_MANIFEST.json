@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "6d75128f206788145b7ab2f917b139d04031ca6f67ef31b85b0ea7651d7374ee"
+      "sha256": "a9063524286653fb57bbcb0a624423c4b8797b12c64129867e09c40a298b21db"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -76,7 +76,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/UPSTREAM.md",
-      "sha256": "96c220594711cb3d4acbed82f79ffda7ae535af92f3663c9e676663921e5e53e"
+      "sha256": "a5da1b9519d7295928b4b4406b8679b0de9145695e206fee990fc1c366d133c0"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/idf_component.yml",
@@ -484,7 +484,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_stepup_parser_test.cpp",
-      "sha256": "a5fbc29cf79f92aca20f5ab58d8d9b4deb03863de52a0f4b27f68cc906607669"
+      "sha256": "5df582d0eb0b78832d2d041434af5842532ca42f34db378fd80000a2cfbf5715"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_uwb_flow_test.cpp",
@@ -756,7 +756,7 @@
     },
     {
       "path": "aliro-esp32/components/cbor/tinycbor/src/cborencoder.c",
-      "sha256": "80e565e03035a842e5ab556253cb16eba5fc8fa78143319316f638cf26ed242d"
+      "sha256": "4f6e0a40f6948b86d7164e2f0f3fef7656146782c98f33896d700b6c0f738d29"
     },
     {
       "path": "aliro-esp32/components/cbor/tinycbor/src/cborencoder_close_container_checked.c",
@@ -8244,7 +8244,7 @@
     },
     {
       "path": "aliro-esp32/tests/README.md",
-      "sha256": "ad145fe210beca4c23013e62617c6a736b5d5eee8880ac5f3887965d845495de"
+      "sha256": "edd326177babdd4ced8f978c12e1c478a5b52e04ddb23c8e2eba37b81b6c5cbc"
     },
     {
       "path": "aliro-esp32/tests/firmware_auth_test.cpp",
@@ -8564,7 +8564,7 @@
     },
     {
       "path": "docs/documentation-changelog.md",
-      "sha256": "80acd26d59f5c8098241c8084c75d94d2b0b5316307f752ba3d63c6a5240c6fe"
+      "sha256": "b0c25a5cad912c699244ff4657814d892070f125f7b70df7c6d0da67470c7987"
     },
     {
       "path": "docs/execution-plan.md",
@@ -9384,7 +9384,7 @@
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
-      "sha256": "053dc9beaba6a07d6ad21eed6ca63bed9fbdb43d290ebcb6ea6f800fda42dc9f"
+      "sha256": "0e1668bd8582f8dabb572e81bc6ab2fde145175a17a5e2ad2310a9e1765b2abc"
     },
     {
       "path": ".github/workflows/source-and-nfc.yml",
@@ -9396,11 +9396,11 @@
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "d83350417069b751b85f12d807e7e504e299d933902616bb2f0eef88fec2f66a"
+      "sha256": "9c1d5580b225242a6b21379460fed8c200704643b931eeb2dd1cd98228655e02"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
-      "sha256": "aa017c03bc3f6ec610724692fa69d7330fc9863d7bebec83569e9be24a952834"
+      "sha256": "4548a3e86cad0797032b0957e7a12b6bc802052f08afffef7e8304ebaa2608bc"
     },
     {
       "path": "docs/README.md",
@@ -9408,7 +9408,7 @@
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.en.md",
-      "sha256": "343c30b50b44dab21327b210c320bfea1be54108002b5b597c8a6a7093e92f7e"
+      "sha256": "5e0daf90d7039b0ea0a74af6d4c6e00fccbc17b81a4e27401190af0ca4267b48"
     },
     {
       "path": "docs/aliro-competitors-2026-10-13.en.md",
@@ -9416,11 +9416,15 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "e28135c7af6b145af69547eebecd3ddda171dff9f301b4ea05b66feacb4cfd6d"
+      "sha256": "f438b65b7380c420eda5064f191565543d311ac6ff202f83c376913a6c763251"
     },
     {
       "path": "scripts/verify-public-source.py",
       "sha256": "6b7f4caa5839c4ee18d2460df19971906c580ad844e0be84c350a1a8c115210d"
+    },
+    {
+      "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
+      "sha256": "88533fdfb8cad632840efb0654cbe647bab8740236d75f1b67e71229bb95d0c9"
     }
   ],
   "omitted": [

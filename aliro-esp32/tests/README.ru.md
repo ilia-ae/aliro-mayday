@@ -49,3 +49,8 @@ UBSAN_OPTIONS=halt_on_error=1 ASAN_OPTIONS=detect_leaks=0 ctest --test-dir /tmp/
 LeakSanitizer недоступен на проверенном macOS. Обычная конфигурация собирается
 без sanitizers. Тесты не заменяют реальный кошелёк, аппаратные тайминги,
 физический выход и проверку потери питания.
+
+Отдельная проверка encoder сверяет канонические пустые byte/text strings
+и расчёт размера. Первый Linux UBSan выявил нулевой memcpy, не диагностированный
+на macOS; в прошивке и host-наборе используется
+[одно исправление TinyCBOR](../components/cbor/LOCAL_PATCHES.md).

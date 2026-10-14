@@ -59,3 +59,7 @@ acceptance checks and the separate esp-aliro/UWB migration plan.
 The pinned upstream suite has two known failures in `aliro_ble_flow_test`:
 completion-status expectation and duplicate Time Sync callback count. They
 reproduce before our patches; BLE access transport is excluded from this firmware.
+
+Host tests compile the firmware's vendored tinycbor. Its zero-length payload
+memcpy safety fix and regression are documented in
+[CBOR local patches](../cbor/LOCAL_PATCHES.md). It preserves encoded bytes.
