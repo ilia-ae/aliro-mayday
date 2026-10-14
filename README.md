@@ -1,6 +1,6 @@
 # aliro.mayday
 
-[Русский](README.ru.md) · [Documentation index](docs/README.md)
+[Русский](README.ru.md) · [Documentation index](docs/README.md) · [Wiring diagram](docs/wiring.en.md)
 
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
 DoorLock provisioning and local administration. This repository began as a clean
@@ -8,9 +8,9 @@ source snapshot dated **13 October 2026**, with new Git history.
 
 ## Verified status
 
-- The iPhone Standard/Fast path worked on the May 2026 bench. The controller
-  was offline during the October update; the new build still needs real
-  iPhone regression tests and Samsung Wallet validation through SmartThings.
+- The iPhone Standard/Fast path worked on the May 2026 bench. The October
+  changes have not been installed on the bench; real iPhone regression tests
+  and Samsung Wallet validation through SmartThings are still required.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
   Fifty-eight firmware scenarios pass, including 22 actual provisioning callback
   cases and old iPhone records,
@@ -36,7 +36,8 @@ The full host suite has two known upstream BLE-flow test failures;
 hardware acceptance checks.
 
 Public `main` includes the document-policy fixes, signed revocation and bilingual
-guides integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1).
+guides integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1),
+plus provisioning/persistence fixes from [PR #2](https://github.com/ilia-ae/aliro-mayday/pull/2).
 The original source-snapshot prerelease remains unchanged. Publishing this source
 does not establish real-wallet compatibility or deploy firmware to a controller.
 [Repository readiness](docs/repository-status-2026-10-14.md#english) records

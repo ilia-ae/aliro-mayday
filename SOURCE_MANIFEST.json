@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "3d01cee3f51153fafdc4d0c00edb7c84a0f03b054825617f3b75987f01c96028"
+      "sha256": "f750dbc038e8aca8f3d593587964b9db6e99663e47db72f5f9afae1ccdeba02f"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "282063bffec9173e515183d4e9351dbe4b0c8a8b3e45d5c04e354916f2bdd5da"
+      "sha256": "d4f3e47b24dab2e0a5f7ee58cbe8889c40417accbc0b53f193f7f870b15ad6a0"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -8572,7 +8572,7 @@
     },
     {
       "path": "docs/hardware-reference.md",
-      "sha256": "e5befb6b009bd6bbc3ec0e209fc9953641d913bdd8a38e5ecd9e0cbaf512529f"
+      "sha256": "017650e012b2a53ed95fed74825c92992d4fd21de649c1869bea310c3949ced9"
     },
     {
       "path": "docs/project-gap-analysis.md",
@@ -9392,11 +9392,11 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "a450968709efeee55ea71406970f3b7e3b5759b5efafa39fcd019bfb3f6f3469"
+      "sha256": "b19ed84cd10546787dc7b5e0f3dbb8b29b3a96ca7a30700713ad7eb15413c4bf"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "399d3d071f41e4e811f0aeaf5737305d848c78c2888d9537a98f8a16e94601f1"
+      "sha256": "260e881848deb23df723bb48c8e95c60f7390e68490d3806db7959904d738d4b"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
@@ -9404,7 +9404,7 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "f19f362825fcfb7cb51c77bf26e30184cdfc7ebaa9824e13817753ebd66aa1a8"
+      "sha256": "350ab8037d60cf5b1b6879f8308bc96ae12f14a7487da5992144ac9879056674"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.en.md",
@@ -9416,11 +9416,11 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "274f869ece0e504eec7e602c4520aab23715192a720813bd83a8a3b7e5bf7c16"
+      "sha256": "5766e39dcc2f51cb0e0659c2c953d300e4db7f0745ed5d5b374ad33b0fe24728"
     },
     {
       "path": "scripts/verify-public-source.py",
-      "sha256": "c02c43dbeabbd3cb0b0a09cd00529109ad70303b005fd6459427b2867939add7"
+      "sha256": "d4d05121b1f12289054ceadefb58b0a20d9f7e516d88777000deb20ee2976824"
     },
     {
       "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
@@ -9493,6 +9493,22 @@
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.md",
       "sha256": "10ec5fcb364743635dd9222fe59a9b364220b71d366e393256ab769b56077617"
+    },
+    {
+      "path": "docs/images/aliro-wiring.en.svg",
+      "sha256": "34f3b5c0005f325785f3a823bc12ac28b1c65c3b4aec8e6e89cc93896d740804"
+    },
+    {
+      "path": "docs/images/aliro-wiring.ru.svg",
+      "sha256": "c168a6e162ad95ba0fbc81caa375dd47101db8d28f720da93525b57d841f052a"
+    },
+    {
+      "path": "docs/wiring.en.md",
+      "sha256": "cbeed469af0fb9f926f0830faed4bb0a03ef3dde334dfdebc9a7c95bfdcb9734"
+    },
+    {
+      "path": "docs/wiring.md",
+      "sha256": "2ff2fa971e1136891cfb125124b675b9111c4c3730b4cc82abcd9a5143f67ca4"
     }
   ],
   "omitted": [

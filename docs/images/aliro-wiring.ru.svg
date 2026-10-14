@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="1040" viewBox="0 0 1160 1040" role="img" aria-labelledby="title desc">
+<title id="title">Aliro · схема подключения</title>
+<desc id="desc">CS GPIO10, SCK GPIO12, MISO GPIO13, MOSI GPIO11. I2C SDA GPIO8, SCL GPIO9. Выход реле / электрозамка пока не назначен</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17243b} .muted{fill:#526177} .mono{font-family:monospace} .wire{fill:none;stroke-width:3}</style>
+<rect width="1160" height="1040" fill="#f6f8fb"/>
+<text x="44" y="57" font-size="32" font-weight="700">Aliro · схема подключения</text>
+<text x="44" y="91" font-size="18" class="muted">ESP32-S3 + PN532 · номера GPIO, а не позиции на гребёнке</text>
+<rect x="44" y="128" width="340" height="650" rx="14" fill="#ffffff" stroke="#b4c2d4"/>
+<rect x="790" y="128" width="326" height="388" rx="14" fill="#ffffff" stroke="#b4c2d4"/>
+<rect x="790" y="542" width="326" height="236" rx="14" fill="#ffffff" stroke="#b4c2d4"/>
+<text x="66" y="165" font-size="23" font-weight="700">ESP32-S3</text>
+<text x="1100" y="165" font-size="23" font-weight="700" text-anchor="end">PN532</text>
+<text x="1100" y="193" font-size="16" text-anchor="end" class="muted">NFC · режим SPI</text>
+<text x="68" y="737" font-size="18" class="muted">Питание платы: USB</text>
+<text x="68" y="767" font-size="16" class="muted">GPIO48 · встроенный RGB LED</text>
+<text x="812" y="569" font-size="20" font-weight="700">Дополнительные модули</text>
+<path d="M384 214 H790" class="wire" stroke="#7865be"/>
+<circle cx="384" cy="214" r="5" fill="#fff" stroke="#7865be" stroke-width="2"/>
+<circle cx="790" cy="214" r="5" fill="#fff" stroke="#7865be" stroke-width="2"/>
+<text x="362" y="220" font-size="19" text-anchor="end" class="mono">GPIO10</text>
+<text x="810" y="220" font-size="19" class="mono">NSS / SS / CS</text>
+<rect x="535" y="199" width="108" height="29" rx="5" fill="#f6f8fb"/>
+<text x="589" y="220" font-size="17" text-anchor="middle" class="mono">CS</text>
+<path d="M384 260 H790" class="wire" stroke="#cf711c"/>
+<circle cx="384" cy="260" r="5" fill="#fff" stroke="#cf711c" stroke-width="2"/>
+<circle cx="790" cy="260" r="5" fill="#fff" stroke="#cf711c" stroke-width="2"/>
+<text x="362" y="266" font-size="19" text-anchor="end" class="mono">GPIO12</text>
+<text x="810" y="266" font-size="19" class="mono">SCK / SCLK</text>
+<rect x="535" y="245" width="108" height="29" rx="5" fill="#f6f8fb"/>
+<text x="589" y="266" font-size="17" text-anchor="middle" class="mono">SCK</text>
+<path d="M384 306 H790" class="wire" stroke="#267eb0"/>
+<circle cx="384" cy="306" r="5" fill="#fff" stroke="#267eb0" stroke-width="2"/>
+<circle cx="790" cy="306" r="5" fill="#fff" stroke="#267eb0" stroke-width="2"/>
+<text x="362" y="312" font-size="19" text-anchor="end" class="mono">GPIO13</text>
+<text x="810" y="312" font-size="19" class="mono">MISO</text>
+<rect x="535" y="291" width="108" height="29" rx="5" fill="#f6f8fb"/>
+<text x="589" y="312" font-size="17" text-anchor="middle" class="mono">MISO</text>
+<path d="M384 352 H790" class="wire" stroke="#1b8a72"/>
+<circle cx="384" cy="352" r="5" fill="#fff" stroke="#1b8a72" stroke-width="2"/>
+<circle cx="790" cy="352" r="5" fill="#fff" stroke="#1b8a72" stroke-width="2"/>
+<text x="362" y="358" font-size="19" text-anchor="end" class="mono">GPIO11</text>
+<text x="810" y="358" font-size="19" class="mono">MOSI</text>
+<rect x="535" y="337" width="108" height="29" rx="5" fill="#f6f8fb"/>
+<text x="589" y="358" font-size="17" text-anchor="middle" class="mono">MOSI</text>
+<path d="M384 398 H790" class="wire" stroke="#bf3d50"/>
+<circle cx="384" cy="398" r="5" fill="#fff" stroke="#bf3d50" stroke-width="2"/>
+<circle cx="790" cy="398" r="5" fill="#fff" stroke="#bf3d50" stroke-width="2"/>
+<text x="362" y="404" font-size="19" text-anchor="end" class="mono">3V3 *</text>
+<text x="810" y="404" font-size="19" class="mono">VCC *</text>
+<rect x="535" y="383" width="108" height="29" rx="5" fill="#f6f8fb"/>
+<text x="589" y="404" font-size="17" text-anchor="middle" class="mono">3.3 V *</text>
+<path d="M384 444 H790" class="wire" stroke="#515d70"/>
+<circle cx="384" cy="444" r="5" fill="#fff" stroke="#515d70" stroke-width="2"/>
+<circle cx="790" cy="444" r="5" fill="#fff" stroke="#515d70" stroke-width="2"/>
+<text x="362" y="450" font-size="19" text-anchor="end" class="mono">GND</text>
+<text x="810" y="450" font-size="19" class="mono">GND</text>
+<rect x="535" y="429" width="108" height="29" rx="5" fill="#f6f8fb"/>
+<text x="589" y="450" font-size="17" text-anchor="middle" class="mono">GND</text>
+<text x="810" y="483" font-size="15" class="muted">IRQ: не подключать</text>
+<text x="810" y="504" font-size="15" class="muted">RST: без управления ESP32</text>
+<path d="M384 599 H790" class="wire" stroke="#b08a00"/>
+<circle cx="384" cy="599" r="5" fill="#fff" stroke="#b08a00" stroke-width="2"/>
+<circle cx="790" cy="599" r="5" fill="#fff" stroke="#b08a00" stroke-width="2"/>
+<text x="362" y="605" font-size="19" text-anchor="end" class="mono">GPIO8</text>
+<text x="810" y="605" font-size="18" class="mono">SDA · жёлтый</text>
+<text x="580" y="590" font-size="16" text-anchor="middle" class="muted">SDA</text>
+<path d="M384 640 H790" class="wire" stroke="#64748b"/>
+<circle cx="384" cy="640" r="5" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<circle cx="790" cy="640" r="5" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<text x="362" y="646" font-size="19" text-anchor="end" class="mono">GPIO9</text>
+<text x="810" y="646" font-size="18" class="mono">SCL · белый</text>
+<text x="580" y="631" font-size="16" text-anchor="middle" class="muted">SCL</text>
+<path d="M384 681 H790" class="wire" stroke="#bf3d50"/>
+<circle cx="384" cy="681" r="5" fill="#fff" stroke="#bf3d50" stroke-width="2"/>
+<circle cx="790" cy="681" r="5" fill="#fff" stroke="#bf3d50" stroke-width="2"/>
+<text x="362" y="687" font-size="19" text-anchor="end" class="mono">5V</text>
+<text x="810" y="687" font-size="18" class="mono">5V · красный</text>
+<text x="580" y="672" font-size="16" text-anchor="middle" class="muted">5V</text>
+<path d="M384 722 H790" class="wire" stroke="#515d70"/>
+<circle cx="384" cy="722" r="5" fill="#fff" stroke="#515d70" stroke-width="2"/>
+<circle cx="790" cy="722" r="5" fill="#fff" stroke="#515d70" stroke-width="2"/>
+<text x="362" y="728" font-size="19" text-anchor="end" class="mono">GND</text>
+<text x="810" y="728" font-size="18" class="mono">GND · чёрный</text>
+<text x="580" y="713" font-size="16" text-anchor="middle" class="muted">GND</text>
+<text x="810" y="754" font-size="15" class="mono">ByteButton 0x47 · OLED 0x3C</text>
+<rect x="44" y="803" width="1072" height="87" rx="12" fill="#eef2f8"/>
+<text x="66" y="836" font-size="22" font-weight="700">Выход реле / электрозамка пока не назначен</text>
+<text x="66" y="867" font-size="17" class="muted">Прошивка меняет состояние Matter и индикацию. GPIO48 — только LED.</text>
+<text x="44" y="924" font-size="19" font-weight="700">* 3V3 → VCC только для PN532 с допустимым питанием 3,3 В.</text>
+<text x="44" y="956" font-size="17" class="muted">Для другого PN532 сверь VCC и режим SPI с его документацией. Сигналы ESP32: 3,3 В.</text>
+<text x="44" y="988" font-size="19" font-weight="700">GPIO9 = SCL. Не подключай к нему RST PN532.</text>
+<text x="44" y="1020" font-size="16" class="muted">Для текущего aliro-esp32. Плата LilyGO с W5500 требует другой карты и прошивки.</text>
+</svg>

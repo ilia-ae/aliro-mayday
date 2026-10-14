@@ -4,6 +4,10 @@ This file records the physical boards and kits that matter to this repo.
 It is intentionally more detailed than the short hardware summary in the
 root README.
 
+For the current Aliro firmware, use the labelled
+[wiring guide](wiring.en.md) / [схему подключения](wiring.md). The GPIO9 reset
+suggestion from earlier bring-up is not valid with the current I²C peripherals.
+
 For a roadmap-driven analysis of what is still missing, see
 [project-gap-analysis.md](project-gap-analysis.md).
 
@@ -113,8 +117,11 @@ The current default pin map for the PN532 path is:
 - `GPIO11` -> SPI MOSI
 - `GPIO12` -> SPI clock
 - `GPIO13` -> SPI MISO
-- `GPIO14` -> optional PN532 `IRQ`
-- `GPIO9` -> optional PN532 `RST`
+- PN532 `IRQ` is not connected to ESP32 in the current Aliro SPI driver
+- PN532 `RST` is not driven by a GPIO; follow the module power/reset requirements
+- `GPIO8` -> shared I²C `SDA` for ByteButton and OLED
+- `GPIO9` -> shared I²C `SCL`; do not connect PN532 reset here
+- `GPIO48` -> built-in RGB indicator on the configured target; no relay pin is assigned
 
 This mapping is intentionally conservative: it avoids boot-strap and flash
 signals and keeps the NFC wiring easy to reason about during bring-up.

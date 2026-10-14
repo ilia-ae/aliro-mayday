@@ -7,10 +7,12 @@
 The public repository is [ilia-ae/aliro-mayday](https://github.com/ilia-ae/aliro-mayday).
 It has new Git history. The old repository remains private. Public `main` includes
 the document rights/revocation implementation and current bilingual documentation
-integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1). The original
+integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1), plus
+provisioning/persistence fixes from [PR #2](https://github.com/ilia-ae/aliro-mayday/pull/2). The original
 source-snapshot prerelease remains the initial sanitized snapshot. Hardware
 acceptance is still pending: merging source is not a firmware deployment or Aliro
-certification. The controller was not connected or flashed.
+certification. A controller is now connected for read-only diagnostics; the
+updated application has not been installed and phone acceptance is pending.
 
 | Included source | Current role and verification |
 | --- | --- |
@@ -51,7 +53,7 @@ before enabling that transport, UWB hardware and correction of live-site claims.
 A valid clock is required for document-bound access. Revocation applies after
 its signed document is delivered; it is not an online revocation service.
 
-The current overview, build/rollback guide, policy, tests and competitor review
+The current overview, wiring diagrams, build/rollback guide, policy, tests and competitor review
 have English/Russian versions. Historical and upstream docs are not all
 translated; the standard's full Russian translation is absent. See the
 [documentation coverage index](README.md).
@@ -61,10 +63,12 @@ translated; the standard's full Russian translation is absent. See the
 Публичный репозиторий — [ilia-ae/aliro-mayday](https://github.com/ilia-ae/aliro-mayday).
 У него новая история Git. Старый репозиторий остаётся приватным. Публичный `main`
 включает проверку прав/отзыва и актуальные переводы, интегрированные через
-[PR №1](https://github.com/ilia-ae/aliro-mayday/pull/1). Прежний source-snapshot
+[PR №1](https://github.com/ilia-ae/aliro-mayday/pull/1); исправления выдачи и
+сохранения ключей — через [PR №2](https://github.com/ilia-ae/aliro-mayday/pull/2). Прежний source-snapshot
 prerelease сохраняет исходный очищенный снимок. Аппаратная приёмка ещё нужна:
 слияние исходников не является прошивкой контроллера или сертификацией Aliro.
-Контроллер не подключался и не прошивался.
+Контроллер подключён для чтения диагностики; обновлённое приложение не
+устанавливалось, проверки с настоящими телефонами ещё нужны.
 
 | Включённые исходники | Назначение и степень проверки |
 | --- | --- |
@@ -105,7 +109,7 @@ Application image — 2 564 656 байт; запас OTA-раздела 2,17%.
 Доступ по документу требует часов. Отзыв начинает действовать после доставки
 подписанного документа; онлайн-служба отзыва здесь не реализована.
 
-Актуальные обзор, сборка/возврат, политика, тесты и сравнение конкурентов есть
+Актуальные обзор, схемы подключения, сборка/возврат, политика, тесты и сравнение конкурентов есть
 на русском и английском. Исторические и upstream-документы переведены не все;
 полного русского перевода стандарта нет. См. [оглавление и покрытие](README.md).
 

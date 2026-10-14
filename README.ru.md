@@ -1,6 +1,6 @@
 # aliro.mayday
 
-[English](README.md) · [Документация](docs/README.md)
+[English](README.md) · [Документация](docs/README.md) · [Схема подключения](docs/wiring.md)
 
 Экспериментальный контроллер Aliro NFC на ESP32-S3 + PN532 с выдачей ключей
 через Matter DoorLock и локальным управлением. Репозиторий начат как очищенный
@@ -8,9 +8,9 @@
 
 ## Проверенное состояние
 
-- Standard/Fast на iPhone работал на майском стенде. Контроллер выключен во
-  время октябрьского обновления; новая сборка ещё требует проверки настоящего
-  iPhone и Samsung Wallet через SmartThings.
+- Standard/Fast на iPhone работал на майском стенде. Октябрьские изменения
+  на стенд ещё не установлены; проверки настоящего iPhone и Samsung Wallet
+  через SmartThings остаются необходимыми.
 - Прошивка собирается с ESP-IDF v5.4.4 / esp-matter 8d56152. Проходят
   58 сценариев прошивки, включая 22 проверки реальных provisioning callbacks
   и старые iPhone-записи, отказ неверной
@@ -32,7 +32,8 @@
 [описание тестов](aliro-esp32/tests/README.ru.md) объясняет границу проверки.
 [Статус репозитория](docs/repository-status-2026-10-14.md#русский) поясняет различие
 между актуальным `main` и прежним source-release. Исправления и переводы
-включены через [PR №1](https://github.com/ilia-ae/aliro-mayday/pull/1); публикация
+включены через [PR №1](https://github.com/ilia-ae/aliro-mayday/pull/1), исправления
+выдачи и сохранения ключей — через [PR №2](https://github.com/ilia-ae/aliro-mayday/pull/2). Публикация
 исходников не подтверждает поддержку настоящего кошелька и не прошивает контроллер.
 
 Подготовка provisioning и стенда V4_HUB/Fold7 описана
