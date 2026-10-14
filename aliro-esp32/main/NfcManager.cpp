@@ -751,3 +751,12 @@ void NfcManager::handleGenericTag(const std::vector<uint8_t>& uid, const std::ar
     alpaca::serialize(event, event_data);
     event_bus.publish({m_nfc_topic, 0, event_data.data(), event_data.size()});
 }
+
+namespace aliro::nfc {
+void refreshReader(NfcManager* manager) {
+    if (manager) { manager->updateEcpData(); manager->invalidateAuthCacheExternal(); }
+}
+void invalidateReader(NfcManager* manager) {
+    if (manager) manager->invalidateAuthCacheExternal();
+}
+}

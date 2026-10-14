@@ -12,7 +12,8 @@ source snapshot dated **13 October 2026**, with new Git history.
   was offline during the October update; the new build still needs real
   iPhone regression tests and Samsung Wallet validation through SmartThings.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
-  Thirty-six firmware regression scenarios pass, covering old iPhone records,
+  Fifty-eight firmware scenarios pass, including 22 actual provisioning callback
+  cases and old iPhone records,
   signature rejection, credential revocation, reboot and persistence failures.
 - DigitalDoorKey is pinned to
   `80e4a1e14eab3646b62ab3bdad6d2ed01d399375`; local patches are documented in
@@ -40,6 +41,10 @@ The original source-snapshot prerelease remains unchanged. Publishing this sourc
 does not establish real-wallet compatibility or deploy firmware to a controller.
 [Repository readiness](docs/repository-status-2026-10-14.md#english) records
 what is included, translated and still awaiting verification.
+
+Samsung provisioning preparation and the V4_HUB/Fold7 bench procedure are
+documented [here](docs/samsung-bench-preparation-2026-10-14.en.md). Real Wallet
+key issuance remains unproven; no controller has been flashed.
 
 ## Build and test
 

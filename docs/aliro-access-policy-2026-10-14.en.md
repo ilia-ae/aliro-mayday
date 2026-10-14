@@ -105,16 +105,16 @@ Matter/ClearCredential revocation continues to work.
 
 ## Verification
 
-The supported suite passes **14/14 executables** under AddressSanitizer and
+The supported suite passes **15/15 executables** under AddressSanitizer and
 UndefinedBehaviorSanitizer with no reported memory errors. The full suite passes
-14/15: BLE-flow retains two upstream functional failures (completion status and
+15/16: BLE-flow retains two upstream functional failures (completion status and
 duplicate Time Sync). BLE access is disabled in firmware. LeakSanitizer is not
 available on the tested macOS runtime. Firmware builds with ESP-IDF 5.4.4 /
 esp-matter 8d56152.
 
-The application image is **2,554,304 bytes**, leaving **67,136 bytes (2.56%)** in
+The application image is **2,564,656 bytes**, leaving **56,784 bytes (2.17%)** in
 the existing OTA partition. SHA-256:
-`989787603cdddd82647a82781082346ac1445126b1287eeab09269151ccf208f`.
+`527774e399d8538ce8b88f9b43892fbdabc14feb9fb569c8ca6a5db18c912578`.
 The targeted suite has **36 firmware integration cases**, **9 cryptographic
 document-validation cases** and **10 AccessData/revocation cases**. It compiles
 the actual adapter and NVS serializer and the firmware's vendored tinycbor.
@@ -133,3 +133,7 @@ The additional Ubuntu/Clang run found a null-pointer memcpy for an empty CBOR
 payload. The fix preserves canonical bytes and required-size accounting; a
 separate regression checks both boundaries.
 [TinyCBOR patch](../aliro-esp32/components/cbor/LOCAL_PATCHES.md).
+
+An additional 22 cases exercise actual provisioning callbacks;
+[bench preparation](samsung-bench-preparation-2026-10-14.en.md) documents the new
+reader configuration record, storage failures and acceptance order.

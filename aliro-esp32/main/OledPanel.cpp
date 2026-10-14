@@ -1,3 +1,4 @@
+#include "SystemClock.hpp"
 // OledPanel — minimal SH1107 driver + status renderer.
 //
 // 128×64 OLED, I2C @ 0x3C. Layout: 8 horizontal pages × 128 columns.
@@ -1107,15 +1108,7 @@ esp_err_t OledPanel::init()
     // Set timezone Asia/Almaty (UTC+5, no DST since 2005).
     setenv("TZ", "ALMT-5", 1);
     tzset();
-    if (esp_sntp_enabled()) {
-        // Already initialised by something else (admin_panel?) — leave it.
-    } else {
-        esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
-        esp_sntp_setservername(0, "pool.ntp.org");
-        esp_sntp_setservername(1, "time.cloudflare.com");
-        esp_sntp_init();
-        ESP_LOGI(TAG, "SNTP started (Europe/Moscow)");
-    }
+    aliro::startSystemClock();
 
     // CPU usage telemetry — register idle hooks on both cores. The hook
     // is just an inc, so cost is negligible. Calibrate baseline by

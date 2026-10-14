@@ -69,6 +69,17 @@ Files:
 - `aliro-esp32/DEBUGGING.md`
 ```
 
+## 2026-10-14 — Samsung bench preparation
+
+- Added paired English/Russian instructions for the V4_HUB/Fold7 bench, explicit
+  no-flash status, multi-admin preservation of Apple pairing, Wallet onboarding
+  prerequisites and private backup/rollback requirements.
+- Documented shared 16-slot storage, P-256 validation, complete reader config
+  record, stable sub-ID, grant rollback and system time independent of OLED.
+- Updated supported/full suite counts and current application size/hash. The
+  22 new callback tests substitute SDK/hardware boundaries and do not prove a
+  real Samsung Wallet or power-loss transaction.
+
 ## 2026-10-14
 
 ### Summary

@@ -171,9 +171,19 @@ add_executable(firmware_auth_test
 target_include_directories(firmware_auth_test PRIVATE ${FIRMWARE_MAIN} ${FIRMWARE_TESTS}/stubs)
 target_link_libraries(firmware_auth_test PRIVATE aliro_test_harness firmware_msgpack Catch2::Catch2WithMain)
 add_test(NAME firmware_auth_test COMMAND firmware_auth_test)
+add_executable(firmware_provisioning_test
+    ${FIRMWARE_TESTS}/provisioning_test.cpp
+    ${FIRMWARE_TESTS}/stubs/nvs.cpp ${FIRMWARE_TESTS}/stubs/provisioning_platform.cpp
+    ${FIRMWARE_MAIN}/AliroDelegate.cpp ${FIRMWARE_MAIN}/DoorLockUserStubs.cpp
+    ${FIRMWARE_MAIN}/SystemClock.cpp
+    ${FIRMWARE_MAIN}/DDKAuthContext.cpp ${FIRMWARE_MAIN}/ReaderDataManager.cpp)
+target_include_directories(firmware_provisioning_test PRIVATE ${FIRMWARE_MAIN} ${FIRMWARE_TESTS}/stubs)
+target_link_libraries(firmware_provisioning_test PRIVATE aliro_test_harness firmware_msgpack Catch2::Catch2WithMain)
+add_test(NAME firmware_provisioning_test COMMAND firmware_provisioning_test)
 if(DDK_ENABLE_SANITIZERS)
     target_compile_options(msgpack-c PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
     target_compile_options(firmware_auth_test PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+    target_compile_options(firmware_provisioning_test PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
 endif()
 
 # Catch2 tests — the Fast/Standard flow tests, the step-up parser unit

@@ -6,12 +6,9 @@
 // Aliro attribute read, which Apple Home surfaces as
 // "Specified action or command indicated is not supported".
 //
-// Storage:
-//   - reader_signing_key (32 B, secret) — kept in RAM only for now,
-//     §7.6 (security audit) will move to encrypted NVS namespace `aliro_cfg`.
-//   - reader_verification_key (65 B, public) — RAM, persisted in NVS later.
-//   - reader_group_identifier (16 B) — RAM.
-//   - reader_group_sub_identifier (16 B) — random on first boot, persisted.
+// Storage: legacy NVS fields are readable without identity migration. New
+// writes use one complete readerCfg1 record; a clear marker prevents fallback
+// to old keys. The stable 16-byte sub-ID remains in its original subId field.
 
 #include <app/clusters/door-lock-server/door-lock-delegate.h>
 #include "ReaderCredentialOps.hpp"
@@ -51,7 +48,7 @@ public:
     // True iff a reader signing/verification keypair has been provisioned.
     // Used by app_main / LED indicator: paired-without-keys = violet,
     // paired-with-keys = orange/green.
-    bool isProvisioned() const { return reader_verification_key_len_ != 0; }
+    bool isProvisioned() const { return reader_config_valid_ && sub_identifier_persisted_ && reader_data_synced_; }
 
     // Get the 16-byte Aliro reader_group_identifier as hex string.
     // Returns 0 length if no GID is set.
@@ -94,8 +91,12 @@ public:
 private:
     // Push current reader keys into the connected ReaderDataManager (if any).
     // Builds a readerData_t from in-memory fields and calls updateReaderData.
-    void syncToReaderDataManager();
+    bool syncToReaderDataManager();
 
+    bool reader_config_valid_ = false;
+    bool reader_config_read_ok_ = false;
+    bool sub_identifier_persisted_ = false;
+    bool reader_data_synced_ = true;
     ReaderDataManager * reader_data_sink_ = nullptr;
     NfcManager *        nfc_manager_      = nullptr;
 

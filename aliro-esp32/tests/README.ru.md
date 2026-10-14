@@ -54,3 +54,8 @@ LeakSanitizer недоступен на проверенном macOS. Обычн
 и расчёт размера. Первый Linux UBSan выявил нулевой memcpy, не диагностированный
 на macOS; в прошивке и host-наборе используется
 [одно исправление TinyCBOR](../components/cbor/LOCAL_PATCHES.md).
+
+`firmware_provisioning_test` собирает настоящие AliroDelegate и DoorLockUserStubs
+с заменой SDK boundary types и hardware hooks. 22 сценария проверяют slots,
+выдачу ключей/reader config, ошибки/rollback, старые записи, запуск часов,
+Standard/Fast, reboot и отзыв. См. [подготовку Samsung](../../docs/samsung-bench-preparation-2026-10-14.md).

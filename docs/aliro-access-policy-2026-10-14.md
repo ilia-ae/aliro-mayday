@@ -105,14 +105,14 @@ Document-bound ключи проверяются в области своего 
 
 ## Проверки
 
-Весь поддерживаемый набор: 14/14 executables проходят с AddressSanitizer и
+Весь поддерживаемый набор: 15/15 executables проходят с AddressSanitizer и
 UndefinedBehaviorSanitizer, без сообщений об ошибках памяти. В полном наборе
-14/15 executables проходят; оставшийся BLE-flow имеет те же две upstream
+15/16 executables проходят; оставшийся BLE-flow имеет те же две upstream
 functional failures (completion status и двойной Time Sync), BLE access
 transport не включён в прошивку. LeakSanitizer на данном macOS недоступен.
 ESP-IDF 5.4.4 / esp-matter 8d56152: firmware build успешен.
-Application image — 2554304 байт, свободно 67136 байт (2.56%)
-в прежнем OTA-разделе. SHA-256: `989787603cdddd82647a82781082346ac1445126b1287eeab09269151ccf208f`. Набор включает
+Application image — 2564656 байт, свободно 56784 байт (2.17%)
+в прежнем OTA-разделе. SHA-256: `527774e399d8538ce8b88f9b43892fbdabc14feb9fb569c8ca6a5db18c912578`. Набор включает
 36 firmware integration cases, 9 криптографических document-validation cases
 и 10 AccessData/revocation cases. Проверяются реальный adapter и NVS serializer,
 тот же vendored tinycbor, что в firmware, цепочки GET RESPONSE, права/clock/expiry,
@@ -129,3 +129,7 @@ iPhone на старом ключе и Samsung Wallet/SmartThings, с сохра
 указателем для пустого CBOR payload. Исправление сохраняет канонические байты
 и расчёт требуемого размера; отдельный регрессионный тест проверяет обе границы.
 [Описание патча TinyCBOR](../aliro-esp32/components/cbor/LOCAL_PATCHES.md).
+
+Дополнительно проходят 22 проверки реальных provisioning callbacks;
+[следующий этап](samsung-bench-preparation-2026-10-14.md) описывает новые
+reader configuration fields, storage failures и стендовый порядок.

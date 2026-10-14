@@ -27,6 +27,8 @@
 #include "DoorLockAccessPolicy.hpp"
 #include "ReaderCredentialOps.hpp"
 #include "UserAccessPolicy.hpp"
+#include "DoorLockStorageLimits.hpp"
+#include "P256Validation.hpp"
 
 using chip::ByteSpan;
 using chip::CharSpan;
@@ -43,11 +45,11 @@ static const char *TAG = "doorlock-stubs";
 
 namespace {
 
-constexpr size_t kMaxUsers          = 5;
-constexpr size_t kMaxCredsPerUser   = 3;
+constexpr size_t kMaxUsers          = aliro::storage::users;
+constexpr size_t kMaxCredsPerUser   = aliro::storage::credentials_per_user;
 constexpr size_t kUserNameBuffer    = 32;
 constexpr size_t kMaxCredTypes      = 10;     // covers PIN(1), RFID(2), Aliro 6/7/8
-constexpr size_t kMaxCredsPerType   = 8;
+constexpr size_t kMaxCredsPerType   = aliro::storage::credential_slots_per_type;
 constexpr size_t kCredDataBuffer    = 96;     // Aliro endpoint pubkey is 65 B
 constexpr const char * kNs          = "dl_store";
 
@@ -302,7 +304,11 @@ bool emberAfPluginDoorLockSetUser(EndpointId endpointId, uint16_t userIndex,
         ESP_LOGE(TAG, "SetUser ep=%u idx=%u -> out-of-range", endpointId, userIndex);
         return false;
     }
-    StoredUser & u = g_users[s];
+    const StoredUser previous = g_users[s];
+    StoredUser u = previous;
+    if (userName.size() > kUserNameBuffer || (userName.size() && !userName.data()) ||
+        totalCredentials > kMaxCredsPerUser ||
+        (totalCredentials && credentials == nullptr)) return false;
 
     u.occupied   = (userStatus != UserStatusEnum::kAvailable);
     u.name_len   = std::min(userName.size(), kUserNameBuffer);
@@ -316,7 +322,16 @@ bool emberAfPluginDoorLockSetUser(EndpointId endpointId, uint16_t userIndex,
     if (u.createdBy == kUndefinedFabricIndex) u.createdBy = creator;
     u.lastModifiedBy = modifier;
 
-    if (!persist_user(userIndex, u)) return false;
+    if (!persist_user(userIndex, u)) {
+        // A failed grant must not publish new permissions in RAM. A requested
+        // disable/clear still keeps the previous credential assignments denied.
+        if (previous.occupied && userStatus != UserStatusEnum::kOccupiedEnabled) {
+            g_users[s] = previous;
+            g_users[s].userStatus = UserStatusEnum::kOccupiedDisabled;
+        }
+        return false;
+    }
+    g_users[s] = u;
 
     // Apple Home iOS 26 subscribes after CommissioningComplete; the UI on
     // "Access Codes" / "Setting up Home Key" advances only when it sees a
@@ -374,7 +389,12 @@ bool emberAfPluginDoorLockSetCredential(EndpointId endpointId, uint16_t credenti
     StoredCredential & c = g_creds[t][s];
 
     const StoredCredential previous = c;
-    if (credentialData.size() > kCredDataBuffer) return false;
+    if (credentialData.size() > kCredDataBuffer || (credentialData.size() && !credentialData.data())) return false;
+    const bool aliroKey = credentialType == CredentialTypeEnum::kAliroCredentialIssuerKey ||
+        credentialType == CredentialTypeEnum::kAliroEvictableEndpointKey ||
+        credentialType == CredentialTypeEnum::kAliroNonEvictableEndpointKey;
+    if (aliroKey && credentialStatus == DlCredentialStatus::kOccupied &&
+        !aliro::keys::validPublicKey(credentialData.data(),credentialData.size())) return false;
     c.occupied       = (credentialStatus == DlCredentialStatus::kOccupied);
     c.credentialType = credentialType;
     c.data_len       = std::min(credentialData.size(), kCredDataBuffer);
@@ -411,6 +431,15 @@ bool emberAfPluginDoorLockSetCredential(EndpointId endpointId, uint16_t credenti
                 static_cast<uint8_t>(credentialType), chip::ByteSpan(previous.data, previous.data_len));
             persisted = persisted && removed;
         }
+    }
+
+    if (!persisted && c.occupied) {
+        // A failed NFC mirror must not leave a successfully enumerable grant
+        // in the Matter table. Restore the old per-slot record where possible.
+        c = previous;
+        if (!persist_cred(credentialType,credentialIndex,c))
+            ESP_LOGE(TAG,"Credential rollback could not be persisted");
+        return false;
     }
 
     // Trigger ReportData to wake up the iOS subscription (see SetUser

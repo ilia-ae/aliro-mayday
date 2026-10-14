@@ -9,6 +9,7 @@ Current implementation documentation is available in English and Russian.
 | SDK setup, firmware build, safe update and rollback / Сборка и обновление | [Firmware guide](../aliro-esp32/README.md) | [Прошивка](../aliro-esp32/README.ru.md) |
 | Document rights, revocation, persistence and limits / Права и отзыв | [Access policy](aliro-access-policy-2026-10-14.en.md) | [Политика доступа](aliro-access-policy-2026-10-14.md) |
 | Host tests, sanitizers and hardware acceptance / Проверки | [Tests](../aliro-esp32/tests/README.md) | [Тесты](../aliro-esp32/tests/README.ru.md) |
+| Samsung provisioning and bench steps / Подготовка Samsung | [Bench preparation](samsung-bench-preparation-2026-10-14.en.md) | [Подготовка стенда](samsung-bench-preparation-2026-10-14.md) |
 | Competitors, SDKs and implementations / Другие решения | [Review](aliro-competitors-2026-10-13.en.md) | [Обзор](aliro-competitors-2026-10-13.md) |
 | Repository readiness, included projects, remaining work / Готовность репозитория | [Status (EN/RU)](repository-status-2026-10-14.md#english) | [Статус (RU/EN)](repository-status-2026-10-14.md#русский) |
 

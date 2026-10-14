@@ -77,9 +77,9 @@ Keep an existing bench configuration instead of resetting it with `set-target`.
 The `just aliro-build` helper assumes SDK installations under the user's usual
 `~/esp` / `~/CODE` locations; the commands above support other locations.
 
-The checked application image is **2,554,304 bytes**, with **67,136 bytes (2.56%)**
+The checked application image is **2,564,656 bytes**, with **56,784 bytes (2.17%)**
 free in a `0x280000` OTA slot. Its SHA-256 is
-`989787603cdddd82647a82781082346ac1445126b1287eeab09269151ccf208f`.
+`527774e399d8538ce8b88f9b43892fbdabc14feb9fb569c8ca6a5db18c912578`.
 There is little room for additional firmware code without another size review.
 
 ## Existing hardware and configuration
@@ -128,3 +128,8 @@ and their licenses are indexed in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICE
 The previous April bring-up notes are retained in historical documents.
 The [documentation index](../docs/README.md) identifies current guides and
 archived research; archived claims are not current verification results.
+
+Current provisioning uses a complete reader configuration record and shared
+slot limits. Reader/user/credential errors propagate without publishing grants;
+stable sub-ID and old key records are retained. System time sync starts without
+OLED. See [Samsung bench preparation](../docs/samsung-bench-preparation-2026-10-14.en.md).

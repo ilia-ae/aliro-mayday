@@ -571,6 +571,12 @@ ddk::ApduResponse AliroTestEndpoint::handle_auth0(const std::vector<uint8_t>& da
     return resp;
 }
 
+void AliroTestEndpoint::retain_standard_persistent_key()
+{
+    AliroKeySchedule schedule;
+    persistent_key = schedule.derive_persistent(session_input(recorded_fci),derived_key,endpoint_key.pub_x);
+}
+
 ddk::ApduResponse AliroTestEndpoint::handle_auth1(const std::vector<uint8_t>& data)
 {
     if (scenario.unknown_endpoint_key && device_key.pub == endpoint_key.pub)
