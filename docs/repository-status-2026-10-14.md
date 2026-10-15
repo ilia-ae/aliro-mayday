@@ -15,13 +15,13 @@ certification. A full private backup and an application-only update were verifie
 connected controller. On 15 October, Matter, PN532 NFC and HTTP/WebSocket
 administration started successfully with the saved reader configuration. Installer
 checks confirmed that data partitions, pairing, bootloader and partition table
-were not written. The owner subsequently reported a failed old-key iPhone tap after the update: NFC detected the phone, but no unlock followed. Acceptance is therefore blocked on diagnosis and a successful repeat test; Fold7 is deferred.
+were not written. An initial old-key iPhone tap was reported as detected without an unlock. After the administration fixes, the owner confirmed that the same saved key works on 15 October. The current boot records three authenticated taps, zero tap failures and both UNLOCKED and LOCKED Matter state changes, with no panic in the retrieved log. No key reissue or pairing reset was needed. Fold7 remains deferred. The installed firmware fixes and this acceptance report are in [PR #6](https://github.com/ilia-ae/aliro-mayday/pull/6); they are not yet merged into public `main`.
 
-A diagnostic bench build now reports failure phases without logging wallet identifiers or key material. It also reserves the WebSocket sender stack after Matter starts and before NFC workers, avoiding an observed administration startup failure when a document-bound credential is present. Supported host tests pass 15/15; the actual saved access document passes issuer signature, device binding and access policy checks on the host. Closing the diagnostic WebSocket also exposed an HTTP cleanup stack overflow: the configured 8,192-byte purge buffer produced an 8,224-byte cleanup frame inside an 8,192-byte HTTP task. The buffer is now 512 bytes; a compilation of the actual SDK function confirms a 544-byte cleanup frame. OTA upload buffering and credential checks are unchanged. These results do not establish a successful phone transaction. Do not remove the saved iPhone key or reset pairing to work around the failure.
+A diagnostic bench build now reports failure phases without logging wallet identifiers or key material. It also reserves the WebSocket sender stack after Matter starts and before NFC workers, avoiding an observed administration startup failure when a document-bound credential is present. Supported host tests pass 15/15; the actual saved access document passes issuer signature, device binding and access policy checks on the host. Closing the diagnostic WebSocket also exposed an HTTP cleanup stack overflow: the configured 8,192-byte purge buffer produced an 8,224-byte cleanup frame inside an 8,192-byte HTTP task. The buffer is now 512 bytes; a compilation of the actual SDK function confirms a 544-byte cleanup frame. OTA upload buffering and credential checks are unchanged. HTTP startup now also waits for the application bootstrap stack to be released and for sufficient internal memory. Graceful WebSocket closure and subsequent HTTP retrieval passed without a reset. The successful saved-key iPhone test confirms the current bench path; physical actuation, on-device revocation and Samsung issuance still need separate acceptance tests.
 
 | Included source | Current role and verification |
 | --- | --- |
-| `aliro-esp32/` | Active firmware; pinned SDK build; Matter/NFC/admin startup checked on the bench, document policy tested on the host |
+| `aliro-esp32/` | Active firmware; pinned SDK build; Matter/NFC/admin startup and saved-key iPhone taps checked on the bench, document policy tested on the host |
 | `homekey-esp32/` | Frozen reference, unchanged by this update; original MIT license retained |
 | `matter-controller/` | Controller example; Wi-Fi comes from local build configuration; changed object compiled, full image not validated here |
 | `android-smartkey/`, `smartkey-esp32-patch/` | HCE fallback scaffolds; not a working Samsung Wallet integration |
@@ -44,14 +44,14 @@ cryptographic document-validation and ten rights/revocation cases, plus one empt
 suite passes 15/15 executables with AddressSanitizer/UndefinedBehaviorSanitizer.
 The full suite is 15/16, with two known upstream BLE-flow failures. These do not
 establish hardware timing, actual wallet behavior or power-loss durability.
-The application builds at 2,565,488 bytes, leaving 2.13% in its OTA slot.
+The application builds at 2,567,088 bytes, leaving 2.07% in its OTA slot.
 
 The repository now contains a GitHub Actions check for manifest/fixture integrity,
 current local documentation links and the supported host suite. It explicitly
 excludes the known failing BLE-flow executable. Firmware SDK builds and wallet
 tests are not part of that workflow. Integrity checking is not a secret scanner.
 
-Remaining acceptance/work: real old-key iPhone tests, Samsung Wallet via
+Remaining acceptance/work: on-device revocation/disabled-user/reboot tests using a separate test key, Samsung Wallet via
 SmartThings, clean-machine firmware build, physical relay validation, optional
 schedule/reader-rule provisioning and certificate-chain support, BLE failures
 before enabling that transport, UWB hardware.

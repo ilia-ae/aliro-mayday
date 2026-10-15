@@ -8336,11 +8336,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "0e526fe485fb8fc2b4e4d4b63689c6e5fc90c0ab3849b45a75615d50a17663bd"
+      "sha256": "6692d0636b4c36eb8f073cce9452e4580057ac49e9771ac0ba5c350116b9074f"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "c3ba0eab236a2f86c7347ae67fa8883869d986ace601a0ccd2e1da4feb7d083d"
+      "sha256": "70d6ac42ab00ba3e685e55b039fe85366a399b0a1fe1da8f63910caa2d6bc632"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -9404,7 +9404,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "7d4b8babfb3c384f49ac8e7fa77a08c3e4ee73094855d4e094b7659b78b22ba9"
+      "sha256": "00d98ef965d80960ad87f8f2bda9a77c70833c92416c7a846994c24bf9e91564"
     },
     {
       "path": "scripts/verify-public-source.py",
@@ -9512,7 +9512,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.ru.md",
-      "sha256": "75f130c8dcca73e13e2df2d5eb57b9b9373a0b8c09d5328f069b8f775606dcf0"
+      "sha256": "044fef9ac635fa64bcb404d1a597f8e26f14d592b39478fa00de1a8ee527210a"
     },
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",
