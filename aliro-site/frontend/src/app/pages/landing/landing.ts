@@ -178,33 +178,37 @@ interface ComparisonRow {
                             </a>
                         </div>
                     </div>
-                    <div class="hero-visual" aria-hidden="true">
-                        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
-                            <!-- phone silhouette -->
-                            <rect x="10" y="30" width="90" height="180" rx="14" fill="none" stroke="currentColor" stroke-width="2.5" opacity="0.7"/>
-                            <rect x="18" y="42" width="74" height="140" rx="6" fill="var(--accent)" opacity="0.08"/>
-                            <circle cx="55" cy="195" r="3.5" fill="currentColor" opacity="0.5"/>
-                            <!-- face id indicator -->
-                            <circle cx="55" cy="112" r="18" fill="none" stroke="var(--accent)" stroke-width="2"/>
-                            <path d="M47 108 L47 112 M63 108 L63 112 M50 120 Q55 124 60 120" stroke="var(--accent)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                            <!-- NFC waves -->
-                            <path d="M115 110 Q128 120 115 130" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M130 100 Q150 120 130 140" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
-                            <path d="M145 90 Q175 120 145 150" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-                            <!-- reader (monogram square) -->
-                            <rect x="188" y="85" width="70" height="70" rx="14" fill="var(--accent)"/>
-                            <path d="M205 142 L223 98 L241 142 M212 128 L234 128" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <!-- arrow -->
-                            <path d="M268 120 L298 120 M290 112 L298 120 L290 128" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
-                            <!-- lock -->
-                            <g transform="translate(258 180)">
-                                <rect x="0" y="14" width="50" height="38" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
-                                <path d="M12 14 V8 a13 13 0 0 1 26 0 V14" fill="none" stroke="currentColor" stroke-width="2.5"/>
-                                <circle cx="25" cy="33" r="3.5" fill="currentColor"/>
-                                <rect x="23" y="33" width="4" height="8" fill="currentColor"/>
-                            </g>
-                        </svg>
-                    </div>
+                    <figure class="hero-visual" aria-labelledby="demo-stand-caption">
+                        <div class="demo-stand-stage">
+                            <picture>
+                                <source [srcset]="'/images/demo-stand-' + demoStandView() + '.webp'" type="image/webp" />
+                                <img
+                                    [src]="'/images/demo-stand-' + demoStandView() + '.png'"
+                                    [width]="demoStandView() === 'top' ? 1086 : 1151"
+                                    [height]="demoStandView() === 'top' ? 1448 : 1366"
+                                    [alt]="'demo_stand.' + demoStandView() + '_alt' | translate"
+                                    fetchpriority="high"
+                                    decoding="async"
+                                />
+                            </picture>
+                        </div>
+                        <figcaption id="demo-stand-caption">
+                            <strong>{{ 'demo_stand.title' | translate }}</strong>
+                            <span class="demo-stand-credit">Mayday / Ilia Arestov</span>
+                            <div class="demo-stand-views" role="group" [attr.aria-label]="'demo_stand.views' | translate">
+                                @for (view of demoStandViews; track view) {
+                                    <button
+                                        type="button"
+                                        [class.is-active]="demoStandView() === view"
+                                        [attr.aria-pressed]="demoStandView() === view"
+                                        (click)="demoStandView.set(view)"
+                                    >{{ 'demo_stand.' + view | translate }}</button>
+                                }
+                            </div>
+                            <p class="demo-stand-note">{{ 'demo_stand.note' | translate }}</p>
+                            <a [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">{{ 'source.wiring' | translate }} →</a>
+                        </figcaption>
+                    </figure>
                 </div>
             </section>
 
@@ -1134,15 +1138,66 @@ interface ComparisonRow {
                 border-color: var(--fg-muted);
             }
             .hero-visual {
-                color: var(--fg);
-                opacity: 0.85;
-                display: flex;
-                justify-content: flex-end;
-            }
-            .hero-visual svg {
                 width: 100%;
-                height: auto;
-                max-width: 360px;
+                min-width: 0;
+                margin: 0;
+                text-align: center;
+            }
+            .demo-stand-stage {
+                height: clamp(18rem, 32vw, 26rem);
+                display: grid;
+                place-items: center;
+            }
+            .demo-stand-stage picture,
+            .demo-stand-stage img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+                object-fit: contain;
+            }
+            .hero-visual figcaption {
+                margin-top: 0.75rem;
+                font-size: 0.8125rem;
+                color: var(--fg-muted);
+            }
+            .hero-visual figcaption strong {
+                display: block;
+                color: var(--fg);
+                font-size: 0.9375rem;
+            }
+            .demo-stand-credit {
+                display: block;
+                margin-top: 0.125rem;
+            }
+            .demo-stand-views {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-top: 0.875rem;
+            }
+            .demo-stand-views button {
+                min-height: 44px;
+                padding: 0.5rem 1rem;
+                border: 1px solid var(--border);
+                border-radius: var(--pill-radius);
+                background: transparent;
+                color: var(--fg-muted);
+            }
+            .demo-stand-views button:hover {
+                border-color: var(--accent);
+                color: var(--fg);
+            }
+            .demo-stand-views button.is-active {
+                background: var(--accent);
+                border-color: var(--accent);
+                color: var(--accent-ink);
+            }
+            .hero-visual .demo-stand-note {
+                margin: 0.75rem 0 0.375rem;
+                font-size: 0.75rem;
+                color: var(--fg-dim);
             }
 
             /* ================ Steps ================ */
@@ -2345,10 +2400,11 @@ interface ComparisonRow {
                     gap: 2rem;
                 }
                 .hero-visual {
-                    justify-content: center;
+                    max-width: 28rem;
+                    justify-self: center;
                 }
-                .hero-visual svg {
-                    max-width: 280px;
+                .demo-stand-stage {
+                    height: clamp(16rem, 85vw, 22rem);
                 }
                 .steps ol,
                 .wallets ul,
@@ -2438,6 +2494,8 @@ export class LandingPage {
     /* Mobile-menu overlay state. Toggled by the hamburger button in
        the topbar; closed on backdrop tap or any nav-link click. */
     readonly menuOpen = signal(false);
+    readonly demoStandViews = ['top', 'side'] as const;
+    readonly demoStandView = signal<'top' | 'side'>('top');
 
     /* Order matches the topbar jump-nav (page top→bottom). The leading
        "01"–"06" labels are pre-formatted strings — Angular templates

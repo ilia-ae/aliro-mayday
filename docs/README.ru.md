@@ -14,6 +14,7 @@
 | Временные метки снимка и независимая проверка | [Evidence](provenance/2026-10-15/README.md) | [Подтверждения](provenance/2026-10-15/README.ru.md) |
 | SDK, сборка, обновление и возврат | [Firmware](../aliro-esp32/README.md) | [Прошивка](../aliro-esp32/README.ru.md) |
 | Пины, NFC SPI, дисплей и кнопки | [Wiring](wiring.md) | [Подключение](wiring.ru.md) |
+| Фотографии демо-стенда и примечания к ретуши | [Photos](demo-stand.md) | [Фотографии](demo-stand.ru.md) |
 | Права по документам, отзыв и сохранение | [Policy](aliro-access-policy-2026-10-14.md) | [Политика](aliro-access-policy-2026-10-14.ru.md) |
 | Тесты на компьютере и проверка на аппаратуре | [Tests](../aliro-esp32/tests/README.md) | [Тесты](../aliro-esp32/tests/README.ru.md) |
 | Выдача Samsung и порядок стендовой проверки | [Bench](samsung-bench-preparation-2026-10-14.md) | [Стенд](samsung-bench-preparation-2026-10-14.ru.md) |

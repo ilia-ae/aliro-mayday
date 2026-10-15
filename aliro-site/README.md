@@ -9,6 +9,14 @@ the updated-firmware bench test on 15 October 2026; host tests cover protocol an
 policy changes. Samsung/Google Wallet, on-device revocation with a separate test
 key, a physical relay and certification require separate verification. Publishing source does not establish compatibility.
 
+## Demo stand photos
+
+The hero shows the top view by default, with an accessible top/side view selector.
+Transparent PNG presentation images and lighter WebP copies are in
+`frontend/public/images/`. Photo captions and alt text follow the selected language.
+Images are retouched presentation photos, with the IP hidden and external cables
+removed; they do not replace the electrical wiring guide.
+
 ## Source and deployment
 
 The canonical public source is `aliro-site/` in `ilia-ae/aliro-mayday`.

@@ -20,14 +20,22 @@
             "name": "translations",
             "installMode": "prefetch",
             "updateMode": "prefetch",
-            "cacheQueryOptions": { "ignoreSearch": false },
-            "resources": { "files": ["/i18n/**"] }
+            "cacheQueryOptions": {
+                "ignoreSearch": false
+            },
+            "resources": {
+                "files": [
+                    "/i18n/**"
+                ]
+            }
         },
         {
             "name": "app-assets",
             "installMode": "lazy",
             "updateMode": "lazy",
-            "cacheQueryOptions": { "ignoreSearch": true },
+            "cacheQueryOptions": {
+                "ignoreSearch": true
+            },
             "resources": {
                 "files": [
                     "/apple-touch-icon.png",
@@ -35,11 +43,16 @@
                     "/icon-512.png",
                     "/og.png",
                     "/robots.txt",
-                    "/sitemap.xml"
+                    "/sitemap.xml",
+                    "/images/demo-stand-*"
                 ]
             }
         }
     ],
-    "navigationUrls": ["/**", "!/ngsw-worker.js", "!/ngsw.json"],
+    "navigationUrls": [
+        "/**",
+        "!/ngsw-worker.js",
+        "!/ngsw.json"
+    ],
     "navigationRequestStrategy": "freshness"
 }

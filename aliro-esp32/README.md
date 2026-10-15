@@ -10,6 +10,14 @@
 [![Licensing: mixed; see guide](https://img.shields.io/badge/licensing-mixed-blue)](../docs/licensing.md)
 [![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](../docs/README.md)
 
+<p align="center">
+  <a href="../docs/demo-stand.md"><img src="../aliro-site/frontend/public/images/demo-stand-top.webp" width="260" alt="Aliro demo stand — top view"></a>
+  <a href="../docs/demo-stand.md"><img src="../aliro-site/frontend/public/images/demo-stand-side.webp" width="280" alt="Aliro demo stand — side view"></a>
+</p>
+
+**Aliro demo stand — Mayday / Ilia Arestov.** Retouched photographs; IP and external cables removed.
+[Photos and image notes](../docs/demo-stand.md).
+
 [Русский](README.ru.md) · [Documentation index](../docs/README.md)
 
 Project-original additions: **Mayday / Ilia Arestov**. [Authorship and upstream credits](../AUTHORS.md).
