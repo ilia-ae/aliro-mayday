@@ -7,8 +7,10 @@
 #include "ddk/store/Issuer.h"
 #include "ddk/store/ReaderIdentity.h"
 #include "ddk/transport/NfcChannel.h"
+#include <esp_log.h>
 
 namespace {
+constexpr const char* TAG = "DDKAuthContext";
 class Store final : public ddk::CredentialStore {
 public:
     readerData_t original;
@@ -190,7 +192,13 @@ void DDKAuthenticationContext::setSelectResponse(const std::vector<uint8_t>& res
 std::tuple<std::vector<uint8_t>, std::vector<uint8_t>, KeyFlow>
 DDKAuthenticationContext::authenticate(KeyFlow requested) {
     const auto failed = std::make_tuple(std::vector<uint8_t>{}, std::vector<uint8_t>{}, kFlowFailed);
-    if (!impl_->aliro || requested == kFlowFailed || requested == kFlowNext) return failed;
+    const auto reject = [&failed](const char* phase) {
+        // Phase names only: never log wallet identifiers, APDUs or key material.
+        ESP_LOGW(TAG, "Authentication rejected: %s", phase);
+        return failed;
+    };
+    if (!impl_->aliro || requested == kFlowFailed || requested == kFlowNext)
+        return reject("unsupported flow");
     // The precomputed session keeps its fresh ephemeral key and transaction ID.
     // The firmware currently requests Fast; explicit Standard/StepUp support
     // is configured without rebuilding that expensive precomputed material.
@@ -198,7 +206,7 @@ DDKAuthenticationContext::authenticate(KeyFlow requested) {
         requested == kFlowSTANDARD ? ddk::Flow::Standard : ddk::Flow::StepUp);
     auto profile = ddk::aliro::make_profile();
     if (profile->validate_select(*impl_->session, impl_->select) != ddk::FailureReason::None)
-        return failed;
+        return reject("SELECT/version/reader identity");
     const bool completed=profile->step(*impl_->session, ddk::FlowState::Selected)==ddk::FlowState::Done;
     bool policyChanged=false;
     auto policyData=impl_->store.exportPolicyData(impl_->clock(),policyChanged);
@@ -208,14 +216,15 @@ DDKAuthenticationContext::authenticate(KeyFlow requested) {
             // Standalone callers also receive a fail-closed snapshot.
             for (auto& issuer:policyData.issuers) issuer.document_policy_valid=false;
             impl_->target=std::move(policyData);
-            return failed;
+            return reject("policy persistence");
         }
         impl_->store.original=policyData; impl_->target=std::move(policyData);
     }
-    if (!completed) return failed;
+    if (!completed) return reject("protocol exchange or endpoint policy");
     auto outcome = profile->finalize(*impl_->session);
     if (!outcome || !outcome.issuer || !outcome.endpoint ||
-        aliro::credentials::revoked(impl_->store.original, outcome.endpoint->public_key)) return failed;
+        aliro::credentials::revoked(impl_->store.original, outcome.endpoint->public_key))
+        return reject("finalization or local revocation");
     // An existing key uses its old independent authorization. A learned key
     // must retain a verified document and pass current AccessData/revocation policy.
     bool alreadyAuthorized=false;
@@ -223,12 +232,13 @@ DDKAuthenticationContext::authenticate(KeyFlow requested) {
         for (const auto& endpoint:issuer.endpoints)
             alreadyAuthorized|=endpoint.endpoint_pk==outcome.endpoint->public_key;
     if ((!alreadyAuthorized && !outcome.endpoint->document_bound) ||
-        !aliro::documents::allowed(*outcome.issuer,*outcome.endpoint,impl_->clock(),impl_->access)) return failed;
+        !aliro::documents::allowed(*outcome.issuer,*outcome.endpoint,impl_->clock(),impl_->access))
+        return reject("enrollment or document authorization");
     const auto issuerId = outcome.issuer->id;
     const auto endpointId = outcome.endpoint->id;
     if (impl_->store.wantsSave) {
         auto data = impl_->store.exportData();
-        if (!impl_->save(data)) return failed;
+        if (!impl_->save(data)) return reject("credential persistence or concurrent update");
         impl_->target = std::move(data);
     }
     const auto flow = !impl_->store.wantsSave ? kFlowFAST :

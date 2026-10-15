@@ -56,6 +56,8 @@ public:
                    ReaderDataManager &readerDataManager);
   ~WebServerManager();
 
+  // Reserve the mandatory sender stack after Matter startup, before NFC workers fragment SRAM.
+  static bool reserveWebSocketStack();
   void begin();
   bool isRunning() const { return m_server && m_wsQueue && m_wsTaskHandle; }
 

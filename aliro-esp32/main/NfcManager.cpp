@@ -607,7 +607,9 @@ void NfcManager::handleHomeKeyAuth() {
             alpaca::serialize(event, event_data);
             event_bus.publish({m_nfc_topic, 0, event_data.data(), event_data.size()});
         } else {
-            ESP_LOGW(TAG, "HomeKey authentication failed.");
+            ESP_LOGW(TAG, "HomeKey authentication failed (%s).",
+                flow == kFlowFailed ? "protocol/credential rejected" :
+                "credential revision or current authorization changed");
 #if CONFIG_ALIRO_OLED_PANEL
             aliro::OledPanel::notifyAuthFail();
 #endif

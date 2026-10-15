@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "806b5a4c921b79388c7f7356797c38268f299fdc182098a23a370e6918504887"
+      "sha256": "e349e4618ebd7ad97166bfdfbcc7d82cf34acd588dae7410acae9db53e0fb9c2"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -336,7 +336,7 @@
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/Profile.cpp",
-      "sha256": "1458d9716c03f9822c1cd085a1a189c4a674ead3f15c84ab73c0f30bfbab0989"
+      "sha256": "571fe6de1dedd882f8963eca1530d8dff5e3ae36d949b2bc6ee610da88c79fb6"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/ProfileFactory.cpp",
@@ -572,7 +572,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/include/WebServerManager.hpp",
-      "sha256": "4012209616295644a686df3d925a6fdeffcbf96344655af6779aa9754f404630"
+      "sha256": "bf8df892a98937d04b5d4b4b2e90e96875902746c1c4e4f294e83c989fdb0997"
     },
     {
       "path": "aliro-esp32/components/admin_panel/include/WebSocketLogSinker.h",
@@ -620,7 +620,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebServerManager.cpp",
-      "sha256": "b663cc8d2929085b9b3af7593248b5b4f59143571bdf03d3e06a9720e06a3268"
+      "sha256": "887cc323f3f54cfd1a3eebc645aeda8101269b8cb9a68ee1e467c35cb241eeb3"
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebSocketLogSinker.cpp",
@@ -8128,7 +8128,7 @@
     },
     {
       "path": "aliro-esp32/main/DDKAuthContext.cpp",
-      "sha256": "dddd4cd54c60aad9e0140843d0e101d705f8ae56145094892c95bec8051a3bba"
+      "sha256": "2995b9a962a58df6036c8579fc18fde841d0f91df1c35df07163e23a1b91f32e"
     },
     {
       "path": "aliro-esp32/main/DDKAuthContext.h",
@@ -8176,7 +8176,7 @@
     },
     {
       "path": "aliro-esp32/main/NfcManager.cpp",
-      "sha256": "3763a7bcd055068ea4bef5b28da783074f91dc35effc87e619a8e7f8c5b0b646"
+      "sha256": "e33e9e25c874213fe354f7339682c2f3b7b31caa4acb1e150eac4d9ae73e9b7b"
     },
     {
       "path": "aliro-esp32/main/NfcManager.hpp",
@@ -8220,7 +8220,7 @@
     },
     {
       "path": "aliro-esp32/main/app_main.cpp",
-      "sha256": "714a743747a4ff50cc5750d32ecc0960c55ce6b27b1cc3a1eb9133e698235293"
+      "sha256": "fbcf541976be0bb183e9a7db02bb5b3a48ac73a4de37a7ea015819269d144421"
     },
     {
       "path": "aliro-esp32/main/eventStructs.hpp",
@@ -8240,7 +8240,7 @@
     },
     {
       "path": "aliro-esp32/sdkconfig.defaults",
-      "sha256": "791aee45696aa9100bc5a3d3890e56fdb49f7db3cce618a46b9a289fe2862db9"
+      "sha256": "2b7e92b0ae8659b70d96caeaf80e2b7bbf7b7acabc222e7fffc0d8750cc12d80"
     },
     {
       "path": "aliro-esp32/tests/README.md",
@@ -8336,11 +8336,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "0e526fe485fb8fc2b4e4d4b63689c6e5fc90c0ab3849b45a75615d50a17663bd"
+      "sha256": "6692d0636b4c36eb8f073cce9452e4580057ac49e9771ac0ba5c350116b9074f"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "c3ba0eab236a2f86c7347ae67fa8883869d986ace601a0ccd2e1da4feb7d083d"
+      "sha256": "70d6ac42ab00ba3e685e55b039fe85366a399b0a1fe1da8f63910caa2d6bc632"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -9388,7 +9388,7 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "1a7a4dfb9f5444ad51adbf484a6dd1fcbe030faa5df5fa2420c54446563dc6a2"
+      "sha256": "575c3c3a2719b7df236ff8bc6d41f2595c17e766b1a74452984886acc05fc624"
     },
     {
       "path": "aliro-esp32/README.ru.md",
@@ -9404,7 +9404,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "2ab8fa7cdc81bf14078dbee84cd4e7067ca20f966b60aaa706b51a66a67294a9"
+      "sha256": "00d98ef965d80960ad87f8f2bda9a77c70833c92416c7a846994c24bf9e91564"
     },
     {
       "path": "scripts/verify-public-source.py",
@@ -9512,7 +9512,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.ru.md",
-      "sha256": "ef863b356bf4767c7906d895773d8b85bb3a3ebded69954f545ac8f0885bc580"
+      "sha256": "044fef9ac635fa64bcb404d1a597f8e26f14d592b39478fa00de1a8ee527210a"
     },
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",

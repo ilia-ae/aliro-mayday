@@ -332,8 +332,12 @@ FlowState Profile::step(Session& session, FlowState current)
     } else {
       control_flow(session, 0x00, 0x00);   // no channel — row 9
     }
+    LOG(W, "Authentication denied: issuer=%d endpoint=%d flow=%d revocation=%d",
+        foundIssuer != nullptr, foundEndpoint != nullptr, static_cast<int>(flowUsed), revocation_failed);
     return FlowState::Failed;
   }
+  LOG(W, "AUTH0 rejected: SW=%02X%02X response=%zu bytes",
+      response.sw1, response.sw2, response.data.size());
   control_flow(session, 0x0, 0x0);
   return FlowState::Failed;
 }

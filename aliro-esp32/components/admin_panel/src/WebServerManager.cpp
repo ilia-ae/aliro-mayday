@@ -50,6 +50,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
 #include <dirent.h>
 #include <esp_app_desc.h>
 #include <mutex>
@@ -65,6 +66,19 @@
 const char *WebServerManager::TAG = "WebServerManager";
 static EventBus::Bus& event_bus = EventBus::Bus::instance();
 const size_t MAX_WS_PAYLOAD = 8192;
+namespace {
+constexpr size_t kWebSocketStackBytes = 4096;
+StackType_t* s_webSocketStack = nullptr;
+StaticTask_t s_webSocketTask;
+}
+
+bool WebServerManager::reserveWebSocketStack() {
+  if (!s_webSocketStack) {
+    s_webSocketStack = static_cast<StackType_t*>(heap_caps_malloc(
+        kWebSocketStackBytes, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
+  }
+  return s_webSocketStack != nullptr;
+}
 
 // ============================================================================
 // Helper Functions
@@ -176,12 +190,9 @@ void WebServerManager::begin() {
   httpd_ssl_config_t ssl_config = HTTPD_SSL_CONFIG_DEFAULT();
   ssl_config.httpd.max_uri_handlers = 22;
   ssl_config.httpd.max_open_sockets = 4;
-  // 8 K. Was 8 K originally — left alone after experiments at 12 K / 16 K
-  // both caused mDNS task creation to fail at boot due to internal-SRAM
-  // pressure (only ~32 KB internal free when WebServer starts). The
-  // httpd_req_delete edge-case crash needs to be tackled differently
-  // (audit handlers for deep stack frames) instead of throwing more
-  // stack at it.
+  // Keep the HTTP stack at 8 KiB: larger stacks starve radio/mDNS tasks.
+  // Request cleanup also uses stack space; sdkconfig.defaults bounds its
+  // purge buffer at 512 bytes rather than consuming this entire stack.
   ssl_config.httpd.stack_size = 8192;
   // OTA upload tuning: default httpd recv/send timeouts are 5 s. With
   // an OTA upload that lasts ~20 s the recv timeout fires repeatedly
@@ -255,9 +266,17 @@ void WebServerManager::begin() {
     return;
   }
 
-  if (xTaskCreate(ws_send_task, "ws_send_task", 4096, this, 5,
-                  &m_wsTaskHandle) != pdPASS) {
-    ESP_LOGE(TAG, "Failed to create WebSocket task");
+  if (s_webSocketStack) {
+    m_wsTaskHandle = xTaskCreateStatic(ws_send_task, "ws_send_task",
+        kWebSocketStackBytes, this, 5, s_webSocketStack, &s_webSocketTask);
+  } else if (xTaskCreate(ws_send_task, "ws_send_task", kWebSocketStackBytes, this, 5,
+                         &m_wsTaskHandle) != pdPASS) {
+    m_wsTaskHandle = nullptr;
+  }
+  if (!m_wsTaskHandle) {
+    ESP_LOGE(TAG, "Failed to create WebSocket task (internal free=%u largest=%u)",
+        (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+        (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
     vQueueDelete(m_wsQueue);
     m_wsQueue = nullptr;
     m_wsTaskHandle = nullptr;
@@ -2085,6 +2104,9 @@ std::string WebServerManager::getDeviceMetrics() {
   cJSON *status = cJSON_CreateObject();
   cJSON_AddStringToObject(status, "type", "metrics");
   cJSON_AddNumberToObject(status, "uptime", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<int64_t, std::micro>(esp_timer_get_time())).count());
+  const auto wall_time = std::time(nullptr);
+  cJSON_AddNumberToObject(status, "unix_time", static_cast<double>(wall_time));
+  cJSON_AddBoolToObject(status, "document_clock_ready", wall_time > 1577836800);
   cJSON_AddNumberToObject(status, "free_heap", esp_get_free_heap_size());
   cJSON_AddNumberToObject(status, "wifi_rssi", WiFi.RSSI());
   cJSON_AddBoolToObject(status, "nfc_connected", m_nfc_connected.load(std::memory_order_relaxed));

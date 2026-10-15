@@ -267,7 +267,7 @@
     },
     "roadmap": {
         "title": "Work plan",
-        "lede": "Status on 14 October 2026. Completed stages refer to the prototype; certification and finished-device dates have not been announced.",
+        "lede": "Status on 15 October 2026. Completed stages refer to the prototype; certification and finished-device dates have not been announced.",
         "status": {
             "done": "Done",
             "active": "In progress",
@@ -287,7 +287,7 @@
         "3": {
             "title": "Wallet testing",
             "eta": "In progress",
-            "text": "The existing iPhone key works on current firmware. Regression after the update and Samsung Fold 7 through SmartThings remain pending."
+            "text": "The existing iPhone key passed the updated-firmware bench test on 15 October: three authenticated taps, zero failures, and lock-state changes in both directions. Samsung Fold 7 through SmartThings remains pending."
         },
         "4": {
             "title": "Local administration",
@@ -349,7 +349,7 @@
             "strengths_2": "Matter over Thread",
             "strengths_3": "Setup requirements documented by Aqara",
             "advantages_1": "Public firmware source, tests and wiring diagrams",
-            "advantages_2": "Existing iPhone key tested on the baseline; Samsung/Google still pending",
+            "advantages_2": "Existing iPhone key tested after the update; Samsung/Google still pending",
             "advantages_3": "Telegram, metrics and camera integration are planned"
         },
         "schlage_encode": {
@@ -372,7 +372,7 @@
             "strengths_1": "Apple home keys",
             "strengths_2": "Matter on the Matter-labelled model",
             "strengths_3": "Compatible ecosystem hub requirements documented by Level",
-            "advantages_1": "Updated-firmware iPhone acceptance is still pending",
+            "advantages_1": "Existing iPhone key passed the updated-firmware bench test",
             "advantages_2": "Local verification of provisioned credentials",
             "advantages_3": "Physical lock output and certification remain future work"
         },
@@ -445,9 +445,9 @@
     "changelog": {
         "title": "What's new",
         "1": {
-            "date": "2026-10-14",
-            "title": "Public code, access rights and wiring diagrams",
-            "text": "PRs #1–3 are in main: DigitalDoorKey update, document rights and revocation, preserved reader identity, provisioning fixes, translations and GPIO diagrams. The owner tested the existing iPhone key; Fold 7 awaits bench acceptance."
+            "date": "2026-10-15",
+            "title": "Existing iPhone key verified after firmware update",
+            "text": "The existing iPhone key passed the updated-firmware test without reissuing the key or resetting pairing. The log records three authenticated taps, zero failures and both lock states. HTTP startup and disconnect fixes are published in PR #6; Fold 7 awaits bench acceptance."
         },
         "2": {
             "date": "2026-04-23",
@@ -540,7 +540,7 @@
     },
     "status": {
         "title": "What we're building",
-        "p1": "The existing iPhone key on the current firmware changes lock state in both directions, reported by the owner on 14 October 2026. The new build is tested on the host; a real iPhone regression after installation is still required.",
+        "p1": "On 15 October 2026, the owner confirmed that the existing iPhone key works after the firmware update. The controller recorded three authenticated taps, zero failures and both locked and unlocked Matter states. The key and pairing were preserved.",
         "p2": "The supported tests pass: 15 of 15. Access rights, revocation and persistence are implemented; Samsung Wallet on Fold 7, Google Wallet, a physical relay and Aliro BLE/UWB remain unverified.",
         "cta": "View code and implementation limits →"
     }
