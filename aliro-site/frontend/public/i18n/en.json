@@ -422,7 +422,7 @@
         },
         "6": {
             "q": "Can I build this myself?",
-            "a": "Source and build instructions are public in ilia-ae/aliro-mayday. Start with the pin diagram and the guide for preserving keys during an update. Personal non-commercial builds are permitted by project terms; commercial use of the main code requires a license. A physical actuator driver still needs to be added."
+            "a": "Source and build instructions are public in ilia-ae/aliro-mayday. Start with the pin diagram and the guide for preserving keys during an update. License v1.1 permits personal non-commercial builds, changes, forks and free redistribution within its scope; commercial use of project-original code requires a separate agreement. A physical actuator driver still needs to be added."
         },
         "7": {
             "q": "Can I use this commercially?",
@@ -440,7 +440,9 @@
         "open_repo": "View code on GitHub",
         "documentation": "Documentation",
         "wiring": "Wiring diagram and pins",
-        "license_note": "Main project code is source-available with a separate commercial license. Component licenses are retained. This is not a certified release."
+        "license_note": "Project-original code is source-available. License v1.1 permits changes, forks and free redistribution for the specified non-commercial uses. Commercial use requires a separate agreement. Third-party components retain their own licenses.",
+        "licensing": "License v1.1 and permitted uses",
+        "contributing": "Contributing and authorship"
     },
     "changelog": {
         "title": "What's new",
@@ -527,10 +529,10 @@
         "linkPrivacy": "Privacy"
     },
     "footer": {
-        "copyright_holder": "Ilia Arestov",
-        "copyright": "© 2026 Ilia Arestov",
+        "copyright_holder": "Mayday / Ilia Arestov",
+        "copyright": "© 2026 Mayday / Ilia Arestov",
         "rights": "All rights reserved",
-        "commercial": "Public source · source-available · commercial use by licence",
+        "commercial": "Public source · license v1.1 · commercial use by licence",
         "tagline": "Experimental ESP32-S3 + PN532 NFC controller. Public source and wiring; Samsung/Google Wallet acceptance remains pending.",
         "nav_label": "Sections",
         "docs_label": "Resources",

@@ -12,7 +12,7 @@
     },
     {
       "path": "LICENSE",
-      "sha256": "3afb97ca0d63df4270e97cd6b74977a08ccb5a6a194e4c026e7c6140e46cad18"
+      "sha256": "5aef1152eaa0968841e30b965463000ec4130016a1bbd71927384b2674fc900f"
     },
     {
       "path": "LICENSES/MIT.txt",
@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "92dbe4440b80e0973a373dfaf7c32afd576bfe5ac9c5771787c691e3f2d97f6b"
+      "sha256": "544fabf07e42a917636f731cf430309b3f6cb9421dfbe67c976bf4a13c8f632a"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "c3a1ec78133f17bb7470eb7c7f4232638fd4681250b7585ec74ef7fc59c86181"
+      "sha256": "0343cf42cefcc6ab9267b992c1a833409ecbab6b6d505072c74bf9de6a1af8d8"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -8272,11 +8272,11 @@
     },
     {
       "path": "aliro-site/LICENSE",
-      "sha256": "bfc00b2c95576c499af9ec6e46141996de2ce00950e161182c65b984efe6c73a"
+      "sha256": "64dee8972d473deeafa7da17a69d27160c5c2a87de669bc7562d0dde7be17d99"
     },
     {
       "path": "aliro-site/README.md",
-      "sha256": "7f62e80925ad068ba69cb64c6611569eb109b985e5f4a8426d0ea260df942794"
+      "sha256": "dbcb1cba3afe641c98eec168c47cd82c4463b1245a7427859cbf0e89bf2a786b"
     },
     {
       "path": "aliro-site/frontend/.gitignore",
@@ -8336,11 +8336,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "6692d0636b4c36eb8f073cce9452e4580057ac49e9771ac0ba5c350116b9074f"
+      "sha256": "8d5bee617b470fbe6f074ef218419cabaf429ff5df92360dd29fee31f849151c"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "70d6ac42ab00ba3e685e55b039fe85366a399b0a1fe1da8f63910caa2d6bc632"
+      "sha256": "20c66f097eff5cba53d0898a19b5d298cdab969de35c36cd00abfc74ad85e256"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8372,7 +8372,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app/pages/landing/landing.ts",
-      "sha256": "39fe1fc287016176d696871b9ca9cf2a1121665401dc6c2b473df0da5e7cf174"
+      "sha256": "55ec669e25c7c910549004f73d284c7d902471d97f4a399901b25239c3e15218"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",
@@ -8408,7 +8408,7 @@
     },
     {
       "path": "aliro-site/frontend/src/index.html",
-      "sha256": "ce0360dd2a792dbe12adaeb9ccf86ddd9d078f4fd7a79ea61944c3bdfdaec80f"
+      "sha256": "f307c39f56bbbc030da13b9b27988322ccad8da3b37dc37096e5029507e23c46"
     },
     {
       "path": "aliro-site/frontend/src/main.ts",
@@ -9388,11 +9388,11 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "2031d20eb5407b5197b2ab6ff0ba55366c9fb2c29284da621eed8d5c0b822d9e"
+      "sha256": "191f5a3c5b964e5eb10d64380a67336a91ec37c071c611b9743dfad1dae85832"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "68ccb6047b9ea629a7f263de7a85327399d3a04a9e00918659afc327c8fb3cec"
+      "sha256": "31f822993512f36b0b0c655ffeeca847407494cb027e882c3508e3668d98a520"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
@@ -9400,7 +9400,7 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "0027fb7dd576beae5f8d2e5e3f5ede46adef6e5f8fd76db9bd304055d70e6f55"
+      "sha256": "ed3fcdfff0f2a5fcbec214698d8a009fa1437fb12bb318a54b21a67054dcacf5"
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
@@ -9408,7 +9408,7 @@
     },
     {
       "path": "scripts/verify-public-source.py",
-      "sha256": "c61c3390bb2884d0ca5f59cb0fff03cd34827cc3c83dbeced41c8c9e329f0630"
+      "sha256": "149088e0030c9ecb33a0032b79ccd03d4775312e3f967d048e3821afd9a03b96"
     },
     {
       "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
@@ -9492,15 +9492,15 @@
     },
     {
       "path": "aliro-site/README.ru.md",
-      "sha256": "b8757bab6f80c6d36cf6e9a9d26c5fda76e2280d8bca3e607abf549529d04139"
+      "sha256": "f7ff4d74eb3a01e3cdc9fd31f551686d019f40bb3de9adbe9f252661c082304a"
     },
     {
       "path": "aliro-site/frontend/e2e/source.spec.ts",
-      "sha256": "547e6e3b43582d23aa99c15fb742dccd42bb5c17f810f244462823b80c0cb0a0"
+      "sha256": "293cf6e0529c6b04407a4e7640dea7824ab3cfecde11deb000aae98aa5bef11a"
     },
     {
       "path": "docs/README.ru.md",
-      "sha256": "f0b69eccb6e889909d6b536777e61dca2ce475a2b5badaae2c8ce5c2b9c10449"
+      "sha256": "eeffa81a500a83a2eb7622c8fbda93b9ad0f2a1fa79e7f0694c63da264356663"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.ru.md",
@@ -9552,15 +9552,15 @@
     },
     {
       "path": "docs/licensing-inventory-2026-10-15.json",
-      "sha256": "ba678d170463836eec8283cc6f0c7050cc0dae283788ff02dd7cadac9ca48cfb"
+      "sha256": "f04056a0b92659ff0a5300f22517cb113ba0676f4d5b0ff913ad6f241ec15e1a"
     },
     {
       "path": "docs/licensing.md",
-      "sha256": "f7d5841c20804518fcb0993010493eeb5282a007f95c900fb7df565605dbd48c"
+      "sha256": "0a32566225b72d5cc6aeaac5f4026e3729535752475fd1d8cec91b1f2b0ac2a4"
     },
     {
       "path": "docs/licensing.ru.md",
-      "sha256": "216f47dd6ea461dc9b76645cef3b9199cd18769f31879d3831c13d0f2282cfab"
+      "sha256": "c2562c5110f5c20a95139688832772815d2bfacfdfeb7e22732c2c2b04fc128d"
     },
     {
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
@@ -9568,15 +9568,23 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "080e726192fcd74061eacd8873be070b2f2f80f8a5be143efa15e679b8ed2dd5"
+      "sha256": "3a415f74b75b5d682bb4c4e512caa02120a369183c938c95d6d68b45dc89249e"
     },
     {
       "path": "CONTRIBUTING.ru.md",
-      "sha256": "65ceb8ae7620e255e203e0d8f1d9a20cc7a96942315dace1e88ad668b13e7b32"
+      "sha256": "52ac2e054611d78baa0e5b757e6463ff4df95f379b88e20ab75ec644cd6ead5c"
     },
     {
       "path": "LICENSES/Aliro-Mayday-1.0.txt",
       "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
+    },
+    {
+      "path": "AUTHORS.md",
+      "sha256": "e803331c5bb6f04f1270004b3173eb9f789a6024b44532b230bd01078b24ebe8"
+    },
+    {
+      "path": "AUTHORS.ru.md",
+      "sha256": "b8e0e327b7a6b14b629dcce4e286cf3f8f1c6674b181814d393ab53b8cfdc7ed"
     }
   ],
   "omitted": [

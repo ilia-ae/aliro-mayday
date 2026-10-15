@@ -12,6 +12,8 @@
 
 [Русский](README.ru.md) · [Documentation index](../docs/README.md)
 
+Project-original additions: **Mayday / Ilia Arestov**. [Authorship and upstream credits](../AUTHORS.md).
+
 Experimental ESP32-S3 + PN532 controller with Matter DoorLock provisioning,
 NVS credential storage and local administration. On 15 October 2026, the owner
 confirmed the existing iPhone key works after the update. The current boot records

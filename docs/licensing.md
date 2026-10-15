@@ -9,6 +9,10 @@ redistribution and new contributions; the commercial terms have not changed.
 
 ## Project-original code
 
+Project-original work is credited to **Mayday / Ilia Arestov**; Mayday is the
+project brand, with Ilia Arestov remaining the named rights holder. See
+[authorship and upstream credits](../AUTHORS.md).
+
 Original Aliro application code and original website code use the project's
 **Source-Available Commercial License v1.1**. Source is publicly readable; the
 repository as a whole is not offered under MIT or an OSI-approved open-source

@@ -79,3 +79,5 @@ This SPA has no server-side rendering. Social crawlers that do not execute
 JavaScript see the static Russian metadata; runtime metadata follows the selected
 language. Component licenses retain their scope; public availability does not
 make all project code OSI Open Source.
+
+Project-original authorship: **Mayday / Ilia Arestov**. [License v1.1](LICENSE) clarifies permitted modifications and redistribution; [contribution terms](../CONTRIBUTING.md) cover new submissions. See [authorship and third-party scope](../AUTHORS.md).

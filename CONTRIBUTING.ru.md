@@ -1,6 +1,6 @@
 # Участие в проекте
 
-[English](CONTRIBUTING.md) · [Лицензия v1.1](LICENSE) · [Лицензирование](docs/licensing.ru.md)
+[English](CONTRIBUTING.md) · [Лицензия v1.1](LICENSE) · [Лицензирование](docs/licensing.ru.md) · [Авторство](AUTHORS.ru.md)
 
 Изменения собственного кода проекта используют Source-Available Commercial
 License v1.1. Изменения отдельно лицензированных компонентов сохраняют применимую

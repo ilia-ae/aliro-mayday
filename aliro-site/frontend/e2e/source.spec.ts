@@ -14,9 +14,14 @@ test.describe('public source access', () => {
             await expect(section.locator(`a[href$="/docs/${index}"]`)).toBeVisible();
             const wiring = lang === 'ru' ? 'wiring.ru.md' : 'wiring.md';
             await expect(section.locator(`a[href$="/docs/${wiring}"]`)).toBeVisible();
+            const suffix = lang === 'ru' ? '.ru' : '';
+            await expect(section.locator(`a[href$="/docs/licensing${suffix}.md"]`)).toBeVisible();
+            await expect(section.locator(`a[href$="/CONTRIBUTING${suffix}.md"]`)).toBeVisible();
             await expect(section.locator('[role="timer"]')).toHaveCount(0);
             await expect(section.locator('a[href^="mailto:"]')).toHaveCount(0);
             await expect(section).toContainText(/source-available/i);
+            await expect(section).toContainText('v1.1');
+            await expect(page.locator('footer .copyright')).toContainText('Mayday / Ilia Arestov');
             await expect(page.locator('#status a')).toHaveAttribute('href', repository);
         });
     }

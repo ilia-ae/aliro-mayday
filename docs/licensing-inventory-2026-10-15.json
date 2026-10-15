@@ -6,7 +6,7 @@
   "legal_texts": [
     {
       "path": "LICENSE",
-      "sha256": "3afb97ca0d63df4270e97cd6b74977a08ccb5a6a194e4c026e7c6140e46cad18"
+      "sha256": "5aef1152eaa0968841e30b965463000ec4130016a1bbd71927384b2674fc900f"
     },
     {
       "path": "LICENSES/Aliro-Mayday-1.0.txt",
@@ -162,7 +162,7 @@
     },
     {
       "path": "aliro-site/LICENSE",
-      "sha256": "bfc00b2c95576c499af9ec6e46141996de2ce00950e161182c65b984efe6c73a"
+      "sha256": "64dee8972d473deeafa7da17a69d27160c5c2a87de669bc7562d0dde7be17d99"
     },
     {
       "path": "homekey-esp32/LICENSE",

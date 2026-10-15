@@ -529,6 +529,15 @@ interface ComparisonRow {
                         </a>
                     </p>
                     <p>{{ 'source.license_note' | translate }}</p>
+                    <p class="cta">
+                        <a [attr.href]="sourceLicensingUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.licensing' | translate }} →
+                        </a>
+                        ·
+                        <a [attr.href]="sourceContributingUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.contributing' | translate }} →
+                        </a>
+                    </p>
                 </div>
             </section>
 
@@ -1913,52 +1922,7 @@ interface ComparisonRow {
                 margin: 0;
             }
 
-            /* ================ Source release countdown ================ */
-            /* Live countdown to the public source-code release. The
-               component refreshes every second via a signal driven by
-               setInterval. Cleaned up via DestroyRef in the constructor. */
-            .source .countdown {
-                display: grid;
-                grid-template-columns: repeat(4, minmax(0, 1fr));
-                gap: 0.75rem;
-                max-width: 36rem;
-                margin: 0.5rem 0 1.25rem;
-            }
-            .source .unit {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.25rem;
-                padding: 1.25rem 0.75rem;
-                background: var(--bg-elevated);
-                border: 1px solid var(--border);
-                border-radius: var(--soft-radius);
-            }
-            .source .num {
-                font-family: var(--font-display);
-                font-weight: 700;
-                font-size: 2.25rem;
-                line-height: 1;
-                color: var(--accent);
-                letter-spacing: -0.02em;
-                font-variant-numeric: tabular-nums;
-            }
-            .source .label {
-                font-size: 0.6875rem;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                color: var(--fg-dim);
-            }
-            .source .target {
-                font-size: 0.9375rem;
-                color: var(--fg-muted);
-                margin: 0 0 0.5rem;
-            }
-            .source .target strong {
-                color: var(--fg);
-                font-weight: 600;
-            }
+            /* ================ Published source ================ */
             .source .released {
                 font-size: 1.0625rem;
                 color: var(--accent);
@@ -2336,18 +2300,6 @@ interface ComparisonRow {
                 .standard .refs {
                     grid-template-columns: 1fr;
                 }
-                /* Countdown tiles tighten so 4 fit without crowding on
-                   narrow viewports — 0.75rem h-padding leaves only ~42px
-                   for the 2.25rem number, which is borderline. */
-                .source .unit {
-                    padding: 0.875rem 0.5rem;
-                }
-                .source .num {
-                    font-size: 1.875rem;
-                }
-                .source .countdown {
-                    gap: 0.5rem;
-                }
                 /* Footer fully stacks single-column on phones. */
                 footer {
                     padding: 3rem 0 2rem;
@@ -2440,6 +2392,12 @@ export class LandingPage {
     readonly sourceReleasedUrl = 'https://github.com/ilia-ae/aliro-mayday';
     readonly sourceDocumentationUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/README${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly sourceLicensingUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/licensing${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly sourceContributingUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/CONTRIBUTING${this.language.lang() === 'ru' ? '.ru' : ''}.md`
     );
     readonly sourceWiringUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/wiring${this.language.lang() === 'ru' ? '.ru' : ''}.md`

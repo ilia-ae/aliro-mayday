@@ -1,6 +1,6 @@
 # Contributing
 
-[Русский](CONTRIBUTING.ru.md) · [License v1.1](LICENSE) · [Licensing guide](docs/licensing.md)
+[Русский](CONTRIBUTING.ru.md) · [License v1.1](LICENSE) · [Licensing guide](docs/licensing.md) · [Authorship](AUTHORS.md)
 
 Changes to project-original material use the Source-Available Commercial License
 v1.1. Changes to independently licensed components keep their applicable license,

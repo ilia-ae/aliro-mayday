@@ -12,6 +12,8 @@
 
 [Русский](README.ru.md) · [Documentation index](docs/README.md) · [Wiring diagram](docs/wiring.md)
 
+Project-original work: **Mayday / Ilia Arestov**. [Authorship and upstream credits](AUTHORS.md).
+
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
 DoorLock provisioning and local administration. This repository began as a clean
 source snapshot dated **13 October 2026**, with new Git history.
