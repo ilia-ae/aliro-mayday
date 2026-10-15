@@ -24,6 +24,15 @@ and Aliro certification require separate acceptance.
 
 Licensing is mixed: see the [scope and third-party exceptions](../docs/licensing.md).
 
+## Snapshot timestamp evidence
+
+**DigiCert + FreeTSA (RFC 3161): verified.** Three OpenTimestamps calendar receipts
+are included; a verified Bitcoin block is not yet included in the published package.
+The evidence identifies snapshot [`24e218e`](https://github.com/ilia-ae/aliro-mayday/tree/24e218ef1ea83dafd47447e0393ddd5cd949ccaa)
+dated 15 October 2026, credited to **Mayday / Ilia Arestov**.
+
+[Proofs and verification](../docs/provenance/2026-10-15/README.md) · [Download ZIP](https://aliro.mayday.software/proofs/aliro-snapshot-2026-10-15.zip) · [Manifest](../docs/provenance/2026-10-15/authorship-manifest.json)
+
 ## Current implementation
 
 - DigitalDoorKey is pinned to `80e4a1e14eab3646b62ab3bdad6d2ed01d399375`.

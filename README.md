@@ -18,6 +18,15 @@ Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
 DoorLock provisioning and local administration. This repository began as a clean
 source snapshot dated **13 October 2026**, with new Git history.
 
+## Snapshot timestamp evidence
+
+**DigiCert + FreeTSA (RFC 3161): verified.** Three OpenTimestamps calendar receipts
+are included; a verified Bitcoin block is not yet included in the published package.
+The evidence identifies snapshot [`24e218e`](https://github.com/ilia-ae/aliro-mayday/tree/24e218ef1ea83dafd47447e0393ddd5cd949ccaa)
+dated 15 October 2026, credited to **Mayday / Ilia Arestov**.
+
+[Proofs and verification](docs/provenance/2026-10-15/README.md) · [Download ZIP](https://aliro.mayday.software/proofs/aliro-snapshot-2026-10-15.zip) · [Manifest](docs/provenance/2026-10-15/authorship-manifest.json)
+
 ## Verified status
 
 - On 15 October 2026, the owner confirmed the existing iPhone key works after

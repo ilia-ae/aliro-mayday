@@ -538,6 +538,37 @@ interface ComparisonRow {
                             {{ 'source.contributing' | translate }} →
                         </a>
                     </p>
+                    <div id="evidence" class="source-evidence" aria-labelledby="evidence-title">
+                        <h3 id="evidence-title">{{ 'source.evidence.title' | translate }}</h3>
+                        <p class="evidence-meta">
+                            Mayday / Ilia Arestov · {{ 'source.evidence.snapshot' | translate }}
+                            <a [attr.href]="sourceEvidenceSnapshotUrl" target="_blank" rel="noopener noreferrer">24e218e</a>
+                        </p>
+                        <ul>
+                            <li><strong>DigiCert + FreeTSA</strong> — {{ 'source.evidence.verified' | translate }}</li>
+                            <li><strong>OpenTimestamps / Bitcoin</strong> — {{ 'source.evidence.pending' | translate }}</li>
+                        </ul>
+                        <p>{{ 'source.evidence.scope' | translate }}</p>
+                        <p class="evidence-links">
+                            <a class="evidence-download" [attr.href]="sourceEvidenceBundleUrl" download="aliro-snapshot-2026-10-15.zip">
+                                {{ 'source.evidence.download' | translate }} ↓
+                            </a>
+                            <a [attr.href]="sourceEvidenceUrl()" target="_blank" rel="noopener noreferrer">
+                                {{ 'source.evidence.verify' | translate }} →
+                            </a>
+                        </p>
+                        <details>
+                            <summary>{{ 'source.evidence.digest' | translate }}</summary>
+                            <code>{{ sourceEvidenceManifestDigest }}</code>
+                            <p>
+                                <a [attr.href]="sourceEvidenceManifestUrl" target="_blank" rel="noopener noreferrer">{{ 'source.evidence.manifest' | translate }}</a>
+                                ·
+                                <a [attr.href]="sourceEvidenceRecordUrl" target="_blank" rel="noopener noreferrer">{{ 'source.evidence.record' | translate }}</a>
+                                ·
+                                <a [attr.href]="sourceEvidenceBundleUrl + '.sha256'" target="_blank" rel="noopener noreferrer">{{ 'source.evidence.archive_checksum' | translate }}</a>
+                            </p>
+                        </details>
+                    </div>
                 </div>
             </section>
 
@@ -1945,11 +1976,7 @@ interface ComparisonRow {
             .source .released-cta a:hover {
                 background: var(--accent-hover);
             }
-            /* Primary "Get early access" CTA — same button proportions
-               as the post-launch released-cta and the status CTA, so
-               all three primary actions on the page share one visual
-               language. mailto target is reactively rebuilt with a
-               URL-encoded localized subject (see earlyAccessMailto). */
+            /* Public documentation links share the primary button proportions. */
             .source .cta {
                 margin: 1.5rem 0 0;
             }
@@ -1966,6 +1993,56 @@ interface ComparisonRow {
             }
             .source .cta a:hover {
                 background: var(--accent-hover);
+            }
+            .source-evidence {
+                max-width: 52rem;
+                margin-top: 2.5rem;
+                padding: clamp(1.25rem, 3vw, 2rem);
+                border: 1px solid var(--border);
+                border-left: 3px solid var(--accent);
+                border-radius: var(--soft-radius);
+                background: var(--bg-elevated);
+                scroll-margin-top: 6rem;
+            }
+            .source-evidence h3 {
+                margin: 0 0 0.75rem;
+                font-size: 1.375rem;
+            }
+            .source-evidence .evidence-meta {
+                color: var(--fg-muted);
+                font-size: 0.9375rem;
+            }
+            .source-evidence ul {
+                padding-left: 1.25rem;
+                line-height: 1.7;
+            }
+            .source-evidence .evidence-links {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1rem;
+                margin: 1.25rem 0;
+            }
+            .source-evidence .evidence-download {
+                padding: 0.75rem 1rem;
+                border-radius: var(--btn-radius);
+                background: var(--accent);
+                color: var(--accent-ink);
+                text-decoration: none;
+                font-weight: 600;
+            }
+            .source-evidence .evidence-download:hover {
+                background: var(--accent-hover);
+            }
+            .source-evidence summary {
+                cursor: pointer;
+                color: var(--fg-muted);
+            }
+            .source-evidence details code {
+                display: block;
+                margin-top: 0.75rem;
+                overflow-wrap: anywhere;
+                font-size: 0.875rem;
             }
 
             /* ================ Changelog ================ */
@@ -2399,6 +2476,14 @@ export class LandingPage {
     readonly sourceContributingUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/CONTRIBUTING${this.language.lang() === 'ru' ? '.ru' : ''}.md`
     );
+    readonly sourceEvidenceUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/provenance/2026-10-15/README${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly sourceEvidenceSnapshotUrl = 'https://github.com/ilia-ae/aliro-mayday/tree/24e218ef1ea83dafd47447e0393ddd5cd949ccaa';
+    readonly sourceEvidenceBundleUrl = '/proofs/aliro-snapshot-2026-10-15.zip';
+    readonly sourceEvidenceManifestDigest = '9f51d5b701905d34c7a22910c80c2950451cfa3cf9402e8485947b90ff13af2c';
+    readonly sourceEvidenceManifestUrl = 'https://github.com/ilia-ae/aliro-mayday/blob/main/docs/provenance/2026-10-15/authorship-manifest.json';
+    readonly sourceEvidenceRecordUrl = 'https://github.com/ilia-ae/aliro-mayday/blob/main/docs/provenance/2026-10-15/verification.json';
     readonly sourceWiringUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/wiring${this.language.lang() === 'ru' ? '.ru' : ''}.md`
     );

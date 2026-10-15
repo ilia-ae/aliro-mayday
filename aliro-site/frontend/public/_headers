@@ -12,3 +12,12 @@
 
 /i18n/*
   Cache-Control: no-cache
+
+/proofs/aliro-snapshot-2026-10-15.zip
+  Content-Type: application/zip
+  Content-Disposition: attachment; filename="aliro-snapshot-2026-10-15.zip"
+  Cache-Control: no-cache
+
+/proofs/*.sha256
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: no-cache

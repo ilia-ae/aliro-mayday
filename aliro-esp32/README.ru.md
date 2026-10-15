@@ -25,6 +25,15 @@ DoorLock, хранением в NVS и локальным управлением
 
 Лицензирование смешанное: см. [области и сторонние исключения](../docs/licensing.ru.md).
 
+## Подтверждения снимка исходников
+
+**DigiCert + FreeTSA (RFC 3161): проверены.** Получены три квитанции
+OpenTimestamps; подтверждённый Bitcoin-блок пока не включён в опубликованный пакет.
+Доказательства относятся к снимку [`24e218e`](https://github.com/ilia-ae/aliro-mayday/tree/24e218ef1ea83dafd47447e0393ddd5cd949ccaa)
+от 15 октября 2026 с подписью **Mayday / Ilia Arestov**.
+
+[Доказательства и проверка](../docs/provenance/2026-10-15/README.ru.md) · [Скачать ZIP](https://aliro.mayday.software/proofs/aliro-snapshot-2026-10-15.zip) · [Манифест](../docs/provenance/2026-10-15/authorship-manifest.json)
+
 ## Текущая реализация
 
 - DigitalDoorKey закреплён на `80e4a1e14eab3646b62ab3bdad6d2ed01d399375`.

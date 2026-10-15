@@ -442,7 +442,20 @@
         "wiring": "Wiring diagram and pins",
         "license_note": "Project-original code is source-available. License v1.1 permits changes, forks and free redistribution for the specified non-commercial uses. Commercial use requires a separate agreement. Third-party components retain their own licenses.",
         "licensing": "License v1.1 and permitted uses",
-        "contributing": "Contributing and authorship"
+        "contributing": "Contributing and authorship",
+        "evidence": {
+            "title": "Snapshot timestamp evidence",
+            "snapshot": "15 October 2026 source snapshot",
+            "verified": "Signed timestamps for this source snapshot have been verified.",
+            "pending": "Three calendar receipts. A verified Bitcoin block is not yet included in the published package.",
+            "scope": "The timestamps cover this specific snapshot and the authorship statement “Mayday / Ilia Arestov”. The full verification record explains their scope and the rights retained by third-party authors.",
+            "download": "Download proof bundle (ZIP)",
+            "verify": "Proofs and independent verification",
+            "digest": "Manifest SHA-256 and verification record",
+            "manifest": "View manifest",
+            "record": "View verification record",
+            "archive_checksum": "ZIP checksum"
+        }
     },
     "changelog": {
         "title": "What's new",

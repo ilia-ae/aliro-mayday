@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "544fabf07e42a917636f731cf430309b3f6cb9421dfbe67c976bf4a13c8f632a"
+      "sha256": "d384ccabe79ae83a967686d4d5c58a63f31b0805962d1d2380453d10c106dc23"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "0343cf42cefcc6ab9267b992c1a833409ecbab6b6d505072c74bf9de6a1af8d8"
+      "sha256": "fba04fb35804bf6e29c9d33b03eef596c3e59093ae6ceb0e8a3f3ff89fb2125a"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -8336,11 +8336,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "8d5bee617b470fbe6f074ef218419cabaf429ff5df92360dd29fee31f849151c"
+      "sha256": "6acf67148e5b781eb79716ad3edc149fe1307693a26b239cc16752c9f6ac7e42"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "20c66f097eff5cba53d0898a19b5d298cdab969de35c36cd00abfc74ad85e256"
+      "sha256": "60a2e61111e5be704e762f3c9756146e2b96181067ef61900cba535b2236e897"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8372,7 +8372,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app/pages/landing/landing.ts",
-      "sha256": "55ec669e25c7c910549004f73d284c7d902471d97f4a399901b25239c3e15218"
+      "sha256": "9e41dbf5448e227c2bde593fd22970bf3ff891331454c0f0b17974a9a8cdc3fb"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",
@@ -9388,11 +9388,11 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "191f5a3c5b964e5eb10d64380a67336a91ec37c071c611b9743dfad1dae85832"
+      "sha256": "b8c91994cc1a1bd8bd32838ae6395b62be1d31eb672d1210bc1f4b2063d9a4f2"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "31f822993512f36b0b0c655ffeeca847407494cb027e882c3508e3668d98a520"
+      "sha256": "6a23f67e13f7d6f6355eba0c3417aef19af6e68d2c8d18c20f4e72e61f0ecf92"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
@@ -9528,7 +9528,7 @@
     },
     {
       "path": "aliro-site/frontend/public/_headers",
-      "sha256": "6ad8d2b2d309c9067de18980bc963ec15135649196295192696deee52508ec52"
+      "sha256": "f5b436f9569a2630ea1321b61033e02bf4bef924fc118ab2e194e8544c7c61f0"
     },
     {
       "path": "aliro-site/frontend/scripts/content-version.mjs",
@@ -9633,6 +9633,14 @@
     {
       "path": "docs/provenance/2026-10-15/verification.json",
       "sha256": "991b2d86b65c3655d7cfdd14be5670aba8f30575798287f19e1bf5b70f58c9b9"
+    },
+    {
+      "path": "aliro-site/frontend/public/proofs/aliro-snapshot-2026-10-15.zip",
+      "sha256": "634ec80d18c48b5e14a3415a35c804a7423782c5e78e3fbebeac1b8e46aa661a"
+    },
+    {
+      "path": "aliro-site/frontend/public/proofs/aliro-snapshot-2026-10-15.zip.sha256",
+      "sha256": "472c23277db39d5bafc0820a69e6b012043b2cbb98a286458627506b3dca0808"
     }
   ],
   "omitted": [

@@ -18,6 +18,15 @@
 через Matter DoorLock и локальным управлением. Репозиторий начат как очищенный
 снимок исходников **13 октября 2026** с новой историей Git.
 
+## Подтверждения снимка исходников
+
+**DigiCert + FreeTSA (RFC 3161): проверены.** Получены три квитанции
+OpenTimestamps; подтверждённый Bitcoin-блок пока не включён в опубликованный пакет.
+Доказательства относятся к снимку [`24e218e`](https://github.com/ilia-ae/aliro-mayday/tree/24e218ef1ea83dafd47447e0393ddd5cd949ccaa)
+от 15 октября 2026 с подписью **Mayday / Ilia Arestov**.
+
+[Доказательства и проверка](docs/provenance/2026-10-15/README.ru.md) · [Скачать ZIP](https://aliro.mayday.software/proofs/aliro-snapshot-2026-10-15.zip) · [Манифест](docs/provenance/2026-10-15/authorship-manifest.json)
+
 ## Проверенное состояние
 
 - 15 октября 2026 владелец подтвердил работу прежнего ключа iPhone после
