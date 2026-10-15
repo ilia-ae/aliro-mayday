@@ -104,6 +104,7 @@ static const char *TAG = "aliro-esp32";
 static std::unique_ptr<WebServerManager> s_web_server_pending;
 static std::atomic<WebServerManager*> s_web_server_for_start{nullptr};
 static std::atomic<bool> s_web_server_started{false};
+static std::atomic<bool> s_app_initialization_complete{false};
 
 // Friendly name resolved by mDNS (`http://aliro.local/`). DHCP hostname
 // is set to the same string so consumer routers can also list us as
@@ -178,6 +179,10 @@ void aliro_admin_kick_webserver_if_needed()
 {
     auto * pending = s_web_server_for_start.load();
     if (!pending) return;
+    if (!s_app_initialization_complete.load(std::memory_order_acquire)) {
+        retry_admin_start_later();
+        return;
+    }
     if (s_web_server_started.exchange(true)) return; // coalesce queued starts
 
     // Dispatch WebServerManager::begin() off the Matter device-layer event
@@ -192,6 +197,17 @@ void aliro_admin_kick_webserver_if_needed()
             auto * ws = reinterpret_cast<WebServerManager *>(arg);
             aliro_admin_publish_mdns();
             size_t free_internal = heap_caps_get_free_size(MALLOC_CAP_INTERNAL);
+            const size_t largest_internal = heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL);
+            // A failed HTTP task creation can leave a bound listening socket
+            // in this SDK. Wait for bootstrap's 16 KiB stack and adequate
+            // contiguous space instead of entering that failure path.
+            if (free_internal < 24 * 1024 || largest_internal < 12 * 1024) {
+                ESP_LOGI(TAG, "[admin] waiting for HTTP memory (free=%u largest=%u)",
+                         (unsigned)free_internal, (unsigned)largest_internal);
+                s_web_server_started.store(false);
+                retry_admin_start_later();
+                return;
+            }
             ESP_LOGI("aliro-esp32", "[admin] starting WebServerManager "
                      "(free internal heap: %u)", (unsigned)free_internal);
             ws->begin();
@@ -1040,7 +1056,9 @@ extern "C" void app_main()
     // atomic scheduling guard coalesces this with a concurrent IP-up event.
     auto * sta = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
     esp_netif_ip_info_t ip_info{};
+    s_app_initialization_complete.store(true, std::memory_order_release);
     if (sta && esp_netif_get_ip_info(sta, &ip_info) == ESP_OK && ip_info.ip.addr) {
-        aliro_admin_kick_webserver_if_needed();
+        // Run after app_main has returned its stack to the internal heap.
+        retry_admin_start_later();
     }
 }

@@ -8220,7 +8220,7 @@
     },
     {
       "path": "aliro-esp32/main/app_main.cpp",
-      "sha256": "8abf9d4c6e9c34bdf11a38626c0798366b671580ebc24a1a9186689cb8435eda"
+      "sha256": "fbcf541976be0bb183e9a7db02bb5b3a48ac73a4de37a7ea015819269d144421"
     },
     {
       "path": "aliro-esp32/main/eventStructs.hpp",
