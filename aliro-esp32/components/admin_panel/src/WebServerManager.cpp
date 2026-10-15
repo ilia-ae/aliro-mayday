@@ -230,11 +230,14 @@ void WebServerManager::begin() {
   // because httpd_ssl_start overrides it later. Plain httpd_start honours
   // whatever's there, so we must explicitly set 80.
   plain_cfg.server_port = 80;
-  if (httpd_start(&m_server, &plain_cfg) == ESP_OK) {
+  const auto start_result = httpd_start(&m_server, &plain_cfg);
+  if (start_result == ESP_OK) {
     ESP_LOGI(TAG, "HTTP server started (plain), free heap: %zu",
              esp_get_free_heap_size());
   } else {
-    ESP_LOGE(TAG, "Failed to start HTTP server");
+    ESP_LOGE(TAG, "Failed to start HTTP server: %s (internal largest=%u)",
+             esp_err_to_name(start_result),
+             (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
     return;
   }
 
@@ -256,6 +259,8 @@ void WebServerManager::begin() {
                   &m_wsTaskHandle) != pdPASS) {
     ESP_LOGE(TAG, "Failed to create WebSocket task");
     vQueueDelete(m_wsQueue);
+    m_wsQueue = nullptr;
+    m_wsTaskHandle = nullptr;
     httpd_stop(m_server);
     m_server = nullptr;
     return;

@@ -111,8 +111,8 @@ UndefinedBehaviorSanitizer, без сообщений об ошибках пам
 functional failures (completion status и двойной Time Sync), BLE access
 transport не включён в прошивку. LeakSanitizer на данном macOS недоступен.
 ESP-IDF 5.4.4 / esp-matter 8d56152: firmware build успешен.
-Application image — 2564864 байт, свободно 56576 байт (2.16%)
-в прежнем OTA-разделе. SHA-256: `dc8b7408b67c80520963468e48be29675f56152bb23d735229d5d49c81bf2977`. Набор включает
+Application image — 2565488 байт, свободно 55952 байт (2.13%)
+в прежнем OTA-разделе. SHA-256: `81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`. Набор включает
 36 firmware integration cases, 9 криптографических document-validation cases
 и 10 AccessData/revocation cases. Проверяются реальный adapter и NVS serializer,
 тот же vendored tinycbor, что в firmware, цепочки GET RESPONSE, права/clock/expiry,

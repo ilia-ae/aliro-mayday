@@ -2,7 +2,7 @@
 
 [Русский](repository-status-2026-10-14.ru.md)
 
-14 October 2026.
+14 October 2026; updated 15 October 2026.
 
 The public repository is [ilia-ae/aliro-mayday](https://github.com/ilia-ae/aliro-mayday).
 It has new Git history. The old repository remains private. Public `main` includes
@@ -12,13 +12,14 @@ provisioning/persistence fixes from [PR #2](https://github.com/ilia-ae/aliro-may
 source-snapshot prerelease remains the initial sanitized snapshot. Hardware
 acceptance is still pending: merging source is not a firmware deployment or Aliro
 certification. A full private backup and an application-only update were verified on the
-connected controller. The initial build exposed a startup memory shortage before
-NFC; an application-only rollback restored the old firmware without data writes.
-Updated-firmware startup and phone acceptance are tracked separately.
+connected controller. On 15 October, Matter, PN532 NFC and HTTP/WebSocket
+administration started successfully with the saved reader configuration. Installer
+checks confirmed that data partitions, pairing, bootloader and partition table
+were not written. Physical old-key iPhone acceptance is pending; Fold7 is deferred.
 
 | Included source | Current role and verification |
 | --- | --- |
-| `aliro-esp32/` | Active firmware; builds on the installed pinned SDKs; NFC adapter and document policy tested on the host |
+| `aliro-esp32/` | Active firmware; pinned SDK build; Matter/NFC/admin startup checked on the bench, document policy tested on the host |
 | `homekey-esp32/` | Frozen reference, unchanged by this update; original MIT license retained |
 | `matter-controller/` | Controller example; Wi-Fi comes from local build configuration; changed object compiled, full image not validated here |
 | `android-smartkey/`, `smartkey-esp32-patch/` | HCE fallback scaffolds; not a working Samsung Wallet integration |
@@ -41,7 +42,7 @@ cryptographic document-validation and ten rights/revocation cases, plus one empt
 suite passes 15/15 executables with AddressSanitizer/UndefinedBehaviorSanitizer.
 The full suite is 15/16, with two known upstream BLE-flow failures. These do not
 establish hardware timing, actual wallet behavior or power-loss durability.
-The application builds at 2,564,864 bytes, leaving 2.16% in its OTA slot.
+The application builds at 2,565,488 bytes, leaving 2.13% in its OTA slot.
 
 The repository now contains a GitHub Actions check for manifest/fixture integrity,
 current local documentation links and the supported host suite. It explicitly

@@ -2,11 +2,13 @@
 
 [Русский](samsung-bench-preparation-2026-10-14.ru.md) · [Documentation index](README.md)
 
-14 October 2026. Target bench: SmartThings V4_HUB firmware 0.62.7 and Galaxy Z
+14 October 2026; updated 15 October 2026. Target bench: SmartThings V4_HUB firmware 0.62.7 and Galaxy Z
 Fold7. Network/device identifiers and account data are not in the repository.
-A connected controller was backed up and an application-only update attempted
-without NVS or pairing writes. Its startup memory shortage is being addressed;
-Samsung Wallet integration is not yet proven. Fold7 testing is deferred.
+The connected controller has a verified private backup and an application-only
+update. On 15 October Matter, PN532 NFC and HTTP/WebSocket administration started
+with the saved reader configuration. Data/pairing partitions were not written by
+the installer. Physical old-key iPhone acceptance remains pending; Samsung Wallet
+integration is unproven and Fold7 testing is deferred.
 
 ## Completed code work
 
@@ -48,9 +50,9 @@ The supported ASan/UBSan suite passes 15/15 executables; the full suite is 15/16
 with the same two upstream BLE-flow failures. It does not test actual Samsung,
 SmartThings commissioning, secure elements, radio timing or sudden power loss.
 
-ESP-IDF 5.4.4 / esp-matter 8d56152: application **2,564,864 bytes**, leaving
-**56,576 bytes (2.16%)** in the unchanged OTA slot. SHA-256:
-`dc8b7408b67c80520963468e48be29675f56152bb23d735229d5d49c81bf2977`.
+ESP-IDF 5.4.4 / esp-matter 8d56152: application **2,565,488 bytes**, leaving
+**55,952 bytes (2.13%)** in the unchanged OTA slot. SHA-256:
+`81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`.
 Public repository contains source; the bench application package is local.
 No alternate SDK/backend was enabled.
 

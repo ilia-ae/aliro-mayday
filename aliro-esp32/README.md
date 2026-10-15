@@ -78,9 +78,9 @@ Keep an existing bench configuration instead of resetting it with `set-target`.
 The `just aliro-build` helper assumes SDK installations under the user's usual
 `~/esp` / `~/CODE` locations; the commands above support other locations.
 
-The checked application image is **2,564,864 bytes**, with **56,576 bytes (2.16%)**
+The checked application image is **2,565,488 bytes**, with **55,952 bytes (2.13%)**
 free in a `0x280000` OTA slot. Its SHA-256 is
-`dc8b7408b67c80520963468e48be29675f56152bb23d735229d5d49c81bf2977`.
+`81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`.
 There is little room for additional firmware code without another size review.
 
 ## Existing hardware and configuration
@@ -146,3 +146,8 @@ Current provisioning uses a complete reader configuration record and shared
 slot limits. Reader/user/credential errors propagate without publishing grants;
 stable sub-ID and old key records are retained. System time sync starts without
 OLED. See [Samsung bench preparation](../docs/samsung-bench-preparation-2026-10-14.md).
+
+NFC precomputation uses an 8 KiB stack; polling/document verification uses 12 KiB.
+The previous 4 KiB precompute worker overflowed with the updated DDK. HTTP/WebSocket
+startup reports actual readiness, retries temporary allocation failures, and
+handles an IP-up event that arrived before the admin object was constructed.

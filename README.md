@@ -10,8 +10,9 @@ source snapshot dated **13 October 2026**, with new Git history.
 
 - The owner confirmed the existing iPhone key opened and closed the reader on
   14 October 2026 before updating. A verified private backup was made. Hardware
-  startup and updated-firmware iPhone regression are checked separately; Samsung
-  Wallet validation through SmartThings remains pending.
+  startup passed on 15 October: Matter, PN532 NFC and HTTP/WebSocket administration
+  are running with the stored reader configuration. Physical old-key iPhone
+  acceptance and Samsung Wallet validation through SmartThings remain pending.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
   Fifty-eight firmware scenarios pass, including 22 actual provisioning callback
   cases and old iPhone records,

@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "d6371c0fed14a960da39e65eaae4c07a654fbba32e324d3911d74df8cc7bc5cb"
+      "sha256": "806b5a4c921b79388c7f7356797c38268f299fdc182098a23a370e6918504887"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "96f546c0fb61b86ad5bea1da52076f56326010111a15001e3217097662149e21"
+      "sha256": "2fb8bbdfa5c0f818ea33670380cad4c2b83c96b21ff8042317036498d40e62af"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -572,7 +572,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/include/WebServerManager.hpp",
-      "sha256": "5d96ba93fbc6a32d7d48c69e8409905c217f2117926810bb58d4d929aefa2801"
+      "sha256": "4012209616295644a686df3d925a6fdeffcbf96344655af6779aa9754f404630"
     },
     {
       "path": "aliro-esp32/components/admin_panel/include/WebSocketLogSinker.h",
@@ -620,7 +620,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebServerManager.cpp",
-      "sha256": "8289b1e483575cb7819f42cebc622fceea0fb3fa19a0f5db1b30ac7f00a1bb90"
+      "sha256": "b663cc8d2929085b9b3af7593248b5b4f59143571bdf03d3e06a9720e06a3268"
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebSocketLogSinker.cpp",
@@ -8220,7 +8220,7 @@
     },
     {
       "path": "aliro-esp32/main/app_main.cpp",
-      "sha256": "b0e92457ee63a52ee173fbc5ea79ccc86380b0364fc01e49e9634a07e4582900"
+      "sha256": "714a743747a4ff50cc5750d32ecc0960c55ce6b27b1cc3a1eb9133e698235293"
     },
     {
       "path": "aliro-esp32/main/eventStructs.hpp",
@@ -9380,7 +9380,7 @@
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
-      "sha256": "382bca8495503807715acaaf6f62b09a48a74784e2007f2046514ae5416b4bbd"
+      "sha256": "7d294a3b43ac42f4eb7b1bb97a4df4ac468d76c624328d14dd0d6030a6bdbd95"
     },
     {
       "path": ".github/workflows/source-and-nfc.yml",
@@ -9388,11 +9388,11 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "66071c02a48d4a724c32c6e60d5f739eb471e15e91eda733c0dd19b0deac2a2f"
+      "sha256": "1a7a4dfb9f5444ad51adbf484a6dd1fcbe030faa5df5fa2420c54446563dc6a2"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "85876c2c2656243213281e5a590ead7c65b5717c7aeabfa88429be795e1b5676"
+      "sha256": "fec81f63d906b98718bc3e87ad360adf95553e535f15156e6ac22d8ae92ff792"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
@@ -9404,7 +9404,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "6f5e029b976626e31130d8ca2568b3fce0e0712284ed23d7a6a36db139e14503"
+      "sha256": "2ab8fa7cdc81bf14078dbee84cd4e7067ca20f966b60aaa706b51a66a67294a9"
     },
     {
       "path": "scripts/verify-public-source.py",
@@ -9476,7 +9476,7 @@
     },
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.md",
-      "sha256": "060d85f58876c321f39d709d1217c4d3d1b3656b97b584520da9f97ce1755bc1"
+      "sha256": "02d5e9468adc15a69825ed8d53ae46bcca102a7c5eb03286746b95510271ca03"
     },
     {
       "path": "docs/images/aliro-wiring.en.svg",
@@ -9504,7 +9504,7 @@
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.ru.md",
-      "sha256": "043034557756062d6bbe5afb6ac71f79daafe6dee428063e69a1f8957eb22a3f"
+      "sha256": "a7aeb50b5b8f1f8941dedefb913e9c2645fccf5cae92fcd4ab5255f3dcd7e6b9"
     },
     {
       "path": "docs/aliro-competitors-2026-10-13.ru.md",
@@ -9512,11 +9512,11 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.ru.md",
-      "sha256": "8eef6dccecffbadb01662ba5c6016a6e92d2f7ff3f170d77f8dc1e61ac27e57f"
+      "sha256": "ef863b356bf4767c7906d895773d8b85bb3a3ebded69954f545ac8f0885bc580"
     },
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",
-      "sha256": "6728af350783578c6b6ac8f2a720d003c918d2304afdbb20c62467c801e1b559"
+      "sha256": "78aa72cce7d9274c92c17eb81b1ac13b0078e214acec1ed9d6c852d6809fce4b"
     },
     {
       "path": "docs/wiring.ru.md",

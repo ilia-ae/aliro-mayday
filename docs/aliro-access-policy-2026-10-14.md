@@ -112,9 +112,9 @@ duplicate Time Sync). BLE access is disabled in firmware. LeakSanitizer is not
 available on the tested macOS runtime. Firmware builds with ESP-IDF 5.4.4 /
 esp-matter 8d56152.
 
-The application image is **2,564,864 bytes**, leaving **56,576 bytes (2.16%)** in
+The application image is **2,565,488 bytes**, leaving **55,952 bytes (2.13%)** in
 the existing OTA partition. SHA-256:
-`dc8b7408b67c80520963468e48be29675f56152bb23d735229d5d49c81bf2977`.
+`81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`.
 The targeted suite has **36 firmware integration cases**, **9 cryptographic
 document-validation cases** and **10 AccessData/revocation cases**. It compiles
 the actual adapter and NVS serializer and the firmware's vendored tinycbor.
