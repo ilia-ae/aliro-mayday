@@ -104,7 +104,7 @@
     },
     "standard": {
         "title": "About the Aliro standard",
-        "lede": "Not a pilot and not a prototype. Aliro is the product of years of work by 220+ companies and two mature technologies — Apple HomeKey and CCC CarKey — merged into a single open standard.",
+        "lede": "Aliro 1.0 is the Connectivity Standards Alliance standard for digital access credentials. This project is an experimental implementation of its NFC subset.",
         "timeline_title": "How the standard came to be",
         "timeline": {
             "1": {
@@ -124,23 +124,23 @@
         "tech": {
             "1": {
                 "title": "Asymmetric cryptography",
-                "text": "ECDSA on the P-256 curve for mutual authentication between phone and lock. The private key never leaves the phone's secure chip (Secure Element or Samsung Knox) — it can't be copied, even with device access."
+                "text": "P-256 signatures authenticate keys. The reader does not receive the phone's private key; protection of that key depends on the wallet platform."
             },
             "2": {
                 "title": "Secure channel",
-                "text": "AES-GCM with separate keys per direction and monotonic message counters. Any attempt to replay an older message or inject a forged one is rejected cryptographically."
+                "text": "Separate directional keys and message counters protect the exchange. Correct validation and an installation security review remain necessary."
             },
             "3": {
                 "title": "NFC, BLE, and UWB",
-                "text": "Tap at the reader (NFC), approach-and-wake (BLE), walk-through hands-free (BLE + UWB). UWB measures physical distance to the phone — relay attacks that forward signals from elsewhere don't work."
+                "text": "Aliro defines NFC, BLE and UWB access paths. This firmware enables NFC access; BLE is used for Matter commissioning, and UWB access is not implemented."
             },
             "4": {
                 "title": "Cloud-free",
-                "text": "Phone and lock communicate directly over ISO 7816 APDUs. No server in the loop — better privacy and no single point of failure: the internet can be down and the lock still opens."
+                "text": "NFC authentication runs locally. Provisioning, credential updates and revocation delivery depend on the selected ecosystem; document-bound access also needs a valid clock."
             }
         },
         "ecosystem_title": "Key ecosystem participants",
-        "ecosystem_text": "Apple · Google · Samsung · ASSA ABLOY · Allegion · Kastle Systems · Last Lock · Aqara · NXP · Infineon · Qualcomm · STMicroelectronics — plus 200+ more lock, chip, and smartphone manufacturers.",
+        "ecosystem_text": "Apple · Google · Samsung · ASSA ABLOY · Allegion · NXP · Infineon · Qualcomm · STMicroelectronics",
         "ecosystem_more": "Other lock, chip, and smartphone manufacturers",
         "refs_title": "Read for yourself",
         "refs": {
@@ -151,7 +151,7 @@
             "kormax": "Independent protocol research (kormax/aliro)",
             "nordic": "Nordic reference firmware on nRF SDK"
         },
-        "disclaimer": "aliro.mayday is built against the public Aliro 1.0 specification and is compatible with it. We are not a CSA-certified product — the CSA certification program is optional, paid, and not required to implement the standard. We do not use the \"Works with Aliro\" mark and make no claim to it, but the protocol implementation, APDU commands, cryptography, and the Matter DoorLock cluster integration follow the spec exactly.",
+        "disclaimer": "aliro.mayday implements and tests a documented NFC subset of Aliro 1.0. Full wallet interoperability, BLE/UWB access and certification are not established. The public documentation lists implemented checks, unsupported restrictions and remaining hardware acceptance.",
         "source": "Source: Connectivity Standards Alliance"
     },
     "stack": {
@@ -340,42 +340,43 @@
     },
     "competitors": {
         "title": "Concrete alternatives on the market",
-        "lede": "Aliro 1.0 only shipped in February 2026 — most mass-market smart locks are still on proprietary stacks and only speak Apple Home Key. What they get right, and where aliro.mayday fills the gaps.",
+        "lede": "Commercial model examples for comparing approaches. Features depend on the exact model and firmware. Current Aliro products and open implementations are reviewed in the project documentation.",
         "strengths_label": "What they bring",
-        "advantages_label": "Where aliro.mayday is stronger",
-        "footnote": "Prices are approximate US retail (early 2026); they vary by region and bundle.",
+        "advantages_label": "Our approach and current limits",
+        "footnote": "These are model examples, not a ranking or price comparison. Check each manufacturer's current compatibility requirements; the project documentation covers Aliro products and SDKs separately.",
         "aqara_u200": {
-            "strengths_1": "Apple Home Key via Matter",
-            "strengths_2": "Polished iOS UX at a moderate price",
-            "strengths_3": "Apple Home / Google Home / SmartThings",
-            "advantages_1": "Aliro — keys in Google Wallet and Samsung Wallet, not only Apple",
-            "advantages_2": "No Aqara cloud required — fully local operation",
-            "advantages_3": "Telegram, MQTT, Prometheus, CCTV triggers out of the box"
+            "strengths_1": "Apple home keys",
+            "strengths_2": "Matter over Thread",
+            "strengths_3": "Setup requirements documented by Aqara",
+            "advantages_1": "Public firmware source, tests and wiring diagrams",
+            "advantages_2": "Existing iPhone key tested on the baseline; Samsung/Google still pending",
+            "advantages_3": "Telegram, metrics and camera integration are planned"
         },
         "schlage_encode": {
-            "strengths_1": "Apple Home Key (Encode Plus)",
-            "strengths_2": "Wi-Fi built in — no separate hub",
-            "strengths_3": "Allegion — large, established brand",
-            "advantages_1": "Aliro 1.0 — Schlage has not announced support yet",
-            "advantages_2": "No Schlage Home cloud — local-first architecture",
-            "advantages_3": "Open local HTTP API plus Prometheus and Grafana"
+            "strengths_1": "Apple home keys on Encode Plus",
+            "strengths_2": "Built-in Wi-Fi",
+            "strengths_3": "Schlage Home app and Apple Home integration",
+            "advantages_1": "Documented Aliro NFC subset with access checks and revocation",
+            "advantages_2": "Local HTTP/WebSocket diagnostics",
+            "advantages_3": "English documentation with Russian translations"
         },
         "yale_assure": {
-            "strengths_1": "Apple Home Key (with the Smart Module)",
-            "strengths_2": "Swappable modules — Wi-Fi, Z-Wave, Matter",
-            "strengths_3": "ASSA ABLOY — founding CSA Aliro member",
-            "advantages_1": "No Yale Access app — full self-contained stack",
-            "advantages_2": "Local integrations: MQTT, Telegram, webhooks, CCTV",
+            "strengths_1": "Apple home keys built into the Plus model",
+            "strengths_2": "Bluetooth and Wi-Fi variants",
+            "strengths_3": "Yale Access app and guest entry codes",
+            "advantages_1": "Experimental controller on ESP32-S3 + PN532",
+            "advantages_2": "Backend, camera and metrics integrations remain planned",
             "advantages_3": "Public source and wiring diagrams"
         },
         "level_bolt": {
-            "strengths_1": "Apple Home Key (Lock+)",
-            "strengths_2": "Invisible design — entire lock fits inside the door",
-            "strengths_3": "Matter supported",
-            "advantages_1": "Aliro — multi-vendor wallets, not only Apple",
-            "advantages_2": "No Level Home cloud — no server needed",
-            "advantages_3": "3–4× cheaper, plus open hardware"
-        }
+            "strengths_1": "Apple home keys",
+            "strengths_2": "Matter on the Matter-labelled model",
+            "strengths_3": "Compatible ecosystem hub requirements documented by Level",
+            "advantages_1": "Updated-firmware iPhone acceptance is still pending",
+            "advantages_2": "Local verification of provisioned credentials",
+            "advantages_3": "Physical lock output and certification remain future work"
+        },
+        "manufacturer": "Manufacturer documentation"
     },
     "privacy": {
         "title": "Your data",
@@ -530,7 +531,7 @@
         "copyright": "© 2026 Ilia Arestov",
         "rights": "All rights reserved",
         "commercial": "Public source · source-available · commercial use by licence",
-        "tagline": "Aliro 1.0 access controller — open doors with a key from Apple, Google, or Samsung Wallet.",
+        "tagline": "Experimental ESP32-S3 + PN532 NFC controller. Public source and wiring; Samsung/Google Wallet acceptance remains pending.",
         "nav_label": "Sections",
         "docs_label": "Resources",
         "privacy_link": "Privacy",

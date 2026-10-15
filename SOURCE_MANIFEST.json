@@ -8336,11 +8336,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "237f75d5ae44e642339d2cc9605f76526e0ad320c27aad0972f6249c1e74371a"
+      "sha256": "0e526fe485fb8fc2b4e4d4b63689c6e5fc90c0ab3849b45a75615d50a17663bd"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "53f558e17c8095b19580f9e8473c23874eb9cf121b6746726e0330db49e04226"
+      "sha256": "c3ba0eab236a2f86c7347ae67fa8883869d986ace601a0ccd2e1da4feb7d083d"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8372,7 +8372,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app/pages/landing/landing.ts",
-      "sha256": "df5412900b0fe07730b52574acef79d4bbacd988267f948f613d13bb83f07a7b"
+      "sha256": "39fe1fc287016176d696871b9ca9cf2a1121665401dc6c2b473df0da5e7cf174"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",

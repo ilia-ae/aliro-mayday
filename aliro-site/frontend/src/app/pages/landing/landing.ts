@@ -430,7 +430,7 @@ interface ComparisonRow {
                             <article>
                                 <header>
                                     <h3>{{ lock.name }}</h3>
-                                    <span class="meta">{{ lock.priceRange }} · {{ lock.year }}</span>
+                                    <a class="meta" [href]="lock.sourceUrl" target="_blank" rel="noopener noreferrer">{{ 'competitors.manufacturer' | translate }} ↗</a>
                                 </header>
                                 <div class="block strengths">
                                     <h4>{{ 'competitors.strengths_label' | translate }}</h4>
@@ -2588,13 +2588,12 @@ export class LandingPage {
     readonly competitorLocks: ReadonlyArray<{
         key: string;
         name: string;
-        priceRange: string;
-        year: string;
+        sourceUrl: string;
     }> = [
-        { key: 'aqara_u200', name: 'Aqara U200', priceRange: '~$220', year: '2024' },
-        { key: 'schlage_encode', name: 'Schlage Encode Plus', priceRange: '~$300', year: '2023' },
-        { key: 'yale_assure', name: 'Yale Assure Lock 2', priceRange: '~$280', year: '2023' },
-        { key: 'level_bolt', name: 'Level Lock+', priceRange: '~$365', year: '2022' }
+        { key: 'aqara_u200', name: 'Aqara U200', sourceUrl: 'https://www.aqara.com/en/u200-installation-methods/' },
+        { key: 'schlage_encode', name: 'Schlage Encode Plus', sourceUrl: 'https://www.schlage.com/en/home/smart-locks/encode-plus.html' },
+        { key: 'yale_assure', name: 'Yale Assure Lock 2 Plus', sourceUrl: 'https://shopyalehome.com/pages/yale-assure-lock-2-plus' },
+        { key: 'level_bolt', name: 'Level Lock+ (Matter)', sourceUrl: 'https://level.co/support/articles/how-to-add-a-matter-enabled-level-lock-to-a-smart-home-ecosystem-app/' }
     ];
 
     readonly comparisonRows: ReadonlyArray<ComparisonRow> = [
