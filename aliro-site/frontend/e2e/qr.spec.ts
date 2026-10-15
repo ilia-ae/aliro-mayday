@@ -61,7 +61,7 @@ test.describe('/qr business-card page', () => {
             { name: /^x$/i, host: /(twitter|x)\.com/ },
             { name: /linkedin/i, host: /linkedin\.com/ },
             { name: /facebook/i, host: /facebook\.com/ },
-            { name: /^vk$/i, host: /vk\.com/ }
+            { name: /^vk$/i, host: /vk\.(com|ru)/ }
         ];
 
         for (const c of cases) {

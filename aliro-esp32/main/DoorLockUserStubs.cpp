@@ -1,3 +1,5 @@
+#include <array>
+#include <vector>
 // In-RAM (+ NVS-persistent) user/credential storage for the DoorLock cluster.
 //
 // Apple Home iOS 26.x reads back every stored user and credential after
@@ -77,7 +79,11 @@ struct StoredCredential {
 };
 
 static StoredUser        g_users[kMaxUsers];
-static StoredCredential  g_creds[kMaxCredTypes][kMaxCredsPerType];
+// Allocate the expanded table as one block instead of consuming internal BSS.
+// At 17 KiB it exceeds the configured 16 KiB malloc threshold, so the ESP32-S3
+// allocator prefers PSRAM. Keep the same two-dimensional indexing and records;
+// task stacks, controller and DMA buffers still require internal RAM.
+static std::vector<std::array<StoredCredential, kMaxCredsPerType>> g_creds(kMaxCredTypes);
 
 bool nvs_open_rw(nvs_handle_t & h)
 {

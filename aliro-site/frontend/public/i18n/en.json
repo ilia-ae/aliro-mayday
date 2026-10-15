@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "aliro.mayday — your door key lives in your phone",
-        "description": "Open doors with your phone. The digital key lives in Apple Wallet, Google Wallet, and Samsung Wallet — no separate app needed. An access controller built on the open Aliro 1.0 standard."
+        "description": "An experimental Aliro NFC controller on ESP32-S3 + PN532. Public source and wiring diagrams, a working iPhone key, and current Samsung testing status."
     },
     "nav": {
         "lang_other": "RU",
@@ -22,52 +22,62 @@
     "hero": {
         "eyebrow": "Open standard · 2026",
         "title": "Your door key lives in your phone",
-        "lede": "No keychains, fobs, or plastic cards. The digital key lives in Apple Wallet, Google Wallet, or Samsung Wallet — right next to your boarding passes and payment cards.",
+        "lede": "An experimental NFC controller built on ESP32-S3 and PN532. An existing iPhone key works on the bench; Samsung Wallet through SmartThings is being prepared for testing. Source code and wiring diagrams are public.",
         "cta_primary": "Get in touch",
-        "cta_secondary": "Source release"
+        "cta_secondary": "View source code"
     },
     "steps": {
-        "title": "How it works",
+        "title": "How NFC access works",
         "1": {
             "title": "Receive the key",
-            "text": "The property owner sends you a digital key and your phone saves it to Wallet — just like a boarding pass. One tap, Face ID confirmation, done."
+            "text": "An iPhone key has worked on the bench. Samsung Wallet issuance through SmartThings still needs testing."
         },
         "2": {
             "title": "Tap the phone on the reader",
-            "text": "No app to open. No codes or passwords. Face ID or fingerprint confirms it's you — and the key itself never leaves your phone's secure chip."
+            "text": "The phone and PN532 exchange NFC commands; firmware checks the signature and key permissions."
         },
         "3": {
-            "title": "Door opens",
-            "text": "Everything happens locally: phone and reader talk directly. No internet, no cloud — the lock works even when Wi-Fi is down."
+            "title": "Result in Matter",
+            "text": "A successful check updates Matter DoorLock state and indicators. A relay or physical lock output has not been implemented."
         }
     },
     "wallets": {
-        "title": "Works with every major wallet",
-        "apple": { "name": "Apple Wallet", "devices": "iPhone · Apple Watch" },
-        "google": { "name": "Google Wallet", "devices": "Android · Wear OS" },
-        "samsung": { "name": "Samsung Wallet", "devices": "Galaxy · Samsung Knox" }
+        "title": "Wallets: what has been verified",
+        "apple": {
+            "name": "Apple Wallet",
+            "devices": "iPhone · existing key tested on the bench"
+        },
+        "google": {
+            "name": "Google Wallet",
+            "devices": "Google Wallet · not yet tested"
+        },
+        "samsung": {
+            "name": "Samsung Wallet",
+            "devices": "Galaxy Fold 7 · SmartThings testing pending"
+        }
     },
     "why": {
         "title": "Why this beats a dedicated app",
         "1": {
             "title": "Already on your phone",
-            "text": "Wallet ships on every modern smartphone. No extra app to install, no account to create, no new password to remember."
+            "text": "The tested iPhone path uses an Apple Wallet key. Issuance into other wallets still needs testing."
         },
         "2": {
             "title": "Hardware-level security",
-            "text": "The private key lives in a dedicated cryptographic chip inside your phone (Secure Element, Samsung Knox). It can't be copied even if the phone is stolen."
+            "text": "The reader checks phone signatures, key binding and access permissions. Security of the complete installation requires a separate audit and hardware tests."
         },
         "3": {
             "title": "Works offline",
-            "text": "Lock and phone communicate directly, with no server in the middle. Elevators, basements, network outages — all irrelevant."
+            "text": "NFC communication is directly with the phone. Document-based access requires a valid clock; prolonged network-loss behaviour still needs testing."
         },
         "4": {
             "title": "One open standard",
-            "text": "Aliro is an open standard from the Connectivity Standards Alliance (February 2026), backed by Apple, Google, Samsung, ASSA ABLOY, Aqara, and others. One key works with any certified lock."
-        }
+            "text": "Aliro 1.0 defines common access protocols. The project implements an NFC subset; provisioned keys and rules determine which readers permit access."
+        },
+        "lede": "We use the open Aliro standard and publish the prototype code. Wallet compatibility is established by testing, not by the standard name alone."
     },
     "use": {
-        "title": "Where it fits",
+        "title": "Planned applications",
         "items": {
             "home": "Apartments and private homes",
             "office": "Offices and commercial buildings",
@@ -77,20 +87,20 @@
     },
     "migration": {
         "title": "Gradual migration, no big-bang switch",
-        "lede": "You don't have to put your whole workforce on phones in one day. The controller reads existing cards from day one — your legacy fleet works alongside digital keys in the wallet. Employees migrate at whatever pace fits: one today, ten tomorrow, no \"everyone at once\".",
+        "lede": "A gradual move from cards to digital keys remains a planned use case. The current Aliro firmware is not a complete office migration system.",
         "1": {
             "title": "Install the controller",
-            "text": "The existing card fleet keeps working unchanged. Employees notice nothing — same cards, same doors, same ritual."
+            "text": "First verify controller wiring and the existing access method. Preserving working access is a requirement for a future migration."
         },
         "2": {
             "title": "Import the card database",
-            "text": "Card UIDs load into the controller as a single list (CSV / HTTP API). From that moment on, event log, card-to-employee mapping, lost-card alerts, and analytics turn on — same as for digital keys."
+            "text": "PM3 tools for UID research are included separately. Bulk card import, employee permissions and a working access-control database are not implemented in the Aliro firmware."
         },
         "3": {
             "title": "Migrate one at a time",
-            "text": "An employee receives a digital key in Apple, Google, or Samsung Wallet whenever it suits them. The old card keeps working in parallel until you disable it yourself in the admin UI. No company-wide migration deadlines."
+            "text": "Digital-key provisioning and revocation use Matter. Joint operation of iPhone, Samsung and existing cards still requires separate tests."
         },
-        "formats": "Supported formats: MIFARE Classic 1K/4K, MIFARE DESFire EV1/EV2/EV3, NTAG21x, ISO 14443A/B, FeliCa, HID Prox 125 kHz via external module."
+        "formats": "PN532 is used over SPI for Aliro NFC. Chip support for a card family does not establish working access credentials for that family in this project."
     },
     "standard": {
         "title": "About the Aliro standard",
@@ -131,7 +141,7 @@
         },
         "ecosystem_title": "Key ecosystem participants",
         "ecosystem_text": "Apple · Google · Samsung · ASSA ABLOY · Allegion · Kastle Systems · Last Lock · Aqara · NXP · Infineon · Qualcomm · STMicroelectronics — plus 200+ more lock, chip, and smartphone manufacturers.",
-        "ecosystem_more": "+ 200 more lock, chip, and smartphone makers",
+        "ecosystem_more": "Other lock, chip, and smartphone manufacturers",
         "refs_title": "Read for yourself",
         "refs": {
             "csa": "Aliro page on the CSA site",
@@ -153,57 +163,111 @@
             "integrations": "External systems"
         },
         "items": {
-            "aliro": { "name": "Aliro 1.0", "tag": "CSA access-control standard" },
-            "matter": { "name": "Matter 1.4+", "tag": "DoorLock cluster with the ALIRO feature" },
-            "iso7816": { "name": "ISO 7816", "tag": "APDU commands over NFC" },
-            "nfc": { "name": "NFC", "tag": "Tap at the reader (primary)" },
-            "ble": { "name": "Bluetooth LE", "tag": "Approach-and-wake" },
-            "uwb": { "name": "UWB", "tag": "Hands-free entry (later)" },
-            "esp32": { "name": "ESP32-S3", "tag": "Main microcontroller" },
-            "pn532": { "name": "PN532", "tag": "NFC front-end over SPI" },
-            "ecdsa": { "name": "ECDSA P-256", "tag": "Mutual authentication" },
-            "aesgcm": { "name": "AES-GCM", "tag": "Secure channel" },
-            "mqtt": { "name": "MQTT", "tag": "Telemetry and alerts" },
-            "http": { "name": "HTTP + WebSocket API", "tag": "Local control" },
-            "telegram": { "name": "Telegram", "tag": "Bot + Mini App" },
-            "prometheus": { "name": "Prometheus", "tag": "Metrics" },
-            "grafana": { "name": "Grafana", "tag": "Ready-made dashboards" },
-            "homeassistant": { "name": "Home Assistant", "tag": "Automations" },
-            "frigate": { "name": "Frigate NVR", "tag": "Camera-recording triggers" },
-            "onvif": { "name": "ONVIF / Hikvision / Dahua", "tag": "Direct camera integration" }
+            "aliro": {
+                "name": "Aliro 1.0",
+                "tag": "CSA access-control standard"
+            },
+            "matter": {
+                "name": "Matter 1.4+",
+                "tag": "DoorLock cluster with the ALIRO feature"
+            },
+            "iso7816": {
+                "name": "ISO 7816",
+                "tag": "APDU commands over NFC"
+            },
+            "nfc": {
+                "name": "NFC",
+                "tag": "Tap at the reader (primary)"
+            },
+            "ble": {
+                "name": "Bluetooth LE",
+                "tag": "Approach-and-wake"
+            },
+            "uwb": {
+                "name": "UWB",
+                "tag": "Hands-free entry (later)"
+            },
+            "esp32": {
+                "name": "ESP32-S3",
+                "tag": "Main microcontroller"
+            },
+            "pn532": {
+                "name": "PN532",
+                "tag": "NFC front-end over SPI"
+            },
+            "ecdsa": {
+                "name": "ECDSA P-256",
+                "tag": "Mutual authentication"
+            },
+            "aesgcm": {
+                "name": "AES-GCM",
+                "tag": "Secure channel"
+            },
+            "mqtt": {
+                "name": "MQTT",
+                "tag": "Telemetry and alerts"
+            },
+            "http": {
+                "name": "HTTP + WebSocket API",
+                "tag": "Local control"
+            },
+            "telegram": {
+                "name": "Telegram",
+                "tag": "Bot + Mini App"
+            },
+            "prometheus": {
+                "name": "Prometheus",
+                "tag": "Metrics"
+            },
+            "grafana": {
+                "name": "Grafana",
+                "tag": "Ready-made dashboards"
+            },
+            "homeassistant": {
+                "name": "Home Assistant",
+                "tag": "Automations"
+            },
+            "frigate": {
+                "name": "Frigate NVR",
+                "tag": "Camera-recording triggers"
+            },
+            "onvif": {
+                "name": "ONVIF / Hikvision / Dahua",
+                "tag": "Direct camera integration"
+            }
         }
     },
     "integrations": {
         "title": "More than a reader — it's a controller",
-        "lede": "Built into your infrastructure: Telegram alerts, camera recordings on every access event, analytics, and remote control via API and MQTT.",
+        "lede": "Matter DoorLock and local web diagnostics are available today. Telegram, cameras, metrics and a control backend remain separate stages.",
         "1": {
             "title": "Remote control",
-            "text": "Lock and unlock from a Telegram bot, a Mini App, or through the HTTP API. Works from anywhere in the world."
+            "text": "Matter commands update logical lock state. A Telegram bot and Mini App for this firmware are not ready."
         },
         "2": {
             "title": "Real-time alerts",
-            "text": "Who opened the door and when, denied attempts, key-probing tries — everything arrives in Telegram at the right priority."
+            "text": "Status and diagnostic logs are available locally. Delivery of Telegram alerts is not verified."
         },
         "3": {
             "title": "Video surveillance",
-            "text": "Triggers camera recording on every access event. Frigate, UniFi Protect, Hikvision, Dahua, any NVR with webhooks, or via Home Assistant."
+            "text": "Frigate, UniFi Protect and other NVRs are candidates for event-based integration. No tested camera integration is available yet."
         },
         "4": {
             "title": "Attack detection",
-            "text": "Detects replay attempts, NFC relay attacks, and case tampering — with a critical-severity alert in real time."
+            "text": "Signatures, key binding and access permissions are tested. Complete relay-attack protection, UWB and case-tamper detection are not implemented."
         },
         "5": {
             "title": "Analytics and metrics",
-            "text": "Prometheus metrics, ready-made Grafana dashboards, a full event log. See who enters most often, when load peaks, where latency spikes."
+            "text": "Local diagnostic metrics exist. Prometheus export and ready-made Grafana dashboards remain planned."
         },
         "6": {
             "title": "Your own ecosystem",
-            "text": "MQTT for home automation, Matter for Apple Home / Google Home / SmartThings, HTTP API for your own scripts and integrations."
+            "text": "The main path is Matter DoorLock. Google Home and SmartThings/Samsung Wallet still need testing; other examples and patches are included as separate projects."
         }
     },
     "roadmap": {
         "title": "Work plan",
-        "lede": "Seven steps from hardware to a production-ready controller. Timings are approximate — broad strokes, April through October 2026, about six months total.",
+        "lede": "Status on 14 October 2026. Completed stages refer to the prototype; certification and finished-device dates have not been announced.",
         "status": {
             "done": "Done",
             "active": "In progress",
@@ -212,43 +276,43 @@
         },
         "1": {
             "title": "Hardware and platform",
-            "eta": "Done · April 2026",
-            "text": "ESP32-S3 + PN532 rig validated, esp-matter skeleton builds and boots. Ready to move on to Aliro logic."
+            "eta": "Tested on the bench",
+            "text": "ESP32-S3 + PN532 over SPI. Pin diagrams are published; a physical actuator driver is still missing."
         },
         "2": {
-            "title": "Matter + Aliro transaction",
-            "eta": "~4–6 weeks · May–June 2026",
-            "text": "DoorLock cluster with the ALIRO feature — provisioning from Apple Home, Google Home, SmartThings. A crypto-verified NFC tap unlocks the door."
+            "title": "Matter and NFC",
+            "eta": "Implemented · October 2026",
+            "text": "Matter DoorLock, DigitalDoorKey, Standard/Fast, rights validation and key revocation. Persistence and provisioning errors have host coverage."
         },
         "3": {
-            "title": "Real-device validation",
-            "eta": "~2 weeks · July 2026",
-            "text": "iPhone tap via Apple Wallet and Samsung Fold 7 tap via Samsung Wallet. Both wallets must work against the same controller."
+            "title": "Wallet testing",
+            "eta": "In progress",
+            "text": "The existing iPhone key works on current firmware. Regression after the update and Samsung Fold 7 through SmartThings remain pending."
         },
         "4": {
-            "title": "Control plane",
-            "eta": "~4–6 weeks · July–August 2026",
-            "text": "HTTP API with a WebSocket event stream, a Telegram bot for alerts and commands, replay/relay-attack and case-tamper detection."
+            "title": "Local administration",
+            "eta": "In progress",
+            "text": "Web diagnostics and logs are available. Complete administration and secure external integrations still need work."
         },
         "5": {
-            "title": "Integrations",
-            "eta": "~3 weeks · August 2026",
-            "text": "Camera-recording triggers — Frigate, UniFi Protect, Home Assistant. Prometheus metrics, ready-made Grafana dashboards."
+            "title": "Cameras and automation",
+            "eta": "Planned",
+            "text": "NVR, Prometheus and Grafana integrations are not verified capabilities."
         },
         "6": {
-            "title": "Backend bridge",
-            "eta": "~4 weeks · September 2026",
-            "text": "The aliro-bridge Node.js service: hosts the Telegram bot, serves the Mini App for remote control, aggregates long-term analytics."
+            "title": "Control backend",
+            "eta": "Planned",
+            "text": "Telegram bot, Mini App and long-term analytics remain a separate future stage."
         },
         "7": {
-            "title": "Production rollout",
-            "eta": "~4–6 weeks · October 2026",
-            "text": "Security audit, OTA updates over Matter, field trials, tested behaviour on network loss and power-loss scenarios."
+            "title": "Finished device",
+            "eta": "Goal with no date",
+            "text": "Physical lock output, hardware acceptance, audit, power behaviour and certification are still required."
         }
     },
     "comparison": {
         "title": "Compared to commercial alternatives",
-        "lede": "A quick look at what aliro.mayday offers next to a typical proprietary smart lock (Aqara U200, Schlage Encode, Yale Assure, Level, etc.). Details vary model to model — this is the broad picture.",
+        "lede": "Our prototype status on 14 October 2026 alongside an overview of commercial solutions. Product capabilities depend on the model; documentation provides details and sources.",
         "headers": {
             "feature": "Feature",
             "aliro_mayday": "aliro.mayday",
@@ -263,16 +327,16 @@
             "open_standards": "Open standards and protocols",
             "matter": "Matter DoorLock standard",
             "cross_wallet": "Apple + Google + Samsung Wallet",
-            "legacy_cards": "Legacy cards (MIFARE / DESFire / HID) — keep working in parallel",
+            "legacy_cards": "Joint operation with existing access cards",
             "offline": "Works without internet",
             "self_hosted": "Fully self-hostable",
             "http_api": "Local HTTP API for automations",
             "telegram": "Built-in Telegram integration",
             "cctv_triggers": "Camera-recording triggers on event",
-            "tamper_alerts": "Replay / relay / case-tamper detection",
+            "tamper_alerts": "Verified relay / tamper protection",
             "prometheus": "Prometheus metrics + Grafana dashboards"
         },
-        "footnote": "\"Partial\" means the capability exists on some vendors or works in a limited mode (e.g., only through one specific cloud)."
+        "footnote": "In our column, Partial means an implemented or tested subset. Another project example or an NFC-chip feature does not establish a working integration here."
     },
     "competitors": {
         "title": "Concrete alternatives on the market",
@@ -302,7 +366,7 @@
             "strengths_3": "ASSA ABLOY — founding CSA Aliro member",
             "advantages_1": "No Yale Access app — full self-contained stack",
             "advantages_2": "Local integrations: MQTT, Telegram, webhooks, CCTV",
-            "advantages_3": "Open hardware and specs, source on request"
+            "advantages_3": "Public source and wiring diagrams"
         },
         "level_bolt": {
             "strengths_1": "Apple Home Key (Lock+)",
@@ -318,46 +382,46 @@
         "lede": "The controller is built local-first. By default, nothing leaves your device. Any outbound integration happens only when you explicitly enable it.",
         "1": {
             "title": "The key never leaves your phone",
-            "text": "The private cryptographic key lives inside your phone's secure chip (Apple Secure Element, Samsung Knox). Neither we nor the lock vendor have physical access to it."
+            "text": "The phone private key is not transferred to the reader. The controller stores its own keys and provisioned credentials; backups of that state must stay private."
         },
         "2": {
-            "title": "No cloud accounts",
-            "text": "No signup, no email binding, no payment card. Phone and lock talk directly — we have nowhere to register you in the first place."
+            "title": "Local access validation",
+            "text": "NFC validation runs on the controller. Wallet key issuance may require an account and service from the selected ecosystem; no project cloud account is required to read the source."
         },
         "3": {
             "title": "Event log and alerts stay local",
-            "text": "Who opened the door and when lives in the controller's own non-volatile memory. Suspicious attempts — replay, relay, key brute-force, card probing — are detected on-device and pushed to the owner through whichever channel you've enabled (Telegram, MQTT, webhooks). Nothing leaves the device unless you turn that channel on."
+            "text": "Web diagnostics run locally. Tested log delivery to Telegram, MQTT and external services is not claimed yet."
         },
         "4": {
             "title": "Verifiable architecture",
-            "text": "The Aliro 1.0 protocol is open and documented in the 195-page CSA specification. The controller source is currently shared on request — for security audit and lab implementation; the public release is planned for October 2026 after field testing. Commercial use (selling devices, integration into paid products, OEM) is licensed separately — write to aliro.mayday@ilia.ae."
+            "text": "Source, access-policy and revocation fixes, tests and wiring diagrams are available on GitHub. Main project code has a commercial source-available license; components retain their MIT/ISC and other licenses. Public source is not Aliro certification."
         }
     },
     "faq": {
         "title": "Frequently asked questions",
         "1": {
             "q": "Do I need internet to unlock the door?",
-            "a": "No. Phone and lock communicate directly over NFC (or BLE + UWB in newer modes). No Wi-Fi, no 4G, no server in the loop. Internet is only needed for the initial key provisioning into your wallet and for remote features like the Telegram bot."
+            "a": "NFC communication is directly with the phone. Document-based access requires a valid controller clock; remote Matter commands require a network. Key issuance depends on the wallet ecosystem. Behaviour during prolonged network loss still needs bench testing."
         },
         "2": {
             "q": "What if my phone is dead?",
-            "a": "Apple Wallet Express Mode keeps the iPhone responsive to the lock for about 5 hours after the battery dies — same as a transit card. Samsung has a similar Power Reserve. If the battery is fully drained, the owner usually has a backup path: physical key, PIN pad, or a trusted neighbour / concierge."
+            "a": "Depleted-battery behaviour depends on the phone model and provisioned key. It has not been tested on our bench, so no runtime is promised. Keep an independent way to enter the premises."
         },
         "3": {
             "q": "I lost my phone — can someone open my door?",
-            "a": "No. The key requires biometrics (Face ID or fingerprint) before it will release a signature. Even if the SIM is removed and the phone is unlocked by passcode, Wallet still won't hand over the key without your face or finger. And if you revoke the key via Find My / Google Find or remove it from Wallet on a new device, the lock will refuse it on the next tap."
+            "a": "A lost phone requires access revocation. Firmware handles disabled users, removed keys and signed revocation documents. Signed revocation takes effect after delivery to the controller; automatic Find My or Google Find integration is not implemented. Key and biometric behaviour depends on the wallet, including Express Mode."
         },
         "4": {
             "q": "Which locks are compatible?",
-            "a": "Any lock certified to the Aliro 1.0 standard — the list of vendors grows monthly (ASSA ABLOY, Allegion, Aqara, Kastle, Last Lock). Or our own controller on ESP32 + PN532 — you can build it yourself or buy a finished unit once available."
+            "a": "The current target is ESP32-S3 + PN532 using the published wiring guide. It is a prototype, not a certified Aliro lock; a relay output is not implemented. Check a commercial lock with its manufacturer."
         },
         "5": {
             "q": "Can someone intercept the NFC signal and open the lock?",
-            "a": "Classic replay attacks (record and replay later) and relay attacks (forward the signal over distance) are blocked cryptographically: every transaction is signed with a fresh, one-time keypair. On top of that, UWB measures the phone's physical distance, and our controller flags latency anomalies as alerts."
+            "a": "Cryptographic signatures and key permissions are checked. This does not establish complete relay-attack protection. UWB, tamper sensors and tested attack alerts are not part of the current build."
         },
         "6": {
             "q": "Can I build this myself?",
-            "a": "For yourself at home — yes, freely. Hardware is straightforward: ESP32-S3 DevKitC (~$10) + PN532 module (~$5) + a relay or electromechanical lock. Source is currently shared on request for audit and assembly; public release is October 2026, after which you'll be able to clone, build, study, audit, and submit pull requests. If you later want to sell devices based on it or deploy commercially — that's commercial use and terms are at aliro.mayday@ilia.ae."
+            "a": "Source and build instructions are public in ilia-ae/aliro-mayday. Start with the pin diagram and the guide for preserving keys during an update. Personal non-commercial builds are permitted by project terms; commercial use of the main code requires a license. A physical actuator driver still needs to be added."
         },
         "7": {
             "q": "Can I use this commercially?",
@@ -365,32 +429,24 @@
         },
         "8": {
             "q": "If Wi-Fi goes down — does Matter / Telegram break, does the lock stop opening?",
-            "a": "No. NFC unlock does not depend on Wi-Fi, Matter, or any cloud. This is an intentional design choice. Only the remote features (analytics, Telegram push, Home Assistant scenes) pause — they reconnect automatically the moment the network comes back."
+            "a": "Losing Wi-Fi should not itself unlock the door. NFC validation is local, but document permissions require a valid clock. Booting without a network and recovery of remote functions still require tests."
         }
     },
     "source": {
-        "title": "Source release",
-        "lede": "Right now the code is shared on request — for audit, research, and partners. Public release is tied to roadmap completion: after the security audit and field testing.",
-        "target_label": "Public release target:",
-        "target_date": "October 31, 2026",
-        "aria_label": "Countdown to public source release",
-        "released": "Done — sources are public.",
-        "open_repo": "Open repository",
-        "request_cta": "Get early access",
-        "request_subject": "Early access request for aliro.mayday source · access-code: SOURCE-EN-2026",
-        "units": {
-            "days": "days",
-            "hours": "hours",
-            "minutes": "minutes",
-            "seconds": "seconds"
-        }
+        "title": "Source code is public",
+        "lede": "The public aliro-mayday repository contains firmware, access-policy and revocation checks, tests and English/Russian documentation. The old repository and device backups remain private.",
+        "released": "A clean snapshot was published on 13 October 2026; current fixes and wiring diagrams are in main.",
+        "open_repo": "View code on GitHub",
+        "documentation": "Documentation",
+        "wiring": "Wiring diagram and pins",
+        "license_note": "Main project code is source-available with a separate commercial license. Component licenses are retained. This is not a certified release."
     },
     "changelog": {
         "title": "What's new",
         "1": {
-            "date": "2026-04-24",
-            "title": "Site launched",
-            "text": "Landing page at aliro.mayday.software: RU + EN, dark/light theme, roadmap, FAQ, comparison, contacts. Source on request until public release in October 2026, commercial use by paid licence (aliro.mayday@ilia.ae)."
+            "date": "2026-10-14",
+            "title": "Public code, access rights and wiring diagrams",
+            "text": "PRs #1–3 are in main: DigitalDoorKey update, document rights and revocation, preserved reader identity, provisioning fixes, translations and GPIO diagrams. The owner tested the existing iPhone key; Fold 7 awaits bench acceptance."
         },
         "2": {
             "date": "2026-04-23",
@@ -400,7 +456,7 @@
         "3": {
             "date": "2026-04-23",
             "title": "aliro-esp32 skeleton on ESP-IDF + esp-matter",
-            "text": "Firmware scaffold: Matter commissioning over BLE, Wi-Fi transport, NVS encryption. Ready for DoorLock cluster implementation."
+            "text": "Firmware scaffold: Matter commissioning over BLE, Wi-Fi transport, NVS persistence. Ready for DoorLock cluster implementation."
         },
         "4": {
             "date": "2026-02-26",
@@ -447,7 +503,7 @@
     },
     "qr": {
         "eyebrow": "Business card",
-        "tagline": "Tap your phone to open the door. No app needed.",
+        "tagline": "Aliro NFC prototype. Source code and wiring diagrams are public.",
         "scanHint": "Scan with another phone",
         "codeAlt": "QR code linking to aliro.mayday.software",
         "shareTitle": "Share the site",
@@ -462,7 +518,7 @@
         "shareVK": "VK",
         "shareEmail": "Email",
         "shareEmailSubject": "aliro.mayday — door key in your phone",
-        "shareMessage": "aliro.mayday — open doors with a key from Apple, Google, or Samsung Wallet. Open standard, no app.",
+        "shareMessage": "aliro.mayday — an Aliro NFC prototype on ESP32-S3 + PN532. Public code and wiring diagrams; iPhone tested on the bench, Samsung testing pending.",
         "linksTitle": "Quick links",
         "linkSite": "Open the site",
         "linkContact": "Get in touch",
@@ -473,7 +529,7 @@
         "copyright_holder": "Ilia Arestov",
         "copyright": "© 2026 Ilia Arestov",
         "rights": "All rights reserved",
-        "commercial": "Source on request · public release October 2026 · commercial use by paid licence",
+        "commercial": "Public source · source-available · commercial use by licence",
         "tagline": "Aliro 1.0 access controller — open doors with a key from Apple, Google, or Samsung Wallet.",
         "nav_label": "Sections",
         "docs_label": "Resources",
@@ -483,8 +539,8 @@
     },
     "status": {
         "title": "What we're building",
-        "p1": "An Aliro access controller built on ESP32 and PN532. Plugs into Apple Home, Google Home, and SmartThings as a standard Matter lock — and accepts keys from all three wallets.",
-        "p2": "Active development. Source is on request now; public release in October 2026.",
-        "cta": "Request source access →"
+        "p1": "The existing iPhone key on the current firmware changes lock state in both directions, reported by the owner on 14 October 2026. The new build is tested on the host; a real iPhone regression after installation is still required.",
+        "p2": "The supported tests pass: 15 of 15. Access rights, revocation and persistence are implemented; Samsung Wallet on Fold 7, Google Wallet, a physical relay and Aliro BLE/UWB remain unverified.",
+        "cta": "View code and implementation limits →"
     }
 }

@@ -37,7 +37,7 @@ credential / отключите пользователя и проверьте �
 для возврата; не стирайте flash и не меняйте security eFuses в этом испытании.
 
 Покрытие документов и подписанного отзыва описано в
-[политике доступа](../../docs/aliro-access-policy-2026-10-14.md).
+[политике доступа](../../docs/aliro-access-policy-2026-10-14.ru.md).
 Для AddressSanitizer / UndefinedBehaviorSanitizer в протоколе, адаптере,
 NVS serializer, tinycbor и msgpack включите `-DDDK_ENABLE_SANITIZERS=ON`
 и пересоберите. На macOS:
@@ -58,4 +58,4 @@ LeakSanitizer недоступен на проверенном macOS. Обычн
 `firmware_provisioning_test` собирает настоящие AliroDelegate и DoorLockUserStubs
 с заменой SDK boundary types и hardware hooks. 22 сценария проверяют slots,
 выдачу ключей/reader config, ошибки/rollback, старые записи, запуск часов,
-Standard/Fast, reboot и отзыв. См. [подготовку Samsung](../../docs/samsung-bench-preparation-2026-10-14.md).
+Standard/Fast, reboot и отзыв. См. [подготовку Samsung](../../docs/samsung-bench-preparation-2026-10-14.ru.md).

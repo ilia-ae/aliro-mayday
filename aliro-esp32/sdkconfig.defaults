@@ -17,6 +17,19 @@ CONFIG_BT_ENABLED=y
 CONFIG_BT_NIMBLE_ENABLED=y
 CONFIG_BT_CONTROLLER_ONLY=n
 
+# Allow NimBLE host buffers to use PSRAM when ordinary internal heap is
+# exhausted. Its default internal-only allocator can consume the memory
+# reserved for task stacks and leave nimble_host uncreated, blocking Matter
+# startup before NFC. Controller/DMA memory and task stacks remain internal.
+# CONFIG_BT_NIMBLE_MEM_ALLOC_MODE_INTERNAL is not set
+CONFIG_BT_NIMBLE_MEM_ALLOC_MODE_DEFAULT=y
+
+# Keep Matter's attribute/model allocations out of the internal-only task
+# and radio heap too. With the expanded credential table, internal-only
+# model allocation plus Wi-Fi/BLE left no stack space for nimble_host.
+# CONFIG_ESP_MATTER_MEM_ALLOC_MODE_INTERNAL is not set
+CONFIG_ESP_MATTER_MEM_ALLOC_MODE_DEFAULT=y
+
 # Disable classic BT — ESP32-S3 doesn't have it, but defaults flip this on
 # on other targets and cause linker errors if copied.
 CONFIG_BT_BLUEDROID_ENABLED=n

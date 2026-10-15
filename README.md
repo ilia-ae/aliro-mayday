@@ -1,6 +1,6 @@
 # aliro.mayday
 
-[Русский](README.ru.md) · [Documentation index](docs/README.md) · [Wiring diagram](docs/wiring.en.md)
+[Русский](README.ru.md) · [Documentation index](docs/README.md) · [Wiring diagram](docs/wiring.md)
 
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
 DoorLock provisioning and local administration. This repository began as a clean
@@ -8,9 +8,10 @@ source snapshot dated **13 October 2026**, with new Git history.
 
 ## Verified status
 
-- The iPhone Standard/Fast path worked on the May 2026 bench. The October
-  changes have not been installed on the bench; real iPhone regression tests
-  and Samsung Wallet validation through SmartThings are still required.
+- The owner confirmed the existing iPhone key opened and closed the reader on
+  14 October 2026 before updating. A verified private backup was made. Hardware
+  startup and updated-firmware iPhone regression are checked separately; Samsung
+  Wallet validation through SmartThings remains pending.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
   Fifty-eight firmware scenarios pass, including 22 actual provisioning callback
   cases and old iPhone records,
@@ -21,7 +22,7 @@ source snapshot dated **13 October 2026**, with new Git history.
 - Step-up validates signed AccessData before learning a device key from a
   provisioned issuer. Cached document keys re-check current permissions and expiry.
   Signed `aliro-r` revocations are stored independently of successful device access
-  and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.en.md)
+  and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.md)
   describe strict handling of unsupported schedules/extensions and missing clocks.
 - Existing Apple v9 framing, identity, pairing and independent iPhone keys are
   preserved. Actual hardware regression remains required.
@@ -40,12 +41,12 @@ guides integrated through [PR #1](https://github.com/ilia-ae/aliro-mayday/pull/1
 plus provisioning/persistence fixes from [PR #2](https://github.com/ilia-ae/aliro-mayday/pull/2).
 The original source-snapshot prerelease remains unchanged. Publishing this source
 does not establish real-wallet compatibility or deploy firmware to a controller.
-[Repository readiness](docs/repository-status-2026-10-14.md#english) records
+[Repository readiness](docs/repository-status-2026-10-14.md) records
 what is included, translated and still awaiting verification.
 
 Samsung provisioning preparation and the V4_HUB/Fold7 bench procedure are
-documented [here](docs/samsung-bench-preparation-2026-10-14.en.md). Real Wallet
-key issuance remains unproven; no controller has been flashed.
+documented [here](docs/samsung-bench-preparation-2026-10-14.md). Real Wallet
+key issuance remains unproven; Fold7 testing is deferred.
 
 ## Build and test
 
@@ -71,7 +72,7 @@ update on the bench. The legacy `homekey-esp32/` tree is an unchanged reference.
 | `matter-controller/` | Matter controller example; Wi-Fi is local build configuration |
 | `android-smartkey/`, `smartkey-esp32-patch/` | Separate Android HCE fallback experiments |
 | Root Python tools | Earlier Proxmark3 reader / UID-lock research tools |
-| `aliro-site/` | Website source; draft feature claims are not validation evidence |
+| `aliro-site/` | Website source, matching EN/RU prototype status and public-code links |
 | `docs/` | Protocol notes, acceptance checks and research |
 
 [Historical workspace notes](README.history.md) preserve the earlier roadmap.
@@ -79,7 +80,7 @@ Use the verified status above for the current release.
 
 ## Related implementations and product comparisons
 
-[Competitor and implementation review](docs/aliro-competitors-2026-10-13.en.md)
+[Competitor and implementation review](docs/aliro-competitors-2026-10-13.md)
 compares Aqara, Nuki, Schlage, esp-aliro, UltraWideLock and other vendor SDKs,
 with source links and practical priorities for this project.
 

@@ -49,10 +49,10 @@ test.describe('i18n', () => {
         const desc = page.locator('meta[name="description"]');
         await expect(desc).toHaveAttribute(
             'content',
-            /Open doors with your phone/i
+            /experimental Aliro NFC/i
         );
 
         await page.goto('/?lang=ru');
-        await expect(desc).toHaveAttribute('content', /Открывайте двери/i);
+        await expect(desc).toHaveAttribute('content', /Экспериментальный Aliro NFC/i);
     });
 });

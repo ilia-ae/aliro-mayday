@@ -16,14 +16,15 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_DOCS = (
     "README.md", "README.ru.md", "THIRD_PARTY_NOTICES.md", "docs/README.md",
-    "docs/repository-status-2026-10-14.md",
-    "docs/wiring.md", "docs/wiring.en.md",
+    "docs/repository-status-2026-10-14.md", "docs/repository-status-2026-10-14.ru.md",
+    "docs/README.ru.md", "aliro-site/README.md", "aliro-site/README.ru.md",
+    "docs/wiring.ru.md", "docs/wiring.md",
+    "docs/samsung-bench-preparation-2026-10-14.ru.md",
     "docs/samsung-bench-preparation-2026-10-14.md",
-    "docs/samsung-bench-preparation-2026-10-14.en.md",
+    "docs/aliro-access-policy-2026-10-14.ru.md",
     "docs/aliro-access-policy-2026-10-14.md",
-    "docs/aliro-access-policy-2026-10-14.en.md",
+    "docs/aliro-competitors-2026-10-13.ru.md",
     "docs/aliro-competitors-2026-10-13.md",
-    "docs/aliro-competitors-2026-10-13.en.md",
     "aliro-esp32/README.md", "aliro-esp32/README.ru.md",
     "aliro-esp32/tests/README.md", "aliro-esp32/tests/README.ru.md",
 )

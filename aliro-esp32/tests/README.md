@@ -36,7 +36,7 @@ the available SmartThings hub. Keep pairing, reader identity and old firmware
 available for rollback; do not erase flash or burn security eFuses in this test.
 
 Document access and signed-revocation coverage is described in
-[the policy notes](../../docs/aliro-access-policy-2026-10-14.md).
+[the policy notes](../../docs/aliro-access-policy-2026-10-14.ru.md).
 To instrument the protocol, real firmware adapter/NVS serializer, tinycbor and
 msgpack parsers, configure with `-DDDK_ENABLE_SANITIZERS=ON` and rebuild. On macOS:
 
@@ -55,4 +55,4 @@ memcpy that macOS did not diagnose; the firmware and host vendor both carry
 `firmware_provisioning_test` compiles the actual AliroDelegate and DoorLockUserStubs
 with SDK boundary types and hardware hooks substituted. Its 22 cases exercise
 slot enumeration, key/reader grants, failure/rollback, old records, clock startup,
-Standard/Fast, reboot and revocation. See [Samsung bench preparation](../../docs/samsung-bench-preparation-2026-10-14.en.md).
+Standard/Fast, reboot and revocation. See [Samsung bench preparation](../../docs/samsung-bench-preparation-2026-10-14.md).

@@ -1,67 +1,56 @@
-# Documentation / Документация
+# Documentation
 
-Current implementation documentation is available in English and Russian.
-Актуальные основные материалы доступны на английском и русском.
+[Русский](README.ru.md)
 
-| Topic / Тема | English | Русский |
+English is the primary repository language. Current guide base filenames contain English;
+Russian translations use `.ru.md` or `README.ru.md`.
+
+| Topic | English | Russian translation |
 | --- | --- | --- |
-| Project, verified status, layout, licenses / Проект и статус | [README](../README.md) | [README](../README.ru.md) |
-| SDK setup, firmware build, safe update and rollback / Сборка и обновление | [Firmware guide](../aliro-esp32/README.md) | [Прошивка](../aliro-esp32/README.ru.md) |
-| GPIO, NFC SPI, display and button wiring / Подключение и пины | [Wiring diagram](wiring.en.md) | [Схема подключения](wiring.md) |
-| Document rights, revocation, persistence and limits / Права и отзыв | [Access policy](aliro-access-policy-2026-10-14.en.md) | [Политика доступа](aliro-access-policy-2026-10-14.md) |
-| Host tests, sanitizers and hardware acceptance / Проверки | [Tests](../aliro-esp32/tests/README.md) | [Тесты](../aliro-esp32/tests/README.ru.md) |
-| Samsung provisioning and bench steps / Подготовка Samsung | [Bench preparation](samsung-bench-preparation-2026-10-14.en.md) | [Подготовка стенда](samsung-bench-preparation-2026-10-14.md) |
-| Competitors, SDKs and implementations / Другие решения | [Review](aliro-competitors-2026-10-13.en.md) | [Обзор](aliro-competitors-2026-10-13.md) |
-| Repository readiness, included projects, remaining work / Готовность репозитория | [Status (EN/RU)](repository-status-2026-10-14.md#english) | [Статус (RU/EN)](repository-status-2026-10-14.md#русский) |
+| Project, verified status, layout and licenses | [Overview](../README.md) | [Русский](../README.ru.md) |
+| SDK setup, build, update and rollback | [Firmware guide](../aliro-esp32/README.md) | [Русский](../aliro-esp32/README.ru.md) |
+| GPIO, NFC SPI, display and buttons | [Wiring](wiring.md) | [Русский](wiring.ru.md) |
+| Document rights, revocation and persistence | [Access policy](aliro-access-policy-2026-10-14.md) | [Русский](aliro-access-policy-2026-10-14.ru.md) |
+| Host tests and hardware acceptance | [Tests](../aliro-esp32/tests/README.md) | [Русский](../aliro-esp32/tests/README.ru.md) |
+| Samsung provisioning and bench steps | [Bench preparation](samsung-bench-preparation-2026-10-14.md) | [Русский](samsung-bench-preparation-2026-10-14.ru.md) |
+| Competitors, SDKs and implementations | [Review](aliro-competitors-2026-10-13.md) | [Русский](aliro-competitors-2026-10-13.ru.md) |
+| Repository readiness and remaining work | [Status](repository-status-2026-10-14.md) | [Русский](repository-status-2026-10-14.ru.md) |
 
-The two language versions of each current guide describe the same scope and
-limitations. Documentation completeness means coverage of the **implemented
-subset**, not implementation of every Aliro feature or verified wallet support.
-Translations of legal texts are not provided; original license texts govern.
+Each current guide and its translation describe the same scope and limitations.
+Coverage refers to the **implemented subset**, not complete Aliro support or
+verified compatibility with every wallet. Original legal texts govern; they
+are not translated here.
 
-Версии основных инструкций описывают одинаковые возможности и ограничения.
-Полнота этих инструкций относится к **реализованной части**. Она не означает
-полноту реализации стандарта или проверенную поддержку всех кошельков.
-Юридические тексты не переведены; действуют оригиналы лицензий.
+## Source and provenance
 
-## Source and provenance / Исходники и происхождение
+- [DigitalDoorKey pin and patches](../aliro-esp32/components/DigitalDoorKey/UPSTREAM.md).
+- [UltraWideLock CBOR import](../aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/UPSTREAM.md).
+- [License scopes and notices](../THIRD_PARTY_NOTICES.md).
+- [Reviewed public fixtures](public-source-review-2026-10-13.json).
+- [Source manifest](../SOURCE_MANIFEST.json): all tracked release files except
+  the manifest itself; hashes describe this branch, not earlier tags.
 
-- [DigitalDoorKey pin and patches](../aliro-esp32/components/DigitalDoorKey/UPSTREAM.md) (English).
-- [UltraWideLock CBOR import](../aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/UPSTREAM.md) (English).
-- [License scopes and third-party notices](../THIRD_PARTY_NOTICES.md) (English).
-- [Reviewed public test fixtures](public-source-review-2026-10-13.json) (JSON).
-- [Source manifest](../SOURCE_MANIFEST.json): all tracked release files except the manifest itself; hashes correspond to this branch, not to older release tags.
+## Historical material
 
-## Historical material / Исторические материалы
+Historical and upstream documents retain their original language and have not
+all been translated. Earlier completion claims and build hashes refer to their
+dated stages.
 
-These remain in their original language and have **not** all been translated.
-Earlier completion claims and build hashes describe their dated stages.
-Они сохранены на исходном языке и **не** переведены целиком. Старые статусы
-готовности и хэши сборок относятся к указанному этапу.
-
-| Material / Материал | Language / Язык | Scope / Область |
+| Material | Language | Scope |
 | --- | --- | --- |
-| [DDK update, 13 October](ddk-update-2026-10-13.md) | RU | Initial update before document policy / Первое обновление |
-| [Initial validator port](aliro-porting-2026-10-13.md) | RU | First validator stage / Первый этап валидатора |
-| [Old wire contract](../PROTOCOL-aliro.md) | EN | Early bring-up choices; superseded policy claims / Ранние решения |
-| [Workspace history](../README.history.md), [TODO](../TODO.md) | EN | Earlier roadmap / Прежний план |
-| [Gap analysis](project-gap-analysis.md), [execution plan](execution-plan.md), [cold-tap roadmap](aliro-stdauth-finishing-roadmap.md) | EN | April investigation / Апрельские исследования |
-| [Hardware reference](hardware-reference.md) | EN | Board and wiring reference; no new hardware proof / Платы и проводка |
-| [Documentation changelog](documentation-changelog.md) | EN | Documentation history / История документации |
+| [DDK update, 13 October](ddk-update-2026-10-13.md) | RU | Initial update before document policy |
+| [Initial validator port](aliro-porting-2026-10-13.md) | RU | First validator stage |
+| [Old wire contract](../PROTOCOL-aliro.md) | EN | Early bring-up choices; superseded policy claims |
+| [Workspace history](../README.history.md), [TODO](../TODO.md) | EN | Earlier roadmap |
+| [Gap analysis](project-gap-analysis.md), [execution plan](execution-plan.md), [cold-tap roadmap](aliro-stdauth-finishing-roadmap.md) | EN | April investigation |
+| [Hardware reference](hardware-reference.md) | EN | Board variants and historical context |
+| [Documentation changelog](documentation-changelog.md) | EN | Documentation history |
 
-Bundled HomeKey and vendor component documentation stays in upstream's language;
-it is not a second verified Aliro user guide. Source trees for Android HCE,
-SmartKey patches, Matter controller and the website have their own READMEs.
+Bundled HomeKey and vendor docs remain in upstream's language. Android HCE,
+SmartKey patches, the Matter controller and website have their own READMEs.
 
-Документация HomeKey и сторонних компонентов сохранена на языке upstream.
-Это не вторая подтверждённая инструкция Aliro. У Android HCE, SmartKey patches,
-Matter controller и сайта есть собственные README.
-
-## Aliro specification / Стандарт Aliro
+## Aliro specification
 
 Use the official [CSA Aliro 1.0 specification](https://csa-iot.org/wp-content/uploads/2026/02/26-42802-001_Aliro_1.0_specification.pdf).
-The PDF and a complete Russian translation of the standard are **not** included.
-Our policy guide explains the implemented subset; it does not replace the standard.
-
-Официальный PDF CSA и полный русский перевод стандарта **не** включены.
-Наш документ объясняет реализованную часть и не заменяет спецификацию.
+The PDF and a complete Russian translation are not included. Our access-policy
+guide describes the implemented subset and does not replace the standard.

@@ -5,7 +5,7 @@ It is intentionally more detailed than the short hardware summary in the
 root README.
 
 For the current Aliro firmware, use the labelled
-[wiring guide](wiring.en.md) / [схему подключения](wiring.md). The GPIO9 reset
+[wiring guide](wiring.md) / [схему подключения](wiring.ru.md). The GPIO9 reset
 suggestion from earlier bring-up is not valid with the current I²C peripherals.
 
 For a roadmap-driven analysis of what is still missing, see

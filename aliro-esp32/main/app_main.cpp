@@ -739,6 +739,9 @@ extern "C" void app_main()
     // and the next iPhone tap fails auth until Apple Home re-runs SetCredential.
     replay_aliro_credentials_to_aliro_delegate();
 
+    ESP_LOGI(TAG, "[init] internal heap before Matter: free=%u largest=%u",
+        static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT)),
+        static_cast<unsigned>(heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT)));
     err = esp_matter::start(app_event_cb);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_matter::start failed: 0x%x", err);

@@ -6,7 +6,7 @@ import {
     inject,
     signal
 } from '@angular/core';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { LanguageService } from '@/app/shared/services/language.service';
 import { ThemeService } from '@/app/shared/services/theme.service';
@@ -116,7 +116,7 @@ interface ComparisonRow {
         </header>
 
         <!-- Mobile fullscreen overlay menu (≤60rem). Pattern adapted
-             from /path/to/deposit.mayday.software public-topbar:
+             from /Users/ilya/CODE/deposit.mayday.software public-topbar:
              backdrop-blurred sheet, numbered nav rows at the top, a
              contact CTA pinned to the bottom. Closes on link tap, Esc,
              or once the viewport widens past the breakpoint. -->
@@ -512,39 +512,23 @@ interface ComparisonRow {
                 <div class="wrap">
                     <h2>{{ 'source.title' | translate }}</h2>
                     <p class="lede">{{ 'source.lede' | translate }}</p>
-                    @if (sourceCountdown(); as t) {
-                        <div class="countdown" role="timer" [attr.aria-label]="'source.aria_label' | translate">
-                            <div class="unit">
-                                <span class="num">{{ t.days }}</span>
-                                <span class="label">{{ 'source.units.days' | translate }}</span>
-                            </div>
-                            <div class="unit">
-                                <span class="num">{{ t.hours }}</span>
-                                <span class="label">{{ 'source.units.hours' | translate }}</span>
-                            </div>
-                            <div class="unit">
-                                <span class="num">{{ t.minutes }}</span>
-                                <span class="label">{{ 'source.units.minutes' | translate }}</span>
-                            </div>
-                            <div class="unit">
-                                <span class="num">{{ t.seconds }}</span>
-                                <span class="label">{{ 'source.units.seconds' | translate }}</span>
-                            </div>
-                        </div>
-                        <p class="target">{{ 'source.target_label' | translate }} <strong>{{ 'source.target_date' | translate }}</strong></p>
-                    } @else {
-                        <p class="released">{{ 'source.released' | translate }}</p>
-                        <p class="released-cta">
-                            <a [attr.href]="sourceReleasedUrl" target="_blank" rel="noopener noreferrer">
-                                {{ 'source.open_repo' | translate }} →
-                            </a>
-                        </p>
-                    }
-                    <p class="cta">
-                        <a [attr.href]="earlyAccessMailto()">
-                            {{ 'source.request_cta' | translate }} →
+                    <p class="released">{{ 'source.released' | translate }}</p>
+                    <p class="released-cta">
+                        <a [attr.href]="sourceReleasedUrl" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.open_repo' | translate }} →
                         </a>
                     </p>
+                    <p class="cta">
+                        <a [attr.href]="sourceDocumentationUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.documentation' | translate }} →
+                        </a>
+                    </p>
+                    <p class="cta">
+                        <a [attr.href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.wiring' | translate }} →
+                        </a>
+                    </p>
+                    <p>{{ 'source.license_note' | translate }}</p>
                 </div>
             </section>
 
@@ -571,7 +555,7 @@ interface ComparisonRow {
                     <p>{{ 'status.p1' | translate }}</p>
                     <p>{{ 'status.p2' | translate }}</p>
                     <p class="cta">
-                        <a [attr.href]="earlyAccessMailto()">
+                        <a [attr.href]="sourceReleasedUrl" target="_blank" rel="noopener noreferrer">
                             {{ 'status.cta' | translate }}
                         </a>
                     </p>
@@ -1350,6 +1334,8 @@ interface ComparisonRow {
                 white-space: nowrap;
             }
             .standard .ecosystem-chips .ecosystem-more {
+                max-width: 100%;
+                white-space: normal;
                 background: transparent;
                 border-style: dashed;
                 color: var(--fg-dim);
@@ -2419,7 +2405,6 @@ interface ComparisonRow {
 export class LandingPage {
     readonly language = inject(LanguageService);
     readonly theme = inject(ThemeService);
-    private readonly translate = inject(TranslateService);
 
     /* Mobile-menu overlay state. Toggled by the hamburger button in
        the topbar; closed on backdrop tap or any nav-link click. */
@@ -2452,37 +2437,16 @@ export class LandingPage {
         return 'nav.theme_switch_to_auto';
     });
 
-    /* Reactive mailto for the "Get early access" CTA. Re-evaluates on
-       language toggle so the encoded subject matches the visible UI
-       language. encodeURIComponent guarantees Cyrillic survives the
-       handoff to the user's mail client. */
-    readonly earlyAccessMailto = computed(() => {
-        // Read the language signal so the computed re-runs on toggle.
-        void this.language.lang();
-        const subject = this.translate.instant('source.request_subject');
-        return `mailto:aliro.mayday@ilia.ae?subject=${encodeURIComponent(subject)}`;
-    });
-
-    /* Source-release countdown.
-       Target: end of step 7 in the project roadmap (production launch
-       + security audit), tied to the "October 2026" milestone everywhere
-       else on the page. Pin the moment to 23:59:59 UTC on Oct 31, 2026
-       so it doesn't drift between timezones. Date.UTC uses 0-indexed
-       months: 9 = October. */
-    private readonly sourceTargetMs = Date.UTC(2026, 9, 31, 23, 59, 59);
-    private readonly nowMs = signal(Date.now());
-
-    /* Where to send visitors once the countdown elapses.
-       UPDATE-BEFORE-LAUNCH: replace with the actual public-repo URL
-       once razqqm/apple-homekey-pm3-reader (or its successor) is
-       flipped public. Until then this link only renders in the
-       post-target @else branch, which is unreachable until Nov 2026. */
-    readonly sourceReleasedUrl = 'https://github.com/razqqm';
+    readonly sourceReleasedUrl = 'https://github.com/ilia-ae/aliro-mayday';
+    readonly sourceDocumentationUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/README${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly sourceWiringUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/wiring${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
 
     constructor() {
-        const id = setInterval(() => this.nowMs.set(Date.now()), 1000);
         const destroyRef = inject(DestroyRef);
-        destroyRef.onDestroy(() => clearInterval(id));
 
         // Lock body scroll while the mobile menu overlay is open so
         // the page underneath doesn't slide around behind the sheet.
@@ -2524,21 +2488,11 @@ export class LandingPage {
         }
     }
 
-    readonly sourceCountdown = computed(() => {
-        const diff = this.sourceTargetMs - this.nowMs();
-        if (diff <= 0) return null;
-        const days = Math.floor(diff / 86_400_000);
-        const hours = Math.floor((diff % 86_400_000) / 3_600_000);
-        const minutes = Math.floor((diff % 3_600_000) / 60_000);
-        const seconds = Math.floor((diff % 60_000) / 1000);
-        return { days, hours, minutes, seconds };
-    });
-
     readonly roadmap: ReadonlyArray<{ n: number; status: RoadmapStatus }> = [
         { n: 1, status: 'done' },
-        { n: 2, status: 'active' },
-        { n: 3, status: 'planned' },
-        { n: 4, status: 'planned' },
+        { n: 2, status: 'done' },
+        { n: 3, status: 'active' },
+        { n: 4, status: 'active' },
         { n: 5, status: 'planned' },
         { n: 6, status: 'planned' },
         { n: 7, status: 'goal' }
@@ -2646,14 +2600,14 @@ export class LandingPage {
     readonly comparisonRows: ReadonlyArray<ComparisonRow> = [
         { key: 'open_standards', ours: 'yes', them: 'partial' },
         { key: 'matter', ours: 'yes', them: 'partial' },
-        { key: 'cross_wallet', ours: 'yes', them: 'partial' },
-        { key: 'legacy_cards', ours: 'yes', them: 'no' },
-        { key: 'offline', ours: 'yes', them: 'partial' },
-        { key: 'self_hosted', ours: 'yes', them: 'no' },
-        { key: 'http_api', ours: 'yes', them: 'no' },
-        { key: 'telegram', ours: 'yes', them: 'no' },
-        { key: 'cctv_triggers', ours: 'yes', them: 'partial' },
-        { key: 'tamper_alerts', ours: 'yes', them: 'partial' },
-        { key: 'prometheus', ours: 'yes', them: 'no' }
+        { key: 'cross_wallet', ours: 'partial', them: 'partial' },
+        { key: 'legacy_cards', ours: 'no', them: 'no' },
+        { key: 'offline', ours: 'partial', them: 'partial' },
+        { key: 'self_hosted', ours: 'partial', them: 'no' },
+        { key: 'http_api', ours: 'partial', them: 'no' },
+        { key: 'telegram', ours: 'no', them: 'no' },
+        { key: 'cctv_triggers', ours: 'no', them: 'partial' },
+        { key: 'tamper_alerts', ours: 'no', them: 'partial' },
+        { key: 'prometheus', ours: 'no', them: 'no' }
     ];
 }
