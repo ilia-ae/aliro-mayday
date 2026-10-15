@@ -12,7 +12,7 @@
     },
     {
       "path": "LICENSE",
-      "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
+      "sha256": "3afb97ca0d63df4270e97cd6b74977a08ccb5a6a194e4c026e7c6140e46cad18"
     },
     {
       "path": "LICENSES/MIT.txt",
@@ -32,11 +32,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "14dbebe544e62e2e14fa15f7e8080d4cb2fb41607a67b1e8aed6170d32cc53c9"
+      "sha256": "92dbe4440b80e0973a373dfaf7c32afd576bfe5ac9c5771787c691e3f2d97f6b"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "09b1d6dda0decb9ef99d9d4cecf2caf0a65a13f95fcf46943318aa8e8e0592a6"
+      "sha256": "5c0d5c0050688ee7042775a6c3f69786b1c5a6b67a85536ac05cbd3809ac91e7"
     },
     {
       "path": "TODO.md",
@@ -8272,7 +8272,7 @@
     },
     {
       "path": "aliro-site/LICENSE",
-      "sha256": "839b74140e14dbce9a940b394eb74f40ffb8b3003df6c134b017414b3d1de3c0"
+      "sha256": "bfc00b2c95576c499af9ec6e46141996de2ce00950e161182c65b984efe6c73a"
     },
     {
       "path": "aliro-site/README.md",
@@ -9388,7 +9388,7 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "8d7fd73db9ef447c3eef7246cd525d1f0451c031b7a5845e403994c428d8c86a"
+      "sha256": "2031d20eb5407b5197b2ab6ff0ba55366c9fb2c29284da621eed8d5c0b822d9e"
     },
     {
       "path": "aliro-esp32/README.ru.md",
@@ -9400,7 +9400,7 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "3d34885900217a7a8de3ff86f7135cf8c991a41a43abfde587f370cecbdbb059"
+      "sha256": "0027fb7dd576beae5f8d2e5e3f5ede46adef6e5f8fd76db9bd304055d70e6f55"
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
@@ -9408,7 +9408,7 @@
     },
     {
       "path": "scripts/verify-public-source.py",
-      "sha256": "e59e67a97556c78bf762f2276a1938dd8e7edc78106fc4c75232fcd146b2df2e"
+      "sha256": "c61c3390bb2884d0ca5f59cb0fff03cd34827cc3c83dbeced41c8c9e329f0630"
     },
     {
       "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
@@ -9500,7 +9500,7 @@
     },
     {
       "path": "docs/README.ru.md",
-      "sha256": "2773469008e5f6347f2d8ce77201b535efb3477214df40f2df3a8eb9c1a40e39"
+      "sha256": "f0b69eccb6e889909d6b536777e61dca2ce475a2b5badaae2c8ce5c2b9c10449"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.ru.md",
@@ -9552,15 +9552,31 @@
     },
     {
       "path": "docs/licensing-inventory-2026-10-15.json",
-      "sha256": "eb36b68f9d21fd2802f29da7e7dbb0162ff04b5dcf7e2277a0ff9827acf13753"
+      "sha256": "ba678d170463836eec8283cc6f0c7050cc0dae283788ff02dd7cadac9ca48cfb"
     },
     {
       "path": "docs/licensing.md",
-      "sha256": "a504bd5c06362e30b5037dae6e3b5e9f37e2851c868389bb2c47d79968ea045e"
+      "sha256": "f7d5841c20804518fcb0993010493eeb5282a007f95c900fb7df565605dbd48c"
     },
     {
       "path": "docs/licensing.ru.md",
-      "sha256": "16184b11441f920453bdcb1f1496e21470bf8a3c07201f448381833560f99391"
+      "sha256": "216f47dd6ea461dc9b76645cef3b9199cd18769f31879d3831c13d0f2282cfab"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "f5c3cc066088fb5a850e557310fe9d9e2ef04981d3c3ad785fd8279cc706cd9a"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "080e726192fcd74061eacd8873be070b2f2f80f8a5be143efa15e679b8ed2dd5"
+    },
+    {
+      "path": "CONTRIBUTING.ru.md",
+      "sha256": "65ceb8ae7620e255e203e0d8f1d9a20cc7a96942315dace1e88ad668b13e7b32"
+    },
+    {
+      "path": "LICENSES/Aliro-Mayday-1.0.txt",
+      "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
     }
   ],
   "omitted": [

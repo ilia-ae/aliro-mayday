@@ -9,6 +9,7 @@
 | --- | --- | --- |
 | Проект, проверенное состояние, структура и лицензии | [Overview](../README.md) | [Обзор](../README.ru.md) |
 | Области лицензий, коммерческое использование и сторонние исключения | [Licensing](licensing.md) | [Лицензирование](licensing.ru.md) |
+| Права на вклады, согласие и порядок PR | [Contributing](../CONTRIBUTING.md) | [Участие в проекте](../CONTRIBUTING.ru.md) |
 | SDK, сборка, обновление и возврат | [Firmware](../aliro-esp32/README.md) | [Прошивка](../aliro-esp32/README.ru.md) |
 | Пины, NFC SPI, дисплей и кнопки | [Wiring](wiring.md) | [Подключение](wiring.ru.md) |
 | Права по документам, отзыв и сохранение | [Policy](aliro-access-policy-2026-10-14.md) | [Политика](aliro-access-policy-2026-10-14.ru.md) |

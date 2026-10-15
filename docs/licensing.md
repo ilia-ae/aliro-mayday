@@ -4,12 +4,13 @@
 
 Reviewed 15 October 2026 against the tracked source. This is a technical inventory
 and explanation of the existing terms, not a legal opinion or commercial release
-clearance. Original license texts govern. The commercial terms have not changed.
+clearance. Original license texts govern. Version **1.1** clarifies modification,
+redistribution and new contributions; the commercial terms have not changed.
 
 ## Project-original code
 
 Original Aliro application code and original website code use the project's
-**Source-Available Commercial License v1**. Source is publicly readable; the
+**Source-Available Commercial License v1.1**. Source is publicly readable; the
 repository as a whole is not offered under MIT or an OSI-approved open-source
 license. The [OSI definition](https://opensource.org/osd) permits commercial use
 without a field-of-use restriction; our original-code terms require a separate
@@ -20,13 +21,43 @@ commercial agreement.
 | Read, study and evaluate the source | Permitted under LICENSE §1(a), (e) |
 | Personal, non-production lab use | One copy per household/workstation under §1(b) |
 | Academic research, teaching and publication | Permitted with attribution under §1(c) |
-| Contributions | §1(d), §6 for original code; the existing license of each contributed file applies |
+| Copy, compile, modify and make forks | Permitted for the existing section 1 uses under §1(f); private changes may remain private |
+| Share original/modified source or compiled builds without charge | Permitted for section 1 non-commercial uses under §1(g), with the complete license, notices, attribution and modified-version identification |
+| New contributions | Express written acceptance of §6 v1.1 for original material; independently licensed files keep their own terms |
 | Selling devices, paid integration, commercial buildings or services | A separate signed commercial agreement is required under §2 |
 
-The current custom grant does not clearly provide a general right to modify and
-redistribute project-original code outside its listed permissions. Obtain written
-clarification before advertising broader redistribution rights. Public hosting
-does not itself replace a copyright license. Contact: **aliro.mayday@ilia.ae**.
+Redistributed covered code keeps this license. Recipients obtain its permissions
+directly from the applicable rights holder under §5; they do not need an
+individual approval for a use expressly granted by §1. Redistribution does not
+permit relicensing covered code under another license or bypassing commercial
+terms. A free download still needs a commercial agreement if its actual use falls
+within §2. Independent third-party permissions remain intact.
+
+Sections **2 and 3 are unchanged word for word** from v1. The original §1(a)-(e)
+permissions, §4 attribution, original §5 commercial-sublicensing restriction,
+warranty disclaimer and contact terms are preserved. Existing commercial
+agreements remain in force. The [previous root license](../LICENSES/Aliro-Mayday-1.0.txt)
+is archived verbatim from commit `2588e3f`; its paths refer to that repository root.
+Contact: **aliro.mayday@ilia.ae**.
+
+## New contributions
+
+Contributors retain copyright. On express written acceptance of **§6 v1.1** for
+an intentional project-original submission, they give the Project Owner a
+non-exclusive, irrevocable, worldwide copyright grant without time limits or
+royalties. It covers public releases under this license and separate paid
+commercial releases, including adaptation and sublicensing. Public recipients
+still need a commercial agreement for uses covered by §2; the incoming grant is
+not their free commercial-use license. Contributor payments or support duties
+require a separate agreement.
+
+The grant covers only rights the contributor can grant. Independently licensed
+files retain their licenses; employer/third-party permissions and restrictions
+must be identified. Mere discussion, submission of third-party code or absence
+of an acceptance record does not establish the new grant. It is not retroactive
+to earlier contributions. Maintainers must retain a record identifying the
+submission and v1.1 acceptance before merging. See [contribution instructions](../CONTRIBUTING.md)
+and the [PR form](../.github/PULL_REQUEST_TEMPLATE.md).
 
 ## Component scopes
 
@@ -84,11 +115,10 @@ rights; applicable standards/IPR programs require separate assessment.
 
 Before distributing commercial devices or generated UI/firmware, review the
 complete artifact's dependency/notice obligations, the UI helper's ShareAlike
-scope and any standards/IPR requirements with qualified counsel. Resolve the
-original-code modification/redistribution grant explicitly. The contribution
-clause also needs review for commercial sublicensing of future third-party
-contributions: it does not expressly settle those rights or transfer copyright. Adding notices is
-not a claim that a full legal/security audit has been completed.
+scope and any standards/IPR requirements with qualified counsel. Check the actual
+rights and acceptance records of contributions being distributed; v1.1 does not
+create missing historical grants. These clarified terms and notices are not a
+claim that a full legal/security audit has been completed.
 
 For publication emails use **“source is publicly available”** and link the
 repository and this guide. Describe the response delay as time spent clarifying

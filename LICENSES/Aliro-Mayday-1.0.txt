@@ -1,0 +1,125 @@
+Scope of this license
+
+This license applies to project-original Aliro application code and additions
+that do not already have an explicit license. The separate licenses listed in
+THIRD_PARTY_NOTICES.md and LICENSES/MIT.txt remain in force. In particular,
+third-party code, inherited HomeKey-ESP32 sources and DigitalDoorKey (including
+our changes to those MIT sources) retain their original license. The PM3 Python
+package retains the MIT license declared in pyproject.toml. This notice does not
+withdraw permissions previously granted under an existing license.
+
+More specific file notices take precedence. These include the CC BY-SA 4.0
+objDiff.ts helpers, GPL-licensed Autoconf macros with their retained output
+exception, and CC0-marked material described in THIRD_PARTY_NOTICES.md. This
+license adds no commercial-use, attribution, sublicensing or contribution
+restrictions to separately licensed material. Section 6 concerns contributions
+to original code covered by this license; other files keep their own licenses.
+Copyright is not assigned by that contribution clause. This copyright license
+does not grant third-party patent, trademark or certification rights.
+
+aliro.mayday — Source-Available Commercial License v1
+Copyright © 2026 Ilia Arestov. All rights reserved.
+
+This software is SOURCE-AVAILABLE but NOT an Open Source licence in the
+OSI sense. Source is public so anyone can read, study, audit, and
+contribute — but any Commercial Use requires a paid licence from the
+copyright holder. Non-commercial personal, research, and educational
+use is permitted free of charge under the terms below.
+
+
+1. PERMITTED WITHOUT A LICENCE FEE
+
+   (a) Reading the source, learning from it, and discussing it publicly.
+   (b) Running a single copy for personal, non-production use at home
+       or in a personal lab — one household or one personal workstation.
+   (c) Academic research, teaching, student projects, and publication
+       with attribution to aliro.mayday.software.
+   (d) Contributing pull requests, issues, and patches to the upstream
+       repository.
+   (e) Auditing the software in the context of evaluating whether to
+       obtain a Commercial Licence (see §2).
+
+
+2. COMMERCIAL USE REQUIRES A PAID LICENCE
+
+   "Commercial Use" means any of the following:
+
+   (a) Selling, leasing, renting, or otherwise monetising hardware
+       that runs this software.
+   (b) Deploying the software in a facility, building, office,
+       hotel, or any premises that generates revenue or is part of
+       a commercial operation.
+   (c) Providing a paid service that depends on this software —
+       installation, integration, deployment, hosting, support,
+       or managed operations.
+   (d) Integrating the software into a product that is itself sold,
+       distributed commercially, or offered as a service (whether
+       or not the product or its source is open).
+   (e) Offering the software as a paid SaaS, hosted service, or
+       cloud service to third parties.
+
+   None of the above is permitted without first obtaining a signed
+   Commercial Licence from the copyright holder.
+
+
+3. ROYALTIES AND LICENSING TERMS
+
+   Commercial Licences are offered on a per-device, per-install,
+   revenue-share, or flat-fee basis. Exact terms depend on volume,
+   deployment scenario, support requirements, white-label/OEM scope,
+   and geography.
+
+   Please contact the copyright holder to negotiate terms BEFORE
+   commercial deployment. Starting deployment without a signed licence
+   constitutes copyright infringement.
+
+
+4. ATTRIBUTION
+
+   Any distribution or public-facing deployment — commercial or not —
+   MUST preserve:
+
+   (a) This copyright notice and licence reference.
+   (b) A visible credit reading "Based on aliro.mayday" or similar,
+       linking back to https://aliro.mayday.software when the medium
+       permits.
+
+
+5. NO SUBLICENSING
+
+   You may not grant third parties the rights this licence grants to
+   you. Each user or operator must obtain their own rights directly
+   from the copyright holder, except where your Commercial Licence
+   explicitly includes redistribution / sublicensing rights.
+
+
+6. CONTRIBUTIONS
+
+   By submitting a pull request, patch, or other contribution, you
+   license your contribution to the copyright holder under the same
+   terms as this licence, and you confirm that you have the right
+   to do so.
+
+
+7. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+   NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE
+   FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION
+   OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+
+8. CONTACT
+
+   Commercial licensing inquiries:
+
+     Email: aliro.mayday@ilia.ae
+     Web:   https://ilia.ae      (Russian)
+            https://ilia.ae/en/   (English)
+
+   Please include: intended use, expected volume or revenue, hosting
+   model, geography, and whether you want support / updates.

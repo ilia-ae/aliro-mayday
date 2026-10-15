@@ -17,8 +17,14 @@ to original code covered by this license; other files keep their own licenses.
 Copyright is not assigned by that contribution clause. This copyright license
 does not grant third-party patent, trademark or certification rights.
 
-aliro.mayday — Source-Available Commercial License v1
+aliro.mayday — Source-Available Commercial License v1.1
 Copyright © 2026 Ilia Arestov. All rights reserved.
+
+Version 1.1 clarifies non-commercial modification and redistribution and
+requires an express grant for new contributions. The commercial-use definition
+and fee terms in sections 2-3 are unchanged from v1. Existing permissions and
+signed commercial agreements remain in force. Earlier contributions do not
+receive a new grant merely because this version is published.
 
 This software is SOURCE-AVAILABLE but NOT an Open Source licence in the
 OSI sense. Source is public so anyone can read, study, audit, and
@@ -38,6 +44,18 @@ use is permitted free of charge under the terms below.
        repository.
    (e) Auditing the software in the context of evaluating whether to
        obtain a Commercial Licence (see §2).
+   (f) Copying, compiling and modifying the covered code, including making
+       forks and derivative versions, for the uses permitted by (a)-(e).
+       You may keep those modifications private.
+   (g) Redistributing unmodified or modified covered code, in source or
+       compiled form, without charge and for the non-commercial uses
+       permitted by this section. Include this complete licence and the
+       applicable copyright and third-party notices, preserve section 4
+       attribution, and clearly identify modified versions as modified.
+       Recipients must receive the covered code under this same licence;
+       independent third-party materials keep their separate licences.
+       Free distribution does not exempt any activity defined as Commercial
+       Use in section 2. No commercial-use permission is granted by (f)-(g).
 
 
 2. COMMERCIAL USE REQUIRES A PAID LICENCE
@@ -92,13 +110,57 @@ use is permitted free of charge under the terms below.
    from the copyright holder, except where your Commercial Licence
    explicitly includes redistribution / sublicensing rights.
 
+   Non-commercial redistribution permitted by section 1(g) is not a grant
+   of sublicensing rights. Each recipient receives the permissions in this
+   public licence directly from the applicable rights holder; no individual
+   approval is needed for an expressly permitted section 1 use. Broader
+   commercial redistribution or sublicensing still requires the written
+   Commercial Licence described above.
+   This restriction does not limit the Project Owner's separate incoming
+   copyright grant under section 6(c).
+
 
 6. CONTRIBUTIONS
 
-   By submitting a pull request, patch, or other contribution, you
-   license your contribution to the copyright holder under the same
-   terms as this licence, and you confirm that you have the right
-   to do so.
+   (a) Scope and acceptance. In this section, "Project Owner" means Ilia
+       Arestov or a successor to the project's licensing rights. A
+       "Contribution" is material you own or are authorised to license and
+       intentionally submit for inclusion in project-original code or
+       documentation. The grant below takes effect only when you expressly
+       accept this section for that submission, in its pull request or
+       another written record. Merely opening an issue, discussing an idea,
+       or providing third-party material is not such acceptance.
+
+   (b) Your ownership. You retain copyright in your Contribution and may
+       use or license your own material elsewhere. This section does not
+       transfer copyright or grant you rights in other people's material.
+
+   (c) Grant for accepted submissions. You grant the Project Owner an
+       irrevocable, non-exclusive, worldwide copyright licence, with no
+       time limit or royalties, to copy, use, modify, combine, display,
+       distribute and sublicense your Contribution and adaptations of it
+       for the project and releases, products or derivatives based on it.
+       This expressly includes inclusion in public releases under this
+       licence and in releases or products supplied under the Project
+       Owner's separate paid commercial licences. No contributor payment,
+       royalty or support obligation arises without a separate written
+       agreement. This incoming grant does not waive sections 2-3 for
+       public recipients or grant them free commercial use of the project.
+
+   (d) Authority and third-party materials. You must have authority to make
+       this grant, including any necessary employer permission. Identify
+       third-party sources, licences and restrictions known to you.
+       Independently licensed components and changes to them remain under
+       their applicable licences; this section does not replace those
+       licences or authorise relicensing material you do not control.
+       Keep the required authorship, licence and change notices.
+
+   (e) Earlier submissions. This section does not retroactively obtain new
+       rights in earlier contributions. Their existing terms remain in
+       force unless the contributor separately agrees in writing. Any new
+       acceptance record must identify this licence version and the
+       submission it covers. The Project Owner may decline a submission
+       whose rights or acceptance have not been established.
 
 
 7. NO WARRANTY

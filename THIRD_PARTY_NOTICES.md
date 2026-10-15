@@ -6,6 +6,10 @@ terms in [LICENSE](LICENSE); non-commercial personal/research use is permitted.
 Commercial use of that original code needs a separate license.
 See the [licensing guide](docs/licensing.md) ([Русский](docs/licensing.ru.md))
 for permitted uses, the mixed-license scope and remaining release review.
+Version 1.1 of the project-original license clarifies free non-commercial
+modification/redistribution and new contribution grants. It does not change
+commercial-use definitions, fee clauses or any independently licensed component.
+New project-original submissions follow [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Existing third-party permissions are preserved. They are not restricted by the
 project license. Keep their copyright and license texts with redistributions.

@@ -105,8 +105,11 @@ The [licensing guide](docs/licensing.md) explains permitted use and the mixed
 license scope. MIT/ISC/Apache/Boost/BSD rights remain in force. File-level
 exceptions include a CC BY-SA UI helper and GPL Autoconf macros with an output
 exception; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Public availability
-does not make the whole repository OSI Open Source. Commercial release review
-and clarification of original-code redistribution/contribution rights remain
+does not make the whole repository OSI Open Source. **License v1.1** expressly
+permits non-commercial modifications, forks and redistribution under its terms;
+commercial-use and fee clauses are unchanged. New contributions require the
+explicit grant described in [CONTRIBUTING.md](CONTRIBUTING.md), with copyright
+retained by their authors. Artifact-wide commercial release review remains
 separate work.
 
 The CSA specification PDF is not redistributed. `SOURCE_MANIFEST.json` records

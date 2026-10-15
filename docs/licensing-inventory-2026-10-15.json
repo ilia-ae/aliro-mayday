@@ -2,10 +2,14 @@
   "format": 1,
   "reviewed_date": "2026-10-15",
   "scope": "Tracked source license texts and selected file-level exceptions; not a complete dependency SBOM or legal clearance.",
-  "primary_license": "Project-original code: Source-Available Commercial License v1; independent file/component grants take precedence.",
+  "primary_license": "Project-original code: Source-Available Commercial License v1.1; independent file/component grants take precedence.",
   "legal_texts": [
     {
       "path": "LICENSE",
+      "sha256": "3afb97ca0d63df4270e97cd6b74977a08ccb5a6a194e4c026e7c6140e46cad18"
+    },
+    {
+      "path": "LICENSES/Aliro-Mayday-1.0.txt",
       "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
     },
     {
@@ -158,7 +162,7 @@
     },
     {
       "path": "aliro-site/LICENSE",
-      "sha256": "839b74140e14dbce9a940b394eb74f40ffb8b3003df6c134b017414b3d1de3c0"
+      "sha256": "bfc00b2c95576c499af9ec6e46141996de2ce00950e161182c65b984efe6c73a"
     },
     {
       "path": "homekey-esp32/LICENSE",
@@ -263,8 +267,20 @@
   ],
   "open_release_questions": [
     "Artifact-wide dependencies, attribution and UI ShareAlike scope.",
-    "Explicit modification/redistribution permissions for project-original code.",
-    "Rights to commercially sublicense future third-party contributions.",
+    "Verify the actual rights and acceptance records of distributed contributions; v1.1 creates no missing historical grants.",
     "Third-party standards, patent, trademark and certification rights."
-  ]
+  ],
+  "license_clarification": {
+    "version": "1.1",
+    "previous_commit": "2588e3fb6cd932d42417e9e32edb87ce1fc02d71",
+    "previous_root_license": "LICENSES/Aliro-Mayday-1.0.txt",
+    "sections_2_and_3_unchanged": true,
+    "section_2_sha256": "2bbe184927029ecd4f654dd6247d0bda788e49568de0cd92685ed318d34546b8",
+    "section_3_sha256": "f12472b993b9b8cb187835ecf532301404dfc121e506dc7d7fa440a5b2124381",
+    "modification_and_noncommercial_redistribution": "Explicit grant in sections 1(f)-(g), with direct recipient licensing in section 5.",
+    "new_contributions": "Express written acceptance of section 6 v1.1 for the identified submission; copyright retained; separate incoming copyright grant permits paid commercial project releases.",
+    "earlier_contributions": "No retroactive grant; existing terms remain unless separately agreed in writing.",
+    "acceptance_instructions": "CONTRIBUTING.md",
+    "acceptance_instructions_ru": "CONTRIBUTING.ru.md"
+  }
 }
