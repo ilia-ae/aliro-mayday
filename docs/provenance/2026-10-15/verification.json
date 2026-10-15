@@ -1,0 +1,121 @@
+{
+  "format": "mayday.snapshot-proof-verification",
+  "format_version": 1,
+  "snapshot_commit": "24e218ef1ea83dafd47447e0393ddd5cd949ccaa",
+  "manifest_sha256": "9f51d5b701905d34c7a22910c80c2950451cfa3cf9402e8485947b90ff13af2c",
+  "credit": "Mayday / Ilia Arestov",
+  "service": "https://deposit.mayday.software/",
+  "verified_rfc3161": [
+    {
+      "provider": "DigiCert",
+      "timestamp_utc": "2026-10-15T12:14:06Z",
+      "trust": "system CA bundle, OpenSSL 3.6.4",
+      "signature_digest_and_nonce_verified": true
+    },
+    {
+      "provider": "FreeTSA",
+      "timestamp_utc": "2026-10-15T12:14:07Z",
+      "trust": "FreeTSA published CA and TSA certificate; both file hashes matched official page",
+      "signature_digest_and_nonce_verified": true
+    }
+  ],
+  "opentimestamps": {
+    "calendars": [
+      "alice",
+      "bob",
+      "finney"
+    ],
+    "status": "pending_bitcoin_attestation",
+    "detached_file_digest_binding_checked": true,
+    "bitcoin_block_verified": false
+  },
+  "author_identity_signature": null,
+  "limits": [
+    "Timestamps prove existence/integrity of this statement and identified snapshot; they do not independently establish authorship or transfer third-party rights.",
+    "No GPG identity signature or completed Bitcoin block verification is claimed.",
+    "The proof refers to the identified commit. The later commit publishing these proof files is outside its source manifest."
+  ],
+  "additional_response_not_used": {
+    "provider": "Sectigo",
+    "reason": "OpenSSL 3.6.4 full timestamp validation failed: ESS cert id not found. Its response is excluded from the published verified proofs."
+  },
+  "checks": [
+    {
+      "provider": "digicert",
+      "check": "manifest bytes",
+      "result": "verified"
+    },
+    {
+      "provider": "digicert",
+      "check": "request digest and nonce",
+      "result": "verified"
+    },
+    {
+      "provider": "digicert",
+      "check": "changed manifest rejected",
+      "result": "verified"
+    },
+    {
+      "provider": "freetsa",
+      "check": "manifest bytes",
+      "result": "verified"
+    },
+    {
+      "provider": "freetsa",
+      "check": "request digest and nonce",
+      "result": "verified"
+    },
+    {
+      "provider": "freetsa",
+      "check": "changed manifest rejected",
+      "result": "verified"
+    }
+  ],
+  "files": [
+    {
+      "path": "authorship-manifest.json",
+      "sha256": "9f51d5b701905d34c7a22910c80c2950451cfa3cf9402e8485947b90ff13af2c",
+      "size": 1882
+    },
+    {
+      "path": "authorship-manifest.tsq",
+      "sha256": "7f08e6a6e2f35481908e4e307a495721bb96712ba434f342728ae3c154a0fc18",
+      "size": 69
+    },
+    {
+      "path": "authorship-manifest.json.ots.alice",
+      "sha256": "5b99ef363d7755391f27df6998df5d5f992e71ff38fe554a71aaac84b5c5295f",
+      "size": 307
+    },
+    {
+      "path": "authorship-manifest.json.ots.bob",
+      "sha256": "5fcf0135a4f4977b1d5a8d6c7ba026911c0cb0799ad2c676cdb0026f0390f48b",
+      "size": 235
+    },
+    {
+      "path": "authorship-manifest.json.ots.finney",
+      "sha256": "5607d473aa9674f87395c910a88aa1c21eebb48a93c76e86864cab0fd88d4e72",
+      "size": 291
+    },
+    {
+      "path": "authorship-manifest.json.tsr.digicert",
+      "sha256": "48209c6fb0de657d2bbef53ba032222d6c5a7ceca0425a31d102b8390ef30f58",
+      "size": 6007
+    },
+    {
+      "path": "authorship-manifest.json.tsr.freetsa",
+      "sha256": "619b82dd297562df940213eb955c4a04b560ac4935ed15270e525488937fd375",
+      "size": 4643
+    },
+    {
+      "path": "freetsa-ca.pem",
+      "sha256": "2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438",
+      "size": 2833
+    },
+    {
+      "path": "freetsa-tsa.pem",
+      "sha256": "8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467",
+      "size": 2273
+    }
+  ]
+}

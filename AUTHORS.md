@@ -21,5 +21,7 @@ The current original-code terms are in the root `LICENSE` (v1.1). The v1 text in
 Our [deposit service](https://deposit.mayday.software/) supports file fingerprints
 and timestamp evidence. A timestamp concerns the existence and integrity of a
 specific snapshot; it does not by itself establish authorship or transfer rights
-in third-party material. No completed Aliro timestamp proof is claimed here
-without a published, independently verifiable proof for the identified snapshot.
+in third-party material. The [15 October snapshot evidence](docs/provenance/2026-10-15/README.md)
+contains two verified RFC 3161 timestamps and three pending OpenTimestamps receipts.
+Its snapshot commit and verification limits are explicit; Bitcoin block
+confirmation and an author identity signature are not claimed.

@@ -1,0 +1,43 @@
+{
+  "format": "mayday.authorship-snapshot",
+  "format_version": 1,
+  "title": "aliro.mayday public source snapshot",
+  "credit": "Mayday / Ilia Arestov",
+  "named_original_rights_holder": "Ilia Arestov",
+  "brand": "Mayday",
+  "statement_scope": "Project-original Aliro additions, website and documentation only. Independent components retain their authors and licenses; no exclusive rights to their work are claimed.",
+  "repository": "https://github.com/ilia-ae/aliro-mayday",
+  "snapshot_commit": "24e218ef1ea83dafd47447e0393ddd5cd949ccaa",
+  "git_tree": "d479f425c68ccb9efedb6729bde139767127f694",
+  "prepared_at_utc": "2026-10-15T12:13:41Z",
+  "source_manifest": {
+    "path": "SOURCE_MANIFEST.json",
+    "sha256": "440a9fc907b83b48f3d47cfa737e9cdd3c06f96cfbcc576023a02a07e5a7e976",
+    "indexed_files": 2396
+  },
+  "identified_metadata": [
+    {
+      "path": "LICENSE",
+      "sha256": "5aef1152eaa0968841e30b965463000ec4130016a1bbd71927384b2674fc900f"
+    },
+    {
+      "path": "AUTHORS.md",
+      "sha256": "e803331c5bb6f04f1270004b3173eb9f789a6024b44532b230bd01078b24ebe8"
+    },
+    {
+      "path": "AUTHORS.ru.md",
+      "sha256": "b8e0e327b7a6b14b629dcce4e286cf3f8f1c6674b181814d393ab53b8cfdc7ed"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "3a415f74b75b5d682bb4c4e512caa02120a369183c938c95d6d68b45dc89249e"
+    },
+    {
+      "path": "CONTRIBUTING.ru.md",
+      "sha256": "52ac2e054611d78baa0e5b757e6463ff4df95f379b88e20ab75ec644cd6ead5c"
+    }
+  ],
+  "timestamp_limit": "The proof binds this statement and the specified snapshot to a time. It does not independently establish authorship, assign copyright, or certify licensing or Aliro compliance.",
+  "author_identity_signature": null,
+  "license": "Project-original Source-Available Commercial License v1.1; independent licenses apply to their respective material; commercial terms unchanged."
+}

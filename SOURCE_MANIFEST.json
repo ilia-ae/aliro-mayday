@@ -9400,7 +9400,7 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "ed3fcdfff0f2a5fcbec214698d8a009fa1437fb12bb318a54b21a67054dcacf5"
+      "sha256": "416673e9fdc9741539a5954cfa4e5f1d127e8e8e3d521a3355939fd43dca8970"
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
@@ -9408,7 +9408,7 @@
     },
     {
       "path": "scripts/verify-public-source.py",
-      "sha256": "149088e0030c9ecb33a0032b79ccd03d4775312e3f967d048e3821afd9a03b96"
+      "sha256": "86c95683e002c69be48541859115379a48e330edf12f75b242cf04a00155b650"
     },
     {
       "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
@@ -9500,7 +9500,7 @@
     },
     {
       "path": "docs/README.ru.md",
-      "sha256": "eeffa81a500a83a2eb7622c8fbda93b9ad0f2a1fa79e7f0694c63da264356663"
+      "sha256": "a6c594c524aa424af8cd94421331958fa6490d69044cccf50f959fabeac4e96d"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.ru.md",
@@ -9580,11 +9580,59 @@
     },
     {
       "path": "AUTHORS.md",
-      "sha256": "e803331c5bb6f04f1270004b3173eb9f789a6024b44532b230bd01078b24ebe8"
+      "sha256": "a9c975890471f7a5caafcd9fb07d443a7784e73f4180188fec4342d26c758b79"
     },
     {
       "path": "AUTHORS.ru.md",
-      "sha256": "b8e0e327b7a6b14b629dcce4e286cf3f8f1c6674b181814d393ab53b8cfdc7ed"
+      "sha256": "4725c2e7791f592a3f1caeb6c734b7a78d1fe6b7627a7eba5b953fedc2cb8e8b"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/README.md",
+      "sha256": "55f5655484618ecda3b97729702d1e27f7cfebb5b641563ffcc0f50011856ca1"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/README.ru.md",
+      "sha256": "b5d6691e683c8d5237d6e92feb01a49f92e737ee3d3811abb3df7c22edb972f3"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json",
+      "sha256": "9f51d5b701905d34c7a22910c80c2950451cfa3cf9402e8485947b90ff13af2c"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.alice",
+      "sha256": "5b99ef363d7755391f27df6998df5d5f992e71ff38fe554a71aaac84b5c5295f"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.bob",
+      "sha256": "5fcf0135a4f4977b1d5a8d6c7ba026911c0cb0799ad2c676cdb0026f0390f48b"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.finney",
+      "sha256": "5607d473aa9674f87395c910a88aa1c21eebb48a93c76e86864cab0fd88d4e72"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.tsr.digicert",
+      "sha256": "48209c6fb0de657d2bbef53ba032222d6c5a7ceca0425a31d102b8390ef30f58"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.tsr.freetsa",
+      "sha256": "619b82dd297562df940213eb955c4a04b560ac4935ed15270e525488937fd375"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.tsq",
+      "sha256": "7f08e6a6e2f35481908e4e307a495721bb96712ba434f342728ae3c154a0fc18"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/freetsa-ca.pem",
+      "sha256": "2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/freetsa-tsa.pem",
+      "sha256": "8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/verification.json",
+      "sha256": "991b2d86b65c3655d7cfdd14be5670aba8f30575798287f19e1bf5b70f58c9b9"
     }
   ],
   "omitted": [
