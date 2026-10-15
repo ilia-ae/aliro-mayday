@@ -8336,11 +8336,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "32482db52980298b0b04723a01ee6c62e894f06cfda5b46718dfb06bf5ed0a3d"
+      "sha256": "fe4b86c21546f77124475a1f205061ecc99143c4a960ef4f768b8737cc6e59ca"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "ea5030d89f45c352e358c297b7f7609ed161ecdad347fb766cf71943e299c7ff"
+      "sha256": "b6207db4e6e53e3277d1c452aed25f33ba8d162cd20a842e4d29eaf3cf06976c"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
