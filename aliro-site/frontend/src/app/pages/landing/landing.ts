@@ -181,12 +181,12 @@ interface ComparisonRow {
                     <figure class="hero-visual" aria-labelledby="demo-stand-caption">
                         <div class="demo-stand-stage">
                             <picture>
-                                <source [srcset]="'/images/demo-stand-' + demoStandView() + '.webp'" type="image/webp" />
+                                <source srcset="/images/demo-stand-top.webp" type="image/webp" />
                                 <img
-                                    [src]="'/images/demo-stand-' + demoStandView() + '.png'"
-                                    [width]="demoStandView() === 'top' ? 1086 : 1151"
-                                    [height]="demoStandView() === 'top' ? 1448 : 1366"
-                                    [alt]="'demo_stand.' + demoStandView() + '_alt' | translate"
+                                    src="/images/demo-stand-top.png"
+                                    width="1086"
+                                    height="1448"
+                                    [alt]="'demo_stand.top_alt' | translate"
                                     fetchpriority="high"
                                     decoding="async"
                                 />
@@ -194,17 +194,6 @@ interface ComparisonRow {
                         </div>
                         <figcaption id="demo-stand-caption">
                             <strong>{{ 'demo_stand.title' | translate }}</strong>
-                            <span class="demo-stand-credit">Mayday / Ilia Arestov</span>
-                            <div class="demo-stand-views" role="group" [attr.aria-label]="'demo_stand.views' | translate">
-                                @for (view of demoStandViews; track view) {
-                                    <button
-                                        type="button"
-                                        [class.is-active]="demoStandView() === view"
-                                        [attr.aria-pressed]="demoStandView() === view"
-                                        (click)="demoStandView.set(view)"
-                                    >{{ 'demo_stand.' + view | translate }}</button>
-                                }
-                            </div>
                             <p class="demo-stand-note">{{ 'demo_stand.note' | translate }}</p>
                             <a [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">{{ 'source.wiring' | translate }} →</a>
                         </figcaption>
@@ -1165,34 +1154,6 @@ interface ComparisonRow {
                 display: block;
                 color: var(--fg);
                 font-size: 0.9375rem;
-            }
-            .demo-stand-credit {
-                display: block;
-                margin-top: 0.125rem;
-            }
-            .demo-stand-views {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                margin-top: 0.875rem;
-            }
-            .demo-stand-views button {
-                min-height: 44px;
-                padding: 0.5rem 1rem;
-                border: 1px solid var(--border);
-                border-radius: var(--pill-radius);
-                background: transparent;
-                color: var(--fg-muted);
-            }
-            .demo-stand-views button:hover {
-                border-color: var(--accent);
-                color: var(--fg);
-            }
-            .demo-stand-views button.is-active {
-                background: var(--accent);
-                border-color: var(--accent);
-                color: var(--accent-ink);
             }
             .hero-visual .demo-stand-note {
                 margin: 0.75rem 0 0.375rem;
@@ -2494,8 +2455,6 @@ export class LandingPage {
     /* Mobile-menu overlay state. Toggled by the hamburger button in
        the topbar; closed on backdrop tap or any nav-link click. */
     readonly menuOpen = signal(false);
-    readonly demoStandViews = ['top', 'side'] as const;
-    readonly demoStandView = signal<'top' | 'side'>('top');
 
     /* Order matches the topbar jump-nav (page top→bottom). The leading
        "01"–"06" labels are pre-formatted strings — Angular templates

@@ -28,11 +28,7 @@
     },
     "demo_stand": {
         "title": "Aliro demo stand",
-        "views": "Demo stand photo views",
-        "top": "Top view",
-        "side": "Side view",
         "top_alt": "Top view of the Aliro demo stand: LEGO base, PN532 NFC reader, OLED display and eight-button module",
-        "side_alt": "Three-quarter side view of the Aliro demo stand showing the LEGO base, PN532 NFC reader, OLED display and button module",
         "note": "Retouched photos · IP hidden · external cables removed"
     },
     "steps": {

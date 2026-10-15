@@ -29,6 +29,6 @@ connections, pin labels and module configuration. The photos are not a pinout or
 evidence of Samsung Wallet compatibility, a physical lock actuator or Aliro
 certification.
 
-The website and READMEs share these assets. WebP copies reduce download size;
+The website uses the top view; both presentation views remain available here. WebP copies reduce download size;
 PNG files retain transparency for reuse. Original desk photographs, network
 addresses, device backups and firmware were not added to the public repository.
