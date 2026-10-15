@@ -8,11 +8,13 @@ source snapshot dated **13 October 2026**, with new Git history.
 
 ## Verified status
 
-- The owner confirmed the existing iPhone key opened and closed the reader on
-  14 October 2026 before updating. A verified private backup was made. Hardware
-  startup passed on 15 October: Matter, PN532 NFC and HTTP/WebSocket administration
-  are running with the stored reader configuration. Physical old-key iPhone
-  acceptance and Samsung Wallet validation through SmartThings remain pending.
+- On 15 October 2026, the owner confirmed the existing iPhone key works after
+  the application-only update. The current boot records three authenticated taps,
+  zero tap failures and both locked and unlocked Matter states. The verified
+  private backup, saved key and pairing were preserved. Matter, PN532 NFC and
+  HTTP/WebSocket administration are running. The installed HTTP startup/disconnect
+  fixes and acceptance report are in [PR #6](https://github.com/ilia-ae/aliro-mayday/pull/6),
+  awaiting merge. Samsung Wallet validation through SmartThings remains pending.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
   Fifty-eight firmware scenarios pass, including 22 actual provisioning callback
   cases and old iPhone records,
@@ -26,7 +28,8 @@ source snapshot dated **13 October 2026**, with new Git history.
   and enforced after reboot. [Policy and limits](docs/aliro-access-policy-2026-10-14.md)
   describe strict handling of unsupported schedules/extensions and missing clocks.
 - Existing Apple v9 framing, identity, pairing and independent iPhone keys are
-  preserved. Actual hardware regression remains required.
+  preserved. The current saved-key iPhone bench test passed; on-device revocation
+  and reboot tests using a separate test key remain required.
 - This is a development prototype. Aliro certification, Samsung/Google Wallet
   compatibility and a physical relay output are not established by this release.
   BLE/UWB access transport is not enabled in this firmware; Matter BLE

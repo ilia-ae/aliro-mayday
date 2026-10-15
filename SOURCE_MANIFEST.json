@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "806b5a4c921b79388c7f7356797c38268f299fdc182098a23a370e6918504887"
+      "sha256": "e349e4618ebd7ad97166bfdfbcc7d82cf34acd588dae7410acae9db53e0fb9c2"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -9388,7 +9388,7 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "1a7a4dfb9f5444ad51adbf484a6dd1fcbe030faa5df5fa2420c54446563dc6a2"
+      "sha256": "575c3c3a2719b7df236ff8bc6d41f2595c17e766b1a74452984886acc05fc624"
     },
     {
       "path": "aliro-esp32/README.ru.md",
