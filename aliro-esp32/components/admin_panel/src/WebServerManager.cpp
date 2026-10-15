@@ -50,6 +50,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
 #include <dirent.h>
 #include <esp_app_desc.h>
 #include <mutex>
@@ -2103,6 +2104,9 @@ std::string WebServerManager::getDeviceMetrics() {
   cJSON *status = cJSON_CreateObject();
   cJSON_AddStringToObject(status, "type", "metrics");
   cJSON_AddNumberToObject(status, "uptime", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<int64_t, std::micro>(esp_timer_get_time())).count());
+  const auto wall_time = std::time(nullptr);
+  cJSON_AddNumberToObject(status, "unix_time", static_cast<double>(wall_time));
+  cJSON_AddBoolToObject(status, "document_clock_ready", wall_time > 1577836800);
   cJSON_AddNumberToObject(status, "free_heap", esp_get_free_heap_size());
   cJSON_AddNumberToObject(status, "wifi_rssi", WiFi.RSSI());
   cJSON_AddBoolToObject(status, "nfc_connected", m_nfc_connected.load(std::memory_order_relaxed));

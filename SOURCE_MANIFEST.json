@@ -620,7 +620,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebServerManager.cpp",
-      "sha256": "50b53e0f1d78abb006afcbeaa432be4ecc6b114fe7ce4b55cba18ffe8de1d4d0"
+      "sha256": "887cc323f3f54cfd1a3eebc645aeda8101269b8cb9a68ee1e467c35cb241eeb3"
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebSocketLogSinker.cpp",
