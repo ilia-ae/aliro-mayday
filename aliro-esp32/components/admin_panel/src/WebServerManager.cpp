@@ -65,6 +65,19 @@
 const char *WebServerManager::TAG = "WebServerManager";
 static EventBus::Bus& event_bus = EventBus::Bus::instance();
 const size_t MAX_WS_PAYLOAD = 8192;
+namespace {
+constexpr size_t kWebSocketStackBytes = 4096;
+StackType_t* s_webSocketStack = nullptr;
+StaticTask_t s_webSocketTask;
+}
+
+bool WebServerManager::reserveWebSocketStack() {
+  if (!s_webSocketStack) {
+    s_webSocketStack = static_cast<StackType_t*>(heap_caps_malloc(
+        kWebSocketStackBytes, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
+  }
+  return s_webSocketStack != nullptr;
+}
 
 // ============================================================================
 // Helper Functions
@@ -255,9 +268,17 @@ void WebServerManager::begin() {
     return;
   }
 
-  if (xTaskCreate(ws_send_task, "ws_send_task", 4096, this, 5,
-                  &m_wsTaskHandle) != pdPASS) {
-    ESP_LOGE(TAG, "Failed to create WebSocket task");
+  if (s_webSocketStack) {
+    m_wsTaskHandle = xTaskCreateStatic(ws_send_task, "ws_send_task",
+        kWebSocketStackBytes, this, 5, s_webSocketStack, &s_webSocketTask);
+  } else if (xTaskCreate(ws_send_task, "ws_send_task", kWebSocketStackBytes, this, 5,
+                         &m_wsTaskHandle) != pdPASS) {
+    m_wsTaskHandle = nullptr;
+  }
+  if (!m_wsTaskHandle) {
+    ESP_LOGE(TAG, "Failed to create WebSocket task (internal free=%u largest=%u)",
+        (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+        (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
     vQueueDelete(m_wsQueue);
     m_wsQueue = nullptr;
     m_wsTaskHandle = nullptr;

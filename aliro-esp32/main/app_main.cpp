@@ -776,6 +776,8 @@ extern "C" void app_main()
         return;
     }
     ESP_LOGI(TAG, "[init] esp-matter started");
+    if (!WebServerManager::reserveWebSocketStack())
+        ESP_LOGW(TAG, "[admin] sender stack reservation failed; startup will retry dynamically");
     aliro::startSystemClock();
 
     // BasicInformation::ProductName / VendorName overridden via compile-
@@ -953,17 +955,21 @@ extern "C" void app_main()
                 // chip event loop, where the lock is acquired automatically.
                 auto* pending = new (std::nothrow) EventHKTap(std::move(tap));
                 if (!pending) {
+                    ESP_LOGE(TAG, "[nfc] unlock rejected: work allocation failed");
                     lockind::nfc_reading_failed();
                     return;
                 }
                 const auto scheduled = chip::DeviceLayer::PlatformMgr().ScheduleWork(
                     [](intptr_t arg) {
                         std::unique_ptr<EventHKTap> accepted(reinterpret_cast<EventHKTap*>(arg));
-                        if (!aliro::instance().isProvisioned() ||
-                            !s_reader_data_manager.authorizationCurrent(accepted->issuerId,
-                            accepted->endpointId, accepted->credentialRevision) ||
-                            !aliro_user_access_allowed(s_reader_data_manager.getReaderDataCopy(),
-                                accepted->issuerId, accepted->endpointId)) {
+                        const bool provisioned=aliro::instance().isProvisioned();
+                        const bool current=provisioned && s_reader_data_manager.authorizationCurrent(
+                            accepted->issuerId,accepted->endpointId,accepted->credentialRevision);
+                        const bool userAllowed=current && aliro_user_access_allowed(
+                            s_reader_data_manager.getReaderDataCopy(),accepted->issuerId,accepted->endpointId);
+                        if (!userAllowed) {
+                            ESP_LOGW(TAG, "[nfc] unlock rejected: reader=%d current-credential=%d user-access=%d",
+                                     provisioned,current,userAllowed);
                             lockind::nfc_reading_failed();
                             return;
                         }
@@ -971,6 +977,7 @@ extern "C" void app_main()
                         lockind::nfc_tap_unlock(/*endpointId=*/1);
                     }, reinterpret_cast<intptr_t>(pending));
                 if (scheduled != CHIP_NO_ERROR) {
+                    ESP_LOGE(TAG, "[nfc] unlock rejected: Matter work scheduling failed");
                     delete pending;
                     lockind::nfc_reading_failed();
                 }

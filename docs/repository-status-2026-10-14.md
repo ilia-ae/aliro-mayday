@@ -15,7 +15,9 @@ certification. A full private backup and an application-only update were verifie
 connected controller. On 15 October, Matter, PN532 NFC and HTTP/WebSocket
 administration started successfully with the saved reader configuration. Installer
 checks confirmed that data partitions, pairing, bootloader and partition table
-were not written. Physical old-key iPhone acceptance is pending; Fold7 is deferred.
+were not written. The owner subsequently reported a failed old-key iPhone tap after the update: NFC detected the phone, but no unlock followed. Acceptance is therefore blocked on diagnosis and a successful repeat test; Fold7 is deferred.
+
+A diagnostic bench build now reports failure phases without logging wallet identifiers or key material. It also reserves the WebSocket sender stack after Matter starts and before NFC workers, avoiding an observed administration startup failure when a document-bound credential is present. Supported host tests pass 15/15; the actual saved access document passes issuer signature, device binding and access policy checks on the host. These results do not establish a successful phone transaction. Do not remove the saved iPhone key or reset pairing to work around the failure.
 
 | Included source | Current role and verification |
 | --- | --- |
