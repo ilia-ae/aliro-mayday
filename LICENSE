@@ -8,6 +8,15 @@ our changes to those MIT sources) retain their original license. The PM3 Python
 package retains the MIT license declared in pyproject.toml. This notice does not
 withdraw permissions previously granted under an existing license.
 
+More specific file notices take precedence. These include the CC BY-SA 4.0
+objDiff.ts helpers, GPL-licensed Autoconf macros with their retained output
+exception, and CC0-marked material described in THIRD_PARTY_NOTICES.md. This
+license adds no commercial-use, attribution, sublicensing or contribution
+restrictions to separately licensed material. Section 6 concerns contributions
+to original code covered by this license; other files keep their own licenses.
+Copyright is not assigned by that contribution clause. This copyright license
+does not grant third-party patent, trademark or certification rights.
+
 aliro.mayday — Source-Available Commercial License v1
 Copyright © 2026 Ilia Arestov. All rights reserved.
 

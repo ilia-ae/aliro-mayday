@@ -1,9 +1,13 @@
 # aliro.mayday
 
+[![Aliro 1.0: experimental NFC subset](https://img.shields.io/badge/Aliro%201.0-experimental%20NFC-orange)](docs/aliro-access-policy-2026-10-14.md)
+[![Matter: DoorLock prototype](https://img.shields.io/badge/Matter-DoorLock%20prototype-2864a0)](aliro-esp32/README.md)
+[![ESP-IDF: tested v5.4.4](https://img.shields.io/badge/ESP--IDF-tested%20v5.4.4-00979D)](aliro-esp32/README.md)
+[![iPhone: existing key bench-tested](https://img.shields.io/badge/iPhone-existing%20key%20bench--tested-2e7d32)](docs/repository-status-2026-10-14.md)
 [![Source integrity and supported host tests](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml/badge.svg?branch=main)](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml?query=branch%3Amain)
 [![Hardware: ESP32-S3 + PN532](https://img.shields.io/badge/hardware-ESP32--S3%20%2B%20PN532-00979D)](docs/wiring.md)
 [![Status: prototype](https://img.shields.io/badge/status-prototype-orange)](docs/repository-status-2026-10-14.md)
-[![License: source-available](https://img.shields.io/badge/license-source--available-blue)](LICENSE)
+[![Licensing: mixed; see guide](https://img.shields.io/badge/licensing-mixed-blue)](docs/licensing.md)
 [![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](docs/README.md)
 
 [Русский](README.ru.md) · [Documentation index](docs/README.md) · [Wiring diagram](docs/wiring.md)
@@ -97,9 +101,13 @@ with source links and practical priorities for this project.
 ## License and provenance
 
 Original Aliro application code uses [source-available commercial terms](LICENSE).
-MIT and other third-party rights remain in force; see
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Public availability does not
-make the whole repository OSI Open Source.
+The [licensing guide](docs/licensing.md) explains permitted use and the mixed
+license scope. MIT/ISC/Apache/Boost/BSD rights remain in force. File-level
+exceptions include a CC BY-SA UI helper and GPL Autoconf macros with an output
+exception; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Public availability
+does not make the whole repository OSI Open Source. Commercial release review
+and clarification of original-code redistribution/contribution rights remain
+separate work.
 
 The CSA specification PDF is not redistributed. `SOURCE_MANIFEST.json` records
 the release's files and SHA-256 hashes. The source has been reviewed for personal

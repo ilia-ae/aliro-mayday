@@ -8,6 +8,7 @@ Russian translations use `.ru.md` or `README.ru.md`.
 | Topic | English | Russian translation |
 | --- | --- | --- |
 | Project, verified status, layout and licenses | [Overview](../README.md) | [Русский](../README.ru.md) |
+| License scopes, commercial use and third-party exceptions | [Licensing](licensing.md) | [Русский](licensing.ru.md) |
 | SDK setup, build, update and rollback | [Firmware guide](../aliro-esp32/README.md) | [Русский](../aliro-esp32/README.ru.md) |
 | GPIO, NFC SPI, display and buttons | [Wiring](wiring.md) | [Русский](wiring.ru.md) |
 | Document rights, revocation and persistence | [Access policy](aliro-access-policy-2026-10-14.md) | [Русский](aliro-access-policy-2026-10-14.ru.md) |

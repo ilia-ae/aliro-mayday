@@ -12,7 +12,7 @@
     },
     {
       "path": "LICENSE",
-      "sha256": "a98ea45b57b5be6a5b433111de019c7040bb7d63b7422a8716822b8f1fd1d1c7"
+      "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
     },
     {
       "path": "LICENSES/MIT.txt",
@@ -32,11 +32,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "549f92dc9f9881f6c5abc515b748e7344848180c935ddb96a1762bfa03c132c0"
+      "sha256": "14dbebe544e62e2e14fa15f7e8080d4cb2fb41607a67b1e8aed6170d32cc53c9"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "386c43d3782a25c39c2de59e5a2b629b132aa122b94d54ad0d757734edfea696"
+      "sha256": "09b1d6dda0decb9ef99d9d4cecf2caf0a65a13f95fcf46943318aa8e8e0592a6"
     },
     {
       "path": "TODO.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "7cdd680ae362ddf21d62486ee9623c19c423c78aa37fe46b5cafd444f7b9602b"
+      "sha256": "c3a1ec78133f17bb7470eb7c7f4232638fd4681250b7585ec74ef7fc59c86181"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -8272,7 +8272,7 @@
     },
     {
       "path": "aliro-site/LICENSE",
-      "sha256": "0370013b37fd31f4868f1ed5b7226848f141ae0f53e6e373933c8a59c6f29fe6"
+      "sha256": "839b74140e14dbce9a940b394eb74f40ffb8b3003df6c134b017414b3d1de3c0"
     },
     {
       "path": "aliro-site/README.md",
@@ -9388,11 +9388,11 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "3e08803bd1a04d5ffcc88382b23cbe3a5445f3e1e5346a0eded3806f48a10e37"
+      "sha256": "8d7fd73db9ef447c3eef7246cd525d1f0451c031b7a5845e403994c428d8c86a"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "87b91764574220066d3e228fd70cd4fba9d05345425577f796f33baaf9d9e79f"
+      "sha256": "68ccb6047b9ea629a7f263de7a85327399d3a04a9e00918659afc327c8fb3cec"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
@@ -9400,7 +9400,7 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "ecf86480ddb6ee1020452c9317e1215635eb5d980f0ca2da664225d8085f94bd"
+      "sha256": "3d34885900217a7a8de3ff86f7135cf8c991a41a43abfde587f370cecbdbb059"
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
@@ -9408,7 +9408,7 @@
     },
     {
       "path": "scripts/verify-public-source.py",
-      "sha256": "3d77b40f938ba2588a0ae37a284fb3708c15ad3bfea3371ef7e7685699bead6d"
+      "sha256": "e59e67a97556c78bf762f2276a1938dd8e7edc78106fc4c75232fcd146b2df2e"
     },
     {
       "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
@@ -9500,7 +9500,7 @@
     },
     {
       "path": "docs/README.ru.md",
-      "sha256": "71dbb6aa4a5b5ff6105614fe86b17119f2f360c96f4d2ee173ed2dbba515c9c8"
+      "sha256": "2773469008e5f6347f2d8ce77201b535efb3477214df40f2df3a8eb9c1a40e39"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.ru.md",
@@ -9537,6 +9537,30 @@
     {
       "path": "aliro-site/frontend/src/site-updates.ts",
       "sha256": "318dffb434c21a826978e33b419d77092bad2f77dea7ad1f783c43f901e4dd40"
+    },
+    {
+      "path": "LICENSES/CC-BY-SA-4.0.txt",
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+    },
+    {
+      "path": "LICENSES/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "LICENSES/GPL-3.0.txt",
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+    },
+    {
+      "path": "docs/licensing-inventory-2026-10-15.json",
+      "sha256": "eb36b68f9d21fd2802f29da7e7dbb0162ff04b5dcf7e2277a0ff9827acf13753"
+    },
+    {
+      "path": "docs/licensing.md",
+      "sha256": "a504bd5c06362e30b5037dae6e3b5e9f37e2851c868389bb2c47d79968ea045e"
+    },
+    {
+      "path": "docs/licensing.ru.md",
+      "sha256": "16184b11441f920453bdcb1f1496e21470bf8a3c07201f448381833560f99391"
     }
   ],
   "omitted": [

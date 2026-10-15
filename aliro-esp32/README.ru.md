@@ -1,9 +1,13 @@
 # Прошивка Aliro NFC
 
+[![Aliro 1.0: experimental NFC subset](https://img.shields.io/badge/Aliro%201.0-experimental%20NFC-orange)](../docs/aliro-access-policy-2026-10-14.ru.md)
+[![Matter: DoorLock prototype](https://img.shields.io/badge/Matter-DoorLock%20prototype-2864a0)](README.ru.md)
+[![ESP-IDF: tested v5.4.4](https://img.shields.io/badge/ESP--IDF-tested%20v5.4.4-00979D)](README.ru.md)
+[![iPhone: existing key bench-tested](https://img.shields.io/badge/iPhone-existing%20key%20bench--tested-2e7d32)](../docs/repository-status-2026-10-14.ru.md)
 [![Source integrity and supported host tests](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml/badge.svg?branch=main)](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml?query=branch%3Amain)
 [![Hardware: ESP32-S3 + PN532](https://img.shields.io/badge/hardware-ESP32--S3%20%2B%20PN532-00979D)](../docs/wiring.ru.md)
 [![Status: prototype](https://img.shields.io/badge/status-prototype-orange)](../docs/repository-status-2026-10-14.ru.md)
-[![License: source-available](https://img.shields.io/badge/license-source--available-blue)](../LICENSE)
+[![Licensing: mixed; see guide](https://img.shields.io/badge/licensing-mixed-blue)](../docs/licensing.ru.md)
 [![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](../docs/README.ru.md)
 
 [English](README.md) · [Оглавление документации](../docs/README.ru.md)
@@ -16,6 +20,8 @@ DoorLock, хранением в NVS и локальным управлением
 Поддерживаемый набор тестов проходит. Выдача Samsung Wallet, отзыв на устройстве
 с отдельным тестовым ключом, физический привод и сертификация Aliro требуют
 отдельного подтверждения.
+
+Лицензирование смешанное: см. [области и сторонние исключения](../docs/licensing.ru.md).
 
 ## Текущая реализация
 

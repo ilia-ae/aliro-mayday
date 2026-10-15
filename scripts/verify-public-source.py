@@ -18,6 +18,7 @@ CURRENT_DOCS = (
     "README.md", "README.ru.md", "THIRD_PARTY_NOTICES.md", "docs/README.md",
     "docs/repository-status-2026-10-14.md", "docs/repository-status-2026-10-14.ru.md",
     "docs/README.ru.md", "aliro-site/README.md", "aliro-site/README.ru.md",
+    "docs/licensing.md", "docs/licensing.ru.md",
     "docs/wiring.ru.md", "docs/wiring.md",
     "docs/samsung-bench-preparation-2026-10-14.ru.md",
     "docs/samsung-bench-preparation-2026-10-14.md",

@@ -1,0 +1,270 @@
+{
+  "format": 1,
+  "reviewed_date": "2026-10-15",
+  "scope": "Tracked source license texts and selected file-level exceptions; not a complete dependency SBOM or legal clearance.",
+  "primary_license": "Project-original code: Source-Available Commercial License v1; independent file/component grants take precedence.",
+  "legal_texts": [
+    {
+      "path": "LICENSE",
+      "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
+    },
+    {
+      "path": "LICENSES/CC-BY-SA-4.0.txt",
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+    },
+    {
+      "path": "LICENSES/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "LICENSES/GPL-3.0.txt",
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+    },
+    {
+      "path": "LICENSES/MIT.txt",
+      "sha256": "3a52f0a9e14beec872b9dfeb8e50fc1262d63bc22ea509180f5a477287c2a740"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/LICENSE",
+      "sha256": "572ed81c2ea7ee2c256bd8368ea21659b57f2d754cd3643ea83d0066657fcbca"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/LICENSE",
+      "sha256": "655fcdbeae1d8b0615a4ec79a12fd2dcdf85fd38d386a07dc82a9b4537f3f2ac"
+    },
+    {
+      "path": "aliro-esp32/components/admin_panel/LICENSE",
+      "sha256": "33e8541493360813ed7a42d55be890c0cc0a3e790c8b6e3de2d4f6660791fb17"
+    },
+    {
+      "path": "aliro-esp32/components/cbor/LICENSE",
+      "sha256": "3c6ba0b5bfa7830505301ffb336a17b0748e0d61c4d34216e9dc98f10e40395e"
+    },
+    {
+      "path": "aliro-esp32/components/cbor/tinycbor/LICENSE",
+      "sha256": "3c6ba0b5bfa7830505301ffb336a17b0748e0d61c4d34216e9dc98f10e40395e"
+    },
+    {
+      "path": "aliro-esp32/components/esp-serial-flasher/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/LICENSE",
+      "sha256": "9bf2320ef2bc3cdd08890644f6f947b010b69dee344c6cbd05cdd682d54c8396"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/LICENSE",
+      "sha256": "70c1a87e6b836da33e48442bcb81be63fdcd0ad3525442e60bc0376821cd7e3d"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/detools/HDiffPatch/LICENSE",
+      "sha256": "e9745e1e16afe154eb09521af7835e8a71425b1e7b44d287fd36be73a622a9b3"
+    },
+    {
+      "path": "aliro-esp32/components/esp_diag_data_store/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_diagnostics/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_encrypted_img/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_insights/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_rcp_update/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_secure_cert_mgr/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/esp_secure_cert_mgr/tools/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/event_bus/LICENSE",
+      "sha256": "33e8541493360813ed7a42d55be890c0cc0a3e790c8b6e3de2d4f6660791fb17"
+    },
+    {
+      "path": "aliro-esp32/components/jsmn/LICENSE",
+      "sha256": "258fff48e1ca3fd8d1888ae616c7e97d8b526db6138df4564c7cfa1235c50715"
+    },
+    {
+      "path": "aliro-esp32/components/json_generator/LICENSE",
+      "sha256": "f0f612d1627194ddd07c8b5b238a514ae9794632e5470c00f16237def7dc2246"
+    },
+    {
+      "path": "aliro-esp32/components/json_parser/LICENSE",
+      "sha256": "f0f612d1627194ddd07c8b5b238a514ae9794632e5470c00f16237def7dc2246"
+    },
+    {
+      "path": "aliro-esp32/components/led_strip/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/libsodium/LICENSE",
+      "sha256": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683"
+    },
+    {
+      "path": "aliro-esp32/components/libsodium/libsodium/LICENSE",
+      "sha256": "508a76d186356c0dd807a670ef510964f8724557024796a2c426c6c0e19ab683"
+    },
+    {
+      "path": "aliro-esp32/components/loggable/LICENSE",
+      "sha256": "cff520cd39ab646423bbe2e6f73f867bc0591e2a04be511487e768c8854de661"
+    },
+    {
+      "path": "aliro-esp32/components/loggable_espidf/LICENSE",
+      "sha256": "32f6ad9efb2c317e903f93d44a3cc22f83fb3229a48d87d5c8cf0281d5b0e1cf"
+    },
+    {
+      "path": "aliro-esp32/components/mdns/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "aliro-esp32/components/msgpack-c/upstream/COPYING",
+      "sha256": "664550b43996452a5a2c7471bb0ff77185a58c69ccafa60f983dc4c162e1ee22"
+    },
+    {
+      "path": "aliro-esp32/components/msgpack-c/upstream/LICENSE_1_0.txt",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+    },
+    {
+      "path": "aliro-esp32/components/pn532_cxx/LICENSE",
+      "sha256": "32f6ad9efb2c317e903f93d44a3cc22f83fb3229a48d87d5c8cf0281d5b0e1cf"
+    },
+    {
+      "path": "aliro-esp32/components/pn532_hal/LICENSE",
+      "sha256": "32f6ad9efb2c317e903f93d44a3cc22f83fb3229a48d87d5c8cf0281d5b0e1cf"
+    },
+    {
+      "path": "aliro-esp32/components/rmaker_common/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "aliro-esp32/data/LICENSE",
+      "sha256": "33e8541493360813ed7a42d55be890c0cc0a3e790c8b6e3de2d4f6660791fb17"
+    },
+    {
+      "path": "aliro-esp32/main/LICENSE.upstream",
+      "sha256": "33e8541493360813ed7a42d55be890c0cc0a3e790c8b6e3de2d4f6660791fb17"
+    },
+    {
+      "path": "aliro-site/LICENSE",
+      "sha256": "839b74140e14dbce9a940b394eb74f40ffb8b3003df6c134b017414b3d1de3c0"
+    },
+    {
+      "path": "homekey-esp32/LICENSE",
+      "sha256": "33e8541493360813ed7a42d55be890c0cc0a3e790c8b6e3de2d4f6660791fb17"
+    }
+  ],
+  "added_license_sources": [
+    {
+      "path": "LICENSES/CC-BY-SA-4.0.txt",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
+      "formatting_note": "Only the final empty line was normalized; license wording is unchanged."
+    },
+    {
+      "path": "LICENSES/CC0-1.0.txt",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt"
+    },
+    {
+      "path": "LICENSES/GPL-3.0.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/GPL-3.0-or-later.txt",
+      "note": "Canonical GNU endpoint returned HTTP 403; unchanged text downloaded from official SPDX repository."
+    }
+  ],
+  "key_exceptions": [
+    {
+      "license": "CC-BY-SA-4.0",
+      "files": [
+        {
+          "path": "aliro-esp32/data/src/lib/utils/objDiff.ts",
+          "sha256": "332b797abf3337bb3f8295908ab7dcde3300ee83d88aaa6ab22642de6b4380f6"
+        },
+        {
+          "path": "homekey-esp32/data/src/lib/utils/objDiff.ts",
+          "sha256": "332b797abf3337bb3f8295908ab7dcde3300ee83d88aaa6ab22642de6b4380f6"
+        }
+      ],
+      "attribution": "Gabriel Gartz; TypeScript refactor is stated in existing file headers.",
+      "source": "https://stackoverflow.com/a/8432188",
+      "verification_api": "https://api.stackexchange.com/2.3/questions/8431651/answers?site=stackoverflow&filter=withbody&pagesize=100",
+      "source_last_edited_utc": "2019-02-15T19:39:42Z",
+      "changes_in_this_review": "None to these source files."
+    },
+    {
+      "license": "GPL-3.0-or-later with the configure-output exception retained in each macro header",
+      "files": [
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/m4/ax_check_link_flag.m4",
+          "sha256": "21995c3ebbadfbd8b6843e09ebfeea507b06f026c8c0f2fcc1f38a7cc346621e"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/m4/ax_pthread.m4",
+          "sha256": "4fa6c352f1fb33147947ead61f9b12537f3d146ce068c003552d3b9582a7a406"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/m4/ax_tls.m4",
+          "sha256": "fd2743d3fa814513cd9cf13660fb2eb8196699c093974676b2718001a509b06f"
+        }
+      ],
+      "changes_in_this_review": "None to these source files."
+    },
+    {
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-core.c",
+          "sha256": "0a386f401f14c2417f9ab6cc03bad124f4c1c035d4aa1396e8349bb299f38324"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-core.h",
+          "sha256": "7dc215ebf08867f67794d52c86d790b3ea5c840cf721ebeff262b206f3d4f4db"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-encoding.c",
+          "sha256": "d1743937f1e5549667fe2d6d65d1c35636b462c95c368fa0900d2e0c00ee223a"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-avx2.c",
+          "sha256": "57c29c603f97fcd367b60cf45ee9ea35fb5c231a5ea4598442fd540f8ecf80ba"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-avx512f.c",
+          "sha256": "0d0b927d51d74a0c757c531eb162f3490dc5517cae8f14018f53ab00c6b41c5a"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ref.c",
+          "sha256": "fad82b77d79de84a63fbea63bd3a6d747e2968bec3fba90e4bd395f834003b64"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ssse3.c",
+          "sha256": "8e539874a0e9a9337ffbb83b2ef2e9e6ee3ff40f47f44080859edcf220342d50"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2.c",
+          "sha256": "b91797fc040a6531ac6fd4220226c095d8855b22aa397875165b27c4b4945163"
+        },
+        {
+          "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/crypto_pwhash/argon2/argon2.h",
+          "sha256": "21e275c64fa57b134e635fb1b96619733bf0bfbc6d2c3d1e6553f56d8bb8e52d"
+        }
+      ],
+      "changes_in_this_review": "None to these source files."
+    }
+  ],
+  "open_release_questions": [
+    "Artifact-wide dependencies, attribution and UI ShareAlike scope.",
+    "Explicit modification/redistribution permissions for project-original code.",
+    "Rights to commercially sublicense future third-party contributions.",
+    "Third-party standards, patent, trademark and certification rights."
+  ]
+}
