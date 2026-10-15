@@ -189,12 +189,9 @@ void WebServerManager::begin() {
   httpd_ssl_config_t ssl_config = HTTPD_SSL_CONFIG_DEFAULT();
   ssl_config.httpd.max_uri_handlers = 22;
   ssl_config.httpd.max_open_sockets = 4;
-  // 8 K. Was 8 K originally — left alone after experiments at 12 K / 16 K
-  // both caused mDNS task creation to fail at boot due to internal-SRAM
-  // pressure (only ~32 KB internal free when WebServer starts). The
-  // httpd_req_delete edge-case crash needs to be tackled differently
-  // (audit handlers for deep stack frames) instead of throwing more
-  // stack at it.
+  // Keep the HTTP stack at 8 KiB: larger stacks starve radio/mDNS tasks.
+  // Request cleanup also uses stack space; sdkconfig.defaults bounds its
+  // purge buffer at 512 bytes rather than consuming this entire stack.
   ssl_config.httpd.stack_size = 8192;
   // OTA upload tuning: default httpd recv/send timeouts are 5 s. With
   // an OTA upload that lasts ~20 s the recv timeout fires repeatedly

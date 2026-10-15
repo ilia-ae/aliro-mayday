@@ -222,7 +222,10 @@ CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
 CONFIG_HTTPD_WS_SUPPORT=y
 CONFIG_HTTPD_MAX_REQ_HDR_LEN=1024
 CONFIG_HTTPD_MAX_URI_LEN=1024
-CONFIG_HTTPD_PURGE_BUF_LEN=8192
+# Request cleanup allocates this buffer on the 8 KiB HTTP task stack,
+# including WebSocket close handling. Keep room for the parser and lwIP/TLS.
+# This is not the OTA upload buffer; unread bodies are discarded in a loop.
+CONFIG_HTTPD_PURGE_BUF_LEN=512
 
 # Arduino-ESP32 as Component — used by admin_panel WebServerManager for
 # WiFi/Ethernet/NeoPixel APIs. We disable Arduino's autostart so our

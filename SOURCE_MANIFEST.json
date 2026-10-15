@@ -620,7 +620,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebServerManager.cpp",
-      "sha256": "3d200cc550f3ce360bb1f250bc7f9a76f5d003286dc3e628f4ea8abeb641cdef"
+      "sha256": "50b53e0f1d78abb006afcbeaa432be4ecc6b114fe7ce4b55cba18ffe8de1d4d0"
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebSocketLogSinker.cpp",
@@ -8240,7 +8240,7 @@
     },
     {
       "path": "aliro-esp32/sdkconfig.defaults",
-      "sha256": "791aee45696aa9100bc5a3d3890e56fdb49f7db3cce618a46b9a289fe2862db9"
+      "sha256": "2b7e92b0ae8659b70d96caeaf80e2b7bbf7b7acabc222e7fffc0d8750cc12d80"
     },
     {
       "path": "aliro-esp32/tests/README.md",
@@ -9404,7 +9404,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "5caab41902a58cdf59b311e425251398fcd722de54aaaf8d03ef04f0091e7a1b"
+      "sha256": "7d4b8babfb3c384f49ac8e7fa77a08c3e4ee73094855d4e094b7659b78b22ba9"
     },
     {
       "path": "scripts/verify-public-source.py",
@@ -9512,7 +9512,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.ru.md",
-      "sha256": "96590ccb9b98c3b5dd5207b06d1afa3db49391a732bee1169a324ed1ff23d1f2"
+      "sha256": "75f130c8dcca73e13e2df2d5eb57b9b9373a0b8c09d5328f069b8f775606dcf0"
     },
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",
