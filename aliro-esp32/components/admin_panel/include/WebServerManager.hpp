@@ -57,6 +57,7 @@ public:
   ~WebServerManager();
 
   void begin();
+  bool isRunning() const { return m_server && m_wsQueue && m_wsTaskHandle; }
 
   /**
    * @brief Stops the web server and cleans up all resources.

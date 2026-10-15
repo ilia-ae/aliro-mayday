@@ -102,7 +102,8 @@ void NfcManager::initAuthPrecompute() {
     xQueueSend(m_authCtxFreeQueue, &item, 0);
   }
 
-  BaseType_t ok = xTaskCreatePinnedToCore(authPrecomputeTaskEntry, "hk_auth_precompute", 4096, this, 3, &m_authPrecomputeTaskHandle, 0);
+  // The updated DDK/PSA session constructor overflows the former 4 KiB stack.
+  BaseType_t ok = xTaskCreatePinnedToCore(authPrecomputeTaskEntry, "hk_auth_precompute", 8192, this, 3, &m_authPrecomputeTaskHandle, 0);
   if (ok != pdPASS || !m_authPrecomputeTaskHandle) {
     ESP_LOGE(TAG, "Failed to start auth precompute task.");
     m_authPrecomputeTaskHandle = nullptr;
@@ -294,7 +295,12 @@ bool NfcManager::begin() {
         ESP_LOGI(TAG, "Auth precompute disabled.");
     }
     ESP_LOGI(TAG, "Starting NFC polling task...");
-    xTaskCreatePinnedToCore(pollingTaskEntry, "nfc_poll_task", 8192, this, 2, &m_pollingTaskHandle, 1);
+    // Leave room for document verification and policy callbacks on real wallets.
+    const auto started = xTaskCreatePinnedToCore(pollingTaskEntry, "nfc_poll_task", 12288, this, 2, &m_pollingTaskHandle, 1);
+    if (started != pdPASS || !m_pollingTaskHandle) {
+        ESP_LOGE(TAG, "Failed to start NFC polling task.");
+        return false;
+    }
     return true;
 }
 

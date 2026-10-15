@@ -102,7 +102,8 @@ static const char *TAG = "aliro-esp32";
 // Holds the constructed-but-not-yet-begin'd WebServerManager. Populated in
 // app_main, started on first kInterfaceIpAddressChanged.
 static std::unique_ptr<WebServerManager> s_web_server_pending;
-static bool s_web_server_started = false;
+static std::atomic<WebServerManager*> s_web_server_for_start{nullptr};
+static std::atomic<bool> s_web_server_started{false};
 
 // Friendly name resolved by mDNS (`http://aliro.local/`). DHCP hostname
 // is set to the same string so consumer routers can also list us as
@@ -156,11 +157,28 @@ static void aliro_admin_publish_mdns()
     s_mdns_published = true;
 }
 
+void aliro_admin_kick_webserver_if_needed();
+
+static void retry_admin_start_later()
+{
+    // IP-up can arrive before app_main returns its 16 KiB stack to the heap.
+    // Retry on the existing timer task instead of leaving a failed HTTP start
+    // permanently marked as running or blocking the Matter event loop.
+    static esp_timer_handle_t timer = [] {
+        esp_timer_handle_t result = nullptr;
+        esp_timer_create_args_t args{};
+        args.callback = [](void*) { aliro_admin_kick_webserver_if_needed(); };
+        args.name = "admin_retry";
+        return esp_timer_create(&args, &result) == ESP_OK ? result : nullptr;
+    }();
+    if (timer) esp_timer_start_once(timer, 1000000);
+}
+
 void aliro_admin_kick_webserver_if_needed()
 {
-    if (s_web_server_started) return;
-    if (!s_web_server_pending) return;
-    s_web_server_started = true; // set early to prevent double-dispatch
+    auto * pending = s_web_server_for_start.load();
+    if (!pending) return;
+    if (s_web_server_started.exchange(true)) return; // coalesce queued starts
 
     // Dispatch WebServerManager::begin() off the Matter device-layer event
     // loop. begin() runs httpd_start + NVS reads + WebSocket handler
@@ -169,7 +187,7 @@ void aliro_admin_kick_webserver_if_needed()
     // session right after the first DHCP lease (because Matter's event
     // loop was blocked). ScheduleWork() runs on the Matter thread but
     // with the event loop free to process incoming packets between calls.
-    chip::DeviceLayer::PlatformMgr().ScheduleWork(
+    const auto scheduled = chip::DeviceLayer::PlatformMgr().ScheduleWork(
         [](intptr_t arg) {
             auto * ws = reinterpret_cast<WebServerManager *>(arg);
             aliro_admin_publish_mdns();
@@ -177,9 +195,18 @@ void aliro_admin_kick_webserver_if_needed()
             ESP_LOGI("aliro-esp32", "[admin] starting WebServerManager "
                      "(free internal heap: %u)", (unsigned)free_internal);
             ws->begin();
-            ESP_LOGI("aliro-esp32", "[admin] WebServerManager up on :80");
+            if (ws->isRunning()) {
+                ESP_LOGI("aliro-esp32", "[admin] WebServerManager up on :80");
+            } else {
+                s_web_server_started.store(false);
+                retry_admin_start_later();
+            }
         },
-        reinterpret_cast<intptr_t>(s_web_server_pending.get()));
+        reinterpret_cast<intptr_t>(pending));
+    if (scheduled != CHIP_NO_ERROR) {
+        s_web_server_started.store(false);
+        retry_admin_start_later();
+    }
 }
 
 // Pretty names for `attribute::callback_type_t` so logs are readable.
@@ -739,6 +766,9 @@ extern "C" void app_main()
     // and the next iPhone tap fails auth until Apple Home re-runs SetCredential.
     replay_aliro_credentials_to_aliro_delegate();
 
+    ESP_LOGI(TAG, "[init] internal heap before Matter: free=%u largest=%u",
+        static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT)),
+        static_cast<unsigned>(heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT)));
     err = esp_matter::start(app_event_cb);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_matter::start failed: 0x%x", err);
@@ -969,6 +999,7 @@ extern "C" void app_main()
         // is past and ~30+ KB of internal RAM is free.
         s_web_server_pending = std::make_unique<WebServerManager>(
             *s_config_manager, s_reader_data_manager);
+        s_web_server_for_start.store(s_web_server_pending.get());
         ESP_LOGI(TAG, "[init] admin_panel constructed (begin() deferred to "
                       "kInterfaceIpAddressChanged when heap settles)");
     }
@@ -996,4 +1027,13 @@ extern "C" void app_main()
     ESP_LOGI(TAG, "============================================================");
     ESP_LOGI(TAG, "READY — BLE advertising for commissioning");
     ESP_LOGI(TAG, "============================================================");
+
+    // DHCP may finish before the admin object exists; that IP-up event was
+    // intentionally ignored. Catch up once construction is complete. The
+    // atomic scheduling guard coalesces this with a concurrent IP-up event.
+    auto * sta = esp_netif_get_handle_from_ifkey("WIFI_STA_DEF");
+    esp_netif_ip_info_t ip_info{};
+    if (sta && esp_netif_get_ip_info(sta, &ip_info) == ESP_OK && ip_info.ip.addr) {
+        aliro_admin_kick_webserver_if_needed();
+    }
 }

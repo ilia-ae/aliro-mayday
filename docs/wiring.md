@@ -1,97 +1,97 @@
-# Подключение ESP32-S3 + PN532
+# ESP32-S3 + PN532 wiring
 
-[English](wiring.en.md) · [Документация](README.md)
+[Русский](wiring.ru.md) · [Documentation](README.md)
 
-Это схема **текущей прошивки `aliro-esp32/`**. Подписи `GPIO` — номера сигналов
-ESP32, а не порядковые номера контактов на гребёнке. Найди контакт по маркировке
-на своей плате. Расположение разъёмов на рисунке условное.
+This diagram describes the **current `aliro-esp32/` firmware**. `GPIO` labels
+are ESP32 signal numbers, not positions on a pin header. Find each contact by
+the marking on your board. Connector positions in the drawing are schematic.
 
-![Схема подключения](images/aliro-wiring.ru.svg)
+![Wiring diagram](images/aliro-wiring.en.svg)
 
-## NFC: четыре сигнала SPI и питание
+## NFC: four SPI signals and power
 
-| Контакт ESP32-S3 | Контакт PN532 | Назначение |
+| ESP32-S3 contact | PN532 contact | Purpose |
 | --- | --- | --- |
-| `GPIO10` | `NSS` / `SS` / `CS` | Выбор NFC-модуля |
-| `GPIO12` | `SCK` / `SCLK` | Тактовый сигнал SPI |
-| `GPIO13` | `MISO` | Данные от PN532 к ESP32 |
-| `GPIO11` | `MOSI` | Данные от ESP32 к PN532 |
-| `GND` | `GND` | Общая земля |
-| `3V3`, **если модуль допускает питание 3,3 В** | `VCC` | Питание NFC-модуля |
-| Не подключать | `IRQ` | Текущий драйвер не использует этот вывод |
-| Не подключать к GPIO | `RST` / `RSTPDN` | Текущая прошивка не управляет сбросом PN532 |
+| `GPIO10` | `NSS` / `SS` / `CS` | NFC module select |
+| `GPIO12` | `SCK` / `SCLK` | SPI clock |
+| `GPIO13` | `MISO` | Data from PN532 to ESP32 |
+| `GPIO11` | `MOSI` | Data from ESP32 to PN532 |
+| `GND` | `GND` | Common ground |
+| `3V3`, **if the module accepts a 3.3 V supply** | `VCC` | NFC module supply |
+| Leave disconnected | `IRQ` | The current driver does not use this pin |
+| Do not connect to an ESP32 GPIO | `RST` / `RSTPDN` | Firmware does not drive PN532 reset |
 
-Сигналы SPI должны иметь уровни **3,3 В**. Напряжение `VCC` зависит от конкретной
-платы PN532: если её документация требует 5 В, подключай к подходящему источнику
-5 В только питание, сохраняя сигналы совместимыми с ESP32. Обозначение `5V`
-на модуле не означает допустимость 5 В на входах ESP32. Если `RSTPDN` требует
-внешней подтяжки для работы модуля, используй схему его производителя.
+SPI signal levels must be **3.3 V**. `VCC` depends on the actual PN532 breakout:
+if its documentation requires 5 V, connect only its supply to a suitable 5 V
+source and keep the signals compatible with ESP32. A `5V` marking on a module
+does not permit 5 V on ESP32 inputs. If `RSTPDN` requires an external pull-up
+to operate, follow the module manufacturer's circuit.
 
-Переведи PN532 в **SPI**. Для V3-плат, описанных в прежних материалах этого
-репозитория, это `SET0=H`, `SET1=L`; для другой ревизии сверь положения
-переключателей с её инструкцией. Не определяй режим по цвету или форме платы.
+Select **SPI** on the PN532. The V3 boards described in this repository's
+earlier material use `SET0=H`, `SET1=L`; check the instructions for any other
+revision. Do not infer the mode from the board's colour or shape.
 
-## Дисплей и кнопки: общая шина I²C
+## Display and buttons: shared I²C bus
 
-Текущая сборка включает M5Stack Unit ByteButton и Unit OLED 1.3″ SH1107.
-Их можно подключить параллельно к одним четырём линиям PORT.A: адреса разные.
-Это подключение относится именно к указанным M5Stack-модулям.
+The current build enables M5Stack Unit ByteButton and Unit OLED 1.3″ SH1107.
+Both can share the same four PORT.A lines because their addresses differ.
+This wiring applies specifically to those M5Stack modules.
 
-| Контакт ESP32-S3 | PORT.A обоих модулей | Цвет штатного кабеля |
+| ESP32-S3 contact | PORT.A on both modules | Supplied cable colour |
 | --- | --- | --- |
-| `GPIO8` | `SDA` | Жёлтый |
-| `GPIO9` | `SCL` | Белый |
-| `5V` от подходящего источника питания платы | `5V` | Красный |
-| `GND` | `GND` | Чёрный |
+| `GPIO8` | `SDA` | Yellow |
+| `GPIO9` | `SCL` | White |
+| Suitable board supply `5V` | `5V` | Red |
+| `GND` | `GND` | Black |
 
-ByteButton имеет адрес `0x47`, OLED — `0x3C`. Питание модулей и цвета кабеля
-указаны в документации [ByteButton](https://docs.m5stack.com/en/unit/Unit_ByteButton)
-и [OLED](https://docs.m5stack.com/en/unit/Unit_OLED). Порядок контактов определяй
-по подписям на разъёме: рисунок не задаёт, с какой стороны смотреть на штекер.
-Для других I²C-плат проверь их питание и напряжение подтяжек SDA/SCL.
+ByteButton uses address `0x47`; OLED uses `0x3C`. Supply and cable colours
+follow the [ByteButton](https://docs.m5stack.com/en/unit/Unit_ByteButton)
+and [OLED](https://docs.m5stack.com/en/unit/Unit_OLED) documentation. Read the
+connector markings: the drawing does not specify which side of a plug to view.
+For other I²C boards, verify their supply and SDA/SCL pull-up voltage.
 
-**GPIO9 занят SCL. Не подключай к нему сброс PN532.** В старом
-[hardware-reference.md](hardware-reference.md) эти линии были смешаны;
-актуальное назначение задаёт эта инструкция и код текущей прошивки.
+**GPIO9 is SCL. Do not connect PN532 reset to it.** The old
+[hardware-reference.md](hardware-reference.md) mixed these assignments;
+this guide and the current firmware are authoritative for this build.
 
-## Индикация и физический замок
+## Indicators and the physical lock
 
-- `GPIO48` используется для встроенного адресного RGB-светодиода WS2812
-  DevKitC-класса. Он показывает состояние; это не выход управления замком.
-  У другой ревизии платы встроенный LED может находиться на другом GPIO.
-- **Пин реле/электрозамка пока не назначен.** Обработчики меняют состояние
-  Matter DoorLock и индикацию; физический драйвер замка не реализован.
-  Пока не подключай `IN` реле к произвольному GPIO из этой схемы.
-- GPIO питания, входы загрузки и USB не являются свободными выходами замка.
-  GPIO14 в этой прошивке не используется как IRQ PN532.
+- `GPIO48` drives the built-in WS2812 RGB indicator on the DevKitC-class target.
+  It indicates state; it is not an actuator output. Another board revision may
+  place its built-in LED on a different GPIO.
+- **No relay/electric-lock pin is assigned yet.** The handlers update Matter
+  DoorLock state and indicators; a physical actuator driver is not implemented.
+  Do not connect a relay's `IN` to an arbitrary GPIO in this diagram.
+- Power, boot and USB pins are not spare actuator outputs. GPIO14 is not used
+  as a PN532 IRQ by this firmware.
 
-## Как собрать без изменения работающей прошивки
+## Assemble without changing the working firmware
 
-1. Отключи питание перед перестановкой проводов. Если текущий стенд уже работает,
-   сначала сопоставь существующие провода с таблицей и запиши подключения.
-2. Соедини общую землю, питание совместимого PN532 и четыре линии SPI;
-   проверь режим SPI. Подключение IRQ к ESP32 не требуется.
-3. При использовании указанных M5Stack-модулей подключи общую I²C-шину.
-   Не соединяй питание PN532 с линией 5 В на основании цвета кабеля.
-4. Подключи ESP32 по USB. Эта схема не требует прошивки, сброса NVS или
-   повторного сопряжения. Работу NFC проверяй журналом и прикладыванием телефона.
+1. Disconnect power before moving wires. For an existing working bench, first
+   compare and record its current connections using the table.
+2. Connect common ground, the compatible PN532 supply and the four SPI signals;
+   verify SPI mode. An IRQ connection to ESP32 is unnecessary.
+3. Connect the shared I²C bus if using the specified M5Stack modules. Do not
+   choose PN532 supply voltage from the cable colour.
+4. Connect ESP32 over USB. This diagram requires no flashing, NVS reset or
+   re-pairing. Check NFC through logs and a real phone tap.
 
-Не применяй эту карту к **LilyGO T-ETH-Lite-ESP32S3 с W5500**: Ethernet занимает
-GPIO9–14. В замороженном `homekey-esp32/` для неё использовали
-`CS=18`, `SCK=15`, `MISO=16`, `MOSI=17`. Текущий Aliro firmware жёстко задаёт
-первую таблицу; поддержка Ethernet и такого переназначения в него не перенесена.
+Do not apply this map to **LilyGO T-ETH-Lite-ESP32S3 with W5500**: Ethernet
+occupies GPIO9–14. Its frozen `homekey-esp32/` baseline used
+`CS=18`, `SCK=15`, `MISO=16`, `MOSI=17`. The current Aliro firmware hard-codes
+the first table; Ethernet and that remapping have not been ported into it.
 
-## Откуда взяты подписи
+## Sources of the labels
 
-- [app_main.cpp](../aliro-esp32/main/app_main.cpp): `kNfcGpioPins` в порядке
-  `[CS, SCK, MISO, MOSI]` = `[10, 12, 13, 11]`.
-- [NfcManager.cpp](../aliro-esp32/main/NfcManager.cpp): SPI transport получает
-  `GPIO_NUM_NC` вместо IRQ; управляющий GPIO сброса здесь не задан.
+- [app_main.cpp](../aliro-esp32/main/app_main.cpp): `kNfcGpioPins` in
+  `[CS, SCK, MISO, MOSI]` order = `[10, 12, 13, 11]`.
+- [NfcManager.cpp](../aliro-esp32/main/NfcManager.cpp): SPI transport uses
+  `GPIO_NUM_NC` for IRQ; no reset-control GPIO is assigned here.
 - [I2cBus.cpp](../aliro-esp32/main/I2cBus.cpp): SDA=8, SCL=9.
 - [LockHandlers.cpp](../aliro-esp32/main/LockHandlers.cpp): `kLedGpio=48`;
-  логическое состояние DoorLock и LED без выхода реле.
-- [sdkconfig.defaults](../aliro-esp32/sdkconfig.defaults): дисплей и кнопки
-  включены в текущем профиле сборки.
+  logical DoorLock state and indicators with no relay output.
+- [sdkconfig.defaults](../aliro-esp32/sdkconfig.defaults): the current build
+  profile enables the display and buttons.
 
-Схема сверена с исходниками. Она не подтверждает распиновку неизвестной ревизии
-платы, качество питания, физическую работу замка или Samsung Wallet.
+The diagram was checked against source. It does not establish the pinout of an
+unknown board revision, supply quality, physical lock operation or Samsung Wallet.

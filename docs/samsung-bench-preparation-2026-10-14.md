@@ -1,88 +1,89 @@
-# Подготовка Samsung Wallet к стенду
+# Samsung Wallet bench preparation
 
-[English](samsung-bench-preparation-2026-10-14.en.md) · [Оглавление](README.md)
+[Русский](samsung-bench-preparation-2026-10-14.ru.md) · [Documentation index](README.md)
 
-14 октября 2026. Целевой стенд — SmartThings V4_HUB с firmware 0.62.7 и
-Galaxy Z Fold7. Адреса, идентификаторы и данные аккаунта не входят в репозиторий.
-Контроллер не подключался и не прошивался. Код подготовлен к аппаратной проверке;
-это ещё не подтверждённая интеграция Samsung Wallet.
+14 October 2026; updated 15 October 2026. Target bench: SmartThings V4_HUB firmware 0.62.7 and Galaxy Z
+Fold7. Network/device identifiers and account data are not in the repository.
+The connected controller has a verified private backup and an application-only
+update. On 15 October Matter, PN532 NFC and HTTP/WebSocket administration started
+with the saved reader configuration. Data/pairing partitions were not written by
+the installer. Physical old-key iPhone acceptance remains pending; Samsung Wallet
+integration is unproven and Fold7 testing is deferred.
 
-## Что закрыто в коде
+## Completed code work
 
-- Общие лимиты используются и в атрибутах Matter, и в хранилище. Все объявленные
-  16 endpoint slots читаются и принимают ключи; старые записи 1–8 сохраняются.
-  Размер одного legacy user/credential blob не менялся, число credentials
-  на пользователя остаётся 3.
-- SetUser не публикует новые права в RAM при ошибке сохранения. Запрошенное
-  отключение сохраняет запрет для прежних assignments в RAM; ошибка возвращается
-  контроллеру. Неверные/слишком большие данные не обрезаются молча.
-- Aliro public keys проверяются как P-256 points до сохранения. Signing key
-  считывателя проверяется на соответствие verification key.
-- Новая конфигурация считывателя хранится одним `readerCfg1` blob. Прежние поля
-  читаются без миграции при загрузке. Stable sub-ID остаётся в прежнем `subId`;
-  существующее неверное/нечитаемое значение не заменяется случайной identity.
-- Ошибка reader config или NFC mirror возвращает неуспех. При неудачном mirror
-  выполняется возврат предыдущей конфигурации; при failed credential mirror
-  возвращается прежняя запись Matter. Ошибки rollback не маскируются.
-- Явный ClearReaderConfig сохраняет clear marker, удаляет старые поля конфигурации
-  и очищает NFC mirror. Sub-ID сохраняется. Новый marker не допускает fallback
-  к старым ключам; неуспешное сохранение не обещает сохранение запрета через
-  потерю питания. Старое ПО не понимает новый формат — для downgrade нужна
-  совместимая приватная резервная копия, а не простая замена приложения.
-- System time sync запускается независимо от OLED. Документный доступ остаётся
-  запрещён без доступных часов. Старым независимым iPhone-ключам часы не нужны.
-- Финальное открытие также требует корректно предоставленной reader configuration.
-  Прежние Apple v9 APDU и криптографический профиль не менялись.
+- Shared limits drive both Matter attributes and storage. All 16 announced
+  endpoint slots can be enumerated and provisioned; old slots 1–8 remain readable.
+  Individual legacy user/credential blob layouts are unchanged; three credentials
+  per user remain the limit.
+- Failed SetUser persistence cannot publish new grants in RAM. Requested
+  disable keeps previous assignments denied in RAM and reports failure.
+  Invalid/oversized requests are not silently truncated.
+- Aliro public keys are checked as P-256 points before storage. The reader signing
+  key must correspond to the verification key.
+- New reader configuration uses one `readerCfg1` blob. Legacy fields load without
+  boot migration. The stable sub-ID remains in `subId`; an invalid/unreadable
+  existing value is not replaced with a random identity.
+- Reader config/NFC mirror errors report failure. Failed mirror attempts restore
+  the previous reader configuration or Matter credential record; rollback failure
+  is not reported as success.
+- Explicit ClearReaderConfig persists a clear marker, erases legacy configuration
+  fields and clears the NFC mirror, retaining the sub-ID. The marker prevents
+  fallback to old keys. Failed storage does not promise denial across power loss.
+  Old software cannot read the new format: downgrade requires compatible private
+  backups rather than replacing the application alone.
+- System time sync starts independently of OLED. Document-bound access still
+  requires a usable clock; old independent iPhone keys do not.
+- Final unlock also requires a successfully provisioned reader configuration.
+  Legacy Apple v9 APDU and cryptographic framing are unchanged.
 
-## Проверки без замка
+## Offline verification
 
-22 новых сценария собирают настоящие AliroDelegate, DoorLockUserStubs,
-DDKAuthContext и ReaderDataManager. Замещены SDK boundary types, hardware hooks
-и NVS API. Проверяются enumeration всех slots, выдача/чтение slot 16, ошибки
-записи/открытия/mirror, rollback, старые поля, stable sub-ID, malformed points,
-отключение пользователя, Standard → Fast → перезапуск → отзыв. Симулятор телефона
-сам выводит свой persistent key; он не копируется из кэша считывателя.
+22 new cases compile the actual AliroDelegate, DoorLockUserStubs, DDKAuthContext
+and ReaderDataManager. SDK boundary types, hardware hooks and NVS API are
+substituted. Coverage includes slot enumeration, slot 16 grant/read-back,
+open/write/mirror failures, rollback, old fields, stable sub-ID, malformed points,
+disabled users, Standard → Fast → reboot → revocation. The simulated phone derives
+its persistent key itself instead of copying the reader's saved key.
 
-Поддерживаемый набор — 15/15 executables с ASan/UBSan. Полный набор — 15/16,
-с прежними двумя upstream BLE-flow ошибками. Это не тест настоящего Samsung,
-SmartThings commissioning, secure element, радиотаймингов или потери питания.
+The supported ASan/UBSan suite passes 15/15 executables; the full suite is 15/16
+with the same two upstream BLE-flow failures. It does not test actual Samsung,
+SmartThings commissioning, secure elements, radio timing or sudden power loss.
 
-ESP-IDF 5.4.4 / esp-matter 8d56152: application image **2 564 656 байт**, свободно
-**56 784 байт (2,17%)** в прежнем OTA-разделе. SHA-256:
-`527774e399d8538ce8b88f9b43892fbdabc14feb9fb569c8ca6a5db18c912578`.
-Публичный репозиторий содержит исходники; пакет приложения для стенда хранится
-локально. Другие SDK и альтернативный протокольный backend не подключались.
+ESP-IDF 5.4.4 / esp-matter 8d56152: application **2,565,488 bytes**, leaving
+**55,952 bytes (2.13%)** in the unchanged OTA slot. SHA-256:
+`81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`.
+Public repository contains source; the bench application package is local.
+No alternate SDK/backend was enabled.
 
-## Когда контроллер будет подключён
+## When the controller is connected
 
-1. Сначала прочитать текущие firmware/partition/reader readiness и проверить
-   старый ключ iPhone на действующей прошивке. Сохранить приватно рабочее
-   приложение, конфигурацию, NVS и pairing. Не стирать flash/NVS и не менять eFuses.
-   Заливка новой прошивки — отдельное действие после этой проверки.
-2. При обновлении использовать только приложение, совместимое с фактической
-   таблицей разделов. После обновления — старый iPhone, повторные taps и reboot.
-3. Добавить SmartThings как ещё один Matter controller через multi-admin /
-   commissioning window существующего устройства. Сохранить Apple fabric и
-   reader identity; не делать factory reset для добавления второго контроллера.
-4. Проверить появление Add Digital Home Key, выдачу ключа Fold7 и read-back
-   пользователей/credentials. Зафиксировать версии SmartThings/Wallet и регион
-   аккаунта приватно. Наличие хаба или успешный Matter unlock само по себе не
-   доказывает готовность Wallet.
-5. Проверить первый/повторные NFC taps, reboot, disabled user, ClearCredential,
-   отказ после reboot и явную повторную выдачу. Повторно проверить iPhone.
-   Физический выход на замок — отдельная проверка; текущие тесты проверяют
-   логическое состояние Matter.
+1. Read existing firmware/partition/reader readiness and check the old iPhone
+   key first. Privately back up the known-good application, configuration, NVS and
+   pairing. Do not erase flash/NVS or change eFuses. Installing an update is a
+   separate action after this check.
+2. Use an application-only update compatible with the actual partition table.
+   Check the old iPhone, repeated taps and reboot after updating.
+3. Add SmartThings as another Matter controller through multi-admin / the existing
+   device's commissioning window. Retain the Apple fabric and reader identity;
+   adding a second controller does not call for factory reset.
+4. Check Add Digital Home Key, issue a Fold7 key and read back users/credentials.
+   Record SmartThings/Wallet versions and account region privately. A hub or
+   successful Matter unlock does not prove Wallet readiness.
+5. Check first/repeated NFC taps, reboot, disabled user, ClearCredential,
+   post-reboot rejection and explicit reprovisioning. Check iPhone again. Physical
+   lock output is a separate acceptance item; host tests cover logical state.
 
-Официальный путь — совместимый замок в SmartThings/Matter, затем ключ Samsung
-Wallet. Доступность зависит от устройств/региона; acceptance сертифицированных
-продуктов не доказывает acceptance prototype с test VID/PID. Не подменять VID/PID
-другого производителя. Если опции Wallet нет, сначала выяснять provisioning
-и доступность сервиса, а затем NFC. [Samsung](https://news.samsung.com/global/samsung-wallet-launches-digital-home-key-for-smart-door-locks).
+Samsung's workflow is a compatible lock in SmartThings/Matter, then a Wallet key.
+Availability depends on device/region. Certified-product acceptance does not
+prove acceptance of a prototype using test VID/PID; do not impersonate another
+manufacturer's identifiers. If Wallet onboarding is absent, diagnose provisioning
+and service availability before the NFC transaction. [Samsung](https://news.samsung.com/global/samsung-wallet-launches-digital-home-key-for-smart-door-locks).
 
-В официальных [release notes хаба](https://community.smartthings.com/t/hub-firmware-and-edge-driver-release-notes-0-62-7/310908)
-указан rollout 0.62.13 с исправлениями Matter OTA и локальной связи. Хаб этой
-работой не обновлялся; перед стендом зафиксировать его фактическую версию.
+Official [hub release notes](https://community.smartthings.com/t/hub-firmware-and-edge-driver-release-notes-0-62-7/310908)
+identify the 0.62.13 rollout with Matter OTA/local connectivity fixes. This work
+has not updated the hub; record its actual version before acceptance.
 
-Оставшиеся ограничения прав/документов: [политика доступа](aliro-access-policy-2026-10-14.md).
-Расписания, provisioned reader-rule dictionary, PKI chains, Aliro BLE/UWB и
-сертификация не добавлены этим этапом.
+Remaining document-policy limits are in [access policy](aliro-access-policy-2026-10-14.md).
+Schedules, provisioned reader-rule dictionaries, PKI chains, Aliro BLE/UWB and
+certification are not added by this stage.

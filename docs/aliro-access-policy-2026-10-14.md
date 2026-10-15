@@ -1,135 +1,140 @@
-# Права доступа и отзыв по документам Aliro
+# Aliro document access rights and revocation
 
-[English](aliro-access-policy-2026-10-14.en.md) · [Оглавление документации](README.md)
+[Русский](aliro-access-policy-2026-10-14.ru.md) · [Documentation index](README.md)
 
-14 октября 2026. Проверка AccessData и обработка подписанных `aliro-r`
-интегрированы в NFC-прошивку и проверены без контроллера. Ключ по документу
-может добавляться только от заранее предоставленного издателя, после проверки
-документа, подписи устройства и права на UnlockDoor. Старые записи iPhone,
-reader identity и Matter pairing сохраняются.
+14 October 2026. AccessData validation and signed `aliro-r` processing are
+integrated into the NFC firmware and tested without the controller. Document
+enrollment requires a provisioned issuer, a verified document, the device's
+signature and permission to UnlockDoor. Old iPhone records, reader identity and
+Matter pairing are preserved.
 
-## Решение о доступе
+## Access decision
 
-Криптографическая проверка выполняется до использования AccessData: ES256,
-issuer kid, P-256 device key, подпись AUTH1, digest каждого переданного элемента,
-namespace, docType, версии, validity и iteration. Непроверенная цепочка
-сертификатов не создаёт доверия. Поддерживаются заранее предоставленные
-issuer public keys и UTC tdate с точностью до секунды.
+Cryptographic validation precedes the use of AccessData: ES256, issuer kid,
+P-256 device key, AUTH1 signature, the digest of every disclosed element,
+namespace, docType, versions, validity and iteration. An unverified certificate
+chain creates no trust. Provisioned issuer public keys and UTC tdate with
+one-second precision are supported.
 
-AccessData обрабатывается по §7.3/7.5 Aliro 1.0:
+AccessData follows Aliro 1.0 §7.3/7.5:
 
-- версия должна быть 1; действие считывателя — Unsecure / Matter UnlockDoor;
-- хотя бы одно inline AccessRule должно разрешать действие; отдельно учитываются
-  дополнительные ReaderRuleIds;
-- неизвестный ReaderRuleId, пустые/неверные правила и неизвестный critical
-  access extension дают отказ. Non-critical access extensions и non-access
-  extensions не добавляют права;
-- ID имеет размер 1–16 байт и участвует в проверке отзыва;
-- расписания — необязательная функция стандарта, которую эта прошивка не
-  интерпретирует. Каждое правило с AllowScheduleIds или DenyScheduleIds
-  считается недействительным; другое самостоятельное правило может разрешить
-  действие согласно OR-семантике стандарта. Ограничение не пропускается;
-- firmware пока не имеет provisioned reader-rule dictionary, поэтому ссылки
-  ReaderRuleIds отклоняются. Сам evaluator проверяет явно переданные правила.
+- Version must be 1; the reader action is Unsecure / Matter UnlockDoor.
+- At least one inline AccessRule must authorize the action; additional
+  ReaderRuleIds are evaluated separately.
+- Unknown ReaderRuleIds, empty/invalid rules and unknown critical access
+  extensions deny access. Non-critical access extensions and non-access
+  extensions confer no permission.
+- ID is 1–16 bytes and participates in revocation checks.
+- Schedules are an optional standard feature that this firmware does not
+  interpret. Each rule referencing AllowScheduleIds or DenyScheduleIds is
+  invalid. Another independent rule may authorize the action under the
+  standard's OR semantics; the unsupported restriction is never bypassed.
+- Firmware does not provision a reader-rule dictionary yet, so ReaderRuleIds
+  are rejected. The evaluator can validate explicitly supplied reader rules.
 
-Новый endpoint сохраняет полный проверенный документ и признак document-bound.
-При каждом Standard/Fast-сеансе и непосредственно перед открытием проверяются
-текущие права, срок и список отзыва. Новый документ с подписанным ограничением
-заменяет прежний кэш даже при отказе в открытии. Старый кэш не даёт обхода.
+A new endpoint stores the complete verified document and a document-bound flag.
+Current permissions, validity and revocation are checked on every Standard/Fast
+session and immediately before unlock. A new device-bound signed restriction
+replaces the cached grant even when access is denied. Old cache cannot bypass it.
 
-Firmware выбирает строгую политику часов для document-bound доступа:
-без доступного системного wall-clock такой доступ запрещён, даже если издатель
-допускает необязательную проверку времени. Документ не устанавливает текущее
-время. Для прежних независимых iPhone/Matter-ключей документные часы не нужны.
-Текущий wall-clock берётся из системной службы времени; в тестах он задаётся явно.
+Firmware uses a strict clock policy for document-bound access: access is denied
+without a usable system wall-clock, even if the issuer makes time verification
+optional. The document cannot establish current time. Old independent
+iPhone/Matter keys do not require document time. The clock comes from the system
+time service; tests supply it explicitly.
 
-## Подписанные документы отзыва
+## Signed revocation documents
 
-`aliro-r` проходит те же проверки подписи, digest и validity, но обязан
-не содержать deviceKeyInfo. Его применение не зависит от разрешения доступа
-предъявившему устройству: документ может отозвать и другое устройство.
+`aliro-r` undergoes the same signature, digest and validity checks and must not
+contain deviceKeyInfo. Applying it does not depend on granting access to the
+presenting device: the document may revoke another device.
 
-RevocationData проверяет версию, ChangeMode и записи. Поддерживаются SHA-256
-полного SEC1 public key, ID, expiration, Overwrite и Update:
+RevocationData validates version, ChangeMode and entries. SHA-256 of the complete
+SEC1 public key, ID, expiration, Overwrite and Update are supported:
 
-- Overwrite более новой iteration применяет снимок; равная iteration игнорируется.
-  Старый документ не применяется. Пустой новый Overwrite очищает список;
-- Update сначала добавляет записи, затем удаляет. Stored RevocationIteration
-  при Update остаётся прежней, как требует §7.6.3; iteration хранится и у каждой
-  записи. Будущие Update-записи не теряются при более раннем Overwrite;
-- полностью одинаковая запись не меняется; совпавший hash или ID заменяет запись;
-- просроченная запись пропускается при известных часах. Без часов expiring
-  revocation остаётся запрещающей. Expiry-bearing removal не снимает отзыв;
-- список ограничен 64 записями на издателя. Неверные данные или превышение
-  вместимости не применяют частичный результат.
+- A newer Overwrite iteration applies a snapshot; an equal iteration is ignored.
+  Older documents are rejected. An empty newer Overwrite clears the list.
+- Update adds entries before removing them. Stored RevocationIteration remains
+  unchanged for Update, as required by §7.6.3; each entry also stores its
+  iteration. Future Update entries survive an earlier Overwrite.
+- An identical entry remains unchanged; a matching hash or ID replaces it.
+- Expired entries are skipped with known time. With no clock, an expiring
+  revocation remains active. An expiry-bearing removal does not lift revocation.
+- Each issuer has at most 64 entries. Invalid data or capacity overflow never
+  applies a partial result.
 
-Document-bound ключи проверяются в области своего доказанного издателя.
-Прежние прямые/кэшированные ключи без такой привязки консервативно проверяются
-по public-key revocations всех доверенных издателей. Пустая/первая issuer-запись
-не может скрыть отзыв того же ключа. Две cache-записи с одним issuer public key
-проверяются как aliases одного издателя: state отзыва/iteration нельзя разделить
-между ними. Экспорт сохраняет credential indices и endpoint metadata своей
-конкретной записи, не заимствуя их у другого alias.
+Document-bound keys are checked within their proven issuer's scope. Legacy
+direct/cached keys without that binding are conservatively checked against
+public-key revocations from all trusted issuers. An empty/first issuer record
+cannot hide the same key's revocation. Cache records with the same issuer public
+key are aliases of one issuer: revocation and iteration cannot be isolated
+between them. Export preserves the credential indices and endpoint metadata of
+the specific record instead of borrowing another alias's metadata.
 
-Локальный запрет после ClearCredential хранится отдельно. Подписанный Update
-или Overwrite не снимает этот запрет; это может сделать явное повторное
-предоставление ключа через существующий Matter-путь.
+The local prohibition after ClearCredential is stored separately. Signed Update
+or Overwrite cannot lift it; explicit reprovisioning through the existing Matter
+path can.
 
-## Сохранение и совместимость
+## Persistence and compatibility
 
-В NVS добавлены необязательные поля документа и списков отзыва. Старые записи
-читаются без миграции identity или pairing; отсутствующее документное состояние
-не превращает прежний разрешённый ключ в новый документный ключ.
+NVS gains optional document and revocation fields. Old records are read without
+migrating identity or pairing. Missing document state does not turn an old
+authorized independent key into a document-bound key.
 
-Изменение policy сохраняется отдельно от успешного входа, с проверкой revision.
-Оно не добавляет неизвестный endpoint. Старый NFC-сеанс не может вернуть
-отозванный ключ. Ошибка NVS не сообщает успех; запрет остаётся в RAM, затронутые
-издатели блокируются. Восстановление требует успешно сохранённого полного
-проверенного revocation snapshot. После успешного сохранения списки переживают
-перезапуск; неуспешная запись не обещает сохранение через потерю питания.
+Policy changes persist separately from successful access, with revision checks,
+and cannot add an unknown endpoint. An old NFC session cannot resurrect a revoked
+key. NVS failure never reports success: denial remains in RAM and affected issuers
+are blocked. Recovery requires a successfully persisted, fully verified
+revocation snapshot. Successfully stored lists survive reboot; failed storage
+does not promise survival across power loss.
 
-Отзыв удаляет связанный FastAuth secret. После снятия отзыва ключ сначала
-проходит Standard и получает новый secret. Аналогично новый access iteration
-может потребовать Standard для прежнего явно выданного ключа; затем FastAuth
-возобновляется. Document-bound ключ не получает новую iteration без документа.
+Revocation deletes the associated FastAuth secret. After revocation is lifted,
+the key must pass Standard first to obtain a new secret. A new access iteration
+can likewise require Standard for a previously explicitly provisioned key;
+FastAuth then resumes. A document-bound key needs a document for a new iteration.
 
-Для Aliro `0x0100` advertised revocation заставляет перейти из Fast в Standard
-и получить проверенный документ своего издателя. Документ другого издателя
-не удовлетворяет этому запросу. Старый Apple `0x0009` не получает новый
-автоматический обмен; его AUTH0/AUTH1, CONTROL FLOW и получение ключей сохранены.
-Уже сохранённый отзыв действует и на v9.
+For Aliro `0x0100`, advertised revocation forces Fast to Standard and requires a
+verified document of the key's issuer. Another issuer's document cannot satisfy
+that request. Legacy Apple `0x0009` gets no new automatic exchange: its
+AUTH0/AUTH1, CONTROL FLOW and key derivation remain. Stored revocation still
+applies to v9.
 
-Обработка распространяет полученный подписанный отзыв. Узнать о ещё не
-доставленном документе при полностью автономной работе считыватель не может.
-Существующий отзыв через Matter/ClearCredential продолжает действовать.
+The reader enforces received signed revocations. An entirely offline reader
+cannot learn about a document that has not been delivered. Existing
+Matter/ClearCredential revocation continues to work.
 
-## Проверки
+## Verification
 
-Весь поддерживаемый набор: 15/15 executables проходят с AddressSanitizer и
-UndefinedBehaviorSanitizer, без сообщений об ошибках памяти. В полном наборе
-15/16 executables проходят; оставшийся BLE-flow имеет те же две upstream
-functional failures (completion status и двойной Time Sync), BLE access
-transport не включён в прошивку. LeakSanitizer на данном macOS недоступен.
-ESP-IDF 5.4.4 / esp-matter 8d56152: firmware build успешен.
-Application image — 2564656 байт, свободно 56784 байт (2.17%)
-в прежнем OTA-разделе. SHA-256: `527774e399d8538ce8b88f9b43892fbdabc14feb9fb569c8ca6a5db18c912578`. Набор включает
-36 firmware integration cases, 9 криптографических document-validation cases
-и 10 AccessData/revocation cases. Проверяются реальный adapter и NVS serializer,
-тот же vendored tinycbor, что в firmware, цепочки GET RESPONSE, права/clock/expiry,
-подделка подписи, replay, запись при отказе доступа, reboot, ошибка NVS,
-local tombstone и сохранение v9/FastAuth.
+The supported suite passes **15/15 executables** under AddressSanitizer and
+UndefinedBehaviorSanitizer with no reported memory errors. The full suite passes
+15/16: BLE-flow retains two upstream functional failures (completion status and
+duplicate Time Sync). BLE access is disabled in firmware. LeakSanitizer is not
+available on the tested macOS runtime. Firmware builds with ESP-IDF 5.4.4 /
+esp-matter 8d56152.
 
-Контроллер не подключался и не прошивался. Следующий стендовый этап — настоящий
-iPhone на старом ключе и Samsung Wallet/SmartThings, с сохранением NVS и pairing.
+The application image is **2,565,488 bytes**, leaving **55,952 bytes (2.13%)** in
+the existing OTA partition. SHA-256:
+`81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`.
+The targeted suite has **36 firmware integration cases**, **9 cryptographic
+document-validation cases** and **10 AccessData/revocation cases**. It compiles
+the actual adapter and NVS serializer and the firmware's vendored tinycbor.
+Coverage includes GET RESPONSE chaining, rights/clock/expiry, forged signatures,
+replay, persistence on denied access, reboot, NVS failure, local tombstones and
+v9/FastAuth preservation.
 
-Основа: [Aliro Specification 1.0, §7.3–7.6](https://csa-iot.org/wp-content/uploads/2026/02/26-42802-001_Aliro_1.0_specification.pdf).
-Исходный [порт валидатора](aliro-porting-2026-10-13.md) остаётся историей первого этапа.
+The controller has a verified private backup. Application-only installation and
+rollback preserve data partitions. Updated-firmware iPhone acceptance is separate
+from startup checks; Samsung Wallet/SmartThings remains deferred.
 
-Дополнительная проверка на Ubuntu/Clang выявила вызов memcpy с нулевым
-указателем для пустого CBOR payload. Исправление сохраняет канонические байты
-и расчёт требуемого размера; отдельный регрессионный тест проверяет обе границы.
-[Описание патча TinyCBOR](../aliro-esp32/components/cbor/LOCAL_PATCHES.md).
+Source: [Aliro Specification 1.0, §7.3–7.6](https://csa-iot.org/wp-content/uploads/2026/02/26-42802-001_Aliro_1.0_specification.pdf).
+The [initial validator port](aliro-porting-2026-10-13.md) is historical first-stage
+context, not the current access-policy status.
 
-Дополнительно проходят 22 проверки реальных provisioning callbacks;
-[следующий этап](samsung-bench-preparation-2026-10-14.md) описывает новые
-reader configuration fields, storage failures и стендовый порядок.
+The additional Ubuntu/Clang run found a null-pointer memcpy for an empty CBOR
+payload. The fix preserves canonical bytes and required-size accounting; a
+separate regression checks both boundaries.
+[TinyCBOR patch](../aliro-esp32/components/cbor/LOCAL_PATCHES.md).
+
+An additional 22 cases exercise actual provisioning callbacks;
+[bench preparation](samsung-bench-preparation-2026-10-14.md) documents the new
+reader configuration record, storage failures and acceptance order.

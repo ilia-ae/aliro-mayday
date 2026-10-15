@@ -50,7 +50,7 @@ Apple v9 framing and normal Fast behavior remain unchanged. Modern advertised
 revocation uses Standard/Step-up, and stale independently provisioned persistent
 keys can re-establish their epoch through authenticated Standard.
 
-See [document access and revocation notes](../../../docs/aliro-access-policy-2026-10-14.md)
+See [document access and revocation notes](../../../docs/aliro-access-policy-2026-10-14.ru.md)
 in the repository root for the supported optional features and acceptance checks.
 
 See `docs/aliro-porting-2026-10-13.md` in the repository root for scope,

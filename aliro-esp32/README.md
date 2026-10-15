@@ -4,9 +4,10 @@
 
 Experimental ESP32-S3 + PN532 controller with Matter DoorLock provisioning,
 NVS credential storage and local administration. The iPhone Standard/Fast path
-worked on the May 2026 bench. The October update builds and passes the supported
-host suite; real iPhone regression and Samsung Wallet tests remain pending.
-The updated application has not been installed. A logical unlock is tested;
+worked on the May bench and the owner confirmed the existing key still opened
+and closed on 14 October before updating. The update builds and passes the
+supported host suite; updated-firmware iPhone and Samsung Wallet checks remain
+separate acceptance items. A logical unlock is tested;
 a physical relay output and Aliro certification are not established.
 
 ## Current implementation
@@ -24,7 +25,7 @@ a physical relay output and Aliro certification are not established.
   are rejected. Certificate-chain trust is not implemented.
 - Aliro BLE/UWB access is disabled. Matter BLE commissioning is available.
 
-Read [access policy and limits](../docs/aliro-access-policy-2026-10-14.en.md),
+Read [access policy and limits](../docs/aliro-access-policy-2026-10-14.md),
 [local DDK changes](components/DigitalDoorKey/UPSTREAM.md) and
 [tests / hardware acceptance](tests/README.md).
 
@@ -77,15 +78,15 @@ Keep an existing bench configuration instead of resetting it with `set-target`.
 The `just aliro-build` helper assumes SDK installations under the user's usual
 `~/esp` / `~/CODE` locations; the commands above support other locations.
 
-The checked application image is **2,564,656 bytes**, with **56,784 bytes (2.17%)**
+The checked application image is **2,565,488 bytes**, with **55,952 bytes (2.13%)**
 free in a `0x280000` OTA slot. Its SHA-256 is
-`527774e399d8538ce8b88f9b43892fbdabc14feb9fb569c8ca6a5db18c912578`.
+`81ea0fab5a18a168b4cbf43a89524094cdfafaf608ff9ac9ba91764199430dc5`.
 There is little room for additional firmware code without another size review.
 
 ## Existing hardware and configuration
 
 The active bench target is ESP32-S3 + PN532 on SPI. Wiring and board variants
-are recorded in the [labelled wiring guide](../docs/wiring.en.md) and
+are recorded in the [labelled wiring guide](../docs/wiring.md) and
 [hardware-reference.md](../docs/hardware-reference.md).
 `sdkconfig.defaults` enables optional octal PSRAM with ignore-not-found and
 currently selects 16 MB flash. Confirm the actual module's memory before a
@@ -98,8 +99,19 @@ paths, not alternate validated targets of this build.
 
 ## Update and rollback acceptance
 
-No controller was flashed during this work. Before updating an existing bench,
-preserve the known-good application, exact partition table, configuration,
+A full private backup was verified on the connected bench, and application-only
+installation and rollback were checked without writing data partitions. An initial
+startup memory shortage was isolated to the uncreated NimBLE host task. The
+expanded 17 KiB credential table now uses one heap block instead of internal BSS;
+with the configured 16 KiB malloc threshold, PSRAM is preferred. Matter/NimBLE
+buffers may also use PSRAM; controller/DMA memory and task stacks remain internal.
+Credential indices and NVS record layouts are unchanged. Existing local build configurations must select
+`CONFIG_BT_NIMBLE_MEM_ALLOC_MODE_DEFAULT=y` and
+`CONFIG_ESP_MATTER_MEM_ALLOC_MODE_DEFAULT=y`; defaults alone do not override old
+`sdkconfig` choices.
+
+Before updating an existing bench, preserve the known-good application, exact
+partition table, configuration,
 reader identity, credential data and Matter pairing. Keep any backups private:
 they can contain live keys. Use an application-only update compatible with the
 existing layout. A generic full `idf.py flash` writes more than the application;
@@ -133,4 +145,9 @@ archived research; archived claims are not current verification results.
 Current provisioning uses a complete reader configuration record and shared
 slot limits. Reader/user/credential errors propagate without publishing grants;
 stable sub-ID and old key records are retained. System time sync starts without
-OLED. See [Samsung bench preparation](../docs/samsung-bench-preparation-2026-10-14.en.md).
+OLED. See [Samsung bench preparation](../docs/samsung-bench-preparation-2026-10-14.md).
+
+NFC precomputation uses an 8 KiB stack; polling/document verification uses 12 KiB.
+The previous 4 KiB precompute worker overflowed with the updated DDK. HTTP/WebSocket
+startup reports actual readiness, retries temporary allocation failures, and
+handles an IP-up event that arrived before the admin object was constructed.
