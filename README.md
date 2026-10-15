@@ -1,5 +1,11 @@
 # aliro.mayday
 
+[![Source integrity and supported host tests](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml/badge.svg?branch=main)](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml?query=branch%3Amain)
+[![Hardware: ESP32-S3 + PN532](https://img.shields.io/badge/hardware-ESP32--S3%20%2B%20PN532-00979D)](docs/wiring.md)
+[![Status: prototype](https://img.shields.io/badge/status-prototype-orange)](docs/repository-status-2026-10-14.md)
+[![License: source-available](https://img.shields.io/badge/license-source--available-blue)](LICENSE)
+[![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](docs/README.md)
+
 [Русский](README.ru.md) · [Documentation index](docs/README.md) · [Wiring diagram](docs/wiring.md)
 
 Experimental Aliro NFC access controller for ESP32-S3 + PN532, with Matter
@@ -13,8 +19,8 @@ source snapshot dated **13 October 2026**, with new Git history.
   zero tap failures and both locked and unlocked Matter states. The verified
   private backup, saved key and pairing were preserved. Matter, PN532 NFC and
   HTTP/WebSocket administration are running. The installed HTTP startup/disconnect
-  fixes and acceptance report are in [PR #6](https://github.com/ilia-ae/aliro-mayday/pull/6),
-  awaiting merge. Samsung Wallet validation through SmartThings remains pending.
+  fixes and acceptance report were merged into `main` through
+  [PR #6](https://github.com/ilia-ae/aliro-mayday/pull/6). Samsung Wallet validation through SmartThings remains pending.
 - The updated firmware builds with ESP-IDF v5.4.4 / esp-matter 8d56152.
   Fifty-eight firmware scenarios pass, including 22 actual provisioning callback
   cases and old iPhone records,

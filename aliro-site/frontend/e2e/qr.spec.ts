@@ -46,15 +46,8 @@ test.describe('/qr business-card page', () => {
     }) => {
         await page.goto('/qr');
 
-        // One assertion per chip — each opens its target sharer in a
-        // new tab with the local origin URL-encoded as the share param.
-        // Each share chip must open its target service in a new tab.
-        // The final popup URL is whatever the service redirects to
-        // (wa.me → api.whatsapp.com, linkedin.com/sharing → uas/login,
-        // etc.), so we only assert on the host domain. The URL may
-        // be encoded once or twice depending on the redirect chain;
-        // checking for a "localhost:4444" substring (any form) is
-        // enough to prove our origin made it into the share payload.
+        // Each sharer receives this test server's origin, including its port.
+        const origin = new URL(page.url()).origin;
         const cases: ReadonlyArray<{ name: RegExp; host: RegExp }> = [
             { name: /telegram/i, host: /t\.me/ },
             { name: /whatsapp/i, host: /wa\.me|api\.whatsapp\.com/ },
@@ -71,9 +64,11 @@ test.describe('/qr business-card page', () => {
                 btn.click()
             ]);
             expect(popup.url()).toMatch(c.host);
-            // Match the encoded origin in any form ("localhost%3A4444",
-            // "localhost%253A4444" after a re-encode, or raw).
-            expect(popup.url()).toMatch(/localhost(%(25)?3A|:)4444/);
+            let shared = popup.url();
+            for (let pass = 0; pass < 2; pass++) {
+                try { shared = decodeURIComponent(shared); } catch { break; }
+            }
+            expect(shared).toContain(origin);
             await popup.close();
         }
     });
@@ -93,7 +88,7 @@ test.describe('/qr business-card page', () => {
         const clipboardText = await page.evaluate(() =>
             navigator.clipboard.readText()
         );
-        expect(clipboardText).toContain('localhost:4444');
+        expect(clipboardText).toBe(new URL(page.url()).origin);
 
         // After 1.8s the chip flips back from "Copied" to its label.
         await expect(copyBtn).toContainText(

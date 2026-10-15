@@ -4,10 +4,10 @@
 [Public source](https://github.com/ilia-ae/aliro-mayday/tree/main/aliro-site)
 
 Angular 21 SPA served by Cloudflare Workers Static Assets. The landing page
-describes the prototype's verified scope: the owner's existing iPhone key worked
-on the bench; host tests cover protocol and policy changes; updated-firmware
-iPhone acceptance, Samsung/Google Wallet, a physical relay and certification
-require separate verification. Publishing source does not establish compatibility.
+describes the prototype's verified scope: the owner's existing iPhone key passed
+the updated-firmware bench test on 15 October 2026; host tests cover protocol and
+policy changes. Samsung/Google Wallet, on-device revocation with a separate test
+key, a physical relay and certification require separate verification. Publishing source does not establish compatibility.
 
 ## Source and deployment
 
@@ -33,7 +33,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **59 tests**, with **5 explicit skips**.
+The complete browser suite passed **61 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 
@@ -52,8 +52,7 @@ Cloudflare's connected build uses `npm install && npm run build`, followed by
 English is the primary repository documentation language; Russian uses `.ru.md`.
 Website language detection retains the user's local preference, then browser
 language, with Russian fallback. Both versions link to their matching public
-documentation and wiring guide. Theme selection, QR sharing and service-worker
-behavior remain supported.
+documentation and wiring guide. Theme selection, QR sharing and offline caching remain supported.
 
 ## Safari and service-worker configuration
 
@@ -61,6 +60,20 @@ Keep `html_handling = "none"` and
 `not_found_handling = "single-page-application"` in `wrangler.toml`. Redirecting
 `/index.html` to `/` can leave Safari replaying a cached redirect during Angular
 service-worker navigation.
+
+Translation request versions are generated from the EN/RU file contents before
+builds and development starts; do not edit or commit `frontend/src/content-version.ts`.
+The service worker prefetches each complete application/translation version and
+reloads an open page when `VERSION_READY` arrives. It checks on focus, network
+reconnection and once per minute while visible. Navigation prefers the network,
+with the cached application available offline. HTML, translation and worker
+control files use revalidation headers. A tab still running code from before this
+fix may need a normal reload to pick up the update handler.
+
+The browser suite includes a real service-worker rollout: warm an older page,
+change the served manifest/translations and confirm the open page updates without
+clearing browser data, while preserving its language and URL. `ALIRO_TEST_PORT`
+selects an isolated test port.
 
 This SPA has no server-side rendering. Social crawlers that do not execute
 JavaScript see the static Russian metadata; runtime metadata follows the selected

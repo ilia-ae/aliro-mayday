@@ -1,5 +1,11 @@
 # aliro.mayday
 
+[![Source integrity and supported host tests](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml/badge.svg?branch=main)](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml?query=branch%3Amain)
+[![Hardware: ESP32-S3 + PN532](https://img.shields.io/badge/hardware-ESP32--S3%20%2B%20PN532-00979D)](docs/wiring.ru.md)
+[![Status: prototype](https://img.shields.io/badge/status-prototype-orange)](docs/repository-status-2026-10-14.ru.md)
+[![License: source-available](https://img.shields.io/badge/license-source--available-blue)](LICENSE)
+[![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](docs/README.ru.md)
+
 [English](README.md) · [Документация](docs/README.ru.md) · [Схема подключения](docs/wiring.ru.md)
 
 Экспериментальный контроллер Aliro NFC на ESP32-S3 + PN532 с выдачей ключей
@@ -13,8 +19,8 @@
   аутентификации, ноль отказов и оба Matter-состояния: открыто и закрыто.
   Проверенная приватная резервная копия, ключ и сопряжение сохранены. Matter,
   PN532 NFC и HTTP/WebSocket-панель работают. Исправления запуска/закрытия HTTP
-  и результат проверки находятся в [PR №6](https://github.com/ilia-ae/aliro-mayday/pull/6),
-  ожидающем слияния. Samsung Wallet через SmartThings ещё предстоит проверить.
+  и результат проверки включены в `main` через
+  [PR №6](https://github.com/ilia-ae/aliro-mayday/pull/6). Samsung Wallet через SmartThings ещё предстоит проверить.
 - Прошивка собирается с ESP-IDF v5.4.4 / esp-matter 8d56152. Проходят
   58 сценариев прошивки, включая 22 проверки реальных provisioning callbacks
   и старые iPhone-записи, отказ неверной

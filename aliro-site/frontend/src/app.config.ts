@@ -7,16 +7,15 @@ import {
     provideZonelessChangeDetection
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { provideServiceWorker } from '@angular/service-worker';
+import { provideServiceWorker, SwUpdate } from '@angular/service-worker';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { appRoutes } from './app.routes';
 import { LanguageService } from './app/shared/services/language.service';
+import { SITE_CONTENT_VERSION } from './content-version';
+import { watchForSiteUpdates } from './site-updates';
 
-// Bump when i18n JSON content changes — busts CDN/HTTP caches on first fetch.
-// Angular SW invalidates separately via ngsw.json hashes; this is for
-// pre-SW and out-of-SW users (dev mode, private browsing, force refresh).
-const I18N_VERSION = '2026-05-01.3';
+// Generated from both translation files before each build.
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -35,7 +34,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideTranslateHttpLoader({
             prefix: '/i18n/',
-            suffix: `.json?v=${I18N_VERSION}`
+            suffix: `.json?v=${SITE_CONTENT_VERSION}`
         }),
         // Block first paint until initial translations are loaded so the
         // user never sees raw keys like "hero.title" before real strings.
@@ -43,6 +42,7 @@ export const appConfig: ApplicationConfig = {
         provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
-        })
+        }),
+        provideAppInitializer(() => watchForSiteUpdates(inject(SwUpdate)))
     ]
 };

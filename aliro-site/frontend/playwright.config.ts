@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const port = Number(process.env['ALIRO_TEST_PORT'] || 4444);
+const baseURL = `http://localhost:${port}`;
+
 /* Smoke + content suite for the aliro.mayday landing.
    Boots the production build (`ng build` → http-server) so the test
    target matches what Cloudflare actually serves, not the dev-mode
@@ -12,7 +15,7 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     reporter: [['list']],
     use: {
-        baseURL: 'http://localhost:4444',
+        baseURL,
         trace: 'on-first-retry',
         screenshot: 'only-on-failure'
     },
@@ -28,8 +31,8 @@ export default defineConfig({
     ],
     webServer: {
         command:
-            'npm run build && npx http-server dist/aliro-mayday-software/browser -p 4444 -s --proxy http://localhost:4444? -c-1',
-        url: 'http://localhost:4444',
+            `npm run build && npx http-server dist/aliro-mayday-software/browser -p ${port} -s --proxy ${baseURL}? -c-1`,
+        url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 180_000
     }

@@ -1,14 +1,20 @@
 # Aliro NFC firmware
 
+[![Source integrity and supported host tests](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml/badge.svg?branch=main)](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml?query=branch%3Amain)
+[![Hardware: ESP32-S3 + PN532](https://img.shields.io/badge/hardware-ESP32--S3%20%2B%20PN532-00979D)](../docs/wiring.md)
+[![Status: prototype](https://img.shields.io/badge/status-prototype-orange)](../docs/repository-status-2026-10-14.md)
+[![License: source-available](https://img.shields.io/badge/license-source--available-blue)](../LICENSE)
+[![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](../docs/README.md)
+
 [Русский](README.ru.md) · [Documentation index](../docs/README.md)
 
 Experimental ESP32-S3 + PN532 controller with Matter DoorLock provisioning,
-NVS credential storage and local administration. The iPhone Standard/Fast path
-worked on the May bench and the owner confirmed the existing key still opened
-and closed on 14 October before updating. The update builds and passes the
-supported host suite; updated-firmware iPhone and Samsung Wallet checks remain
-separate acceptance items. A logical unlock is tested;
-a physical relay output and Aliro certification are not established.
+NVS credential storage and local administration. On 15 October 2026, the owner
+confirmed the existing iPhone key works after the update. The current boot records
+three authenticated taps, zero failures and both locked and unlocked Matter states,
+without key reissue or a pairing reset. The supported host suite passes. Samsung
+Wallet issuance, on-device revocation using a separate test key, physical actuation
+and Aliro certification require separate acceptance.
 
 ## Current implementation
 

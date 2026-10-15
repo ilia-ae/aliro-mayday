@@ -1,14 +1,21 @@
 # Прошивка Aliro NFC
 
+[![Source integrity and supported host tests](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml/badge.svg?branch=main)](https://github.com/ilia-ae/aliro-mayday/actions/workflows/source-and-nfc.yml?query=branch%3Amain)
+[![Hardware: ESP32-S3 + PN532](https://img.shields.io/badge/hardware-ESP32--S3%20%2B%20PN532-00979D)](../docs/wiring.ru.md)
+[![Status: prototype](https://img.shields.io/badge/status-prototype-orange)](../docs/repository-status-2026-10-14.ru.md)
+[![License: source-available](https://img.shields.io/badge/license-source--available-blue)](../LICENSE)
+[![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](../docs/README.ru.md)
+
 [English](README.md) · [Оглавление документации](../docs/README.ru.md)
 
 Экспериментальный контроллер ESP32-S3 + PN532 с выдачей ключей через Matter
-DoorLock, хранением в NVS и локальным управлением. Standard/Fast на iPhone
-работал на майском стенде. Октябрьское обновление собирается и проходит
-поддерживаемый набор тестов на компьютере. Проверки настоящих iPhone и Samsung
-Wallet на новой прошивке ещё нужны. Перед обновлением 14 октября владелец
-подтвердил открытие и закрытие прежним ключом iPhone. Проверено логическое
-открытие; физический выход реле и сертификация Aliro не подтверждены.
+DoorLock, хранением в NVS и локальным управлением. 15 октября 2026 владелец
+подтвердил работу прежнего ключа iPhone после обновления. В текущем запуске
+записаны три успешные аутентификации, ноль отказов и оба Matter-состояния —
+открыто и закрыто; перевыдача ключа и сброс сопряжения не потребовались.
+Поддерживаемый набор тестов проходит. Выдача Samsung Wallet, отзыв на устройстве
+с отдельным тестовым ключом, физический привод и сертификация Aliro требуют
+отдельного подтверждения.
 
 ## Текущая реализация
 

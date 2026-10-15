@@ -32,7 +32,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "e349e4618ebd7ad97166bfdfbcc7d82cf34acd588dae7410acae9db53e0fb9c2"
+      "sha256": "549f92dc9f9881f6c5abc515b748e7344848180c935ddb96a1762bfa03c132c0"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -56,7 +56,7 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "2fb8bbdfa5c0f818ea33670380cad4c2b83c96b21ff8042317036498d40e62af"
+      "sha256": "7cdd680ae362ddf21d62486ee9623c19c423c78aa37fe46b5cafd444f7b9602b"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -8268,7 +8268,7 @@
     },
     {
       "path": "aliro-site/.gitignore",
-      "sha256": "1c0b502f8633a290cf3a632866b68ef31d7fac2078b8203d90b197e4783be598"
+      "sha256": "cd3d82886151c374483e27f736ccbca3530c67c62eed363c235ae500bfae8c65"
     },
     {
       "path": "aliro-site/LICENSE",
@@ -8276,7 +8276,7 @@
     },
     {
       "path": "aliro-site/README.md",
-      "sha256": "84adb9fa95e320abad719981a3a2519bd9b20efcc53b73a4a9b908d5b37c90a9"
+      "sha256": "7f62e80925ad068ba69cb64c6611569eb109b985e5f4a8426d0ea260df942794"
     },
     {
       "path": "aliro-site/frontend/.gitignore",
@@ -8296,7 +8296,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/qr.spec.ts",
-      "sha256": "f140753d9aae19f0165313e7ff1acf649a580c89d67de260973cb543b5081f72"
+      "sha256": "e2f911340a16828376900d3567cc3150de5483c8cb8e69e393f61fc83db6b45f"
     },
     {
       "path": "aliro-site/frontend/e2e/screenshot.spec.ts",
@@ -8312,7 +8312,7 @@
     },
     {
       "path": "aliro-site/frontend/ngsw-config.json",
-      "sha256": "ea381e4ccd37cac2be5e14c954dd53802682b48a250fc06cc8af11731a377c8c"
+      "sha256": "780ea90670d88d15918b34adf4f82eeddffec0d4b543a89f14f0e8babb0a0da0"
     },
     {
       "path": "aliro-site/frontend/package-lock.json",
@@ -8320,11 +8320,11 @@
     },
     {
       "path": "aliro-site/frontend/package.json",
-      "sha256": "653aca230d953123ba330f37d7490b6f16c58cbda39af0019cf427b04564c909"
+      "sha256": "374d202e4f380b05619759464b997cfd4e9f5c895cfd431ae00986af7defa38c"
     },
     {
       "path": "aliro-site/frontend/playwright.config.ts",
-      "sha256": "2ce59a7b897ee298676b876ae97ef63947b4a57f9fe7d5cced88412788b57c30"
+      "sha256": "ffd1363de29c11d56a1422cf839b94ca376248b46598d6e6c356902547505aee"
     },
     {
       "path": "aliro-site/frontend/public/apple-touch-icon.png",
@@ -8400,7 +8400,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app.config.ts",
-      "sha256": "9fec909cbaa940996e8283eff9dbc5723e23d10e33cd954162145a2c3c11a0cd"
+      "sha256": "a5895764d1e5551f0e79ef726149e399b9bfdbc9106361bc70db4843da2892b3"
     },
     {
       "path": "aliro-site/frontend/src/app.routes.ts",
@@ -9388,11 +9388,11 @@
     },
     {
       "path": "README.ru.md",
-      "sha256": "575c3c3a2719b7df236ff8bc6d41f2595c17e766b1a74452984886acc05fc624"
+      "sha256": "3e08803bd1a04d5ffcc88382b23cbe3a5445f3e1e5346a0eded3806f48a10e37"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "fec81f63d906b98718bc3e87ad360adf95553e535f15156e6ac22d8ae92ff792"
+      "sha256": "87b91764574220066d3e228fd70cd4fba9d05345425577f796f33baaf9d9e79f"
     },
     {
       "path": "aliro-esp32/tests/README.ru.md",
@@ -9404,7 +9404,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "00d98ef965d80960ad87f8f2bda9a77c70833c92416c7a846994c24bf9e91564"
+      "sha256": "6dc02722b50253d2d710c044bc5ef081d09c9616354d846219708dafa8c360d2"
     },
     {
       "path": "scripts/verify-public-source.py",
@@ -9492,7 +9492,7 @@
     },
     {
       "path": "aliro-site/README.ru.md",
-      "sha256": "54808b17583167471832e990c478b3a6614dcb3e31c441a9295ea27c765adb2a"
+      "sha256": "b8757bab6f80c6d36cf6e9a9d26c5fda76e2280d8bca3e607abf549529d04139"
     },
     {
       "path": "aliro-site/frontend/e2e/source.spec.ts",
@@ -9512,7 +9512,7 @@
     },
     {
       "path": "docs/repository-status-2026-10-14.ru.md",
-      "sha256": "044fef9ac635fa64bcb404d1a597f8e26f14d592b39478fa00de1a8ee527210a"
+      "sha256": "08a691a49c1d39be4162b5d418eb1c198c3b8b393735f91421e62b468b292e60"
     },
     {
       "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",
@@ -9521,6 +9521,22 @@
     {
       "path": "docs/wiring.ru.md",
       "sha256": "e1ede85530435332ccce7d4cb63f48eb647902849efc7d79c8574768cb6937a2"
+    },
+    {
+      "path": "aliro-site/frontend/e2e/cache-update.spec.ts",
+      "sha256": "f71aed85ba271e5934bac84b8a1846d86878eade87c56fe66c4f69e8529ab26e"
+    },
+    {
+      "path": "aliro-site/frontend/public/_headers",
+      "sha256": "6ad8d2b2d309c9067de18980bc963ec15135649196295192696deee52508ec52"
+    },
+    {
+      "path": "aliro-site/frontend/scripts/content-version.mjs",
+      "sha256": "e5e64391e549dbac9bafda188777deabe56eceb44e3dad8ec59d4709d537de38"
+    },
+    {
+      "path": "aliro-site/frontend/src/site-updates.ts",
+      "sha256": "318dffb434c21a826978e33b419d77092bad2f77dea7ad1f783c43f901e4dd40"
     }
   ],
   "omitted": [
