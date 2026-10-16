@@ -275,6 +275,11 @@ CONFIG_ARDUINO_SELECTIVE_OpenThread=n
 CONFIG_ARDUINO_SELECTIVE_PPP=n
 CONFIG_ARDUINO_SELECTIVE_Preferences=n
 CONFIG_ARDUINO_SELECTIVE_RainMaker=n
+# The dependency is compiled but never initialized by this application.
+# Match the working SDK profile; assisted-claim code in RainMaker 1.5.2
+# cannot compile when its network transport is disabled.
+CONFIG_ESP_RMAKER_SELF_CLAIM=y
+CONFIG_ESP_RMAKER_ASSISTED_CLAIM=n
 CONFIG_ARDUINO_SELECTIVE_SD=n
 CONFIG_ARDUINO_SELECTIVE_SD_MMC=n
 CONFIG_ARDUINO_SELECTIVE_SPI=n
@@ -303,3 +308,12 @@ CONFIG_ALIRO_OLED_PANEL=y
 # via USB for dev. Enable only for release builds, after the Aliro reader
 # logic works end-to-end. See TODO.md §7.6 (security audit).
 # CONFIG_SECURE_FLASH_ENC_ENABLED=y
+
+# Telegram HTTPS validates api.telegram.org against the Espressif CA bundle.
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=y
+
+# Keep the existing 2.5 MiB OTA slots and all credential/NVS offsets.
+# HTTPS + Telegram exceed a slot with the SDK's default -Og build.
+CONFIG_COMPILER_OPTIMIZATION_DEBUG=n
+CONFIG_COMPILER_OPTIMIZATION_SIZE=y

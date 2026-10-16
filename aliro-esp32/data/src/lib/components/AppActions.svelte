@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AccessIntegrations from './AccessIntegrations.svelte';
   import { t } from '$lib/stores/i18n.svelte';
   import { saveConfig } from '$lib/services/api';
   import type { ActionsConfig } from '$lib/types/api';
@@ -9,7 +10,7 @@
     error,
   }: { actions: ActionsConfig; error?: string | null } = $props();
 
-  let activeTab = $state<'nfc' | 'state'>('nfc');
+  let activeTab = $state<'nfc' | 'state' | 'relay' | 'telegram'>('nfc');
 
   // svelte-ignore state_referenced_locally
   let actionsConfig = $state<ActionsConfig>($state.snapshot(actions));
@@ -55,7 +56,7 @@
       </svg>
       {t("Hardware Actions")}
     </h1>
-    <p class="text-sm text-base-content/60">{t("Configure GPIO and NeoPixel actions for NFC and state events.")}</p>
+    <p class="text-sm text-base-content/60">{t("Configure relay control, Telegram and legacy NFC actions.")}</p>
   </div>
 
   {#if !actions && error}
@@ -65,7 +66,7 @@
   {:else if actions}
     <form onsubmit={saveActionsConfig} class="max-w-5xl">
       <!-- Tabs -->
-      <div class="flex bg-base-300 p-1 rounded-xl gap-1 mb-4">
+      <div class="grid grid-cols-2 sm:grid-cols-4 bg-base-300 p-1 rounded-xl gap-1 mb-4">
         <button
           type="button"
           class="flex-1 tab flex-col py-2 rounded-lg transition-colors {activeTab === 'nfc' ? 'bg-base-100 text-primary font-medium shadow-sm' : 'text-base-content/60 hover:bg-base-200'}"
@@ -108,10 +109,15 @@
           </svg>
           <span class="text-[10px] sm:text-xs mt-0.5">{t("State Triggers")}</span>
         </button>
+        {#each ['relay', 'telegram'] as tab}
+          <button type="button" class="tab py-2 rounded-lg h-auto min-h-12 {activeTab === tab ? 'bg-base-100 text-primary font-medium shadow-sm' : 'text-base-content/60'}" onclick={() => activeTab = tab as 'relay' | 'telegram'}>{t(tab === 'relay' ? 'Relay control' : 'Telegram integration')}</button>
+        {/each}
       </div>
 
       <!-- Tab Content -->
-      {#if activeTab === 'nfc'}
+      {#if activeTab === 'relay' || activeTab === 'telegram'}
+        <AccessIntegrations section={activeTab} />
+      {:else if activeTab === 'nfc'}
         <div class="space-y-2">
           <div class="collapse collapse-arrow bg-base-200">
                 <input type="checkbox" name="pixel-nfc-collapse" checked />
@@ -829,11 +835,13 @@
             </div>
       {/if}
 
+      {#if activeTab === 'nfc' || activeTab === 'state'}
       <!-- Action Buttons -->
       <div class="flex flex-wrap gap-3 mt-6">
         <button type="submit" class="btn btn-primary">{t("Save & Apply changes")}</button>
         <button type="button" class="btn btn-ghost" onclick={resetForm}>{t("Reset")}</button>
       </div>
+      {/if}
     </form>
   {/if}
 </div>

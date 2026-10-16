@@ -117,6 +117,7 @@ private:
   // HTTP Route Handlers (Static)
   // ------------------------------------------------------------------------
   static esp_err_t handleGetConfig(httpd_req_t *req);
+  static esp_err_t handleIntegrations(httpd_req_t *req);
   static esp_err_t handleGetEthConfig(httpd_req_t *req);
   static esp_err_t handleGetNfcPresets(httpd_req_t *req);
   static esp_err_t handleClearConfig(httpd_req_t *req);
@@ -183,6 +184,7 @@ private:
 
   // HTTP Server
   httpd_handle_t m_server;
+  bool m_secureTransport = false;
   static const char *TAG;
   std::string m_sessionId;
 

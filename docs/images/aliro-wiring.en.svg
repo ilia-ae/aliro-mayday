@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1160" height="1040" viewBox="0 0 1160 1040" role="img" aria-labelledby="title desc">
 <title id="title">Aliro · wiring diagram</title>
-<desc id="desc">CS GPIO10, SCK GPIO12, MISO GPIO13, MOSI GPIO11. I2C SDA GPIO8, SCL GPIO9. No relay / electric-lock output assigned yet</desc>
+<desc id="desc">CS GPIO10, SCK GPIO12, MISO GPIO13, MOSI GPIO11. I2C SDA GPIO8, SCL GPIO9. Relay disabled by default · choose a free GPIO explicitly</desc>
 <style>text{font-family:Arial,Helvetica,sans-serif;fill:#17243b} .muted{fill:#526177} .mono{font-family:monospace} .wire{fill:none;stroke-width:3}</style>
 <rect width="1160" height="1040" fill="#f6f8fb"/>
 <text x="44" y="57" font-size="32" font-weight="700">Aliro · wiring diagram</text>
@@ -84,8 +84,8 @@
 <text x="580" y="713" font-size="16" text-anchor="middle" class="muted">GND</text>
 <text x="810" y="754" font-size="15" class="mono">ByteButton 0x47 · OLED 0x3C</text>
 <rect x="44" y="803" width="1072" height="87" rx="12" fill="#eef2f8"/>
-<text x="66" y="836" font-size="22" font-weight="700">No relay / electric-lock output assigned yet</text>
-<text x="66" y="867" font-size="17" class="muted">Firmware updates Matter state and indicators. GPIO48 drives the LED only.</text>
+<text x="66" y="836" font-size="22" font-weight="700">Relay disabled by default · choose a free GPIO explicitly</text>
+<text x="66" y="867" font-size="17" class="muted">Actions → Relay control: external driver required. GPIO48 drives the LED only.</text>
 <text x="44" y="924" font-size="19" font-weight="700">* 3V3 → VCC only if the PN532 module accepts a 3.3 V supply.</text>
 <text x="44" y="956" font-size="17" class="muted">Check VCC and SPI mode for your module. ESP32 signal levels: 3.3 V.</text>
 <text x="44" y="988" font-size="19" font-weight="700">GPIO9 = SCL. Do not connect PN532 RST to GPIO9.</text>

@@ -71,4 +71,8 @@ dependencies:
   # OFF (CONFIG_AUTOSTART_ARDUINO=n) so our esp-idf app_main keeps the
   # entry point; setup()/loop() never run.
   espressif/arduino-esp32:
-    version: "^3.3.5"
+    # Keep the SDK used by the working iPhone build. A floating 3.3.x range
+    # currently resolves to incompatible RainMaker/common component versions.
+    version: "3.3.8"
+  espressif/esp_rainmaker:
+    version: "1.5.2"

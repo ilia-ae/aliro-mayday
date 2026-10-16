@@ -205,6 +205,12 @@ for (const lang of ['en', 'ru'] as const)
                 await tab('State Triggers');
                 await page.locator('input[name="state-collapse"]').check();
                 await audit('actions-state');
+                await tab('Relay control');
+                await page.getByRole('heading', { name: t('Relay control'), exact: true }).waitFor();
+                await audit('actions-relay');
+                await tab('Telegram integration');
+                await page.getByRole('heading', { name: t('Telegram integration'), exact: true }).waitFor();
+                await audit('actions-telegram');
                 await open('/misc');
                 await audit('system-homekit');
                 await tab('Hardware');
@@ -299,6 +305,7 @@ for (const lang of ['en', 'ru'] as const)
                     }
                 };
                 const navigate = async (name: string) => {
+                    await page.locator('#controller-ui iframe').scrollIntoViewIfNeeded();
                     const menu = panel.locator('label.drawer-button[for="main-content-drawer"]');
                     if (await menu.isVisible()) await menu.click();
                     await panel
@@ -320,6 +327,12 @@ for (const lang of ['en', 'ru'] as const)
                 await audit('actions');
                 await panel.getByRole('button', { name: t('State Triggers'), exact: true }).click();
                 await audit('actions-state');
+                await panel.getByRole('button', { name: t('Relay control'), exact: true }).click();
+                await panel.getByRole('heading', { name: t('Relay control'), exact: true }).waitFor();
+                await audit('actions-relay');
+                await panel.getByRole('button', { name: t('Telegram integration'), exact: true }).click();
+                await panel.getByRole('heading', { name: t('Telegram integration'), exact: true }).waitFor();
+                await audit('actions-telegram');
                 await navigate('System');
                 await audit('system');
                 await panel.getByRole('button', { name: t('Hardware'), exact: true }).click();

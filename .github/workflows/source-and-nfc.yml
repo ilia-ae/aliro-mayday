@@ -37,6 +37,15 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: python3 scripts/verify-public-source.py
 
+  access-integrations:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - run: sudo apt-get update && sudo apt-get install -y cmake libcjson-dev
+      - run: cmake -S aliro-esp32/components/access_integrations/tests -B /tmp/access-tests -DCMAKE_BUILD_TYPE=Debug
+      - run: cmake --build /tmp/access-tests --parallel 2
+      - run: ctest --test-dir /tmp/access-tests --output-on-failure
+
   host:
     runs-on: ubuntu-24.04
     timeout-minutes: 20

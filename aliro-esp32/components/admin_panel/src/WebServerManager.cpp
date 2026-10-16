@@ -26,6 +26,7 @@
 #include <WiFi.h>
 #include "MqttManager.hpp"
 #include "ReaderDataManager.hpp"
+#include "AccessIntegrations.hpp"
 #include "cJSON.h"
 #include "config.hpp"
 #include "esp_chip_info.h"
@@ -139,7 +140,7 @@ WebServerManager::~WebServerManager() {
   }
 
   if (m_server) {
-    httpd_stop(m_server);
+    if (m_secureTransport) httpd_ssl_stop(m_server); else httpd_stop(m_server);
     m_server = nullptr;
   }
   if (m_statusTimer) {
@@ -188,7 +189,7 @@ void WebServerManager::begin() {
   bool isApMode = (wifiErr == ESP_OK && (currentMode == WIFI_MODE_AP || currentMode == WIFI_MODE_APSTA));
   bool isHttpsEnabled = m_configManager.getConfig<espConfig::misc_config_t>().webHttpsEnabled;
   httpd_ssl_config_t ssl_config = HTTPD_SSL_CONFIG_DEFAULT();
-  ssl_config.httpd.max_uri_handlers = 22;
+  ssl_config.httpd.max_uri_handlers = 26;
   ssl_config.httpd.max_open_sockets = 4;
   // Keep the HTTP stack at 8 KiB: larger stacks starve radio/mDNS tasks.
   // Request cleanup also uses stack space; sdkconfig.defaults bounds its
@@ -228,23 +229,27 @@ void WebServerManager::begin() {
     } else ESP_LOGI(TAG, "No user HTTPS certificates found");
   }
 
-  // httpd_ssl_start panics on the aliro-esp32 build path when called
-  // before WiFi has an IP (esp-tls init reaches into a not-yet-initialized
-  // network interface). For now we fall through to plain httpd_start —
-  // the device runs in INSECURE mode anyway by default
-  // (webHttpsEnabled=false). HTTPS path stays in the code as a TODO,
-  // gated on a fully-up WiFi STA / AP. To restore: deferr WebServerManager
-  // begin() to a kInternetConnectivityChange event in app_main.
+  // begin() is deferred until IP-up by app_main. HTTPS is explicit opt-in;
+  // never accept bot tokens on the plain HTTP/AP recovery server.
   httpd_config_t plain_cfg = ssl_config.httpd;
   plain_cfg.uri_match_fn = httpd_uri_match_wildcard;
   // HTTPD_SSL_CONFIG_DEFAULT() sets .server_port = 0 (OS-picks-ephemeral)
   // because httpd_ssl_start overrides it later. Plain httpd_start honours
   // whatever's there, so we must explicitly set 80.
   plain_cfg.server_port = 80;
-  const auto start_result = httpd_start(&m_server, &plain_cfg);
+  esp_err_t start_result;
+  m_secureTransport = isHttpsEnabled && !isApMode;
+  if (m_secureTransport) {
+    if (!ssl_config.servercert || !ssl_config.prvtkey_pem) {
+      ESP_LOGE(TAG, "HTTPS requires a server certificate and private key");
+      m_secureTransport = false;
+      return;
+    }
+    start_result = httpd_ssl_start(&m_server, &ssl_config);
+  } else start_result = httpd_start(&m_server, &plain_cfg);
   if (start_result == ESP_OK) {
-    ESP_LOGI(TAG, "HTTP server started (plain), free heap: %zu",
-             esp_get_free_heap_size());
+    ESP_LOGI(TAG, "Admin server started (%s), free heap: %zu",
+             m_secureTransport ? "HTTPS" : "HTTP", esp_get_free_heap_size());
   } else {
     ESP_LOGE(TAG, "Failed to start HTTP server: %s (internal largest=%u)",
              esp_err_to_name(start_result),
@@ -261,7 +266,7 @@ void WebServerManager::begin() {
   m_wsQueue = xQueueCreate(20, sizeof(WsFrame *));
   if (!m_wsQueue) {
     ESP_LOGE(TAG, "Failed to create WebSocket queue");
-    httpd_stop(m_server);
+    if (m_secureTransport) httpd_ssl_stop(m_server); else httpd_stop(m_server);
     m_server = nullptr;
     return;
   }
@@ -280,7 +285,7 @@ void WebServerManager::begin() {
     vQueueDelete(m_wsQueue);
     m_wsQueue = nullptr;
     m_wsTaskHandle = nullptr;
-    httpd_stop(m_server);
+    if (m_secureTransport) httpd_ssl_stop(m_server); else httpd_stop(m_server);
     m_server = nullptr;
     return;
   }
@@ -340,7 +345,7 @@ void WebServerManager::end() {
   if(!m_isInitialized) return;
 
   if (m_server) {
-    httpd_stop(m_server);
+    if (m_secureTransport) httpd_ssl_stop(m_server); else httpd_stop(m_server);
     m_server = nullptr;
   }
 
@@ -386,6 +391,62 @@ bool WebServerManager::basicAuth(httpd_req_t* req){
   return authReq == digest;
 }
 
+esp_err_t WebServerManager::handleIntegrations(httpd_req_t *req) {
+  auto *instance = static_cast<WebServerManager *>(req->user_ctx);
+  if (!instance) return ESP_FAIL;
+  httpd_resp_set_type(req, "application/json");
+  httpd_resp_set_hdr(req, "Cache-Control", "no-store");
+  if (!instance->basicAuth(req)) return sendAuthFailure(req);
+  auto reply = [req](cJSON *body, const char *status = "200 OK") {
+    httpd_resp_set_status(req, status);
+    char *text = cJSON_PrintUnformatted(body);
+    auto result = text ? httpd_resp_sendstr(req, text) : ESP_FAIL;
+    cJSON_free(text); cJSON_Delete(body); return result;
+  };
+  auto fail = [&reply](const char *message, const char *status) {
+    auto *j = cJSON_CreateObject(); cJSON_AddBoolToObject(j, "success", false);
+    cJSON_AddStringToObject(j, "error", message); return reply(j, status);
+  };
+  const auto &security = instance->m_configManager.getConfig<espConfig::misc_config_t>();
+  if (req->method == HTTP_POST) {
+    if (!security.webAuthEnabled) return fail("Enable panel authentication before changing integrations.", "403 Forbidden");
+    char marker[32]{}, contentType[64]{};
+    // A cross-origin HTML form cannot supply this header or JSON content type.
+    // No CORS/OPTIONS permissions are granted for these endpoints.
+    if (httpd_req_get_hdr_value_str(req, "X-Aliro-Request", marker, sizeof(marker)) != ESP_OK || strcmp(marker, "integrations-ui") ||
+        httpd_req_get_hdr_value_str(req, "Content-Type", contentType, sizeof(contentType)) != ESP_OK || strncmp(contentType, "application/json", 16))
+      return fail("Invalid integration request.", "403 Forbidden");
+    if (req->content_len < 2 || req->content_len > 2048) return fail("Invalid integration settings.", "400 Bad Request");
+    std::string body(req->content_len, '\0');
+    size_t received = 0; unsigned timeouts = 0;
+    while (received < body.size()) {
+      int count = httpd_req_recv(req, body.data() + received, body.size() - received);
+      if (count == HTTPD_SOCK_ERR_TIMEOUT && ++timeouts <= 2) continue;
+      if (count <= 0) return fail("Incomplete integration request.", "400 Bad Request");
+      received += count;
+    }
+    auto *j = cJSON_ParseWithLengthOpts(body.c_str(), body.size() + 1, nullptr, true);
+    if (!j) return fail("Invalid integration settings.", "400 Bad Request");
+    auto *token = cJSON_GetObjectItemCaseSensitive(j, "token");
+    bool secretWrite = cJSON_IsString(token) && token->valuestring[0];
+    if (secretWrite && !instance->m_secureTransport) {
+      cJSON_Delete(j); std::fill(body.begin(), body.end(), '\0');
+      return fail("Enable panel HTTPS before entering a bot token.", "403 Forbidden");
+    }
+    std::string error;
+    bool testing = strncmp(req->uri, "/api/integrations/test", 22) == 0;
+    bool ok = testing ? aliro::access::testNotification(error) : aliro::access::configure(j, error);
+    cJSON_Delete(j); std::fill(body.begin(), body.end(), '\0');
+    if (!ok) return fail(error.c_str(), "400 Bad Request");
+  }
+  auto *j = cJSON_CreateObject(); cJSON_AddBoolToObject(j, "success", true);
+  auto *data = aliro::access::status();
+  cJSON_AddBoolToObject(data, "authEnabled", security.webAuthEnabled);
+  cJSON_AddBoolToObject(data, "httpsEnabled", instance->m_secureTransport);
+  cJSON_AddItemToObject(j, "data", data);
+  return reply(j);
+}
+
 // ============================================================================
 // Route Setup
 // ============================================================================
@@ -408,6 +469,9 @@ void WebServerManager::setupRoutes() {
 
       // Configuration endpoints
       {"/config", HTTP_GET, handleGetConfig, this},
+      {"/api/integrations", HTTP_GET, handleIntegrations, this},
+      {"/api/integrations", HTTP_POST, handleIntegrations, this},
+      {"/api/integrations/test", HTTP_POST, handleIntegrations, this},
       {"/config/clear", HTTP_POST, handleClearConfig, this},
       {"/config/save", HTTP_POST, handleSaveConfig, this},
       {"/eth_get_config", HTTP_GET, handleGetEthConfig, this},
@@ -2077,6 +2141,10 @@ esp_err_t WebServerManager::handleWebSocketMessage(httpd_req_t *req,
     if(level_item && cJSON_IsNumber(level_item)) {
       esp_log_level_t level = esp_log_level_t(level_item->valueint >= 0 && level_item->valueint < 6 ? level_item->valueint : ESP_LOG_WARN);
       esp_log_level_set("*", level);
+      // Bot API credentials are embedded in request paths; never enable the
+      // HTTP client's request/header diagnostics through the panel.
+      esp_log_level_set("HTTP_CLIENT", ESP_LOG_NONE);
+      esp_log_level_set("TRANSPORT_BASE", ESP_LOG_NONE);
       loggable::Sinker::instance().set_level(level_item->valueint >= 0 && level_item->valueint < 6 ? (loggable::LogLevel)level_item->valueint : loggable::LogLevel::Warning);
       m_configManager.updateFromJson<espConfig::misc_config_t>("{\"logLevel\":" + std::to_string(level) + "}");
       m_configManager.saveConfig<espConfig::misc_config_t>();

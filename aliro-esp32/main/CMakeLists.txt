@@ -19,6 +19,7 @@ idf_component_register(
     INCLUDE_DIRS
         "."
     PRIV_REQUIRES
+        access_integrations
         esp_matter
         nvs_flash
         bt

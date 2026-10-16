@@ -183,3 +183,7 @@ NFC precomputation uses an 8 KiB stack; polling/document verification uses 12 Ki
 The previous 4 KiB precompute worker overflowed with the updated DDK. HTTP/WebSocket
 startup reports actual readiness, retries temporary allocation failures, and
 handles an IP-up event that arrived before the admin object was constructed.
+
+## Relay and Telegram notifications
+
+[Relay and Telegram notifications](../docs/access-integrations.md). Implemented in shared source and the browser demo; disabled by default. The physical controller has not been flashed or tested with these integrations. Telegram is notifications only.

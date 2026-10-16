@@ -8,7 +8,7 @@
     },
     {
       "path": ".github/workflows/source-and-nfc.yml",
-      "sha256": "6e94d3fabb09e14a3fb82142a03bab922a10097694924582515a6811f0231657"
+      "sha256": "8c9e1db79a463e723f23ca7acb08e5d5daa4531bde46e1f085a8b53919f5f8b9"
     },
     {
       "path": ".gitignore",
@@ -72,11 +72,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "f740504358ac1e544458627d0ac7973f39fd0001caf13618592129b75a9a78e2"
+      "sha256": "9675aa7d1fe97c77ab19c52ef9fbfbce95909f6c95b87ce1ab2f65bd67f679d8"
     },
     {
       "path": "README.ru.md",
-      "sha256": "61d39480fb78ac0af93a623681be0369c1022766f3adb9b77dce28454441f6f5"
+      "sha256": "f8e9ad9bd5c4966b53fe81cb5fa1ce5d4415195af7e7e06968443dbf87a59e5f"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -100,11 +100,11 @@
     },
     {
       "path": "aliro-esp32/README.md",
-      "sha256": "171f1eb1e1280226f8e0871893a3ca570c4eb17b06ce07fafc501ff936d7ff28"
+      "sha256": "3a9ae9e65ea02bd9478a294dc675085824f8bbeddd0e617839456ed3fa5f152e"
     },
     {
       "path": "aliro-esp32/README.ru.md",
-      "sha256": "1401d25e4d00a9f30c9cf8038ec1bbae2b427ff4710d27b2ae927ba73be9b715"
+      "sha256": "b1ab4b285604f15365def708006ebcf356a1cb1bfec26c30a5fc39fa78d7642f"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -623,8 +623,36 @@
       "sha256": "a522df0b782620f58d5528cd7e73b880262ba833b4f48a4cfa6744c6fb2a7b21"
     },
     {
+      "path": "aliro-esp32/components/access_integrations/AccessIntegrations.cpp",
+      "sha256": "db51a1edc4b773f7d50dceb3bb57d6352c3e5a41026c9489ca0f2e52ce1405c9"
+    },
+    {
+      "path": "aliro-esp32/components/access_integrations/CMakeLists.txt",
+      "sha256": "06182fabe06ce22b1fe412051099aa87285d1ba2c8507f78e9353b4d1924b272"
+    },
+    {
+      "path": "aliro-esp32/components/access_integrations/include/AccessIntegrations.hpp",
+      "sha256": "bd9de2df0d27215823f591f06f37c06a1680efd71c7f09c220314ddcb5ab20f4"
+    },
+    {
+      "path": "aliro-esp32/components/access_integrations/include/AccessJson.hpp",
+      "sha256": "e4b286b1cf9963520a6f0fd1d950e4552c94c81f31bfa2f9968763fa7e6f7f6f"
+    },
+    {
+      "path": "aliro-esp32/components/access_integrations/include/AccessPolicy.hpp",
+      "sha256": "55c70492ed0f31861fa595d91a2b7b312c271fc831c73fd85e9506f4200384dd"
+    },
+    {
+      "path": "aliro-esp32/components/access_integrations/tests/AccessCoreTest.cpp",
+      "sha256": "65cb728982b14837be7b873e0b681f5963b76d4e9bf015ab5dff093a2e7f392d"
+    },
+    {
+      "path": "aliro-esp32/components/access_integrations/tests/CMakeLists.txt",
+      "sha256": "241d76866bbdd2e399930ad2db8f9a70c78f6f136c04980d03e327d1f2032bc4"
+    },
+    {
       "path": "aliro-esp32/components/admin_panel/CMakeLists.txt",
-      "sha256": "4322128dce996dce86913b20fdd54d1aaa3fa60952c09130048bcdaefd858eaa"
+      "sha256": "ab679277fea2e537397d92fab1189b8f9adb5c8e7bd1199ea6ceb8ebca2a702c"
     },
     {
       "path": "aliro-esp32/components/admin_panel/LICENSE",
@@ -668,7 +696,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/include/WebServerManager.hpp",
-      "sha256": "bf8df892a98937d04b5d4b4b2e90e96875902746c1c4e4f294e83c989fdb0997"
+      "sha256": "5651e1d6f5ab1bfc4c2b6d9b8da7ac2f0a98ccbbd88e1060f2f927efcfaa95e0"
     },
     {
       "path": "aliro-esp32/components/admin_panel/include/WebSocketLogSinker.h",
@@ -716,7 +744,7 @@
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebServerManager.cpp",
-      "sha256": "887cc323f3f54cfd1a3eebc645aeda8101269b8cb9a68ee1e467c35cb241eeb3"
+      "sha256": "a64a811b8d0e82e038d05bce07581e5ec2b52138f03b7f880faa53945b99cb62"
     },
     {
       "path": "aliro-esp32/components/admin_panel/src/WebSocketLogSinker.cpp",
@@ -8027,8 +8055,12 @@
       "sha256": "a162d857481ee0161fecd370c7f1588e6397a1000a7e465713241f5caf1ce6a4"
     },
     {
+      "path": "aliro-esp32/data/src/lib/components/AccessIntegrations.svelte",
+      "sha256": "653da6b5bedf42711f81e76790c2a68cdfdaa6d4aa1fe706f4e9ce058c211edb"
+    },
+    {
       "path": "aliro-esp32/data/src/lib/components/AppActions.svelte",
-      "sha256": "a088373856fdd90d548a4f709f20d3dd49643b148a7ca7c840fbc801bf496949"
+      "sha256": "09ccdd0ed8fdb808a54c149ab33c791fd9d0e53c9c4c433fc8f7bf4a5ad1fdfc"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/AppMisc.svelte",
@@ -8100,7 +8132,7 @@
     },
     {
       "path": "aliro-esp32/data/src/lib/i18n/ru.json",
-      "sha256": "f0d6f7528718e6b83ce36efbb4821441d8f7396cb7ecc5f62a3c7cdf46673fc7"
+      "sha256": "b1793e7e56a9dc47b93a1b9b7c069b4172d6bca79d729bee71b050486f9c39ae"
     },
     {
       "path": "aliro-esp32/data/src/lib/index.ts",
@@ -8208,7 +8240,7 @@
     },
     {
       "path": "aliro-esp32/data/src/routes/layout.svelte",
-      "sha256": "daf15e9bc8e1036cc78973eafbcc516045eb36d38c9b6ccbe8c66958239beaa9"
+      "sha256": "c5d64d0966da52d6b60ebb37133b11994b113415512787c6c4eb7259caebe204"
     },
     {
       "path": "aliro-esp32/data/src/routes/logs/index.svelte",
@@ -8272,7 +8304,7 @@
     },
     {
       "path": "aliro-esp32/main/CMakeLists.txt",
-      "sha256": "69c66e0b9c4564523fb50c06132ebb82063a9cb074955323dbc67b67e1598169"
+      "sha256": "aec5f7345c17f025b7702281ad2395e14e9f4a14c3ca3e6e51fabab8f82b7262"
     },
     {
       "path": "aliro-esp32/main/DDKAuthContext.cpp",
@@ -8328,7 +8360,7 @@
     },
     {
       "path": "aliro-esp32/main/LockHandlers.cpp",
-      "sha256": "6c75db4b922e19ecdf468f08dacf33135af3de3cb95f01f02a0f4252ea85e4a6"
+      "sha256": "020aab52686112e87390e18b0302ec05bd6fa211290cc3524a385af85b07c2cd"
     },
     {
       "path": "aliro-esp32/main/NfcManager.cpp",
@@ -8396,7 +8428,7 @@
     },
     {
       "path": "aliro-esp32/main/app_main.cpp",
-      "sha256": "fbcf541976be0bb183e9a7db02bb5b3a48ac73a4de37a7ea015819269d144421"
+      "sha256": "82d495b95d6cd92f5d0b19c15f014575fa907d9ef9bdee5e3bbd5f7eef37414d"
     },
     {
       "path": "aliro-esp32/main/eventStructs.hpp",
@@ -8404,7 +8436,7 @@
     },
     {
       "path": "aliro-esp32/main/idf_component.yml",
-      "sha256": "dc41fb87e88e82763963542272091001bef96a9316945ad47983119cb273fbc1"
+      "sha256": "93134822cb1dae708316443afebde17e0baf0ff91e80259868b0e7955b3cbb82"
     },
     {
       "path": "aliro-esp32/main/utils.hpp",
@@ -8416,7 +8448,7 @@
     },
     {
       "path": "aliro-esp32/sdkconfig.defaults",
-      "sha256": "2b7e92b0ae8659b70d96caeaf80e2b7bbf7b7acabc222e7fffc0d8750cc12d80"
+      "sha256": "2b5de920f2e204e44879f385ad8c6125460e1dff7326bf33b17cdb99ec9491cf"
     },
     {
       "path": "aliro-esp32/tests/README.md",
@@ -8515,6 +8547,10 @@
       "sha256": "f71aed85ba271e5934bac84b8a1846d86878eade87c56fe66c4f69e8529ab26e"
     },
     {
+      "path": "aliro-site/frontend/e2e/controller-integrations.spec.ts",
+      "sha256": "b8902eda82f43be740b1f66d8bcf78741394e9c225c3bb8d8d15b35ef16c597c"
+    },
+    {
       "path": "aliro-site/frontend/e2e/controller-live-demo.spec.ts",
       "sha256": "9e9fca9fb3a3791b4481806b56fec14068239f84ce96867b624ca3dddd3e9700"
     },
@@ -8524,7 +8560,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/controller-responsive.spec.ts",
-      "sha256": "079b6030a42627b2c635370009ed484367d13e9d4399b9301a2e2b57f620b530"
+      "sha256": "8631ade03981f3f4e667a93f2f64260bfd07c21094b062f6216fc210d71c9948"
     },
     {
       "path": "aliro-site/frontend/e2e/controller-ui.spec.ts",
@@ -8596,11 +8632,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "1715e48d01138e27aad25e5af864062a21c78b21606b24e3d67700d00886553d"
+      "sha256": "df20fd5ab406dde4f9a9b66bdee6cd138a7cc601f2c095f7f2cf1ed08f2e3ba5"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "e582db0343f9ab59a6a66d8f88b43c12de82e3f5828a0a3a98e29f9f618fc31f"
+      "sha256": "4cb209870ad4895a48d2cd80976a15b26b559a8e4cd1688c4d656dc9a06de56a"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8887,6 +8923,14 @@
       "sha256": "e5173b3f6eed1074e9e66dcfd29b46cb3ae60d98dbfabf7a26502bd333692bfb"
     },
     {
+      "path": "docs/access-integrations.md",
+      "sha256": "ed512aefe9d4ac5256cd23f307b53df61624a2c58366c7b5d7582c875a46320b"
+    },
+    {
+      "path": "docs/access-integrations.ru.md",
+      "sha256": "7c2581a59265d18832a4222c854cb12db9ec7113be223b51f8a0219355100e38"
+    },
+    {
       "path": "docs/aliro-access-policy-2026-10-14.md",
       "sha256": "7d294a3b43ac42f4eb7b1bb97a4df4ac468d76c624328d14dd0d6030a6bdbd95"
     },
@@ -8940,15 +8984,15 @@
     },
     {
       "path": "docs/hardware-reference.md",
-      "sha256": "e94ef429ce2327d80d1e518bad6eeff38023695c39b5ec717a900f58313f5c86"
+      "sha256": "de11a1a96ffacce7506da2343b01a1480857d0269218ad4e67b37d9385a75875"
     },
     {
       "path": "docs/images/aliro-wiring.en.svg",
-      "sha256": "34f3b5c0005f325785f3a823bc12ac28b1c65c3b4aec8e6e89cc93896d740804"
+      "sha256": "fa509d1edf93e0f6baf0fdda3d9fe22de90f66c95d90150c2d11ae9acc6d6da2"
     },
     {
       "path": "docs/images/aliro-wiring.ru.svg",
-      "sha256": "c168a6e162ad95ba0fbc81caa375dd47101db8d28f720da93525b57d841f052a"
+      "sha256": "faf1c9b72674bd71622a620a651e8dd1dbea50752085b88dc0979e6b2c8a8092"
     },
     {
       "path": "docs/licensing-inventory-2026-10-15.json",
@@ -9036,11 +9080,11 @@
     },
     {
       "path": "docs/wiring.md",
-      "sha256": "e78dd2044f1f1070cd5406ac73cbb80bad02835202306cf21b4298a8a391d942"
+      "sha256": "3cbac93616ebe80977a369b530181eb48bd22c67754aa5aa7997d1b7bddacb03"
     },
     {
       "path": "docs/wiring.ru.md",
-      "sha256": "e1ede85530435332ccce7d4cb63f48eb647902849efc7d79c8574768cb6937a2"
+      "sha256": "12ab4e4e4a9657968ac7b0a713ec291bd554f9a0947e8130dcd5566962cf89b2"
     },
     {
       "path": "homekey-esp32/.clangd",
@@ -9736,15 +9780,15 @@
     },
     {
       "path": "scripts/controller-ui-browser-demo.mjs",
-      "sha256": "00f67fe9f675d7dcc2dd039fdf05f3d9068f0a083f597ef620dceffc1b14de4e"
+      "sha256": "11cfc53a28588d0ebff5152cd101e484a112730452db1c01c35c6d048c77aa81"
     },
     {
       "path": "scripts/controller-ui-demo.mjs",
-      "sha256": "0cdee675ee27c4df685fd172261a3fa31c77c3f9e2007c3b812a067d5bef8cac"
+      "sha256": "30aafa8a71af5e7314fdc485b8399d2f171a4a9749449bc497003ba984f524fa"
     },
     {
       "path": "scripts/controller-ui-fixtures.mjs",
-      "sha256": "00115e8235ffd04304d8b42d274c069096319d7f7f1f6384049ba710c5895f08"
+      "sha256": "77cfbf17e054f54d8b93aa7f1a7d3b3a50a42752d7836e1139b388955eb6d25f"
     },
     {
       "path": "scripts/debug-controller-ui.mjs",
@@ -9768,7 +9812,11 @@
     },
     {
       "path": "scripts/tests/controller-ui-debug.test.mjs",
-      "sha256": "abf0cf9ff71fffc4bdfec054c930ebb1b9455ab4de5c1993de51bf530c212631"
+      "sha256": "662423e3dd22065c213664c3a07e410f89e5ab6793028f81dd06e3096610acaf"
+    },
+    {
+      "path": "scripts/tests/controller-ui-integrations.test.mjs",
+      "sha256": "c1e2efe0a52a03cbfd08a39d788635302f3b957ec980f4f5ea79ed5db7b75f00"
     },
     {
       "path": "scripts/tests/controller-ui-preferences.test.mjs",

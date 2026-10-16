@@ -122,7 +122,7 @@
         <PanelPreferences />
         {#if __DEMO__}
           <div role="note" class="alert bg-base-200 border border-base-content/15 shrink-0 mt-2 flex flex-wrap justify-between gap-3">
-            <span>{t('Demo preview — sample data. No controller connected; changes are disabled.')}</span>
+            <span>{t('Demo preview — sample data. Relay and Telegram simulations stay in this browser; no controller is connected.')}</span>
             {#if __WEB_DEMO__}
               <a class="link whitespace-nowrap" target="_blank" rel="noopener noreferrer" href={`/?lang=${language.current}#controller-ui`}>{t('Project website ↗')}</a>
             {/if}

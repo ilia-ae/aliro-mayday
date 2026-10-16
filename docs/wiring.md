@@ -59,9 +59,10 @@ this guide and the current firmware are authoritative for this build.
 - `GPIO48` drives the built-in WS2812 RGB indicator on the DevKitC-class target.
   It indicates state; it is not an actuator output. Another board revision may
   place its built-in LED on a different GPIO.
-- **No relay/electric-lock pin is assigned yet.** The handlers update Matter
-  DoorLock state and indicators; a physical actuator driver is not implemented.
-  Do not connect a relay's `IN` to an arbitrary GPIO in this diagram.
+- **Relay output is disabled and unassigned by default.** The native driver
+  supports a configurable unlock pulse or logical-state output. Choose a free
+  pin explicitly in Actions → Relay control; see [relay setup](access-integrations.md).
+  The installed controller has not been updated or tested with a physical relay.
 - Power, boot and USB pins are not spare actuator outputs. GPIO14 is not used
   as a PN532 IRQ by this firmware.
 
@@ -89,7 +90,7 @@ the first table; Ethernet and that remapping have not been ported into it.
   `GPIO_NUM_NC` for IRQ; no reset-control GPIO is assigned here.
 - [I2cBus.cpp](../aliro-esp32/main/I2cBus.cpp): SDA=8, SCL=9.
 - [LockHandlers.cpp](../aliro-esp32/main/LockHandlers.cpp): `kLedGpio=48`;
-  logical DoorLock state and indicators with no relay output.
+  logical DoorLock state, indicators and the accepted-state relay hook.
 - [sdkconfig.defaults](../aliro-esp32/sdkconfig.defaults): the current build
   profile enables the display and buttons.
 

@@ -30,9 +30,12 @@ export function installBrowserDemo(target = window) {
   target.fetch = async (input, init = {}) => {
     const url = new URL(input instanceof Request ? input.url : String(input), target.location.href);
     const method = (init.method || (input instanceof Request ? input.method : 'GET')).toUpperCase();
+    let body;
+    try { body = JSON.parse(init.body || (input instanceof Request && method !== 'GET' ? await input.clone().text() : 'null')); } catch { body = null; }
     const reply = url.origin === target.location.origin
-      ? demo.request(url, method)
+      ? demo.request(url, method, body)
       : { status: 403, body: { success: false, error: disabledMessage } };
+    if (url.origin === target.location.origin && method === 'POST' && reply.status === 200) publish(demo.drain());
     return Response.json(reply.body, { status: reply.status });
   };
 
@@ -68,7 +71,7 @@ export function installBrowserDemo(target = window) {
         for (const data of demo.initial()) { this.receive(data); parentState(data); }
         this.timer = setInterval(() => {
           for (const data of demo.tick()) this.receive(data);
-        }, 5000);
+        }, 500);
       }, 0);
     }
 

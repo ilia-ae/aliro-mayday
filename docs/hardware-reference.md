@@ -121,7 +121,7 @@ The current default pin map for the PN532 path is:
 - PN532 `RST` is not driven by a GPIO; follow the module power/reset requirements
 - `GPIO8` -> shared I²C `SDA` for ByteButton and OLED
 - `GPIO9` -> shared I²C `SCL`; do not connect PN532 reset here
-- `GPIO48` -> built-in RGB indicator on the configured target; no relay pin is assigned
+- `GPIO48` -> built-in RGB indicator on the configured target; the relay is disabled/unassigned by default; configure a free output separately
 
 This mapping is intentionally conservative: it avoids boot-strap and flash
 signals and keeps the NFC wiring easy to reason about during bring-up.

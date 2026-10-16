@@ -139,3 +139,7 @@ upstream public test keys and marker strings by file hash. The old development
 repository and its history are not included.
 
 Project website: [aliro.mayday.software](https://aliro.mayday.software/).
+
+## Relay and Telegram notifications
+
+[Relay and Telegram notifications](docs/access-integrations.md). Implemented in shared source and the browser demo; disabled by default. The physical controller has not been flashed or tested with these integrations. Telegram is notifications only.

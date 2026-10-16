@@ -19,6 +19,7 @@ idf_component_register(
         # topic constants used by NfcManager + AliroDelegate.
         "${CMAKE_SOURCE_DIR}/main"
     REQUIRES
+        access_integrations
         nvs_flash
         esp_http_server
         esp_https_server

@@ -45,6 +45,7 @@
 #include "OledPanel.hpp"
 #endif
 #include <atomic>
+#include "AccessIntegrations.hpp"
 
 static const char *TAG = "lock-hdl";
 
@@ -307,6 +308,7 @@ void nfc_reading_ok()
 // then revert to whatever state we had before the tap (typically kLocked).
 void nfc_reading_failed()
 {
+    aliro::access::accessDenied();
     g_nfc_reject_ticks.store(10);   // 10 × 100 ms tick = 1 s
     g_state.store(State::kNfcRejected);
 #if CONFIG_ALIRO_BYTEBUTTON_PANEL
@@ -339,11 +341,17 @@ static void apply_lock_state_change(EndpointId endpointId, DlLockState newState,
     // LockOperation event — that's what Apple Home subscribes to and
     // dismisses its "in progress" UI on. Without the event the tile
     // ends up at "not responding".
-    DoorLockServer::Instance().SetLockState(endpointId, newState,
+    const bool accepted = DoorLockServer::Instance().SetLockState(endpointId, newState,
                                             source,
                                             Nullable<uint16_t>(),
                                             Nullable<List<const LockOpCredentials>>(),
                                             fabricIdx, nodeId);
+
+    // Actuate only after Matter accepts the state/event update. Preserve the
+    // existing Aliro validation and the Apple Home LockOperation event path.
+    if (!accepted) { ESP_LOGW(TAG, "Lock state update rejected; output unchanged"); return; }
+    if (newState == DlLockState::kLocked || newState == DlLockState::kUnlocked)
+        aliro::access::lockChanged(newState == DlLockState::kLocked, static_cast<unsigned>(source));
 
     if (newState == DlLockState::kLocked) {
         lockind::set_locked();

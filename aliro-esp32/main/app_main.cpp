@@ -46,6 +46,7 @@
 // "business controller" deployment model.
 #include "ConfigManager.hpp"
 #include "WebServerManager.hpp"
+#include "AccessIntegrations.hpp"
 #include "WebSocketLogSinker.h"
 #include "ConsoleLogSinker.h"
 #include "loggable.hpp"
@@ -1013,6 +1014,16 @@ extern "C" void app_main()
         if (!s_config_manager->begin()) {
             ESP_LOGE(TAG, "[admin] ConfigManager::begin failed — using defaults");
         }
+        const auto &pins = s_config_manager->getConfig<espConfig::misc_config_t>();
+        aliro::access::reservePin(pins.controlPin);
+        aliro::access::reservePin(pins.hsStatusPin);
+        for (auto pin : pins.nfcGpioPins) aliro::access::reservePin(pin);
+        if (pins.ethernetEnabled) {
+            // SPI entry 0 is frequency, RMII entries 0/4 are address/clock mode.
+            for (size_t i = 1; i < pins.ethSpiConfig.size(); ++i) aliro::access::reservePin(pins.ethSpiConfig[i]);
+            for (size_t i = 1; i < 4; ++i) aliro::access::reservePin(pins.ethRmiiConfig[i]);
+        }
+        aliro::access::begin();
         // WebServerManager.begin() needs ~12 KB of internal-RAM heap (http
         // server task, esp_littlefs lazy-mutex, ws_send_task stack). At
         // app_main time, Matter just allocated WiFi/BLE buffers and free

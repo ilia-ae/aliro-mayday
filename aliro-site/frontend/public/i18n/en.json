@@ -46,7 +46,7 @@
         },
         "3": {
             "title": "Result in Matter",
-            "text": "A successful check updates Matter DoorLock state and indicators. A relay or physical lock output has not been implemented."
+            "text": "A successful check updates Matter DoorLock and indicators. The shared source now includes an optional relay driver; the installed controller has not been updated."
         }
     },
     "wallets": {
@@ -247,14 +247,14 @@
     },
     "integrations": {
         "title": "More than a reader — it's a controller",
-        "lede": "Matter DoorLock and local web diagnostics are available today. Telegram, cameras, metrics and a control backend remain separate stages.",
+        "lede": "Matter DoorLock and local web diagnostics are available. Relay control and Telegram notifications are implemented in the shared source and browser demo; physical operation still needs testing.",
         "1": {
             "title": "Remote control",
-            "text": "Matter commands update logical lock state. A Telegram bot and Mini App for this firmware are not ready."
+            "text": "Matter commands and authenticated NFC use the same optional relay driver. Telegram has no lock-control commands."
         },
         "2": {
             "title": "Real-time alerts",
-            "text": "Status and diagnostic logs are available locally. Delivery of Telegram alerts is not verified."
+            "text": "Lock-state notifications and optional NFC-denial alerts are implemented. Try simulated delivery in the demo; live Telegram delivery still needs testing."
         },
         "3": {
             "title": "Video surveillance",
@@ -310,7 +310,7 @@
         "6": {
             "title": "Control backend",
             "eta": "Planned",
-            "text": "Telegram bot, Mini App and long-term analytics remain a separate future stage."
+            "text": "Relay control and notification-only Telegram support are implemented in source. Hardware acceptance, cameras, Mini App and long-term analytics remain future work."
         },
         "7": {
             "title": "Finished device",
@@ -358,7 +358,7 @@
             "strengths_3": "Setup requirements documented by Aqara",
             "advantages_1": "Public firmware source, tests and wiring diagrams",
             "advantages_2": "Existing iPhone key tested after the update; Samsung/Google still pending",
-            "advantages_3": "Telegram, metrics and camera integration are planned"
+            "advantages_3": "Relay and Telegram notification code is available; physical validation, metrics and camera integration remain pending"
         },
         "schlage_encode": {
             "strengths_1": "Apple home keys on Encode Plus",
@@ -422,7 +422,7 @@
         },
         "4": {
             "q": "Which locks are compatible?",
-            "a": "The current target is ESP32-S3 + PN532 using the published wiring guide. It is a prototype, not a certified Aliro lock; a relay output is not implemented. Check a commercial lock with its manufacturer."
+            "a": "The current target is ESP32-S3 + PN532 using the published wiring guide. An optional GPIO relay driver is implemented and disabled by default; physical relay testing is pending. This prototype is not a certified Aliro lock. Check commercial locks with their manufacturer."
         },
         "5": {
             "q": "Can someone intercept the NFC signal and open the lock?",
