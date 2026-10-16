@@ -142,6 +142,26 @@ bundled. `bun run dev` keeps the existing development proxy at localhost:8000.
 Neither build command flashes a controller. Installing firmware is a separate
 operation described in the [firmware guide](../aliro-esp32/README.md).
 
+## Responsive layout checks
+
+The shared panel and the embedded homepage demo are checked in **English and
+Russian**, in **light and dark** themes. The layout matrix covers 320, 360, 390,
+430, 768 and 1280 CSS pixels in Chromium, plus iPhone-size views in WebKit.
+It includes all six sections, initial setup, expanded settings and log entries,
+certificate inputs and long filenames. The checks measure text overlap and
+horizontal overflow, not just whether a page opens.
+
+From the repository root:
+
+```sh
+cd aliro-site/frontend
+npx playwright install chromium --only-shell
+npx playwright install --with-deps webkit
+npx playwright test controller-responsive.spec.ts
+```
+
+These checks use synthetic browser data. They do not contact or flash a controller.
+
 ## Screenshot gallery
 
 Six actual browser screenshots, captured on **16 October 2026** using the local

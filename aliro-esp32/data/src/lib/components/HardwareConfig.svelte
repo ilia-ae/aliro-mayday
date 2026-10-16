@@ -94,7 +94,7 @@
 <div class="space-y-4">
 	<!-- PN532 NFC Reader -->
 	<div class="py-2 px-3 bg-base-100 rounded-lg">
-		<div class="flex items-center justify-between mb-2">
+		<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
 			<p class="text-sm font-medium">PN532 NFC Reader</p>
 			{#if nfcConnected !== undefined && !isCaptivePortal}
 				<div class="flex items-center gap-2">
@@ -131,7 +131,7 @@
 				<option value={255}>{t("Custom")}</option>
 			</select>
 		</div>
-		<div class="grid grid-cols-4 gap-2">
+		<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
 			<div class="form-control">
 				<label class="label" for="nfcSsPin">
 					<span class="label-text text-xs">{t("SS Pin")}</span>

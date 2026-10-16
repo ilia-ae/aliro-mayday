@@ -118,7 +118,7 @@
       </div>
       <div class="drawer-content h-full w-full">
         <!-- Content -->
-        <main id="main-content" class="px-6 h-full overflow-y-auto bg-base-100" class:flex={route.pathname === '/logs'} class:flex-col={route.pathname === '/logs'}>
+        <main id="main-content" class="px-3 sm:px-6 h-full overflow-y-auto bg-base-100" class:flex={route.pathname === '/logs'} class:flex-col={route.pathname === '/logs'}>
         <PanelPreferences />
         {#if __DEMO__}
           <div role="note" class="alert bg-base-200 border border-base-content/15 shrink-0 mt-2 flex flex-wrap justify-between gap-3">
@@ -134,7 +134,7 @@
             <div class="loading loading-spinner loading-lg"></div>
           </div>
         {:else}
-          <div class={route.pathname === '/logs' ? 'flex-1 min-h-0' : ''}>{@render children()}</div>
+          <div class={route.pathname === '/logs' ? 'flex-1 min-h-[32rem] shrink-0' : ''}>{@render children()}</div>
         {/if}
         </main>
       </div>

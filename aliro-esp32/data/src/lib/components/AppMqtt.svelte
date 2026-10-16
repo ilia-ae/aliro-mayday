@@ -227,7 +227,7 @@
             </div>
 
             <!-- Home Assistant Discovery Toggle -->
-            <div class="flex items-center justify-between py-2 px-3 bg-base-100 rounded-lg">
+            <div class="flex items-center justify-between gap-3 py-2 px-3 bg-base-100 rounded-lg">
               <div>
                 <p class="font-medium text-sm text-base-content">{t("Home Assistant MQTT Discovery")}</p>
                 <p class="text-xs text-base-content/70">{t("Enable automatic device discovery in Home Assistant")}</p>
@@ -337,7 +337,7 @@
             </div>
 
             <!-- Ignore NFC Tags Toggle -->
-            <div class="flex items-center justify-between py-2 px-3 bg-base-100 rounded-lg">
+            <div class="flex items-center justify-between gap-3 py-2 px-3 bg-base-100 rounded-lg">
               <div>
                 <p class="font-medium text-sm text-base-content">{t("Ignore NFC Tags")}</p>
                 <p class="text-xs text-base-content/70">{t("Do not publish NFC tag events to MQTT")}</p>
@@ -350,7 +350,7 @@
             </div>
 
             <!-- Custom Lock States Toggle -->
-            <div class="flex items-center justify-between py-2 mb-0 px-3 bg-base-100 rounded-lg">
+            <div class="flex items-center justify-between gap-3 py-2 mb-0 px-3 bg-base-100 rounded-lg">
               <div>
                 <p class="font-medium text-sm text-base-content">{t("Custom Lock States")}</p>
                 <p class="text-xs text-base-content/70">{t("Enable custom lock state mappings")}</p>
@@ -419,7 +419,7 @@
                 <!-- Custom Lock States -->
                 <div class="bg-base-100 rounded-lg p-3">
                   <p class="font-medium text-sm mb-2">{t("Custom Lock States")}</p>
-                  <div class="grid grid-cols-3 gap-3">
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <div class="form-control">
                       <label class="label py-1">
                         <span class="label-text text-sm">{t("Unlocking")}</span>
@@ -496,7 +496,7 @@
             </div>
 
             <!-- Enable SSL/TLS Toggle -->
-            <div class="flex items-center justify-between py-2 px-3 bg-base-100 rounded-lg">
+            <div class="flex items-center justify-between gap-3 py-2 px-3 bg-base-100 rounded-lg">
               <div>
                 <p class="font-medium text-sm text-base-content">{t("Enable SSL/TLS")}</p>
                 <p class="text-xs text-base-content/70">{t("Use encrypted connection to the broker")}</p>

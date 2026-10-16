@@ -8020,7 +8020,7 @@
     },
     {
       "path": "aliro-esp32/data/src/app.css",
-      "sha256": "272a1d90e2543a20ff226f92392fde1ad688420b21e610f5539ae85bb6ece4ee"
+      "sha256": "fc5ceefc45db015c1274496c0b4c78396c9133523b06d41847442cddc16a3a38"
     },
     {
       "path": "aliro-esp32/data/src/lib/assets/favicon.png",
@@ -8032,11 +8032,11 @@
     },
     {
       "path": "aliro-esp32/data/src/lib/components/AppMisc.svelte",
-      "sha256": "a953024bf4c6fee4fc54e76e4d63c992cda34e79a0796150494d8b1c1f10136d"
+      "sha256": "a250c1e53d4652bc9cd3bc7185437dc6234c43c899650b58b1dbe2bc76ed0517"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/AppMqtt.svelte",
-      "sha256": "f040c75f540a1ac09184d37516027283ba3fc06df5951798b68682052ab067bb"
+      "sha256": "8fcce446a27e0524798127e34371f02fafc33cbd42b9df36746a255fc2944a10"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/AppOTA.svelte",
@@ -8056,11 +8056,11 @@
     },
     {
       "path": "aliro-esp32/data/src/lib/components/HKInfo.svelte",
-      "sha256": "23eb03a246f1d4163a0a6b7c1ac037b3e2d2a780f974c86b95e3965ff59dbf43"
+      "sha256": "4bbf056c3e36bcba155124ad97855e4581f7a6b76c304b4361f0c43f1f86253b"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/HardwareConfig.svelte",
-      "sha256": "e67a1f3ea8c8574c74586b0e7c765dff80cf5d898d22ac46dda6dad3967e44b4"
+      "sha256": "4f10022fd8ca3a19fc750567596d8a942d15eed8da5d745b0dd791c9c6cf8966"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/LanguageSwitcher.svelte",
@@ -8068,7 +8068,7 @@
     },
     {
       "path": "aliro-esp32/data/src/lib/components/LogViewer.svelte",
-      "sha256": "4ed4ed384369690959549662abcba8a276913a50f3adce68a61f441cc3023164"
+      "sha256": "b101ed468c2903be84b54404fc5a3dd7ec154750bf26fcdd7aee64320432abad"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/NavigationMenu.svelte",
@@ -8208,7 +8208,7 @@
     },
     {
       "path": "aliro-esp32/data/src/routes/layout.svelte",
-      "sha256": "eb37f73057632999e327a78e5d017f539918cb985990e1d92da6f0980e72c9ae"
+      "sha256": "daf15e9bc8e1036cc78973eafbcc516045eb36d38c9b6ccbe8c66958239beaa9"
     },
     {
       "path": "aliro-esp32/data/src/routes/logs/index.svelte",
@@ -8496,11 +8496,11 @@
     },
     {
       "path": "aliro-site/README.md",
-      "sha256": "722da25af7847e2d4b6980a4d6372bcbbaa448d54b95de35dc376796f74b5153"
+      "sha256": "a3c506a09a0d5957cbcbe65c356e1878daf77441f3866c0604b4fefa9566bc5a"
     },
     {
       "path": "aliro-site/README.ru.md",
-      "sha256": "5530ec011efe11cb71a3cd726a3f176ce8916d271179ea71ef0ea7177cc86877"
+      "sha256": "fc417bf1ff0bea29cd3744a43db3b69ab98986535c2437e7beda836359b9ea51"
     },
     {
       "path": "aliro-site/frontend/.gitignore",
@@ -8523,8 +8523,12 @@
       "sha256": "7752134ebf842c3549c7652ff975cd42b12db6e8c6af0c09a3aba28bacb2eaec"
     },
     {
+      "path": "aliro-site/frontend/e2e/controller-responsive.spec.ts",
+      "sha256": "079b6030a42627b2c635370009ed484367d13e9d4399b9301a2e2b57f620b530"
+    },
+    {
       "path": "aliro-site/frontend/e2e/controller-ui.spec.ts",
-      "sha256": "0bce83c64bf35835936e9a6d96d4a993ee24770fe6ca6a1bd26408d8ac9e56f9"
+      "sha256": "06ff476e45e370f92df4e6593391515c3b48623b68f417392f352a45912d0be8"
     },
     {
       "path": "aliro-site/frontend/e2e/i18n.spec.ts",
@@ -8576,7 +8580,7 @@
     },
     {
       "path": "aliro-site/frontend/playwright.config.ts",
-      "sha256": "ffd1363de29c11d56a1422cf839b94ca376248b46598d6e6c356902547505aee"
+      "sha256": "b0ea8037f3b587c6c25247c6c1a36db9f86a3dcb38e2fcbff445e0bde4e1b77e"
     },
     {
       "path": "aliro-site/frontend/public/_headers",
@@ -8908,11 +8912,11 @@
     },
     {
       "path": "docs/controller-ui-debug.md",
-      "sha256": "213d513d4226808269d9170e47508cddc228d2baaf1f70b6b3f77366cddc928b"
+      "sha256": "df4feea1f9a23a569525d9650f87be3b153c17fe8b47385a196e21be8d9be7ac"
     },
     {
       "path": "docs/controller-ui-debug.ru.md",
-      "sha256": "4d88823fdd65a9276254eef486570a252e8b014f3bf0eb2b19a5ec06a49993b1"
+      "sha256": "6eccfaf6d18ff9907a1363e4cee85025fcc60162687fba9483974862bcda147d"
     },
     {
       "path": "docs/ddk-update-2026-10-13.md",

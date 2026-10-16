@@ -520,7 +520,7 @@
 			</div>
 
 			<!-- Actions -->
-			<div class="flex gap-2">
+			<div class="flex flex-wrap gap-2">
 				<button type="submit" class="btn btn-primary">{t("Save & Apply changes")}</button>
 				<button type="button" class="btn btn-outline" onclick={resetForm}>{t("Reset")}</button>
 			</div>

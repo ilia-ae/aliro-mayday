@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
 
+// These tests inspect settled layouts; disable the host page's smooth
+// anchor scrolling so automatic click scrolling cannot fight the animation.
+test.use({ reducedMotion: 'reduce' });
+
+
 for (const lang of ['en', 'ru']) {
     test(`controller interface screenshot and local launch guide in ${lang}`, async ({ page }) => {
         await page.goto(`/?lang=${lang}#controller-ui`);

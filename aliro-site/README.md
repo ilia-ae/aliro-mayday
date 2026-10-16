@@ -70,10 +70,11 @@ cd frontend
 npm ci
 npm run build
 npx playwright install chromium --only-shell
+npx playwright install --with-deps webkit
 npx playwright test
 ```
 
-The complete browser suite passed **131 tests**, with **5 explicit skips**.
+The complete browser suite passed **155 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 

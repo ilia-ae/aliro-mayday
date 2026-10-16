@@ -99,10 +99,13 @@
 
   const virtualizerOptions = {
     getScrollElement: () => scrollEl,
+    getItemKey: (index: number) => filteredLogs()[index]?.id ?? index,
     estimateSize: () => 46
   };
 
-  function doScroll(index: number, behavior: ScrollBehavior = 'smooth') {
+  // Smooth scrolling can defer virtual-row measurement and overlap a restored
+  // expanded entry with its successor. Log following must use measured positions.
+  function doScroll(index: number, behavior: ScrollBehavior = 'auto') {
     isProgrammaticScroll = true;
     $virtualizer?.scrollToIndex(index, { align: 'end', behavior });
     setTimeout(() => {
@@ -225,17 +228,17 @@
 
 <div class="h-full flex flex-col text-base-content">
   <!-- Header -->
-  <div class="pt-4 pb-2">
+  <div class="pt-4 pb-2 shrink-0">
     <h1 class="text-xl font-semibold">{t("System Logs")}</h1>
     <p class="text-sm text-base-content/60">{t("Real-time device logs via WebSocket.")}</p>
   </div>
 
   <!-- Toolbar Card -->
-  <div class="pb-2 sm:pb-4">
+  <div class="pb-2 sm:pb-4 shrink-0">
     <div class="bg-base-200 rounded-lg border border-base-300 p-2 sm:p-4">
       <!-- Row 1: Search, Log Level, and Toggle -->
       <div class="flex items-center gap-2 lg:pb-2">
-        <div class="join flex-1">
+        <div class="join flex-1 min-w-0">
           <div class="join-item bg-base-200 border border-base-300 border-r-0 px-3 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-base-content/50">
               <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -244,7 +247,7 @@
           <input
             type="text"
             placeholder={t("Search logs...")}
-            class="input input-sm join-item flex-1 bg-base-100 border-base-300 focus:outline-none"
+            class="input input-sm join-item flex-1 min-w-0 w-full bg-base-100 border-base-300 focus:outline-none"
             bind:value={searchText}
             aria-label={t("Search logs")}
           />
@@ -341,10 +344,10 @@
   </div>
 
   <!-- Live Logs Card -->
-  <div class="flex-1 pb-4 min-h-0">
+  <div class="flex-1 pb-4 min-h-64">
     <div class="bg-base-200 rounded-lg border border-base-300 h-full flex flex-col">
       <!-- Card Header -->
-      <div class="px-4 py-3 border-b border-base-300 flex items-center gap-2">
+      <div class="px-4 py-3 border-b border-base-300 flex items-center gap-2 shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 text-teal-500">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
         </svg>
@@ -368,7 +371,7 @@
               <div
                 style="height: {$virtualizer?.getTotalSize()}px; width: 100%; position: relative;"
               >
-                {#each $virtualizer?.getVirtualItems() as virtualRow (virtualRow.index)}
+                {#each $virtualizer?.getVirtualItems() as virtualRow (virtualRow.key)}
                   {@const item = filteredLogs()[virtualRow.index]}
                   <div
                     style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({virtualRow.start}px);"
