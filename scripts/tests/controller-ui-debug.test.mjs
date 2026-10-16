@@ -70,10 +70,19 @@ test('WebSocket supports reads and rejects malformed or mutating commands', asyn
     expect((await next()).nfc_connected).toBe(false);
     expect((await next()).current_version).toBe('Demo preview');
     expect((await next()).msg).toContain('no hardware connected');
+    expect((await next()).type).toBe('demo_nfc');
     for (const type of ['ping', 'sysinfo', 'metrics', 'ota_info']) {
       ws.send(JSON.stringify({ type }));
       expect((await next()).type).toBe(type === 'ping' ? 'pong' : type);
     }
+    ws.send(JSON.stringify({ type: 'demo_nfc_tap', scenario: 'revoked' }));
+    const denied = await next();
+    expect(denied.type).toBe('demo_nfc');
+    expect(denied.result).toBe('revoked');
+    expect(denied.locked).toBe(true);
+    expect(denied.events).toHaveLength(3);
+    ws.send(JSON.stringify({ type: 'demo_nfc_reset' }));
+    expect((await next()).tap_count).toBe(0);
     for (const command of ['{"type":"set_log_level","data":"DEBUG"}', 'null', 'not JSON']) {
       ws.send(command);
       expect((await next()).type).toBe('error');

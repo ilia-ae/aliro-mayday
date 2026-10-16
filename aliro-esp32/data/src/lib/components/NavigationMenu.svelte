@@ -9,6 +9,7 @@
 	import { websocketState } from "$lib/stores/websocket.svelte";
 	import { p } from "sv-router/generated";
 	import { isActiveLink } from 'sv-router';
+  import ControllerIdentity from './ControllerIdentity.svelte';
 
 	let { onClose, id } = $props();
   function panelHref(path: '/' | '/mqtt' | '/actions' | '/misc' | '/ota' | '/logs') {
@@ -33,8 +34,8 @@
 			<div class="flex size-10 items-center justify-center rounded-lg bg-info/20 w-12 p-2">
 				<img src={logoSrc()} alt="aliro.mayday logo" class="size-7" />
 			</div>
-			<div class="flex items-start flex-col w-full">
-				<span class="pl-2 text-sm font-bold">aliro.mayday</span>
+			<div class="flex items-start flex-col flex-1 min-w-0">
+        <div class="pl-2 min-w-0 w-full"><ControllerIdentity /></div>
 				<div class="pl-2 flex items-center gap-1">
 					<div class="inline-grid *:[grid-area:1/1]">
 						<div

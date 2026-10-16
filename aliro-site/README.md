@@ -31,13 +31,18 @@ The [local launch and debugging guide](../docs/controller-ui-debug.md) explains
 ## Interaction and snapshot evidence
 
 The NFC section includes a button-controlled phone/reader/door animation, with
-a reduced-motion alternative and a clear physical-output limitation. It is a
-schematic animation; it never connects to hardware or changes the panel state.
+a reduced-motion alternative and a clear physical-output limitation. It shares
+valid/revoked/unknown example outcomes and the event trace with the panel through
+an origin/source/controller-ID checked browser-only bridge. No hardware is connected.
 
 The source section separates code/documentation links from licensing. Its
 deposit card summarises the existing 15 October proof package and links to
 [deposit.mayday](https://deposit.mayday.software/). The original proof bytes and
 pending Bitcoin status are preserved. EN/RU summary SVGs are presentation assets.
+
+The panel header identifies the controller. The ordinary UI uses its existing
+Reader ID and also receives the diagnostics view; simulation controls remain
+limited to hosted/local demo builds. Telegram is not connected.
 
 ## Source and deployment
 
@@ -63,7 +68,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **101 tests**, with **5 explicit skips**.
+The complete browser suite passed **111 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 

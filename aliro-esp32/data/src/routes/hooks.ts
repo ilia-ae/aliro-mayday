@@ -1,6 +1,7 @@
 import type { Hooks } from 'sv-router';
 import type { HKInfo } from '$lib/types/api';
 import { setLoadingState } from '$lib/stores/system.svelte';
+import { loadReaderInfo } from '$lib/stores/controller.svelte';
 
 declare module 'sv-router' {
   interface RouteMeta {
@@ -15,9 +16,7 @@ export default {
         return;
       }
       setLoadingState(true);
-      const res = await fetch('/config?type=hkinfo').then(r => r.json());
-      if (!res.success) throw new Error(res.error);
-      meta.homeData = { hkInfo: res.data as HKInfo, error: null };
+      meta.homeData = { hkInfo: await loadReaderInfo(true), error: null };
     } catch (error) {
       console.error('Failed to load hkinfo:', error);
       meta.homeData = { hkInfo: null, error: error instanceof Error ? error.message : 'Unknown error' };

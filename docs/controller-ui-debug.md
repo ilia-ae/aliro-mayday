@@ -5,19 +5,20 @@
 Run the actual Svelte administration UI from `aliro-esp32/data` on your computer,
 with synthetic HTTP/WebSocket responses. No controller, ESP-IDF, USB connection,
 Wi-Fi credentials or saved keys are required. This previews the interface;
-it does not emulate NFC authentication, Matter, a wallet or a physical lock.
+it does not emulate PN532 silicon, NFC radio/APDU traffic, Aliro cryptography,
+a wallet or a physical lock. Example access outcomes are explicitly simulated.
 
 ## Live demo on the website
 
 [Open the panel](https://aliro.mayday.software/demo/index.html?lang=en#/).
 Explore all six sections and nested settings, edit fields without saving, and
 view synthetic logs. The panel itself is currently in English; the demo banner
-and return link follow the selected EN/RU language.
+return link and simulation controls follow the selected EN/RU language.
 
 This is a separate build of the actual UI. HTTP responses and device events are
 created in the browser: there are no API requests, network WebSockets or controller
 connections. A `connect-src 'none'` policy additionally prevents network connections.
-Saves, resets, reboots, certificate changes and OTA uploads return a demo error.
+Configuration saves, device resets, reboots, certificate changes and OTA uploads return a demo error.
 Reloading the page restores the sample values.
 
 [Demo bundle license notices](https://aliro.mayday.software/demo/NOTICES.txt).
@@ -25,8 +26,37 @@ Project commercial terms and component licenses remain unchanged.
 
 The [homepage](https://aliro.mayday.software/?lang=en#controller-ui) embeds this
 same isolated demo below the stand photo. The screenshots remain in a collapsible
-gallery. The nearby tap/door animation is a schematic illustration, independent
-of both the panel and physical hardware.
+gallery. The tap/door visualisation and panel share the same browser-only simulation
+and event log; both remain independent of physical hardware.
+
+## PN532 simulation, event trace and controller identity
+
+On the homepage, choose a valid, revoked or unknown example key and tap the
+reader. The panel offers the same controls. A valid example toggles logical
+lock state; denied examples preserve the previous state. The visible trace and
+Logs section contain the same explicitly labelled synthetic events. This does
+not run real NFC, signature verification, Matter, GPIO or Telegram requests.
+Resetting the simulation only resets temporary demo state.
+
+The panel header shows the device name and identifier on desktop and mobile.
+Long IDs are abbreviated in the mobile header; the Dashboard shows the full ID.
+The ordinary UI reads its existing Reader ID from `/config?type=hkinfo`; this is
+the Aliro reader identifier, not an ESP32 factory serial. The normal dashboard
+also shows NFC diagnostics and recent events from its existing WebSocket log.
+These common UI changes take effect when its assets are separately built and
+installed; editing or publishing source does not flash a connected controller.
+
+Hosted examples use synthetic IDs: `DEMO-01` by default, or `DEMO-02` with
+`/demo/index.html?controller=DEMO-02&lang=en#/`. Each frame has independent state.
+The homepage bridge checks message origin, source window, controller ID and an
+allow-list of simulation commands. The CSP still forbids network connections.
+Simulation controls are excluded from the ordinary controller UI bundle. Local
+`bun run debug` also supports the synthetic controls through its loopback mock.
+
+The technical diagram describes the prototype's ESP32-S3 → PN532/SPI → Aliro
+checks → Matter DoorLock path. It is not a captured RF trace or evidence of a
+hardware acceptance test. Telegram integration is not implemented in the
+published Aliro firmware; no bot is connected by this demo.
 
 ## Quick start
 

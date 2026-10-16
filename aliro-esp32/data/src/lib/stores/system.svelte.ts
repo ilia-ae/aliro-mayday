@@ -1,5 +1,6 @@
 export type SystemInfo = {
   deviceName: string,
+  controller_id?: string,
   version: string,
   uptime: number,
   free_heap: number,

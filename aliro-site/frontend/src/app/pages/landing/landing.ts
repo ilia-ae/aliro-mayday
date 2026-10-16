@@ -1,6 +1,8 @@
 import {
     Component,
     DestroyRef,
+    ElementRef,
+    ViewChild,
     computed,
     effect,
     inject,
@@ -193,11 +195,15 @@ interface ComparisonRow {
                             </picture>
                         </div>
                         <figcaption id="demo-stand-caption">
-                            <strong>{{ 'demo_stand.title' | translate }}</strong>
-                            <p class="demo-stand-note">{{ 'demo_stand.note' | translate }}</p>
-                            <a [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">{{ 'source.wiring' | translate }} →</a>
-                            <span aria-hidden="true"> · </span>
-                            <a href="#controller-ui">{{ 'controller_ui.title' | translate }} →</a>
+                            <div class="demo-stand-meta">
+                                <strong>{{ 'demo_stand.title' | translate }}</strong>
+                                <span class="demo-stand-note">{{ 'demo_stand.note' | translate }}</span>
+                            </div>
+                            <p class="demo-stand-specs">ESP32-S3 · PN532 · OLED</p>
+                            <div class="demo-stand-links">
+                                <a [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">{{ 'demo_stand.wiring' | translate }} ↗</a>
+                                <a href="#controller-ui">{{ 'demo_stand.panel' | translate }} ↓</a>
+                            </div>
                         </figcaption>
                     </figure>
                 </div>
@@ -213,7 +219,7 @@ interface ComparisonRow {
                         </a>
                         <p id="controller-demo-note">{{ 'controller_ui.live_note' | translate }}</p>
                     </div>
-                    <iframe class="controller-ui-frame" [src]="controllerUiEmbedUrl()"
+                    <iframe #controllerFrame class="controller-ui-frame" [src]="controllerUiEmbedUrl()"
                             [title]="'controller_ui.frame_title' | translate"
                             aria-describedby="controller-demo-note" loading="lazy" referrerpolicy="no-referrer"></iframe>
                     <details class="controller-ui-screenshots">
@@ -261,7 +267,8 @@ interface ComparisonRow {
             <section id="how-it-works" class="steps">
                 <div class="wrap">
                     <h2>{{ 'steps.title' | translate }}</h2>
-                    <app-access-demo />
+                    <app-access-demo [reader]="demoReader()" [ready]="demoReaderReady()" [trace]="demoTrace()"
+                                     (tap)="sendDemoTap($event)" (reset)="sendDemoReset()" />
                     <ol>
                         @for (n of [1, 2, 3]; track n) {
                             <li>
@@ -1227,20 +1234,27 @@ interface ComparisonRow {
                 object-fit: contain;
             }
             .hero-visual figcaption {
-                margin-top: 0.75rem;
+                max-width: 26rem;
+                margin: 0.75rem auto 0;
+                padding-top: 0.875rem;
+                border-top: 1px solid var(--border);
+                text-align: left;
                 font-size: 0.8125rem;
                 color: var(--fg-muted);
             }
-            .hero-visual figcaption strong {
-                display: block;
-                color: var(--fg);
-                font-size: 0.9375rem;
+            .demo-stand-meta {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem;
             }
-            .hero-visual .demo-stand-note {
-                margin: 0.75rem 0 0.375rem;
-                font-size: 0.75rem;
-                color: var(--fg-dim);
-            }
+            .hero-visual figcaption strong { color: var(--fg); font-size: 0.875rem; font-weight: 500; }
+            .hero-visual .demo-stand-note { font-size: 0.6875rem; color: var(--fg-dim); }
+            .hero-visual .demo-stand-specs { margin: 0.375rem 0 0; font-size: 0.75rem; color: var(--fg-dim); }
+            .demo-stand-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
+            .demo-stand-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg-muted); }
+            .demo-stand-links a:hover { color: var(--accent); }
 
             /* ================ Steps ================ */
             .steps ol {
@@ -2652,6 +2666,24 @@ export class LandingPage {
     /* Mobile-menu overlay state. Toggled by the hamburger button in
        the topbar; closed on backdrop tap or any nav-link click. */
     readonly menuOpen = signal(false);
+    @ViewChild('controllerFrame') private controllerFrame?: ElementRef<HTMLIFrameElement>;
+    readonly demoReaderReady = signal(false);
+    readonly demoReader = signal({ locked: true, result: 'idle', tap_count: 0, controller_id: 'DEMO-01' });
+    readonly demoTrace = signal<{ tag: string; msg: string; level: string; ts: number }[]>([]);
+
+    sendDemoTap(scenario: string): void {
+        if (!['valid', 'revoked', 'unknown'].includes(scenario)) return;
+        this.controllerFrame?.nativeElement.contentWindow?.postMessage({
+            type: 'aliro-demo-command', controller_id: 'DEMO-01', command: 'tap', scenario
+        }, location.origin);
+    }
+
+    sendDemoReset(): void {
+        this.controllerFrame?.nativeElement.contentWindow?.postMessage({
+            type: 'aliro-demo-command', controller_id: 'DEMO-01', command: 'reset'
+        }, location.origin);
+    }
+
 
     /* Order matches the topbar jump-nav (page top→bottom). The leading
        "01"–"06" labels are pre-formatted strings — Angular templates
@@ -2735,6 +2767,26 @@ export class LandingPage {
 
     constructor() {
         const destroyRef = inject(DestroyRef);
+        const onDemoState = (event: MessageEvent) => {
+            const data = event.data;
+            if (event.origin !== location.origin || event.source !== this.controllerFrame?.nativeElement.contentWindow
+                || data?.type !== 'aliro-demo-state' || data.simulated !== true || data.controller_id !== 'DEMO-01'
+                || typeof data.locked !== 'boolean' || !['idle', 'granted', 'revoked', 'unknown'].includes(data.result)
+                || !Number.isSafeInteger(data.tap_count) || data.tap_count < 0) return;
+            const previous = this.demoReader();
+            this.demoReader.set({ locked: data.locked, result: data.result, tap_count: data.tap_count, controller_id: data.controller_id });
+            this.demoReaderReady.set(true);
+            if (data.tap_count === 0) this.demoTrace.set([]);
+            else if (data.tap_count !== previous.tap_count && Array.isArray(data.events)) {
+                const events = data.events.slice(0, 8).filter((entry: any) =>
+                    typeof entry?.msg === 'string' && entry.msg.length <= 500 && typeof entry.tag === 'string'
+                    && ['INFO', 'WARN', 'ERROR'].includes(entry.level) && Number.isFinite(entry.ts));
+                this.demoTrace.update(trace => [...trace, ...events].slice(-60));
+            }
+        };
+        window.addEventListener('message', onDemoState);
+        destroyRef.onDestroy(() => window.removeEventListener('message', onDemoState));
+
 
         // Lock body scroll while the mobile menu overlay is open so
         // the page underneath doesn't slide around behind the sheet.

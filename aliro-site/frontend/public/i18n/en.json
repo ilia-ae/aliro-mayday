@@ -30,7 +30,9 @@
     "demo_stand": {
         "title": "Aliro demo stand",
         "top_alt": "Top view of the Aliro demo stand: LEGO base, PN532 NFC reader, OLED display and eight-button module",
-        "note": "Retouched photo"
+        "note": "Retouched photo",
+        "wiring": "Wiring guide",
+        "panel": "Web panel"
     },
     "steps": {
         "title": "How NFC access works",
@@ -614,16 +616,35 @@
         "screenshots": "Browse screenshots of all sections"
     },
     "access_demo": {
-        "label": "The interaction · animation",
+        "label": "PN532 NFC Reader · simulation",
         "play": "Play the tap sequence",
         "reset": "Reset the sequence",
-        "note": "A schematic demonstration with no device connection. On the bench, firmware changes Matter DoorLock state; a physical lock output still needs to be added.",
+        "note": "The simulation shares events with the demo panel and runs only in your browser. It performs no real NFC exchange or cryptographic validation. Firmware checks run on the ESP32; a physical lock output still needs to be added.",
         "states": {
             "0": "The lock is closed",
             "1": "Bring the phone to the reader",
             "2": "Check the key and access rights",
             "3": "Access granted",
-            "4": "The door opens · simulation"
-        }
+            "4": "The door opens · simulation",
+            "5": "Access denied · simulation",
+            "6": "The lock is closed · simulation"
+        },
+        "key_label": "Example key",
+        "keys": {
+            "valid": "Valid key",
+            "revoked": "Revoked key",
+            "unknown": "Unknown key"
+        },
+        "log_title": "Tap event log",
+        "log_empty": "Tap an example key to see the event trace.",
+        "loading": "Loading the demo reader…",
+        "tech_title": "Inside the prototype",
+        "controller": "Demo controller ID",
+        "hardware_label": "Hardware path",
+        "protocol_label": "Protocol",
+        "checks_label": "Checks",
+        "checks": "Signatures, permissions and revocation run in firmware. The demo uses the selected example outcome.",
+        "result_label": "Logical result",
+        "source": "View the NFC implementation"
     }
 }

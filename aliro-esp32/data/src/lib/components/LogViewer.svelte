@@ -361,6 +361,7 @@
           <div
             class="absolute inset-0 overflow-y-auto font-mono text-sm p-2"
             bind:this={scrollEl}
+            role="log" aria-label="Controller event log" aria-live="off"
           >
             {#if virtualizer}
               <div

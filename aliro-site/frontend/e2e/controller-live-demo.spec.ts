@@ -28,7 +28,7 @@ test('live panel navigates all sections, nested settings and logs without networ
     await expect(page.getByRole('note')).toContainText('Демо-панель');
     await expect(page.getByRole('heading', { name: 'Dashboard', exact: true })).toBeVisible();
     await expect(page.getByText('Demo reader', { exact: true })).toBeVisible();
-    await expect(page.getByText('Aliro demo stand', { exact: true })).toBeVisible();
+    await expect(page.getByText('Aliro demo stand', { exact: true }).last()).toBeVisible();
 
     await navigatePanel(page, 'MQTT');
     await expect(page.getByRole('heading', { name: /^MQTT Settings/ })).toBeVisible();

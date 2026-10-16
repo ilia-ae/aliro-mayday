@@ -11,6 +11,10 @@
   import type { LogEntry } from '$lib/types/api';
   import { logIdIncrement, logs } from '$lib/stores/logs.svelte';
   import { route } from 'sv-router/generated';
+  import ControllerIdentity from '$lib/components/ControllerIdentity.svelte';
+  import DemoNfc from '$lib/components/DemoNfc.svelte';
+  import { demoNfc } from '$lib/stores/demo-nfc.svelte';
+  import { loadReaderInfo } from '$lib/stores/controller.svelte';
 
 	let { children } = $props();
   let drawerOpen = $state(false);
@@ -23,6 +27,7 @@
     initTheme();
 
     if (isCaptivePortal) return;
+    void loadReaderInfo().catch(() => {});
 
 		if (ws) {
 			ws.connect();
@@ -46,6 +51,15 @@
 						} else {
 							console.warn('Invalid log message structure:', data);
 						}
+          }
+          if (__DEMO__ && data.type === 'demo_nfc' && data.simulated === true) {
+            demoNfc.locked = data.locked;
+            demoNfc.result = data.result;
+            demoNfc.tap_count = data.tap_count;
+            demoNfc.events = data.events || [];
+            for (const entry of demoNfc.events) logs.push({
+              ...entry, id: Date.now() + logIdIncrement(), localts: new Date().toISOString(), expanded: false,
+            } as LogEntry);
           }
 				}
       });
@@ -81,7 +95,7 @@
           </svg>
         </label>
         <div class="flex justify-between w-full">
-          <span class="font-bold text-lg">aliro.mayday</span>
+          <ControllerIdentity compact />
           <div class="gap-1 pr-2">
             <div class="inline-grid *:[grid-area:1/1]">
               <div class="status animate-ping" class:status-success={websocketState.connected} class:status-error={!websocketState.connected} class:status-warning={websocketState.state == "reconnecting"}></div>
@@ -103,21 +117,22 @@
       </div>
       <div class="drawer-content h-full w-full">
         <!-- Content -->
-        <main id="main-content" class="px-6 h-full overflow-y-auto bg-base-100">
+        <main id="main-content" class="px-6 h-full overflow-y-auto bg-base-100" class:flex={route.pathname === '/logs'} class:flex-col={route.pathname === '/logs'}>
         {#if __DEMO__}
-          <div role="note" class="alert alert-info mt-5 flex flex-wrap justify-between gap-3">
+          <div role="note" class="alert alert-info shrink-0 mt-5 flex flex-wrap justify-between gap-3">
             <span>{demoRussian ? 'Демо-панель — демонстрационные данные. Контроллер не подключён; изменения не сохраняются.' : 'Demo preview — sample data. No controller connected; changes are disabled.'}</span>
             {#if __WEB_DEMO__}
               <a class="link whitespace-nowrap" target="_blank" rel="noopener noreferrer" href={demoRussian ? '/?lang=ru#controller-ui' : '/?lang=en#controller-ui'}>{demoRussian ? 'К проекту ↗' : 'Project website ↗'}</a>
             {/if}
           </div>
         {/if}
+        {#if __DEMO__}<DemoNfc />{/if}
         {#if getLoadingState()}
           <div class="flex items-center justify-center h-full">
             <div class="loading loading-spinner loading-lg"></div>
           </div>
         {:else}
-          {@render children()}
+          <div class={route.pathname === '/logs' ? 'flex-1 min-h-0' : ''}>{@render children()}</div>
         {/if}
         </main>
       </div>
