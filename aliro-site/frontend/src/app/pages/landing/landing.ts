@@ -357,6 +357,12 @@ interface ComparisonRow {
                 <div class="wrap">
                     <h2 id="controller-ui-title">{{ 'controller_ui.title' | translate }}</h2>
                     <p class="lede">{{ 'controller_ui.lede' | translate }}</p>
+                    <div class="controller-ui-demo">
+                        <a class="btn primary" [href]="controllerUiDemoUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'controller_ui.live' | translate }} ↗
+                        </a>
+                        <p>{{ 'controller_ui.live_note' | translate }}</p>
+                    </div>
                     <div class="controller-ui-views" role="group" [attr.aria-label]="'controller_ui.sections' | translate">
                         @for (view of controllerUiViews; track view.key; let i = $index) {
                             <button type="button" [class.is-selected]="controllerUiIndex() === i"
@@ -1542,6 +1548,15 @@ interface ComparisonRow {
                 margin: 0;
             }
 
+            .controller-ui-demo {
+                margin: 1.5rem 0;
+            }
+            .controller-ui-demo p {
+                margin: 0.75rem 0 0;
+                max-width: 44rem;
+                color: var(--fg-muted);
+                font-size: 0.875rem;
+            }
             .controller-ui-views {
                 display: flex;
                 flex-wrap: wrap;
@@ -2613,6 +2628,9 @@ export class LandingPage {
     readonly sourceReleasedUrl = 'https://github.com/ilia-ae/aliro-mayday';
     readonly sourceDocumentationUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/README${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly controllerUiDemoUrl = computed(() =>
+        `/demo/index.html?lang=${this.language.lang()}#/`
     );
     readonly sourceControllerUiUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/controller-ui-debug${this.language.lang() === 'ru' ? '.ru' : ''}.md`

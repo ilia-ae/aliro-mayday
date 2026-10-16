@@ -28,6 +28,8 @@ jobs:
       - name: Build the ordinary production UI (demo mode off)
         run: bun run build
         working-directory: aliro-esp32/data
+      - name: Build the isolated hosted browser demo
+        run: node aliro-site/frontend/scripts/build-controller-demo.mjs
 
   source:
     runs-on: ubuntu-24.04

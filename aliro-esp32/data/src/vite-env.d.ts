@@ -3,3 +3,4 @@
 declare const __DEV__: boolean;
 declare const __VERSION__: string;
 declare const __DEMO__: boolean;
+declare const __WEB_DEMO__: boolean;

@@ -7,6 +7,22 @@ with synthetic HTTP/WebSocket responses. No controller, ESP-IDF, USB connection,
 Wi-Fi credentials or saved keys are required. This previews the interface;
 it does not emulate NFC authentication, Matter, a wallet or a physical lock.
 
+## Live demo on the website
+
+[Open the panel](https://aliro.mayday.software/demo/index.html?lang=en#/).
+Explore all six sections and nested settings, edit fields without saving, and
+view synthetic logs. The panel itself is currently in English; the demo banner
+and return link follow the selected EN/RU language.
+
+This is a separate build of the actual UI. HTTP responses and device events are
+created in the browser: there are no API requests, network WebSockets or controller
+connections. A `connect-src 'none'` policy additionally prevents network connections.
+Saves, resets, reboots, certificate changes and OTA uploads return a demo error.
+Reloading the page restores the sample values.
+
+[Demo bundle license notices](https://aliro.mayday.software/demo/NOTICES.txt).
+Project commercial terms and component licenses remain unchanged.
+
 ## Quick start
 
 Install [Bun](https://bun.sh/docs/installation) **1.3.13** and
@@ -36,6 +52,7 @@ are not wiring instructions: use the [wiring guide](wiring.md).
 - Use browser developer tools to set breakpoints and inspect the Console,
   Network requests and `/ws` messages. The Logs page receives synthetic entries.
 - API fixtures and read-only guards are in
+  [controller-ui-fixtures.mjs](../scripts/controller-ui-fixtures.mjs); the local server is
   [controller-ui-demo.mjs](../scripts/controller-ui-demo.mjs).
   Restart the command after changing this server file.
 - **Ctrl+C** stops Vite and the demo API. No controller state is changed.
@@ -60,7 +77,7 @@ bun run debug:test
 bun run build
 ```
 
-The tests check API reads, rejection of writes and device commands, WebSocket
+The tests check browser isolation, API reads, rejection of writes and device commands, WebSocket
 reads/ping, the actual Vite proxy and server shutdown. CI runs these checks and
 the ordinary UI build. `bun run build` produces the usual compressed UI assets
 under `aliro-esp32/data/dist/`; demo mode is off by default and no mock server is

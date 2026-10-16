@@ -50,7 +50,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **69 tests**, with **5 explicit skips**.
+The complete browser suite passed **79 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 
@@ -70,6 +70,24 @@ English is the primary repository documentation language; Russian uses `.ru.md`.
 Website language detection retains the user's local preference, then browser
 language, with Russian fallback. Both versions link to their matching public
 documentation and wiring guide. Theme selection, QR sharing and offline caching remain supported.
+
+## Live demo build
+
+Frontend `npm run build` first builds the actual UI from `aliro-esp32/data`
+in the separate `web-demo` mode. In the public monorepo this directory is a
+sibling of `aliro-site`; the deployment mirror keeps the same UI source under
+its own root, together with `scripts/controller-ui-*.mjs` and
+`scripts/debug-controller-ui.mjs`. Copy source, bun.lock, configuration and licenses;
+exclude node_modules, .router and dist.
+
+The builder uses Bun 1.3.13 and a frozen lockfile. If that version is unavailable
+on the build host, it invokes the pinned official npm package through npm exec.
+`frontend/public/demo/` is generated, untracked, and copied by Angular into `/demo/`.
+The entry is `/demo/index.html`; section navigation uses hashes. The demo is
+excluded from Angular service-worker navigation. Its CSP blocks network connections;
+API responses and events are generated in-browser and device commands are rejected.
+License texts are served alongside the bundle at `/demo/NOTICES.txt`.
+The ordinary firmware UI build keeps its existing mode and excludes the demo adapter.
 
 ## Safari and service-worker configuration
 

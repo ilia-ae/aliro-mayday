@@ -21,3 +21,6 @@ frontend/playwright-report/
 # Logs
 *.log
 npm-debug.log*
+
+# Rebuilt from controller UI source before website builds
+frontend/public/demo/

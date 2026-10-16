@@ -52,7 +52,8 @@
     "navigationUrls": [
         "/**",
         "!/ngsw-worker.js",
-        "!/ngsw.json"
+        "!/ngsw.json",
+        "!/demo/**"
     ],
     "navigationRequestStrategy": "freshness"
 }

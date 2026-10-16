@@ -14,6 +14,7 @@
 
 	let { children } = $props();
   let drawerOpen = $state(false);
+  const demoRussian = __WEB_DEMO__ && new URLSearchParams(location.search).get('lang') === 'ru';
 	let unsubscribeMessages : (() => void) | null = null;
 
   const isCaptivePortal = $derived(route.pathname.startsWith('/captive-portal'));
@@ -104,7 +105,12 @@
         <!-- Content -->
         <main id="main-content" class="px-6 h-full overflow-y-auto bg-base-100">
         {#if __DEMO__}
-          <div role="note" class="alert alert-info mt-5">Demo preview — sample data. No controller connected; changes are disabled.</div>
+          <div role="note" class="alert alert-info mt-5 flex flex-wrap justify-between gap-3">
+            <span>{demoRussian ? 'Демо-панель — демонстрационные данные. Контроллер не подключён; изменения не сохраняются.' : 'Demo preview — sample data. No controller connected; changes are disabled.'}</span>
+            {#if __WEB_DEMO__}
+              <a class="link whitespace-nowrap" target="_blank" rel="noopener noreferrer" href={demoRussian ? '/?lang=ru#controller-ui' : '/?lang=en#controller-ui'}>{demoRussian ? 'К проекту ↗' : 'Project website ↗'}</a>
+            {/if}
+          </div>
         {/if}
         {#if getLoadingState()}
           <div class="flex items-center justify-center h-full">

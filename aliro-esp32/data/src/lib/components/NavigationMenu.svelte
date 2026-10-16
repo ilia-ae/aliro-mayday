@@ -11,6 +11,10 @@
 	import { isActiveLink } from 'sv-router';
 
 	let { onClose, id } = $props();
+  function panelHref(path: '/' | '/mqtt' | '/actions' | '/misc' | '/ota' | '/logs') {
+    return __WEB_DEMO__ ? `${location.pathname}${location.search}#${path}` : p(path);
+  }
+
 
 	onMount(() => {
 		initTheme();
@@ -73,7 +77,7 @@
 		onclick={onClose}
 	>
 		<li class="my-1" role="menuitem">
-			<a href={p('/')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
+			<a href={panelHref('/')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6 mr-1"
@@ -93,7 +97,7 @@
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
-			<a href={p('/mqtt')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
+			<a href={panelHref('/mqtt')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -113,7 +117,7 @@
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
-			<a href={p('/actions')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
+			<a href={panelHref('/actions')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-6 w-6 mr-1">
           <path fill-rule="evenodd" d="M9.58 1.077a.75.75 0 0 1 .405.82L9.165 6h4.085a.75.75 0 0 1 .567 1.241l-6.5 7.5a.75.75 0 0 1-1.302-.638L6.835 10H2.75a.75.75 0 0 1-.567-1.241l6.5-7.5a.75.75 0 0 1 .897-.182Z" clip-rule="evenodd" />
         </svg>
@@ -121,7 +125,7 @@
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
-			<a href={p('/misc')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
+			<a href={panelHref('/misc')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6 mr-1"
@@ -147,7 +151,7 @@
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
-			<a href={p('/ota')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
+			<a href={panelHref('/ota')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6 mr-1"
@@ -167,7 +171,7 @@
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
-			<a href={p('/logs')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
+			<a href={panelHref('/logs')} class="text-lg flex items-center" {@attach isActiveLink({ className: 'bg-neutral' })}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6 mr-1"

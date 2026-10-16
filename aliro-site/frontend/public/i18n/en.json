@@ -599,6 +599,8 @@
                 "label": "Logs",
                 "alt": "System logs containing explicitly synthetic demo entries"
             }
-        }
+        },
+        "live": "Open live demo",
+        "live_note": "Explore the actual panel in your browser with sample data. Changes are not saved; no controller is connected."
     }
 }

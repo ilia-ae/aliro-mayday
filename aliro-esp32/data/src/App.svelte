@@ -3,4 +3,4 @@
   import 'sv-router/generated';
 </script>
 
-<Router />
+<Router base={__WEB_DEMO__ ? "#" : undefined} />

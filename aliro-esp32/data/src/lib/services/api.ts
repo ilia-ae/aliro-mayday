@@ -8,9 +8,9 @@ export async function rebootDevice() {
     });
 
     if (!response.ok) {
-      // the reboot endpoint always sends success=true and message
-      // we don't have an API error message to show
-      notifications.addError(`Request Failed`);
+      const error = await response.json();
+      notifications.addError(error.error || 'Request Failed');
+      return;
     }
     const result : ApiSuccess = await response.json();
     notifications.addSuccess(result.message);
@@ -27,7 +27,9 @@ export async function resetPairings() {
     });
 
     if (!response.ok) {
-      notifications.addError(`Request Failed`);
+      const error = await response.json();
+      notifications.addError(error.error || 'Request Failed');
+      return;
     }
     const result : ApiSuccess = await response.json();
     notifications.addSuccess(result.message);
@@ -44,7 +46,9 @@ export async function resetWifi() {
     });
 
     if (!response.ok) {
-      notifications.addError(`Request Failed`);
+      const error = await response.json();
+      notifications.addError(error.error || 'Request Failed');
+      return;
     }
     const result : ApiSuccess = await response.json();
     notifications.addSuccess(result.message);
@@ -61,7 +65,9 @@ export async function startConfigAP() {
     });
 
     if (!response.ok) {
-      notifications.addError(`Request Failed`);
+      const error = await response.json();
+      notifications.addError(error.error || 'Request Failed');
+      return;
     }
     const result : ApiSuccess = await response.json();
     notifications.addSuccess(result.message);
