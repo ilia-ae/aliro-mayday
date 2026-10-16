@@ -8924,11 +8924,11 @@
     },
     {
       "path": "docs/access-integrations.md",
-      "sha256": "870b140275647256291a648f130bf7f5b79e3348d2a26d12534a85a89de55e42"
+      "sha256": "5ddcf1a705326f4f0bcb5054ee8c459e1340e8641b7a140ff0935bcc2303c68c"
     },
     {
       "path": "docs/access-integrations.ru.md",
-      "sha256": "9fb99afa6430c66e34b06b6d3a66e00cb7f636f1df9c1788eaa81780dd8cc114"
+      "sha256": "46061a63eefd116e6ac487b8dbba56cbeae1a94134be62916382341d536a94ac"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
@@ -8988,11 +8988,11 @@
     },
     {
       "path": "docs/images/aliro-relay.en.svg",
-      "sha256": "1748751f0478be3a70f5ace801ac6f6dde545d5224cb0e52f408fb63ac1d2f98"
+      "sha256": "9a604634da8480ef553888330000aa9eba63f90c122d31bda256dfa7d69db666"
     },
     {
       "path": "docs/images/aliro-relay.ru.svg",
-      "sha256": "c1f86f39818b5dc69ee88d814db40e75d49e9d5779de71f71fb3de8643fc177f"
+      "sha256": "57d6e889f11366a74c1b6ab05e4606f84e9cae959c2f11403447078fecf6bda4"
     },
     {
       "path": "docs/images/aliro-wiring.en.svg",
@@ -9088,11 +9088,11 @@
     },
     {
       "path": "docs/wiring.md",
-      "sha256": "4621ba22dba2b0a1f33bb5fca9278a9d403ef25607965ba34389734421b4f546"
+      "sha256": "35f57f5a9031f79d96c7f8aad4e6d6b1be87e22bdbf7688475a6bd250c813cf0"
     },
     {
       "path": "docs/wiring.ru.md",
-      "sha256": "55a198025004485d095b5477b982c7ebbeebff56b8e3475839951441eb95a2da"
+      "sha256": "0e7fa3bbe7ad8217d09767c0a6d57bc4b026febdf17c79770ef2dc7c8bae4489"
     },
     {
       "path": "homekey-esp32/.clangd",

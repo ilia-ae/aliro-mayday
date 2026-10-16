@@ -11,12 +11,13 @@ still need a separate hardware acceptance test.
 ## Relay setup, step by step
 
 The [connection table and relay diagram](wiring.md#relay-gpio4-example) show
-**GPIO4 → IN** and a separate **COM/NO lock-power circuit**. That is an example
-for a compatible module, not an automatic pin assignment or confirmation of
-an unknown relay/lock model.
+**GPIO4 → D on DFRobot DFR0473** and a separate **COM/NO lock-power circuit**.
+The reference uses a 5 V module supply, HIGH control and R1 = 10 kΩ to ground,
+plus a separate 12 V power-to-unlock bench lock. GPIO4 still requires explicit
+selection; another module must meet the documented compatibility requirements.
 
-1. With power removed, identify your module's `IN`, `GND`, `VCC` and contact
-   `COM`/`NO`/`NC`. Verify input compatibility with **3.3 V**, the active HIGH/LOW
+1. With power removed, identify DFR0473's `D` (control), `−` (GND), `+` (5 V)
+   and contact `COM`/`NO`/`NC`; leave `N/A` unused. Verify input compatibility with **3.3 V**, the active HIGH/LOW
    level and the module/lock supply ratings.
 2. Use the diagram only if its power-to-unlock DC lock example matches your
    hardware. Prepare the external driver supply, contact circuit and specified

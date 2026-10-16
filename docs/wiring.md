@@ -76,29 +76,58 @@ for the current DevKitC profile, provided nothing else on your board uses it.
 
 ![Relay control and lock-power connections](images/aliro-relay.en.svg)
 
-The diagram assumes a relay **module with a driver, a 3.3 V compatible input
-and a HIGH trigger**, plus a low-voltage DC lock that releases when powered.
-Connector positions are schematic. Read the terminal labels on the real module.
+### Reference parts to use
+
+Use **one DFRobot Gravity DFR0473 mechanical relay module**, powered at **5 V**,
+with its built-in driver and **HIGH** control input. Its control pin is marked
+**`D`**, its supply pins **`+`** and **`−`**. The manufacturer documents 3.3 V
+logic compatibility; this is our concrete reference, not a requirement to use
+a particular brand.
+
+| Part | Reference specification |
+| --- | --- |
+| Relay | DFRobot DFR0473, one mechanical changeover relay with driver |
+| Module supply | Regulated **5 V DC, at least 0.5 A**, separate from the lock |
+| R1 | **10 kΩ** from module `D` to module `−` / ESP32 `GND` |
+| Demo lock | **12 V DC, power-to-unlock**, supports a 1-second pulse; select a small bench actuator rated at no more than 1 A for this example |
+| Lock supply | Sized for that lock and its inrush; e.g. **12 V DC, 2 A** for a compatible ≤1 A bench lock |
+| Load suppression | Diode/TVS specified for the chosen DC lock, as shown below |
+
+The module's 5 V input supply is separate from the **3.3 V GPIO signal**. Do not
+connect the external 5 V supply to the USB-powered ESP32's 5 V rail in this
+example. Only the module's control ground is shared with ESP32. Keep the lock's
+12 V circuit on the isolated contacts.
+
+Buy an equivalent only if its documentation confirms **3.3 V input, HIGH trigger,
+5 V module supply and voltage-free COM/NO/NC contacts**. A relay case marking
+such as `SRD-05VDC-SL-C` alone identifies the relay, not its surrounding module's
+input circuit. A visually similar LOW-trigger board is not a drop-in match to
+this HIGH setup. Connector positions are schematic; follow the actual labels.
+On DFR0473, **`N/A` is an unused terminal**, not COM.
+
+Sources: [DFRobot pinout and electrical specification](https://wiki.dfrobot.com/dfr0473/),
+[HIGH/LOW behavior](https://wiki.dfrobot.com/dfr0473/docs/19017),
+[manufacturer schematic](https://dfimg.dfrobot.com/wiki/18607/DFR0473_digita-relay-module_schematics_V1.0.pdf).
 
 | From | To | Meaning |
 | --- | --- | --- |
-| ESP32 `GPIO4` | Relay-module `IN` / `SIG` | Control signal only |
-| ESP32 `GND` | Relay-module `GND` | Signal reference |
-| Relay-module supply `+` | Module `VCC` / `DC+` | Use the module's rated supply, not GPIO4 |
-| Relay-module supply `−` | Module `GND` / `DC−` | Same ground as ESP32 in this non-isolated example |
+| ESP32 `GPIO4` | DFR0473 `D` | Control signal only (3.3 V) |
+| ESP32 `GND` | DFR0473 `−` | Signal reference |
+| 5 V module supply `+` | DFR0473 `+` | Module power, not GPIO4 |
+| 5 V module supply `−` | DFR0473 `−` | Same ground as ESP32 |
 | Lock supply `+` | Relay contact `COM` | Start of the switched lock circuit |
 | Relay contact `NO` | Lock `+` | Power reaches the lock when the relay is active |
 | Lock `−` | Lock supply `−` | Lock-power return |
 | Relay contact `NC` | Leave disconnected | Unused for this power-to-unlock example |
 
-The two module `GND` labels in the drawing are **one electrical node**, not a
+The two module `−` / `GND` labels in the drawing are **one electrical node**, not a
 promise of two physical pins. The lock circuit is switched through isolated
 contacts; its supply negative does not need a connection to ESP32 for that reason.
 An optically isolated module may need different ground/jumper wiring: follow
 its manufacturer rather than defeating the isolation.
 
-For this HIGH-trigger example, hold the input LOW during boot with the module's
-specified pull-down. For a compatible LOW-trigger module, choose **LOW** in the
+For this HIGH-trigger reference, add **R1 = 10 kΩ from D to − (GND)** to hold
+the input LOW while the ESP32 GPIO is high-impedance at boot. For a compatible LOW-trigger module, choose **LOW** in the
 panel and use the specified inactive pull-up to **3.3 V**, never a 5 V pull-up on
 ESP32 GPIO. A bare relay coil needs a separate transistor/MOSFET driver and coil
 suppression; it cannot replace the compatible module shown here.
