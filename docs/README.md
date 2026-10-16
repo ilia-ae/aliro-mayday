@@ -15,6 +15,7 @@ Russian translations use `.ru.md` or `README.ru.md`.
 | SDK setup, build, update and rollback | [Firmware guide](../aliro-esp32/README.md) | [Русский](../aliro-esp32/README.ru.md) |
 | GPIO, NFC SPI, display and buttons | [Wiring](wiring.md) | [Русский](wiring.ru.md) |
 | Demo stand photos and retouching notes | [Photos](demo-stand.md) | [Русский](demo-stand.ru.md) |
+| Local web UI launch, debugging and screenshot gallery | [UI debug guide](controller-ui-debug.md) | [Русский](controller-ui-debug.ru.md) |
 | Document rights, revocation and persistence | [Access policy](aliro-access-policy-2026-10-14.md) | [Русский](aliro-access-policy-2026-10-14.ru.md) |
 | Host tests and hardware acceptance | [Tests](../aliro-esp32/tests/README.md) | [Русский](../aliro-esp32/tests/README.ru.md) |
 | Samsung provisioning and bench steps | [Bench preparation](samsung-bench-preparation-2026-10-14.md) | [Русский](samsung-bench-preparation-2026-10-14.ru.md) |

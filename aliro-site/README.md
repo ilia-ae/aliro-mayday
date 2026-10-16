@@ -17,6 +17,15 @@ copies are in `frontend/public/images/`. The caption and alt text follow the
 selected language. The photo is retouched, with the IP hidden and external
 cables removed; use the separate electrical wiring guide for connections.
 
+## Controller web interface
+
+A separate gallery shows six browser screenshots of the actual Svelte administration UI:
+overview, MQTT, actions, system settings, OTA and logs. Section buttons and previous/next
+controls switch images; each opens at full size. All use explicitly synthetic data.
+The images are not live controller tests.
+The [local launch and debugging guide](../docs/controller-ui-debug.md) explains
+`bun run debug`; no controller or ESP-IDF is needed.
+
 ## Source and deployment
 
 The canonical public source is `aliro-site/` in `ilia-ae/aliro-mayday`.
@@ -41,7 +50,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **61 tests**, with **5 explicit skips**.
+The complete browser suite passed **69 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 

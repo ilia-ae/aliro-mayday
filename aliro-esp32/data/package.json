@@ -33,7 +33,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "debug": "bun ../../scripts/debug-controller-ui.mjs",
+    "debug:test": "bun test ../../scripts/tests/controller-ui-debug.test.mjs"
   },
   "type": "module",
   "dependencies": {

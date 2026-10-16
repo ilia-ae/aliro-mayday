@@ -10,7 +10,7 @@
 [![Licensing: mixed; see guide](https://img.shields.io/badge/licensing-mixed-blue)](../docs/licensing.md)
 [![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](../docs/README.md)
 
-[Русский](README.ru.md) · [Documentation index](../docs/README.md) · [Demo stand photos](../docs/demo-stand.md)
+[Русский](README.ru.md) · [Documentation index](../docs/README.md) · [Demo stand photos](../docs/demo-stand.md) · [Web UI gallery and debugging](../docs/controller-ui-debug.md)
 
 Project-original additions: **Mayday / Ilia Arestov**. [Authorship and upstream credits](../AUTHORS.md).
 
@@ -23,6 +23,12 @@ Wallet issuance, on-device revocation using a separate test key, physical actuat
 and Aliro certification require separate acceptance.
 
 Licensing is mixed: see the [scope and third-party exceptions](../docs/licensing.md).
+
+## Local web UI
+
+Run the actual interface with sample data: `cd aliro-esp32/data` → `bun run debug` (from the repository root). Requires Bun 1.3.13 and Node.js 22.12+; Node 24 LTS is recommended. The script does not connect to or flash a controller.
+
+[Web UI gallery and debugging](../docs/controller-ui-debug.md).
 
 ## Snapshot timestamp evidence
 

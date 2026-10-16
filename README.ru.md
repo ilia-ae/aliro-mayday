@@ -10,13 +10,19 @@
 [![Licensing: mixed; see guide](https://img.shields.io/badge/licensing-mixed-blue)](docs/licensing.ru.md)
 [![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](docs/README.ru.md)
 
-[English](README.md) · [Документация](docs/README.ru.md) · [Схема подключения](docs/wiring.ru.md) · [Фотографии стенда](docs/demo-stand.ru.md)
+[English](README.md) · [Документация](docs/README.ru.md) · [Схема подключения](docs/wiring.ru.md) · [Фотографии стенда](docs/demo-stand.ru.md) · [Галерея панели и отладка](docs/controller-ui-debug.ru.md)
 
 Собственный материал проекта: **Mayday / Ilia Arestov**. [Авторство и сторонние вклады](AUTHORS.ru.md).
 
 Экспериментальный контроллер Aliro NFC на ESP32-S3 + PN532 с выдачей ключей
 через Matter DoorLock и локальным управлением. Репозиторий начат как очищенный
 снимок исходников **13 октября 2026** с новой историей Git.
+
+## Локальная веб-панель
+
+Запустите настоящий интерфейс с демоданными: `cd aliro-esp32/data` → `bun run debug` (из корня репозитория). Требуются Bun 1.3.13 и Node.js 22.12+; рекомендуется Node 24 LTS. Скрипт не подключается к контроллеру и не прошивает его.
+
+[Галерея панели и отладка](docs/controller-ui-debug.ru.md).
 
 ## Подтверждения снимка исходников
 

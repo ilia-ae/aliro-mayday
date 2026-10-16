@@ -5,11 +5,16 @@ import tailwindcss from "@tailwindcss/vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { router } from "sv-router/vite-plugin";
 import compression from "vite-plugin-compression2";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 
 export default defineConfig(({ mode }) => {
   const isDev = mode === "development";
-  const version : string = execSync('git rev-parse --short=16 HEAD').toString().trim();
+  const isDemo = isDev && process.env.ALIRO_UI_DEMO === "1";
+  const backend = isDemo ? process.env.ALIRO_UI_BACKEND_URL : "http://localhost:8000";
+  if (!backend) throw new Error("Demo backend URL is required; use bun run debug");
+  let version = "source-snapshot";
+  try { version = execFileSync("git", ["rev-parse", "--short=16", "HEAD"], { stdio: ["ignore", "pipe", "ignore"] }).toString().trim(); }
+  catch { /* Source ZIPs do not include Git history. */ }
 
   return {
     plugins: [
@@ -28,7 +33,7 @@ export default defineConfig(({ mode }) => {
         deleteOriginalAssets: true
       })
     ],
-    define: { __DEV__: isDev, __VERSION__: JSON.stringify(version) },
+    define: { __DEV__: isDev, __DEMO__: isDemo, __VERSION__: JSON.stringify(version) },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -66,14 +71,15 @@ export default defineConfig(({ mode }) => {
       legalComments: 'none',
     },
     server: {
-      proxy: {
-        "/certificates": "http://localhost:8000",
-        "/config": "http://localhost:8000",
-        "/eth_get_config": "http://localhost:8000",
-        "/nfc_get_presets": "http://localhost:8000",
-        "/ws": { target: "ws://localhost:8000", ws: true },
-        "/captive_portal_config": "http://localhost:8000"
-      },
+      proxy: Object.fromEntries([
+        "/certificates", "/config", "/eth_get_config", "/nfc_get_presets",
+        "/captive_portal_config",
+        ...(isDemo ? ["/wifi_scan", "/reboot_device", "/reset_hk_pair",
+          "/reset_wifi_cred", "/start_config_ap", "/ota"] : []),
+        "/ws",
+      ].map(path => [path, path === "/ws"
+        ? { target: backend.replace(/^http/, "ws"), ws: true }
+        : backend])),
     },
   };
 });

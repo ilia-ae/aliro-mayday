@@ -14,7 +14,7 @@
     "paths": {
       "$lib/*": ["./src/lib/*"],
       "sv-router/generated": [
-        ".router/router.ts"
+        "./.router/router.ts"
       ]
     }
   },

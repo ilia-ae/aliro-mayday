@@ -103,6 +103,9 @@
       <div class="drawer-content h-full w-full">
         <!-- Content -->
         <main id="main-content" class="px-6 h-full overflow-y-auto bg-base-100">
+        {#if __DEMO__}
+          <div role="note" class="alert alert-info mt-5">Demo preview — sample data. No controller connected; changes are disabled.</div>
+        {/if}
         {#if getLoadingState()}
           <div class="flex items-center justify-center h-full">
             <div class="loading loading-spinner loading-lg"></div>

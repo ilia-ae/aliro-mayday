@@ -196,6 +196,8 @@ interface ComparisonRow {
                             <strong>{{ 'demo_stand.title' | translate }}</strong>
                             <p class="demo-stand-note">{{ 'demo_stand.note' | translate }}</p>
                             <a [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">{{ 'source.wiring' | translate }} →</a>
+                            <span aria-hidden="true"> · </span>
+                            <a href="#controller-ui">{{ 'controller_ui.title' | translate }} →</a>
                         </figcaption>
                     </figure>
                 </div>
@@ -347,6 +349,49 @@ interface ComparisonRow {
                                 <p>{{ 'integrations.' + n + '.text' | translate }}</p>
                             </article>
                         }
+                    </div>
+                </div>
+            </section>
+
+            <section id="controller-ui" class="controller-ui" aria-labelledby="controller-ui-title">
+                <div class="wrap">
+                    <h2 id="controller-ui-title">{{ 'controller_ui.title' | translate }}</h2>
+                    <p class="lede">{{ 'controller_ui.lede' | translate }}</p>
+                    <div class="controller-ui-views" role="group" [attr.aria-label]="'controller_ui.sections' | translate">
+                        @for (view of controllerUiViews; track view.key; let i = $index) {
+                            <button type="button" [class.is-selected]="controllerUiIndex() === i"
+                                    [attr.aria-pressed]="controllerUiIndex() === i"
+                                    aria-controls="controller-ui-preview" (click)="controllerUiIndex.set(i)">
+                                {{ 'controller_ui.views.' + view.key + '.label' | translate }}
+                            </button>
+                        }
+                    </div>
+                    <figure id="controller-ui-preview" class="controller-ui-preview">
+                        <a [href]="controllerUiView().src" target="_blank" rel="noopener noreferrer"
+                           [attr.aria-label]="('controller_ui.open_image' | translate) + ': ' + ('controller_ui.views.' + controllerUiView().key + '.label' | translate)">
+                            <img [src]="controllerUiView().src"
+                                 [alt]="'controller_ui.views.' + controllerUiView().key + '.alt' | translate"
+                                 width="1280" height="720" loading="lazy" decoding="async" />
+                        </a>
+                        <figcaption>
+                            <div class="controller-ui-paging">
+                                <button type="button" (click)="stepControllerUi(-1)" aria-controls="controller-ui-preview"
+                                        [attr.aria-label]="'controller_ui.previous' | translate">←</button>
+                                <span aria-live="polite" aria-atomic="true">
+                                    {{ 'controller_ui.views.' + controllerUiView().key + '.label' | translate }}
+                                    · {{ controllerUiIndex() + 1 }} / {{ controllerUiViews.length }}
+                                </span>
+                                <button type="button" (click)="stepControllerUi(1)" aria-controls="controller-ui-preview"
+                                        [attr.aria-label]="'controller_ui.next' | translate">→</button>
+                            </div>
+                            <p>{{ 'controller_ui.caption' | translate }}</p>
+                        </figcaption>
+                    </figure>
+                    <div class="controller-ui-links">
+                        <a [href]="sourceControllerUiUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'controller_ui.guide' | translate }} ↗
+                        </a>
+                        <a href="#hero">{{ 'controller_ui.hardware' | translate }} ↑</a>
                     </div>
                 </div>
             </section>
@@ -1497,6 +1542,71 @@ interface ComparisonRow {
                 margin: 0;
             }
 
+            .controller-ui-views {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-top: 1.5rem;
+            }
+            .controller-ui-views button,
+            .controller-ui-paging button {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 0.5rem 1rem;
+                border: 1px solid var(--border);
+                border-radius: 0.75rem;
+                color: var(--fg);
+                background: var(--bg-elevated);
+                font: inherit;
+                cursor: pointer;
+            }
+            .controller-ui-views button:hover,
+            .controller-ui-paging button:hover {
+                border-color: var(--fg-muted);
+            }
+            .controller-ui-views button.is-selected {
+                background: var(--fg);
+                color: var(--bg);
+                border-color: var(--fg);
+            }
+            .controller-ui-views button:focus-visible,
+            .controller-ui-paging button:focus-visible {
+                outline: 2px solid var(--fg);
+                outline-offset: 3px;
+            }
+            .controller-ui-paging {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+            }
+            .controller-ui-paging span {
+                text-align: center;
+                color: var(--fg);
+                font-weight: 600;
+            }
+            .controller-ui-preview {
+                margin: 1rem 0;
+            }
+            .controller-ui-preview img {
+                display: block;
+                width: 100%;
+                height: auto;
+                border: 1px solid var(--border);
+                border-radius: var(--card-radius);
+            }
+            .controller-ui-preview figcaption {
+                margin-top: 0.75rem;
+                color: var(--fg-muted);
+                font-size: 0.875rem;
+                line-height: 1.6;
+            }
+            .controller-ui-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem 1.5rem;
+            }
+
             /* ================ Technology stack ================ */
             .stack-list {
                 list-style: none;
@@ -2483,9 +2593,29 @@ export class LandingPage {
         return 'nav.theme_switch_to_auto';
     });
 
+    readonly controllerUiViews = [
+        { key: 'dashboard', src: '/images/controller-dashboard-demo.jpg' },
+        { key: 'mqtt', src: '/images/controller-mqtt-demo.jpg' },
+        { key: 'actions', src: '/images/controller-actions-demo.jpg' },
+        { key: 'system', src: '/images/controller-system-demo.jpg' },
+        { key: 'ota', src: '/images/controller-ota-demo.jpg' },
+        { key: 'logs', src: '/images/controller-logs-demo.jpg' }
+    ] as const;
+    readonly controllerUiIndex = signal(0);
+    readonly controllerUiView = computed(() => this.controllerUiViews[this.controllerUiIndex()]);
+
+    stepControllerUi(direction: number): void {
+        this.controllerUiIndex.update(index =>
+            (index + direction + this.controllerUiViews.length) % this.controllerUiViews.length
+        );
+    }
+
     readonly sourceReleasedUrl = 'https://github.com/ilia-ae/aliro-mayday';
     readonly sourceDocumentationUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/README${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly sourceControllerUiUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/controller-ui-debug${this.language.lang() === 'ru' ? '.ru' : ''}.md`
     );
     readonly sourceLicensingUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/licensing${this.language.lang() === 'ru' ? '.ru' : ''}.md`

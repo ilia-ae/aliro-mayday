@@ -22,6 +22,7 @@ CURRENT_DOCS = (
     "CONTRIBUTING.md", "CONTRIBUTING.ru.md", ".github/PULL_REQUEST_TEMPLATE.md",
     "AUTHORS.md", "AUTHORS.ru.md",
     "docs/demo-stand.md", "docs/demo-stand.ru.md",
+    "docs/controller-ui-debug.md", "docs/controller-ui-debug.ru.md",
     "docs/provenance/2026-10-15/README.md", "docs/provenance/2026-10-15/README.ru.md",
     "docs/wiring.ru.md", "docs/wiring.md",
     "docs/samsung-bench-preparation-2026-10-14.ru.md",

@@ -563,5 +563,42 @@
         "p1": "On 15 October 2026, the owner confirmed that the existing iPhone key works after the firmware update. The controller recorded three authenticated taps, zero failures and both locked and unlocked Matter states. The key and pairing were preserved.",
         "p2": "The supported tests pass: 15 of 15. Access rights, revocation and persistence are implemented; Samsung Wallet on Fold 7, Google Wallet, a physical relay and Aliro BLE/UWB remain unverified.",
         "cta": "View code and implementation limits →"
+    },
+    "controller_ui": {
+        "title": "Controller web interface",
+        "lede": "The stand brings the hardware together. Its web panel shows reader information, device status, settings and logs.",
+        "open_image": "Open screenshot at full size",
+        "caption": "Screenshots of the actual interface in local demo mode. Sample data; no controller connected.",
+        "guide": "Run and debug the panel locally",
+        "hardware": "View the demo stand",
+        "sections": "Controller interface screenshots",
+        "previous": "Previous screenshot",
+        "next": "Next screenshot",
+        "views": {
+            "dashboard": {
+                "label": "Overview",
+                "alt": "Controller dashboard: sample reader and device information"
+            },
+            "mqtt": {
+                "label": "MQTT",
+                "alt": "MQTT settings: sample broker address and topics"
+            },
+            "actions": {
+                "label": "Actions",
+                "alt": "Hardware actions: example GPIO and NeoPixel settings"
+            },
+            "system": {
+                "label": "System",
+                "alt": "System settings: device options and management controls in demo mode"
+            },
+            "ota": {
+                "label": "OTA update",
+                "alt": "Firmware and filesystem upload interface with no files selected in demo mode"
+            },
+            "logs": {
+                "label": "Logs",
+                "alt": "System logs containing explicitly synthetic demo entries"
+            }
+        }
     }
 }

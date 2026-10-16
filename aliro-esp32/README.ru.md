@@ -10,7 +10,7 @@
 [![Licensing: mixed; see guide](https://img.shields.io/badge/licensing-mixed-blue)](../docs/licensing.ru.md)
 [![Documentation: EN / RU](https://img.shields.io/badge/docs-EN%20%2F%20RU-6f42c1)](../docs/README.ru.md)
 
-[English](README.md) · [Оглавление документации](../docs/README.ru.md) · [Фотографии стенда](../docs/demo-stand.ru.md)
+[English](README.md) · [Оглавление документации](../docs/README.ru.md) · [Фотографии стенда](../docs/demo-stand.ru.md) · [Галерея панели и отладка](../docs/controller-ui-debug.ru.md)
 
 Собственные дополнения: **Mayday / Ilia Arestov**. [Авторство и сторонние вклады](../AUTHORS.ru.md).
 
@@ -24,6 +24,12 @@ DoorLock, хранением в NVS и локальным управлением
 отдельного подтверждения.
 
 Лицензирование смешанное: см. [области и сторонние исключения](../docs/licensing.ru.md).
+
+## Локальная веб-панель
+
+Запустите настоящий интерфейс с демоданными: `cd aliro-esp32/data` → `bun run debug` (из корня репозитория). Требуются Bun 1.3.13 и Node.js 22.12+; рекомендуется Node 24 LTS. Скрипт не подключается к контроллеру и не прошивает его.
+
+[Галерея панели и отладка](../docs/controller-ui-debug.ru.md).
 
 ## Подтверждения снимка исходников
 
