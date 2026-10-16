@@ -23,6 +23,11 @@ Reloading the page restores the sample values.
 [Demo bundle license notices](https://aliro.mayday.software/demo/NOTICES.txt).
 Project commercial terms and component licenses remain unchanged.
 
+The [homepage](https://aliro.mayday.software/?lang=en#controller-ui) embeds this
+same isolated demo below the stand photo. The screenshots remain in a collapsible
+gallery. The nearby tap/door animation is a schematic illustration, independent
+of both the panel and physical hardware.
+
 ## Quick start
 
 Install [Bun](https://bun.sh/docs/installation) **1.3.13** and

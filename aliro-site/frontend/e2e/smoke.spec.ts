@@ -16,7 +16,7 @@ test.describe('homepage smoke', () => {
         await expect(page.locator('h1')).not.toContainText('hero.title');
 
         // Hero CTAs render.
-        await expect(page.getByRole('link', { name: /связаться|get in touch/i })).toBeVisible();
+        await expect(page.locator('.hero-cta a[href="#controller-ui"]')).toBeVisible();
 
         // No console errors of any kind.
         expect(errors, errors.join('\n')).toEqual([]);

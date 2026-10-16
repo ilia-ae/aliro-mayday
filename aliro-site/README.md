@@ -19,12 +19,25 @@ cables removed; use the separate electrical wiring guide for connections.
 
 ## Controller web interface
 
-A separate gallery shows six browser screenshots of the actual Svelte administration UI:
+The actual Svelte web panel is embedded below the stand photo on the homepage,
+with sample data and an option to open it in a separate tab. A collapsible gallery
+keeps six browser screenshots:
 overview, MQTT, actions, system settings, OTA and logs. Section buttons and previous/next
 controls switch images; each opens at full size. All use explicitly synthetic data.
 The images are not live controller tests.
 The [local launch and debugging guide](../docs/controller-ui-debug.md) explains
 `bun run debug`; no controller or ESP-IDF is needed.
+
+## Interaction and snapshot evidence
+
+The NFC section includes a button-controlled phone/reader/door animation, with
+a reduced-motion alternative and a clear physical-output limitation. It is a
+schematic animation; it never connects to hardware or changes the panel state.
+
+The source section separates code/documentation links from licensing. Its
+deposit card summarises the existing 15 October proof package and links to
+[deposit.mayday](https://deposit.mayday.software/). The original proof bytes and
+pending Bitcoin status are preserved. EN/RU summary SVGs are presentation assets.
 
 ## Source and deployment
 
@@ -50,7 +63,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **79 tests**, with **5 explicit skips**.
+The complete browser suite passed **95 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 

@@ -3,6 +3,14 @@
   "history_included": false,
   "files": [
     {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "f5c3cc066088fb5a850e557310fe9d9e2ef04981d3c3ad785fd8279cc706cd9a"
+    },
+    {
+      "path": ".github/workflows/source-and-nfc.yml",
+      "sha256": "6e94d3fabb09e14a3fb82142a03bab922a10097694924582515a6811f0231657"
+    },
+    {
       "path": ".gitignore",
       "sha256": "31179d708f97a7b64ce6036b5b6fc9c560c7ac5dbc29239d45f3a399960b51c0"
     },
@@ -11,8 +19,40 @@
       "sha256": "02e735b3dfe1c32833eb550b7ff8ffa17f5f2bc3fa1e7bae61a8f5a3883ce398"
     },
     {
+      "path": "AUTHORS.md",
+      "sha256": "a9c975890471f7a5caafcd9fb07d443a7784e73f4180188fec4342d26c758b79"
+    },
+    {
+      "path": "AUTHORS.ru.md",
+      "sha256": "4725c2e7791f592a3f1caeb6c734b7a78d1fe6b7627a7eba5b953fedc2cb8e8b"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "3a415f74b75b5d682bb4c4e512caa02120a369183c938c95d6d68b45dc89249e"
+    },
+    {
+      "path": "CONTRIBUTING.ru.md",
+      "sha256": "52ac2e054611d78baa0e5b757e6463ff4df95f379b88e20ab75ec644cd6ead5c"
+    },
+    {
       "path": "LICENSE",
       "sha256": "5aef1152eaa0968841e30b965463000ec4130016a1bbd71927384b2674fc900f"
+    },
+    {
+      "path": "LICENSES/Aliro-Mayday-1.0.txt",
+      "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
+    },
+    {
+      "path": "LICENSES/CC-BY-SA-4.0.txt",
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+    },
+    {
+      "path": "LICENSES/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "LICENSES/GPL-3.0.txt",
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
     },
     {
       "path": "LICENSES/MIT.txt",
@@ -33,6 +73,10 @@
     {
       "path": "README.md",
       "sha256": "a6649c6288706abd083911fcd04a8eab01266bf8dc06a479b84761b28fd2664a"
+    },
+    {
+      "path": "README.ru.md",
+      "sha256": "94f7fc74e924686ee642d43309c68e1fcf0cb5f54bd23b9ae99b277ac684a422"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -57,6 +101,10 @@
     {
       "path": "aliro-esp32/README.md",
       "sha256": "dd3912bc7fac70f6951f1cd13330d9bae483f58042d78b856be1adb6d0be2dc4"
+    },
+    {
+      "path": "aliro-esp32/README.ru.md",
+      "sha256": "71b833d46dcbde0b96abb91d7ed540fde4c767ec8d1257690f19e864fce5c0bf"
     },
     {
       "path": "aliro-esp32/VERIFY_FIXES.md",
@@ -101,6 +149,14 @@
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/BleFlow.h",
       "sha256": "2506d53ffef067f1b84b5657e999dd9a86e27e0a30688ab8aa060152252e05ff"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/DocumentAccess.h",
+      "sha256": "f91dfbd0766baae17d15df19525a198cae2a2c3a921333610dbc874c952fe263"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/DocumentVerifier.h",
+      "sha256": "277d18ea03a2a4e5e0183c5d95439299dd988bc0fcf4f55de32e0e0a095192bb"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/ProfileFactory.h",
@@ -263,6 +319,10 @@
       "sha256": "bfc234032cd7dd8006c9bd637101f640c8cefe2b82ffd03960e0ae13ca8e304a"
     },
     {
+      "path": "aliro-esp32/components/DigitalDoorKey/priv/aliro/DocumentCbor.h",
+      "sha256": "6cb7389a0c3d34cbaa1e79de6e7e62e79b3928eda4d36dd13b45deecbc8111a5"
+    },
+    {
       "path": "aliro-esp32/components/DigitalDoorKey/priv/aliro/Profile.h",
       "sha256": "0867dbcd34bf3def0de1d3c3fd60f687ba601a7bc5451c0facffa4e06a08ec55"
     },
@@ -335,12 +395,36 @@
       "sha256": "6c6c5c2b3f6ba8022d037a8e14564a86e09476a133a20ad5265e113fc061a6c2"
     },
     {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/DocumentAccess.cpp",
+      "sha256": "1dd339be3ba498b20a4a9d758b4f005af6b34191e488637cb3dc98036bdc3711"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/DocumentVerifier.cpp",
+      "sha256": "a49303097a250b7bc602bf6a973bd35250715c0618394ef1de3f4fe1ad8367a6"
+    },
+    {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/Profile.cpp",
       "sha256": "571fe6de1dedd882f8963eca1530d8dff5e3ae36d949b2bc6ee610da88c79fb6"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/ProfileFactory.cpp",
       "sha256": "004e0983d241b12dc34fc3766d0d0ea91b88fffa359d05e868ccc955b1232373"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/LICENSE",
+      "sha256": "655fcdbeae1d8b0615a4ec79a12fd2dcdf85fd38d386a07dc82a9b4537f3f2ac"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/UPSTREAM.md",
+      "sha256": "3f939c9a449e5e4525a3a4e51f597c1130e9df2e78bbaf871351c8dbdd3dab34"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/document_cbor.c",
+      "sha256": "5b40784c6351810bcd2dc6e426cf5a0295107d8517096e5d684fd42f42c052fe"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/document_cbor.h",
+      "sha256": "2d515bc4a468ae47e9c994cf507502afe06cb518de742ad40c66f7df448fca00"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/src/auth/AliroFastAuth.cpp",
@@ -455,6 +539,10 @@
       "sha256": "9fdcecf8d577abfd8fb0842ba7f2903bd2e48c3c458c0f040cabc600e691a8a3"
     },
     {
+      "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_access_policy_test.cpp",
+      "sha256": "66aef44cb7452757057675aeb4417015e183baf5cc57884348a4c3c0e0e10be7"
+    },
+    {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_ble_advertising_test.cpp",
       "sha256": "97bb1c4e4931ea17cdf9191e3246cc1b70ddd73760bf5a21137e53ba312c34ef"
     },
@@ -469,6 +557,10 @@
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_ble_security_test.cpp",
       "sha256": "80ec8185862a2917193422aab942a9ae997dce21309008e79cb0345eb81c054f"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_document_validation_test.cpp",
+      "sha256": "7328b7692471a51421d858f4dfd35586bf1a1a9efaab908cb3a4cf86740cb0ac"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_fast_flow_test.cpp",
@@ -513,6 +605,10 @@
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/ble_loopback.hpp",
       "sha256": "3db7d291ea08133833312339669a1c97190a5da0c1074fa18d03a4225194d3b6"
+    },
+    {
+      "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/document_fixtures.hpp",
+      "sha256": "1b2c537d0eb4df0874a74f8fe67058de5f6c023d56aa7b1ebbdc5d6efe71f690"
     },
     {
       "path": "aliro-esp32/components/DigitalDoorKey/tests/ndef_pack_test.cpp",
@@ -641,6 +737,10 @@
     {
       "path": "aliro-esp32/components/cbor/LICENSE",
       "sha256": "3c6ba0b5bfa7830505301ffb336a17b0748e0d61c4d34216e9dc98f10e40395e"
+    },
+    {
+      "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
+      "sha256": "88533fdfb8cad632840efb0654cbe647bab8740236d75f1b67e71229bb95d0c9"
     },
     {
       "path": "aliro-esp32/components/cbor/README.md",
@@ -2451,18 +2551,6 @@
       "sha256": "70c2a1cac93a9180d193400954929ed8c7e3d01512b982cf3287bb03c4256fd3"
     },
     {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af/firmware.elf",
-      "sha256": "aaab892be294608b63219c53fb5610e0d3999b457709f0f0d3264bbdbdef816f"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af/firmware0.bin",
-      "sha256": "148efd683f871afd39909752f900cba2393053f55f9eb162f4aad30a94f9ec38"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af/firmware1.bin",
-      "sha256": "c3c1c159efe01dd86549281d835cd00e729200d2d9ab15c2b9f2446288906c17"
-    },
-    {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af--1f5d945af-dirty-arm-cortex-m4-data-sections.patch",
       "sha256": "88cb2392469edd35efac849cbb308955b6a80d162a21051b8df84d57f1c71625"
     },
@@ -2491,6 +2579,26 @@
       "sha256": "7ac84bd4b8cf63c3e6b81c1fa15b0bcc897057085ec9c4993f0ad60938391d43"
     },
     {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af/firmware.elf",
+      "sha256": "aaab892be294608b63219c53fb5610e0d3999b457709f0f0d3264bbdbdef816f"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af/firmware0.bin",
+      "sha256": "148efd683f871afd39909752f900cba2393053f55f9eb162f4aad30a94f9ec38"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/1f5d945af/firmware1.bin",
+      "sha256": "c3c1c159efe01dd86549281d835cd00e729200d2d9ab15c2b9f2446288906c17"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/v1.10--1f5d945af-dirty-arm-cortex-m4.patch",
+      "sha256": "99be0a1639ef56dc39c04f568e3278ea26792d7245721694c130872288dd20ae"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/v1.10--1f5d945af-dirty.patch",
+      "sha256": "14b24f4c9e4d44f188b8f01ed5dd9cf3b98c9500319e2e679eb6331641e86a10"
+    },
+    {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/v1.10/firmware.elf",
       "sha256": "b3931ee7d0e28d36fd24124833c0d150d8fcd060c9bbc212bd01ea3e0c03e4cd"
     },
@@ -2503,18 +2611,6 @@
       "sha256": "5c341726691cac39360697124e4854bba5e6b8515ff3269452280b24410eee97"
     },
     {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/v1.10--1f5d945af-dirty-arm-cortex-m4.patch",
-      "sha256": "99be0a1639ef56dc39c04f568e3278ea26792d7245721694c130872288dd20ae"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/pybv11/v1.10--1f5d945af-dirty.patch",
-      "sha256": "14b24f4c9e4d44f188b8f01ed5dd9cf3b98c9500319e2e679eb6331641e86a10"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.6.6-1/libpython3.6m.so.1.0",
-      "sha256": "1440c8987d790af4b05b3c34e9c5a08c449a18844cdb2c6843470244076c701b"
-    },
-    {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.6.6-1--3.7.2-3-aarch64.patch",
       "sha256": "8788bf87e0e459178c355114035acb104238d9a63ade5929cac964b2d6d94b40"
     },
@@ -2523,8 +2619,8 @@
       "sha256": "6013fbc162f60506c7af977d3754a01045a79155f3129609d2ded266414a1a36"
     },
     {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.7.2-3/libpython3.7m.so.1.0",
-      "sha256": "c2ee5da93486e0fc4d970519d6a027646a4319d33e0bfc9ec98ae9402cddf2bb"
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.6.6-1/libpython3.6m.so.1.0",
+      "sha256": "1440c8987d790af4b05b3c34e9c5a08c449a18844cdb2c6843470244076c701b"
     },
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.7.2-3--3.7.3-1-aarch64.patch",
@@ -2533,6 +2629,10 @@
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.7.2-3--3.7.3-1.patch",
       "sha256": "f090861555996f10e5d5fadaebda390c7a0d4bf48ba81d6e34ff1305b17076ff"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.7.2-3/libpython3.7m.so.1.0",
+      "sha256": "c2ee5da93486e0fc4d970519d6a027646a4319d33e0bfc9ec98ae9402cddf2bb"
     },
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/python3/aarch64/3.7.3-1/libpython3.7m.so.1.0",
@@ -2569,6 +2669,34 @@
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/sais.c",
       "sha256": "4293fa07064b2c112ef77831b567d3e9a2a3946e7931498dc1da20bfe622bfe3"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1--2-aarch64-data-sections.patch",
+      "sha256": "65773b6314c75c8407e97037024485a7d96540831ba254ae7be228ed5187bbbc"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1--2-aarch64.patch",
+      "sha256": "0bd931ee8b720688fc2fb1fad9dbb74144c89c363ca20420ece53e531f191fdf"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1--2.patch",
+      "sha256": "3446bf9ea6568f11c1251185a2d1dbdb573d2d2d9a6d3a1ed6e039b5dd549f97"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1.bin",
+      "sha256": "d29946eb590fb83aee46ae3ece8329c00dbafbe0bf9ee887b610df1f74c43b5d"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1.dis",
+      "sha256": "a9fd5622706cac035f0224e27c773c699f9ab92d5a4283908b57613c2d64c767"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/2.bin",
+      "sha256": "5cf9b71f359039414301450bbdc9093f842a5e85c4b26263a7a9d8df59c9dad2"
+    },
+    {
+      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/2.dis",
+      "sha256": "be73a7b197b075016a03604dff92444d18e5ca2140baf242d7d50baef0ef01b3"
     },
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell/arm-cortex-m4-bz2.patch",
@@ -2617,34 +2745,6 @@
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell/zstd.patch",
       "sha256": "e92ad52a8ab1a2e5148a2e4ce76fc33d038509658bb85501894c82d508b0a401"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1--2-aarch64-data-sections.patch",
-      "sha256": "65773b6314c75c8407e97037024485a7d96540831ba254ae7be228ed5187bbbc"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1--2-aarch64.patch",
-      "sha256": "0bd931ee8b720688fc2fb1fad9dbb74144c89c363ca20420ece53e531f191fdf"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1--2.patch",
-      "sha256": "3446bf9ea6568f11c1251185a2d1dbdb573d2d2d9a6d3a1ed6e039b5dd549f97"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1.bin",
-      "sha256": "d29946eb590fb83aee46ae3ece8329c00dbafbe0bf9ee887b610df1f74c43b5d"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/1.dis",
-      "sha256": "a9fd5622706cac035f0224e27c773c699f9ab92d5a4283908b57613c2d64c767"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/2.bin",
-      "sha256": "5cf9b71f359039414301450bbdc9093f842a5e85c4b26263a7a9d8df59c9dad2"
-    },
-    {
-      "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/shell-pi-3/2.dis",
-      "sha256": "be73a7b197b075016a03604dff92444d18e5ca2140baf242d7d50baef0ef01b3"
     },
     {
       "path": "aliro-esp32/components/esp_delta_ota/detools/tests/files/synthesizer/1--2-arm-cortex-m4.patch",
@@ -4435,6 +4535,18 @@
       "sha256": "6ef982b0ece325e486d17e9083b5b59cf3fc67712efa6f6a628708bdd39ff55e"
     },
     {
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium.import.props",
+      "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
+    },
+    {
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium.import.xml",
+      "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
+    },
+    {
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium.sln",
+      "sha256": "56960ee02dd4ec5a2f9d3d51eaf2bf7fccd7bade195ec2e43d17d8578d0b42bf"
+    },
+    {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium/libsodium.props",
       "sha256": "5020bc00bc118af8bcabf7cbeb7bee2a1690685b2dc94347dc9ae5eb0c0df75b"
     },
@@ -4451,16 +4563,16 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2010/libsodium.sln",
-      "sha256": "56960ee02dd4ec5a2f9d3d51eaf2bf7fccd7bade195ec2e43d17d8578d0b42bf"
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium.sln",
+      "sha256": "66e854097e4224dd1413125c2ffb5f0462b4f5b74dbef6dfb1629082892f23d4"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium/libsodium.props",
@@ -4479,16 +4591,16 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2012/libsodium.sln",
-      "sha256": "66e854097e4224dd1413125c2ffb5f0462b4f5b74dbef6dfb1629082892f23d4"
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium.sln",
+      "sha256": "270bb5df8c71c1c4b28e1be5c9585cce8330fbc9a7ef51ab8d586b94a85da3d3"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium/libsodium.props",
@@ -4507,16 +4619,16 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2013/libsodium.sln",
-      "sha256": "270bb5df8c71c1c4b28e1be5c9585cce8330fbc9a7ef51ab8d586b94a85da3d3"
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium.sln",
+      "sha256": "add59479bddb0a98789791438b4713852a5a3bbbc816309af8b7b7d8f5b9a88e"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium/libsodium.props",
@@ -4535,16 +4647,16 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2015/libsodium.sln",
-      "sha256": "add59479bddb0a98789791438b4713852a5a3bbbc816309af8b7b7d8f5b9a88e"
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium.sln",
+      "sha256": "942f2b0062dab24133851f0a6257fd425a86eb1c56c907da5031b7acd5a359ab"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium/libsodium.props",
@@ -4563,15 +4675,15 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2019/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2019/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2017/libsodium.sln",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2019/libsodium.sln",
       "sha256": "942f2b0062dab24133851f0a6257fd425a86eb1c56c907da5031b7acd5a359ab"
     },
     {
@@ -4591,16 +4703,16 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2019/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2019/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2019/libsodium.sln",
-      "sha256": "942f2b0062dab24133851f0a6257fd425a86eb1c56c907da5031b7acd5a359ab"
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium.sln",
+      "sha256": "8542b29a806a5d729ef24f19dca1572b11b103934a847e05785d7cad4793ab47"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium/libsodium.props",
@@ -4619,15 +4731,15 @@
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium.import.props",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium.import.props",
       "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium.import.xml",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium.import.xml",
       "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
     },
     {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2022/libsodium.sln",
+      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium.sln",
       "sha256": "8542b29a806a5d729ef24f19dca1572b11b103934a847e05785d7cad4793ab47"
     },
     {
@@ -4645,18 +4757,6 @@
     {
       "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium/libsodium.xml",
       "sha256": "17cf99c2a9bb0bee2f721c9dce79208d55ec02ec570daf51902c7788e13077a9"
-    },
-    {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium.import.props",
-      "sha256": "9267d420248d20ddbf3a4a8a12d811beae00eedd3bbda614b95ca9cd41ab5c97"
-    },
-    {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium.import.xml",
-      "sha256": "4dd7712abb4dc10f58c2c197b2a04a0c11f4de626ce03c09cb12661e32747141"
-    },
-    {
-      "path": "aliro-esp32/components/libsodium/libsodium/builds/msvc/vs2026/libsodium.sln",
-      "sha256": "8542b29a806a5d729ef24f19dca1572b11b103934a847e05785d7cad4793ab47"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/ci/appveyor/libsodium.sln",
@@ -5715,6 +5815,10 @@
       "sha256": "515c51526e521b6a9343602e726ed02265de87ef7a7433047c2df9d3e896a908"
     },
     {
+      "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/include/sodium.h",
+      "sha256": "dee9b42d6da80271c5ed2af564b1701fe5951838af89138ef7a8756f1e5bc9a8"
+    },
+    {
       "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/include/sodium/core.h",
       "sha256": "692c9a03eb49591a3ccacbef293f473c619cc86ef5dd4776a6e2e4321426fb07"
     },
@@ -6045,10 +6149,6 @@
     {
       "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/include/sodium/version.h.in",
       "sha256": "73c2b9204503e993e16b5e2414f787f370d57b843dc1d1989d16d4b4ed7d167d"
-    },
-    {
-      "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/include/sodium.h",
-      "sha256": "dee9b42d6da80271c5ed2af564b1701fe5951838af89138ef7a8756f1e5bc9a8"
     },
     {
       "path": "aliro-esp32/components/libsodium/libsodium/src/libsodium/randombytes/internal/randombytes_internal_random.c",
@@ -6831,6 +6931,10 @@
       "sha256": "9b33bbc1b96c1cbbbd867e2a31ae75227b1cecb3f82d9781387196e6bf80cd90"
     },
     {
+      "path": "aliro-esp32/components/libsodium/port_include/sodium.h",
+      "sha256": "5ee45842307bf933bf21a03afec21841e2910c21b3bed8f190f54f3c54df476c"
+    },
+    {
       "path": "aliro-esp32/components/libsodium/port_include/sodium/crypto_hash_sha256.h",
       "sha256": "ac3e651a3be2c4581ac74ee004994f85d93f66069908628dbeb7d6f62b775533"
     },
@@ -6841,10 +6945,6 @@
     {
       "path": "aliro-esp32/components/libsodium/port_include/sodium/version.h",
       "sha256": "253caa4151879defb204868df8697faed52950d51f84e3c4d846fa675a17dc17"
-    },
-    {
-      "path": "aliro-esp32/components/libsodium/port_include/sodium.h",
-      "sha256": "5ee45842307bf933bf21a03afec21841e2910c21b3bed8f190f54f3c54df476c"
     },
     {
       "path": "aliro-esp32/components/libsodium/sbom_libsodium.yml",
@@ -7507,6 +7607,10 @@
       "sha256": "3a61cac60670c17aa6a28a7ba8b1191cb260a3bc26b5530a20c31bbf0da6c6c8"
     },
     {
+      "path": "aliro-esp32/components/msgpack-c/upstream/include/msgpack.h",
+      "sha256": "58316d8acd57cb66bd9919e9eca1e360e2a4e80b55fe9d5f22b624822e4a4bef"
+    },
+    {
       "path": "aliro-esp32/components/msgpack-c/upstream/include/msgpack/fbuffer.h",
       "sha256": "67a7fe1fada8613c0738b00496e66d95bb0599fea60b96c96265d0a132131363"
     },
@@ -7569,10 +7673,6 @@
     {
       "path": "aliro-esp32/components/msgpack-c/upstream/include/msgpack/zone.h",
       "sha256": "aeef52c64f38e9914658282581833012b43e8835772fea35749d51cd917a8f92"
-    },
-    {
-      "path": "aliro-esp32/components/msgpack-c/upstream/include/msgpack.h",
-      "sha256": "58316d8acd57cb66bd9919e9eca1e360e2a4e80b55fe9d5f22b624822e4a4bef"
     },
     {
       "path": "aliro-esp32/components/msgpack-c/upstream/makedist.sh",
@@ -8027,6 +8127,10 @@
       "sha256": "8061d780fe95253917fd8ff64c9bea30761bf2e502a2f03a6765d48954290be4"
     },
     {
+      "path": "aliro-esp32/data/src/main.demo.ts",
+      "sha256": "b6b69b740853d548d7412257ec65a4eebd0cafd795328deb488b3cecab6f7211"
+    },
+    {
       "path": "aliro-esp32/data/src/main.ts",
       "sha256": "36f46e65ead6393f4213bed3204ef7710ba54707b7542d86e029b4223701b998"
     },
@@ -8147,8 +8251,16 @@
       "sha256": "037987cb6c44eb719a9a626198f4ae4ff264ba9821e0221878b1a971f5be9d8c"
     },
     {
+      "path": "aliro-esp32/main/DocumentAccessOps.hpp",
+      "sha256": "65202285651e4f041be4e6ac7c6ea5c8f763c427483bcf17c72e964effca4a9b"
+    },
+    {
       "path": "aliro-esp32/main/DoorLockAccessPolicy.hpp",
       "sha256": "aa5df91aa2ced199dbf1ed1990f8cfd2681f3e5d298c293aead845457ed9dfa5"
+    },
+    {
+      "path": "aliro-esp32/main/DoorLockStorageLimits.hpp",
+      "sha256": "904256108446f59730a4b8867a09439a9b4e504b645e0ec52fdf9b6e5dbae31f"
     },
     {
       "path": "aliro-esp32/main/DoorLockUserStubs.cpp",
@@ -8183,12 +8295,24 @@
       "sha256": "c754cb15683cb527aa28c658b3f621bac9735152fc5e4eb54f7c14ed1e7a80e2"
     },
     {
+      "path": "aliro-esp32/main/NfcManagerBridge.hpp",
+      "sha256": "8f0f3b0791a6894c896a5b6ada68bad3d8cbf14339aecd6518249ccbc23026db"
+    },
+    {
       "path": "aliro-esp32/main/OledPanel.cpp",
       "sha256": "4c3b2c9d1bd1670bc2d4a6e0b161d3c68d598b6064b3596cad4e1b3b2dee1d20"
     },
     {
       "path": "aliro-esp32/main/OledPanel.hpp",
       "sha256": "fdd37603d12bcb3a8c3cf302f378a27dc19f7c6eaaf90654ada34764ca1823a6"
+    },
+    {
+      "path": "aliro-esp32/main/P256Validation.hpp",
+      "sha256": "882d29f107577425c5c04a3a21059ad284de1dd913d0ae8cb55152883f88bf09"
+    },
+    {
+      "path": "aliro-esp32/main/ReaderConfigStore.hpp",
+      "sha256": "c70212983b92dc3b30446019607443a3c9f1491ec2bef4b977c151a9c7f9efad"
     },
     {
       "path": "aliro-esp32/main/ReaderCredentialOps.hpp",
@@ -8213,6 +8337,14 @@
     {
       "path": "aliro-esp32/main/RemoteLog.hpp",
       "sha256": "d12362e2be3caf3724e320e9372d3ee68e7dc8de43abaf7eda395ff970dcd2b7"
+    },
+    {
+      "path": "aliro-esp32/main/SystemClock.cpp",
+      "sha256": "5efff4e864e7b750ecf5abba2af63d20d87f6b7b7790ea6bcf20638fa55d52a4"
+    },
+    {
+      "path": "aliro-esp32/main/SystemClock.hpp",
+      "sha256": "47362661d8c91ad523461aab5a383512435755cb64c3e513c5059c0a1dbcdcd7"
     },
     {
       "path": "aliro-esp32/main/UserAccessPolicy.hpp",
@@ -8247,12 +8379,52 @@
       "sha256": "9c661cfef79103d571762e9f1cacce2e7eeeb7001709dede2bfc450aee8528e7"
     },
     {
+      "path": "aliro-esp32/tests/README.ru.md",
+      "sha256": "1e89db090cf5fbd199b823475a86d47804f2610afe2b092dd2f870c6815815e4"
+    },
+    {
+      "path": "aliro-esp32/tests/document_policy_test.cpp",
+      "sha256": "020bd92eaf2151adca5856533958b03dcd81228b693de11e0666369a2c821728"
+    },
+    {
       "path": "aliro-esp32/tests/firmware_auth_test.cpp",
       "sha256": "eab02b2dde3dec80ab37030cbad7ad5acc553b0693f90829c3e67a649483a0ac"
     },
     {
+      "path": "aliro-esp32/tests/provisioning_test.cpp",
+      "sha256": "84db8559d939893d63099ea54b8d0290098d646d6cbd58bcae3f633f20dfe033"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/app/clusters/door-lock-server/door-lock-delegate.h",
+      "sha256": "356412154041433789429549e88392194afbe3a8f7add3d15bc80f5a0d126819"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/app/clusters/door-lock-server/door-lock-server.h",
+      "sha256": "fa685b85e52f30214e33ea7d933dd3e3cceafae7e26c95e8d7b5d172979a6802"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/app/reporting/reporting.h",
+      "sha256": "fe94fbbc14eab8fb03d6c759daa0ddc02e880d3af747764e320b5d353718c9f1"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/clusters/DoorLock/AttributeIds.h",
+      "sha256": "5a96539e3328aeae8481540087ea33eb3c07475f200441bfd8924487b23a9a8c"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/clusters/DoorLock/ClusterId.h",
+      "sha256": "461d47c54904ac5cc73b90c936cc4d7b8c03c2b17e02f8813d1dcb515ffc2e9f"
+    },
+    {
       "path": "aliro-esp32/tests/stubs/esp_log.h",
       "sha256": "b4bf8faf853034a06d5c196eadbbb7e07996f2f8107030c70d79b26236a4bf32"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/esp_random.h",
+      "sha256": "1daa6765137a874d00971755c941606021e5201740577242f698178f62647f40"
+    },
+    {
+      "path": "aliro-esp32/tests/stubs/esp_sntp.h",
+      "sha256": "55b725f3a3f0721de1a0521740ef4949ae095b86dedfc4a5161e03e72fcb6f87"
     },
     {
       "path": "aliro-esp32/tests/stubs/nvs.cpp",
@@ -8267,6 +8439,10 @@
       "sha256": "a3abfd70215cb5e0f1565828ae6bf8b9ff1bedf49c4a2df243ed10a96c52da68"
     },
     {
+      "path": "aliro-esp32/tests/stubs/provisioning_platform.cpp",
+      "sha256": "118751efd87e064b56b0cfec0fef6ee9efddb710f17722ebd4ecc0a817aeb2fe"
+    },
+    {
       "path": "aliro-site/.gitignore",
       "sha256": "502ae0f29bccf929f3adb79686e3452709496d5067c0d0728e9c777cbb0e58a9"
     },
@@ -8276,7 +8452,11 @@
     },
     {
       "path": "aliro-site/README.md",
-      "sha256": "d77662546b961f75f9c0a5aa687cf3b5ff5318efca3c24b419e9356889b433c4"
+      "sha256": "f2cd7c688f78f1b78fd337d053985108e81d67d858b0291e3a746beb49744aa1"
+    },
+    {
+      "path": "aliro-site/README.ru.md",
+      "sha256": "ca955891e13edd94e9afe1b41c99560443421b6749db495911be4dbf24467b9a"
     },
     {
       "path": "aliro-site/frontend/.gitignore",
@@ -8287,12 +8467,28 @@
       "sha256": "6fa9fdcae361f6aad6779363c3bbc7ea7288c224eecbd328d32c562d0cc09c34"
     },
     {
+      "path": "aliro-site/frontend/e2e/cache-update.spec.ts",
+      "sha256": "f71aed85ba271e5934bac84b8a1846d86878eade87c56fe66c4f69e8529ab26e"
+    },
+    {
+      "path": "aliro-site/frontend/e2e/controller-live-demo.spec.ts",
+      "sha256": "8256508aa70780358f4f484901e6acfd4a55b7ec619de4f361abb34c18c4c59d"
+    },
+    {
+      "path": "aliro-site/frontend/e2e/controller-ui.spec.ts",
+      "sha256": "0bce83c64bf35835936e9a6d96d4a993ee24770fe6ca6a1bd26408d8ac9e56f9"
+    },
+    {
       "path": "aliro-site/frontend/e2e/i18n.spec.ts",
       "sha256": "0e5c39239afb78b95a57fff44d25937a4725830de2dbcd0230901c98e3032d8e"
     },
     {
+      "path": "aliro-site/frontend/e2e/landing-layout.spec.ts",
+      "sha256": "7253340bda35f1ffece7d64c47b868f570546ce993f1a849e63b90e494dc562b"
+    },
+    {
       "path": "aliro-site/frontend/e2e/links.spec.ts",
-      "sha256": "591c20cf9a53149e8eed6b63bae2c605e5e7c0c4b64394134ea58b7ed878d77b"
+      "sha256": "b40cc8d1a772d2e2d94f7ae3f4049f2072351815226fa77ef5b2090032929d55"
     },
     {
       "path": "aliro-site/frontend/e2e/qr.spec.ts",
@@ -8304,7 +8500,11 @@
     },
     {
       "path": "aliro-site/frontend/e2e/smoke.spec.ts",
-      "sha256": "fe27f38258c9ca27b5b6f18eb7383d8767e86bf983fd13c2b4044bd78a9a8e77"
+      "sha256": "f8b0e71015f3b8b5e8fb869358425e7e8385791d4ec6adb5bee3f5d3145d73c5"
+    },
+    {
+      "path": "aliro-site/frontend/e2e/source.spec.ts",
+      "sha256": "293cf6e0529c6b04407a4e7640dea7824ab3cfecde11deb000aae98aa5bef11a"
     },
     {
       "path": "aliro-site/frontend/e2e/theme.spec.ts",
@@ -8327,6 +8527,10 @@
       "sha256": "ffd1363de29c11d56a1422cf839b94ca376248b46598d6e6c356902547505aee"
     },
     {
+      "path": "aliro-site/frontend/public/_headers",
+      "sha256": "b8bf9e32c20b6e0525507b45ad8925d75cb0d5d5dab89250e5da2733219e0ed8"
+    },
+    {
       "path": "aliro-site/frontend/public/apple-touch-icon.png",
       "sha256": "eb9ca2ca770954e1985ac00f4bfc69b141591f333fa41be86b75806aa55569b6"
     },
@@ -8336,11 +8540,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "d134f731ebea5ff3b00578ee64ba498263b63b6a7ecc6fbe10bc53e14e3f05c7"
+      "sha256": "64c08c5b817ff267a0c27d63de38af320de30da2b5665e60c694ceaf1953c6b4"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "a7f5bdbfc9ac44697f2a2413ccfca6ba2844609761aa5e9b2a233012d250db8d"
+      "sha256": "4e4e139b4c13fee58d70ea9b18c76594f7c69dfa5cd80d6578b6e1483d4658da"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8351,12 +8555,68 @@
       "sha256": "a51bd35b466836e220605a46391d93f018838d8b296747e8127fc42cc7562c6d"
     },
     {
+      "path": "aliro-site/frontend/public/images/aliro-deposit-summary-en.svg",
+      "sha256": "ddc48ff233af447ff671b6e6f1fc83dd5b8bf8e7c776b3e19c8ecdf9b0137615"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/aliro-deposit-summary-ru.svg",
+      "sha256": "890c3a9fe0b1125cb01908d0a0599608db99a1908b77ca5bab3bad85964f370a"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/controller-actions-demo.jpg",
+      "sha256": "43383804d4877f36587d277e6e65a880ec2787ab560a5926c85afabe4c450739"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/controller-dashboard-demo.jpg",
+      "sha256": "f2794a81c8eb68498c8d66e37140f356348c53c887d1ae1ab17f8779938d6c9a"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/controller-logs-demo.jpg",
+      "sha256": "dc937427a08521d57178f7b6b5a746a8556b3f466562c73d65a4ab451ace1996"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/controller-mqtt-demo.jpg",
+      "sha256": "945bc9e66f55b5aee3eda7b9addc30a866c42d3f6f322bf814136d5705eccb37"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/controller-ota-demo.jpg",
+      "sha256": "cd5f1bdf3ee22dc379a16cd5f7fafa613a035e9582d4e6b3940f5133cde1d65a"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/controller-system-demo.jpg",
+      "sha256": "c7e373dc6fea4c59d91bdb3f10eed847349c5af1b50d0b9e77ca5e0f1164bd76"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/demo-stand-side.png",
+      "sha256": "9f68b9344fc1f2442afa7e6b331116c92cc6f097a6bcb68d555702baee6e3c94"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/demo-stand-side.webp",
+      "sha256": "b91bbd900df03919a3aac257df9acf3ddf3ad8023df7c96d6272deff0d708507"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/demo-stand-top.png",
+      "sha256": "bf73e5a6e3fc6e80bee6461bbfc07953e91c17200362ae9215e6e3abc097f1e9"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/demo-stand-top.webp",
+      "sha256": "c8bfbce327dad43dfdda7fe866864eaea50fc2427460a3cb6e342bea406c9f5b"
+    },
+    {
       "path": "aliro-site/frontend/public/og.png",
       "sha256": "80c1766772165cdb8a1fe1ee93a76b7fac1b0f7d458e461345a470114e8e240e"
     },
     {
       "path": "aliro-site/frontend/public/og.svg",
       "sha256": "c0733c865ee1b3b8763857a25cd5fa7a2df085779183d378ccbea7ef3af7a85f"
+    },
+    {
+      "path": "aliro-site/frontend/public/proofs/aliro-snapshot-2026-10-15.zip",
+      "sha256": "634ec80d18c48b5e14a3415a35c804a7423782c5e78e3fbebeac1b8e46aa661a"
+    },
+    {
+      "path": "aliro-site/frontend/public/proofs/aliro-snapshot-2026-10-15.zip.sha256",
+      "sha256": "472c23277db39d5bafc0820a69e6b012043b2cbb98a286458627506b3dca0808"
     },
     {
       "path": "aliro-site/frontend/public/robots.txt",
@@ -8371,8 +8631,32 @@
       "sha256": "8ef44bf6c1abafe7a69d173abecd3e97f2bb7f76fbcb3158a7ee1da6826f843b"
     },
     {
+      "path": "aliro-site/frontend/scripts/build-controller-demo.mjs",
+      "sha256": "74a746be5a85f7f0025e03a07dccb241f4ee0d0fd47b3c774c9a2ca8a3fb12fd"
+    },
+    {
+      "path": "aliro-site/frontend/scripts/content-version.mjs",
+      "sha256": "e5e64391e549dbac9bafda188777deabe56eceb44e3dad8ec59d4709d537de38"
+    },
+    {
+      "path": "aliro-site/frontend/src/app.component.ts",
+      "sha256": "8894baa8d334fe5b9a86c5392b2569724be54bed9be61f7dcea580aef1216472"
+    },
+    {
+      "path": "aliro-site/frontend/src/app.config.ts",
+      "sha256": "a5895764d1e5551f0e79ef726149e399b9bfdbc9106361bc70db4843da2892b3"
+    },
+    {
+      "path": "aliro-site/frontend/src/app.routes.ts",
+      "sha256": "347f3d24910810ddebcc4faf76b23f2f71f067ce5fe384361c4113b50bf6fcb1"
+    },
+    {
+      "path": "aliro-site/frontend/src/app/pages/landing/access-demo.ts",
+      "sha256": "5e4348170edf3afaee4651bed9712f08de091aec965b5a225921ed9edb63826c"
+    },
+    {
       "path": "aliro-site/frontend/src/app/pages/landing/landing.ts",
-      "sha256": "64e6156b6e95c50e3dd9801ed335e3efb538111f39523b8b4614a98a69d384bb"
+      "sha256": "2df714c62b5302862c2dbceb027e3b82478b17a4ad5cb2abb742d77731bbd3a4"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",
@@ -8395,24 +8679,16 @@
       "sha256": "82a7128be42d7a94a1e48d3333a36f3ae813fb0a273086e8e2f3b72e1fc332df"
     },
     {
-      "path": "aliro-site/frontend/src/app.component.ts",
-      "sha256": "8894baa8d334fe5b9a86c5392b2569724be54bed9be61f7dcea580aef1216472"
-    },
-    {
-      "path": "aliro-site/frontend/src/app.config.ts",
-      "sha256": "a5895764d1e5551f0e79ef726149e399b9bfdbc9106361bc70db4843da2892b3"
-    },
-    {
-      "path": "aliro-site/frontend/src/app.routes.ts",
-      "sha256": "347f3d24910810ddebcc4faf76b23f2f71f067ce5fe384361c4113b50bf6fcb1"
-    },
-    {
       "path": "aliro-site/frontend/src/index.html",
       "sha256": "f307c39f56bbbc030da13b9b27988322ccad8da3b37dc37096e5029507e23c46"
     },
     {
       "path": "aliro-site/frontend/src/main.ts",
       "sha256": "ec042ce3fc2abd1a1ff4cfaf9fa3fcb6ba3cfe44ce34814524060605feb9a76a"
+    },
+    {
+      "path": "aliro-site/frontend/src/site-updates.ts",
+      "sha256": "318dffb434c21a826978e33b419d77092bad2f77dea7ad1f783c43f901e4dd40"
     },
     {
       "path": "aliro-site/frontend/src/styles.scss",
@@ -8527,12 +8803,12 @@
       "sha256": "7af865aea3e2dde810363caa1c3f9eed33324aa47f1c7e281034d4bd69129b3d"
     },
     {
-      "path": "android-smartkey/gradle/libs.versions.toml",
-      "sha256": "992cdeafd1e1888eeadd882e104e410aced7e04803f0432edea6e35743065742"
-    },
-    {
       "path": "android-smartkey/gradle.properties",
       "sha256": "c4f652374b7191a2a8ce81e72790ceb36098b28969c47f15418a1b399221b422"
+    },
+    {
+      "path": "android-smartkey/gradle/libs.versions.toml",
+      "sha256": "992cdeafd1e1888eeadd882e104e410aced7e04803f0432edea6e35743065742"
     },
     {
       "path": "android-smartkey/settings.gradle.kts",
@@ -8547,16 +8823,56 @@
       "sha256": "a44b1b867e982d26619da7be260bdd42cdf27564eb197c18497355bd835fee90"
     },
     {
+      "path": "docs/README.md",
+      "sha256": "87db22b751672b83fe9890b6feadd684df23f2ef738dbe0aef81f7a8dc2b5052"
+    },
+    {
+      "path": "docs/README.ru.md",
+      "sha256": "e5173b3f6eed1074e9e66dcfd29b46cb3ae60d98dbfabf7a26502bd333692bfb"
+    },
+    {
+      "path": "docs/aliro-access-policy-2026-10-14.md",
+      "sha256": "7d294a3b43ac42f4eb7b1bb97a4df4ac468d76c624328d14dd0d6030a6bdbd95"
+    },
+    {
+      "path": "docs/aliro-access-policy-2026-10-14.ru.md",
+      "sha256": "a7aeb50b5b8f1f8941dedefb913e9c2645fccf5cae92fcd4ab5255f3dcd7e6b9"
+    },
+    {
       "path": "docs/aliro-competitors-2026-10-13.md",
       "sha256": "b19cb25edc79df74ec19252763a5b0c7bc4c7ffcd57f793b4f121e405fc8166e"
+    },
+    {
+      "path": "docs/aliro-competitors-2026-10-13.ru.md",
+      "sha256": "64bb4bc6d890c93822155208344da4317e91adf01b74bf168a1aa8c4b5b20dbc"
+    },
+    {
+      "path": "docs/aliro-porting-2026-10-13.md",
+      "sha256": "4b6f146d808e218d8f4f02476f832f3ab3fe854afe87aa34be902a6584a209ce"
     },
     {
       "path": "docs/aliro-stdauth-finishing-roadmap.md",
       "sha256": "d6b8b5886b3e43a1a4a5c283d852903377026173db32964e6073b746f2d004d9"
     },
     {
+      "path": "docs/controller-ui-debug.md",
+      "sha256": "30826dad0fc142c2a684726a3e815cabc282ef97601fb7b6fbbb2f9b04235b75"
+    },
+    {
+      "path": "docs/controller-ui-debug.ru.md",
+      "sha256": "79f30d42f671723588487f02a1194f5cc2ec1e7030ea01544c1489409e00ee43"
+    },
+    {
       "path": "docs/ddk-update-2026-10-13.md",
       "sha256": "494bdfbd99a5e522db14c008b75e723364daabad7df04e9ad821e874b104f83c"
+    },
+    {
+      "path": "docs/demo-stand.md",
+      "sha256": "362fa3187cafaff347292633014090606218ffbfd16aa51d2a64934055bdd8b0"
+    },
+    {
+      "path": "docs/demo-stand.ru.md",
+      "sha256": "4ae0823a8f31c74053e1b74c274ad28be4b66efcf09819920fd199d26b6a564e"
     },
     {
       "path": "docs/documentation-changelog.md",
@@ -8571,12 +8887,104 @@
       "sha256": "e94ef429ce2327d80d1e518bad6eeff38023695c39b5ec717a900f58313f5c86"
     },
     {
+      "path": "docs/images/aliro-wiring.en.svg",
+      "sha256": "34f3b5c0005f325785f3a823bc12ac28b1c65c3b4aec8e6e89cc93896d740804"
+    },
+    {
+      "path": "docs/images/aliro-wiring.ru.svg",
+      "sha256": "c168a6e162ad95ba0fbc81caa375dd47101db8d28f720da93525b57d841f052a"
+    },
+    {
+      "path": "docs/licensing-inventory-2026-10-15.json",
+      "sha256": "f04056a0b92659ff0a5300f22517cb113ba0676f4d5b0ff913ad6f241ec15e1a"
+    },
+    {
+      "path": "docs/licensing.md",
+      "sha256": "0a32566225b72d5cc6aeaac5f4026e3729535752475fd1d8cec91b1f2b0ac2a4"
+    },
+    {
+      "path": "docs/licensing.ru.md",
+      "sha256": "c2562c5110f5c20a95139688832772815d2bfacfdfeb7e22732c2c2b04fc128d"
+    },
+    {
       "path": "docs/project-gap-analysis.md",
       "sha256": "c9a6cdceedbaec44b7efe2e73d23d205c6ef7197ce70862315d438b329b79146"
     },
     {
+      "path": "docs/provenance/2026-10-15/README.md",
+      "sha256": "55f5655484618ecda3b97729702d1e27f7cfebb5b641563ffcc0f50011856ca1"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/README.ru.md",
+      "sha256": "b5d6691e683c8d5237d6e92feb01a49f92e737ee3d3811abb3df7c22edb972f3"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json",
+      "sha256": "9f51d5b701905d34c7a22910c80c2950451cfa3cf9402e8485947b90ff13af2c"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.alice",
+      "sha256": "5b99ef363d7755391f27df6998df5d5f992e71ff38fe554a71aaac84b5c5295f"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.bob",
+      "sha256": "5fcf0135a4f4977b1d5a8d6c7ba026911c0cb0799ad2c676cdb0026f0390f48b"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.finney",
+      "sha256": "5607d473aa9674f87395c910a88aa1c21eebb48a93c76e86864cab0fd88d4e72"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.tsr.digicert",
+      "sha256": "48209c6fb0de657d2bbef53ba032222d6c5a7ceca0425a31d102b8390ef30f58"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.json.tsr.freetsa",
+      "sha256": "619b82dd297562df940213eb955c4a04b560ac4935ed15270e525488937fd375"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/authorship-manifest.tsq",
+      "sha256": "7f08e6a6e2f35481908e4e307a495721bb96712ba434f342728ae3c154a0fc18"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/freetsa-ca.pem",
+      "sha256": "2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/freetsa-tsa.pem",
+      "sha256": "8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467"
+    },
+    {
+      "path": "docs/provenance/2026-10-15/verification.json",
+      "sha256": "991b2d86b65c3655d7cfdd14be5670aba8f30575798287f19e1bf5b70f58c9b9"
+    },
+    {
       "path": "docs/public-source-review-2026-10-13.json",
       "sha256": "ff62985825935c5006179b3335d6042bd3abb4a97f02ea47fd0c0f7e3fc08e3e"
+    },
+    {
+      "path": "docs/repository-status-2026-10-14.md",
+      "sha256": "6dc02722b50253d2d710c044bc5ef081d09c9616354d846219708dafa8c360d2"
+    },
+    {
+      "path": "docs/repository-status-2026-10-14.ru.md",
+      "sha256": "08a691a49c1d39be4162b5d418eb1c198c3b8b393735f91421e62b468b292e60"
+    },
+    {
+      "path": "docs/samsung-bench-preparation-2026-10-14.md",
+      "sha256": "02d5e9468adc15a69825ed8d53ae46bcca102a7c5eb03286746b95510271ca03"
+    },
+    {
+      "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",
+      "sha256": "78aa72cce7d9274c92c17eb81b1ac13b0078e214acec1ed9d6c852d6809fce4b"
+    },
+    {
+      "path": "docs/wiring.md",
+      "sha256": "e78dd2044f1f1070cd5406ac73cbb80bad02835202306cf21b4298a8a391d942"
+    },
+    {
+      "path": "docs/wiring.ru.md",
+      "sha256": "e1ede85530435332ccce7d4cb63f48eb647902849efc7d79c8574768cb6937a2"
     },
     {
       "path": "homekey-esp32/.clangd",
@@ -9271,6 +9679,22 @@
       "sha256": "1d13f29b7207edab2e6f0157dcf0d8cd119c587c5bbc049d2716c05030fb25af"
     },
     {
+      "path": "scripts/controller-ui-browser-demo.mjs",
+      "sha256": "6e5251e7cb59173303eee104ce691cb810bfa8080624884a06f0dc90a5b2efd3"
+    },
+    {
+      "path": "scripts/controller-ui-demo.mjs",
+      "sha256": "0cdee675ee27c4df685fd172261a3fa31c77c3f9e2007c3b812a067d5bef8cac"
+    },
+    {
+      "path": "scripts/controller-ui-fixtures.mjs",
+      "sha256": "532d4505360dfc3a7d8de59d4c7c26f13aace95f6df536ee5885a6a391289c74"
+    },
+    {
+      "path": "scripts/debug-controller-ui.mjs",
+      "sha256": "6542fdd0aa913071918993521617eeeaed9a2b0336478ef9f7504e66b6103093"
+    },
+    {
       "path": "scripts/export-public-source.py",
       "sha256": "cce921c9227c12dba36adb78d402d098587679d5ce85792fcbf34f06288d8ae5"
     },
@@ -9281,6 +9705,18 @@
     {
       "path": "scripts/flash-homekey.sh",
       "sha256": "b32f23b5f516c8a5c4b08490b57b04b83b8dc73a2dad458ac4a843e8f3e1f6fd"
+    },
+    {
+      "path": "scripts/tests/controller-ui-browser-demo.test.mjs",
+      "sha256": "61745de5991deb77deeca355b2979b10a1e002f61b585e56f8b633e94f7dbe69"
+    },
+    {
+      "path": "scripts/tests/controller-ui-debug.test.mjs",
+      "sha256": "7aca2393de272db22848b10d37f8df9841e154c75daa51297d3ea79d97d3001a"
+    },
+    {
+      "path": "scripts/verify-public-source.py",
+      "sha256": "b80f5859fbe3be94fde76c62a804d05f84043e183bc1d591064fba85871f6226"
     },
     {
       "path": "smartkey-esp32-patch/README.md",
@@ -9317,426 +9753,6 @@
     {
       "path": "webui.py",
       "sha256": "529735694f4d3fc55e703a922e96ca07785e3baf4a379861890117b355ec9f7c"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/DocumentVerifier.h",
-      "sha256": "277d18ea03a2a4e5e0183c5d95439299dd988bc0fcf4f55de32e0e0a095192bb"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/DocumentVerifier.cpp",
-      "sha256": "a49303097a250b7bc602bf6a973bd35250715c0618394ef1de3f4fe1ad8367a6"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/LICENSE",
-      "sha256": "655fcdbeae1d8b0615a4ec79a12fd2dcdf85fd38d386a07dc82a9b4537f3f2ac"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/UPSTREAM.md",
-      "sha256": "3f939c9a449e5e4525a3a4e51f597c1130e9df2e78bbaf871351c8dbdd3dab34"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/document_cbor.c",
-      "sha256": "5b40784c6351810bcd2dc6e426cf5a0295107d8517096e5d684fd42f42c052fe"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/document_cbor/document_cbor.h",
-      "sha256": "2d515bc4a468ae47e9c994cf507502afe06cb518de742ad40c66f7df448fca00"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_document_validation_test.cpp",
-      "sha256": "7328b7692471a51421d858f4dfd35586bf1a1a9efaab908cb3a4cf86740cb0ac"
-    },
-    {
-      "path": "docs/aliro-porting-2026-10-13.md",
-      "sha256": "4b6f146d808e218d8f4f02476f832f3ab3fe854afe87aa34be902a6584a209ce"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/include/ddk/aliro/DocumentAccess.h",
-      "sha256": "f91dfbd0766baae17d15df19525a198cae2a2c3a921333610dbc874c952fe263"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/priv/aliro/DocumentCbor.h",
-      "sha256": "6cb7389a0c3d34cbaa1e79de6e7e62e79b3928eda4d36dd13b45deecbc8111a5"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/src/aliro/DocumentAccess.cpp",
-      "sha256": "1dd339be3ba498b20a4a9d758b4f005af6b34191e488637cb3dc98036bdc3711"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/tests/aliro_access_policy_test.cpp",
-      "sha256": "66aef44cb7452757057675aeb4417015e183baf5cc57884348a4c3c0e0e10be7"
-    },
-    {
-      "path": "aliro-esp32/components/DigitalDoorKey/tests/harness/document_fixtures.hpp",
-      "sha256": "1b2c537d0eb4df0874a74f8fe67058de5f6c023d56aa7b1ebbdc5d6efe71f690"
-    },
-    {
-      "path": "aliro-esp32/main/DocumentAccessOps.hpp",
-      "sha256": "65202285651e4f041be4e6ac7c6ea5c8f763c427483bcf17c72e964effca4a9b"
-    },
-    {
-      "path": "aliro-esp32/tests/document_policy_test.cpp",
-      "sha256": "020bd92eaf2151adca5856533958b03dcd81228b693de11e0666369a2c821728"
-    },
-    {
-      "path": "docs/aliro-access-policy-2026-10-14.md",
-      "sha256": "7d294a3b43ac42f4eb7b1bb97a4df4ac468d76c624328d14dd0d6030a6bdbd95"
-    },
-    {
-      "path": ".github/workflows/source-and-nfc.yml",
-      "sha256": "6e94d3fabb09e14a3fb82142a03bab922a10097694924582515a6811f0231657"
-    },
-    {
-      "path": "README.ru.md",
-      "sha256": "94f7fc74e924686ee642d43309c68e1fcf0cb5f54bd23b9ae99b277ac684a422"
-    },
-    {
-      "path": "aliro-esp32/README.ru.md",
-      "sha256": "71b833d46dcbde0b96abb91d7ed540fde4c767ec8d1257690f19e864fce5c0bf"
-    },
-    {
-      "path": "aliro-esp32/tests/README.ru.md",
-      "sha256": "1e89db090cf5fbd199b823475a86d47804f2610afe2b092dd2f870c6815815e4"
-    },
-    {
-      "path": "docs/README.md",
-      "sha256": "87db22b751672b83fe9890b6feadd684df23f2ef738dbe0aef81f7a8dc2b5052"
-    },
-    {
-      "path": "docs/repository-status-2026-10-14.md",
-      "sha256": "6dc02722b50253d2d710c044bc5ef081d09c9616354d846219708dafa8c360d2"
-    },
-    {
-      "path": "scripts/verify-public-source.py",
-      "sha256": "b80f5859fbe3be94fde76c62a804d05f84043e183bc1d591064fba85871f6226"
-    },
-    {
-      "path": "aliro-esp32/components/cbor/LOCAL_PATCHES.md",
-      "sha256": "88533fdfb8cad632840efb0654cbe647bab8740236d75f1b67e71229bb95d0c9"
-    },
-    {
-      "path": "aliro-esp32/main/DoorLockStorageLimits.hpp",
-      "sha256": "904256108446f59730a4b8867a09439a9b4e504b645e0ec52fdf9b6e5dbae31f"
-    },
-    {
-      "path": "aliro-esp32/main/NfcManagerBridge.hpp",
-      "sha256": "8f0f3b0791a6894c896a5b6ada68bad3d8cbf14339aecd6518249ccbc23026db"
-    },
-    {
-      "path": "aliro-esp32/main/P256Validation.hpp",
-      "sha256": "882d29f107577425c5c04a3a21059ad284de1dd913d0ae8cb55152883f88bf09"
-    },
-    {
-      "path": "aliro-esp32/main/ReaderConfigStore.hpp",
-      "sha256": "c70212983b92dc3b30446019607443a3c9f1491ec2bef4b977c151a9c7f9efad"
-    },
-    {
-      "path": "aliro-esp32/main/SystemClock.cpp",
-      "sha256": "5efff4e864e7b750ecf5abba2af63d20d87f6b7b7790ea6bcf20638fa55d52a4"
-    },
-    {
-      "path": "aliro-esp32/main/SystemClock.hpp",
-      "sha256": "47362661d8c91ad523461aab5a383512435755cb64c3e513c5059c0a1dbcdcd7"
-    },
-    {
-      "path": "aliro-esp32/tests/provisioning_test.cpp",
-      "sha256": "84db8559d939893d63099ea54b8d0290098d646d6cbd58bcae3f633f20dfe033"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/app/clusters/door-lock-server/door-lock-delegate.h",
-      "sha256": "356412154041433789429549e88392194afbe3a8f7add3d15bc80f5a0d126819"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/app/clusters/door-lock-server/door-lock-server.h",
-      "sha256": "fa685b85e52f30214e33ea7d933dd3e3cceafae7e26c95e8d7b5d172979a6802"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/app/reporting/reporting.h",
-      "sha256": "fe94fbbc14eab8fb03d6c759daa0ddc02e880d3af747764e320b5d353718c9f1"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/clusters/DoorLock/AttributeIds.h",
-      "sha256": "5a96539e3328aeae8481540087ea33eb3c07475f200441bfd8924487b23a9a8c"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/clusters/DoorLock/ClusterId.h",
-      "sha256": "461d47c54904ac5cc73b90c936cc4d7b8c03c2b17e02f8813d1dcb515ffc2e9f"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/esp_random.h",
-      "sha256": "1daa6765137a874d00971755c941606021e5201740577242f698178f62647f40"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/esp_sntp.h",
-      "sha256": "55b725f3a3f0721de1a0521740ef4949ae095b86dedfc4a5161e03e72fcb6f87"
-    },
-    {
-      "path": "aliro-esp32/tests/stubs/provisioning_platform.cpp",
-      "sha256": "118751efd87e064b56b0cfec0fef6ee9efddb710f17722ebd4ecc0a817aeb2fe"
-    },
-    {
-      "path": "docs/samsung-bench-preparation-2026-10-14.md",
-      "sha256": "02d5e9468adc15a69825ed8d53ae46bcca102a7c5eb03286746b95510271ca03"
-    },
-    {
-      "path": "docs/images/aliro-wiring.en.svg",
-      "sha256": "34f3b5c0005f325785f3a823bc12ac28b1c65c3b4aec8e6e89cc93896d740804"
-    },
-    {
-      "path": "docs/images/aliro-wiring.ru.svg",
-      "sha256": "c168a6e162ad95ba0fbc81caa375dd47101db8d28f720da93525b57d841f052a"
-    },
-    {
-      "path": "docs/wiring.md",
-      "sha256": "e78dd2044f1f1070cd5406ac73cbb80bad02835202306cf21b4298a8a391d942"
-    },
-    {
-      "path": "aliro-site/README.ru.md",
-      "sha256": "ebeb9027de1e435d7aff2192220064b96f6d934ab32ad4d5050d6b5249885ac1"
-    },
-    {
-      "path": "aliro-site/frontend/e2e/source.spec.ts",
-      "sha256": "293cf6e0529c6b04407a4e7640dea7824ab3cfecde11deb000aae98aa5bef11a"
-    },
-    {
-      "path": "docs/README.ru.md",
-      "sha256": "e5173b3f6eed1074e9e66dcfd29b46cb3ae60d98dbfabf7a26502bd333692bfb"
-    },
-    {
-      "path": "docs/aliro-access-policy-2026-10-14.ru.md",
-      "sha256": "a7aeb50b5b8f1f8941dedefb913e9c2645fccf5cae92fcd4ab5255f3dcd7e6b9"
-    },
-    {
-      "path": "docs/aliro-competitors-2026-10-13.ru.md",
-      "sha256": "64bb4bc6d890c93822155208344da4317e91adf01b74bf168a1aa8c4b5b20dbc"
-    },
-    {
-      "path": "docs/repository-status-2026-10-14.ru.md",
-      "sha256": "08a691a49c1d39be4162b5d418eb1c198c3b8b393735f91421e62b468b292e60"
-    },
-    {
-      "path": "docs/samsung-bench-preparation-2026-10-14.ru.md",
-      "sha256": "78aa72cce7d9274c92c17eb81b1ac13b0078e214acec1ed9d6c852d6809fce4b"
-    },
-    {
-      "path": "docs/wiring.ru.md",
-      "sha256": "e1ede85530435332ccce7d4cb63f48eb647902849efc7d79c8574768cb6937a2"
-    },
-    {
-      "path": "aliro-site/frontend/e2e/cache-update.spec.ts",
-      "sha256": "f71aed85ba271e5934bac84b8a1846d86878eade87c56fe66c4f69e8529ab26e"
-    },
-    {
-      "path": "aliro-site/frontend/public/_headers",
-      "sha256": "b8bf9e32c20b6e0525507b45ad8925d75cb0d5d5dab89250e5da2733219e0ed8"
-    },
-    {
-      "path": "aliro-site/frontend/scripts/content-version.mjs",
-      "sha256": "e5e64391e549dbac9bafda188777deabe56eceb44e3dad8ec59d4709d537de38"
-    },
-    {
-      "path": "aliro-site/frontend/src/site-updates.ts",
-      "sha256": "318dffb434c21a826978e33b419d77092bad2f77dea7ad1f783c43f901e4dd40"
-    },
-    {
-      "path": "LICENSES/CC-BY-SA-4.0.txt",
-      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
-    },
-    {
-      "path": "LICENSES/CC0-1.0.txt",
-      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
-    },
-    {
-      "path": "LICENSES/GPL-3.0.txt",
-      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
-    },
-    {
-      "path": "docs/licensing-inventory-2026-10-15.json",
-      "sha256": "f04056a0b92659ff0a5300f22517cb113ba0676f4d5b0ff913ad6f241ec15e1a"
-    },
-    {
-      "path": "docs/licensing.md",
-      "sha256": "0a32566225b72d5cc6aeaac5f4026e3729535752475fd1d8cec91b1f2b0ac2a4"
-    },
-    {
-      "path": "docs/licensing.ru.md",
-      "sha256": "c2562c5110f5c20a95139688832772815d2bfacfdfeb7e22732c2c2b04fc128d"
-    },
-    {
-      "path": ".github/PULL_REQUEST_TEMPLATE.md",
-      "sha256": "f5c3cc066088fb5a850e557310fe9d9e2ef04981d3c3ad785fd8279cc706cd9a"
-    },
-    {
-      "path": "CONTRIBUTING.md",
-      "sha256": "3a415f74b75b5d682bb4c4e512caa02120a369183c938c95d6d68b45dc89249e"
-    },
-    {
-      "path": "CONTRIBUTING.ru.md",
-      "sha256": "52ac2e054611d78baa0e5b757e6463ff4df95f379b88e20ab75ec644cd6ead5c"
-    },
-    {
-      "path": "LICENSES/Aliro-Mayday-1.0.txt",
-      "sha256": "db03ef4d7bb034ce3d59b046498b2bcf3e571c66af3098f523f35ae546e600d1"
-    },
-    {
-      "path": "AUTHORS.md",
-      "sha256": "a9c975890471f7a5caafcd9fb07d443a7784e73f4180188fec4342d26c758b79"
-    },
-    {
-      "path": "AUTHORS.ru.md",
-      "sha256": "4725c2e7791f592a3f1caeb6c734b7a78d1fe6b7627a7eba5b953fedc2cb8e8b"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/README.md",
-      "sha256": "55f5655484618ecda3b97729702d1e27f7cfebb5b641563ffcc0f50011856ca1"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/README.ru.md",
-      "sha256": "b5d6691e683c8d5237d6e92feb01a49f92e737ee3d3811abb3df7c22edb972f3"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.json",
-      "sha256": "9f51d5b701905d34c7a22910c80c2950451cfa3cf9402e8485947b90ff13af2c"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.alice",
-      "sha256": "5b99ef363d7755391f27df6998df5d5f992e71ff38fe554a71aaac84b5c5295f"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.bob",
-      "sha256": "5fcf0135a4f4977b1d5a8d6c7ba026911c0cb0799ad2c676cdb0026f0390f48b"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.json.ots.finney",
-      "sha256": "5607d473aa9674f87395c910a88aa1c21eebb48a93c76e86864cab0fd88d4e72"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.json.tsr.digicert",
-      "sha256": "48209c6fb0de657d2bbef53ba032222d6c5a7ceca0425a31d102b8390ef30f58"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.json.tsr.freetsa",
-      "sha256": "619b82dd297562df940213eb955c4a04b560ac4935ed15270e525488937fd375"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/authorship-manifest.tsq",
-      "sha256": "7f08e6a6e2f35481908e4e307a495721bb96712ba434f342728ae3c154a0fc18"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/freetsa-ca.pem",
-      "sha256": "2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/freetsa-tsa.pem",
-      "sha256": "8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467"
-    },
-    {
-      "path": "docs/provenance/2026-10-15/verification.json",
-      "sha256": "991b2d86b65c3655d7cfdd14be5670aba8f30575798287f19e1bf5b70f58c9b9"
-    },
-    {
-      "path": "aliro-site/frontend/public/proofs/aliro-snapshot-2026-10-15.zip",
-      "sha256": "634ec80d18c48b5e14a3415a35c804a7423782c5e78e3fbebeac1b8e46aa661a"
-    },
-    {
-      "path": "aliro-site/frontend/public/proofs/aliro-snapshot-2026-10-15.zip.sha256",
-      "sha256": "472c23277db39d5bafc0820a69e6b012043b2cbb98a286458627506b3dca0808"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/demo-stand-side.png",
-      "sha256": "9f68b9344fc1f2442afa7e6b331116c92cc6f097a6bcb68d555702baee6e3c94"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/demo-stand-side.webp",
-      "sha256": "b91bbd900df03919a3aac257df9acf3ddf3ad8023df7c96d6272deff0d708507"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/demo-stand-top.png",
-      "sha256": "bf73e5a6e3fc6e80bee6461bbfc07953e91c17200362ae9215e6e3abc097f1e9"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/demo-stand-top.webp",
-      "sha256": "c8bfbce327dad43dfdda7fe866864eaea50fc2427460a3cb6e342bea406c9f5b"
-    },
-    {
-      "path": "docs/demo-stand.md",
-      "sha256": "362fa3187cafaff347292633014090606218ffbfd16aa51d2a64934055bdd8b0"
-    },
-    {
-      "path": "docs/demo-stand.ru.md",
-      "sha256": "4ae0823a8f31c74053e1b74c274ad28be4b66efcf09819920fd199d26b6a564e"
-    },
-    {
-      "path": "aliro-site/frontend/e2e/controller-ui.spec.ts",
-      "sha256": "0fa6104a0223fcd99c13bfb872194158df7161b746b4a2b542c609503ca17c4b"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/controller-dashboard-demo.jpg",
-      "sha256": "f2794a81c8eb68498c8d66e37140f356348c53c887d1ae1ab17f8779938d6c9a"
-    },
-    {
-      "path": "docs/controller-ui-debug.md",
-      "sha256": "f17afb2bc115d4e6d4dd79adf916b2511051e3c41cbec1be7154249807d5292c"
-    },
-    {
-      "path": "docs/controller-ui-debug.ru.md",
-      "sha256": "b840b60c4f91d973c3d063de6b4728c0162b9d89697d8b3bd45a27abe0635ee1"
-    },
-    {
-      "path": "scripts/controller-ui-demo.mjs",
-      "sha256": "0cdee675ee27c4df685fd172261a3fa31c77c3f9e2007c3b812a067d5bef8cac"
-    },
-    {
-      "path": "scripts/debug-controller-ui.mjs",
-      "sha256": "6542fdd0aa913071918993521617eeeaed9a2b0336478ef9f7504e66b6103093"
-    },
-    {
-      "path": "scripts/tests/controller-ui-debug.test.mjs",
-      "sha256": "7aca2393de272db22848b10d37f8df9841e154c75daa51297d3ea79d97d3001a"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/controller-actions-demo.jpg",
-      "sha256": "43383804d4877f36587d277e6e65a880ec2787ab560a5926c85afabe4c450739"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/controller-logs-demo.jpg",
-      "sha256": "dc937427a08521d57178f7b6b5a746a8556b3f466562c73d65a4ab451ace1996"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/controller-mqtt-demo.jpg",
-      "sha256": "945bc9e66f55b5aee3eda7b9addc30a866c42d3f6f322bf814136d5705eccb37"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/controller-ota-demo.jpg",
-      "sha256": "cd5f1bdf3ee22dc379a16cd5f7fafa613a035e9582d4e6b3940f5133cde1d65a"
-    },
-    {
-      "path": "aliro-site/frontend/public/images/controller-system-demo.jpg",
-      "sha256": "c7e373dc6fea4c59d91bdb3f10eed847349c5af1b50d0b9e77ca5e0f1164bd76"
-    },
-    {
-      "path": "aliro-esp32/data/src/main.demo.ts",
-      "sha256": "b6b69b740853d548d7412257ec65a4eebd0cafd795328deb488b3cecab6f7211"
-    },
-    {
-      "path": "aliro-site/frontend/e2e/controller-live-demo.spec.ts",
-      "sha256": "afd616f9ec54305aebce60f612dc90a99f92feae7ab18035b512e9deb63a4e9e"
-    },
-    {
-      "path": "aliro-site/frontend/scripts/build-controller-demo.mjs",
-      "sha256": "74a746be5a85f7f0025e03a07dccb241f4ee0d0fd47b3c774c9a2ca8a3fb12fd"
-    },
-    {
-      "path": "scripts/controller-ui-browser-demo.mjs",
-      "sha256": "6e5251e7cb59173303eee104ce691cb810bfa8080624884a06f0dc90a5b2efd3"
-    },
-    {
-      "path": "scripts/controller-ui-fixtures.mjs",
-      "sha256": "532d4505360dfc3a7d8de59d4c7c26f13aace95f6df536ee5885a6a391289c74"
-    },
-    {
-      "path": "scripts/tests/controller-ui-browser-demo.test.mjs",
-      "sha256": "61745de5991deb77deeca355b2979b10a1e002f61b585e56f8b633e94f7dbe69"
     }
   ],
   "omitted": [

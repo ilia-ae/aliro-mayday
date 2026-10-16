@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { AccessDemo } from './access-demo';
 import { LanguageService } from '@/app/shared/services/language.service';
 import { ThemeService } from '@/app/shared/services/theme.service';
 
@@ -25,7 +27,7 @@ interface ComparisonRow {
 @Component({
     selector: 'app-landing',
     standalone: true,
-    imports: [TranslatePipe, RouterLink],
+    imports: [TranslatePipe, RouterLink, AccessDemo],
     template: `
         <a class="skip-link" href="#main-content">
             {{ 'nav.skip_to_content' | translate }}
@@ -44,10 +46,8 @@ interface ComparisonRow {
                 </a>
 
                 <nav class="jump-nav" [attr.aria-label]="'nav.jump_nav_label' | translate">
-                    <!-- Order matches the page top→bottom scroll: migration
-                         (#6) → about (#7) → faq (#13) → roadmap (#14) →
-                         source (#15) → contact (#18). -->
-                    <a href="#migration">{{ 'nav.migration' | translate }}</a>
+                    <!-- Links follow the order of the main sections. -->
+                    <a href="#controller-ui">{{ 'nav.demo' | translate }}</a>
                     <a href="#about">{{ 'nav.about' | translate }}</a>
                     <a href="#faq">{{ 'nav.faq' | translate }}</a>
                     <a href="#roadmap">{{ 'nav.plan' | translate }}</a>
@@ -170,7 +170,7 @@ interface ComparisonRow {
                         <h1>{{ 'hero.title' | translate }}</h1>
                         <p class="lede">{{ 'hero.lede' | translate }}</p>
                         <div class="hero-cta">
-                            <a href="#contact" class="btn-primary">
+                            <a href="#controller-ui" class="btn-primary">
                                 {{ 'hero.cta_primary' | translate }}
                             </a>
                             <a href="#source" class="btn-secondary">
@@ -203,9 +203,65 @@ interface ComparisonRow {
                 </div>
             </section>
 
+            <section id="controller-ui" class="controller-ui" aria-labelledby="controller-ui-title">
+                <div class="wrap">
+                    <h2 id="controller-ui-title">{{ 'controller_ui.title' | translate }}</h2>
+                    <p class="lede">{{ 'controller_ui.lede' | translate }}</p>
+                    <div class="controller-ui-demo">
+                        <a class="btn-secondary" [href]="controllerUiDemoUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'controller_ui.live' | translate }} ↗
+                        </a>
+                        <p id="controller-demo-note">{{ 'controller_ui.live_note' | translate }}</p>
+                    </div>
+                    <iframe class="controller-ui-frame" [src]="controllerUiEmbedUrl()"
+                            [title]="'controller_ui.frame_title' | translate"
+                            aria-describedby="controller-demo-note" loading="lazy" referrerpolicy="no-referrer"></iframe>
+                    <details class="controller-ui-screenshots">
+                        <summary>{{ 'controller_ui.screenshots' | translate }}</summary>
+                    <div class="controller-ui-views" role="group" [attr.aria-label]="'controller_ui.sections' | translate">
+                        @for (view of controllerUiViews; track view.key; let i = $index) {
+                            <button type="button" [class.is-selected]="controllerUiIndex() === i"
+                                    [attr.aria-pressed]="controllerUiIndex() === i"
+                                    aria-controls="controller-ui-preview" (click)="controllerUiIndex.set(i)">
+                                {{ 'controller_ui.views.' + view.key + '.label' | translate }}
+                            </button>
+                        }
+                    </div>
+                    <figure id="controller-ui-preview" class="controller-ui-preview">
+                        <a [href]="controllerUiView().src" target="_blank" rel="noopener noreferrer"
+                           [attr.aria-label]="('controller_ui.open_image' | translate) + ': ' + ('controller_ui.views.' + controllerUiView().key + '.label' | translate)">
+                            <img [src]="controllerUiView().src"
+                                 [alt]="'controller_ui.views.' + controllerUiView().key + '.alt' | translate"
+                                 width="1280" height="720" loading="lazy" decoding="async" />
+                        </a>
+                        <figcaption>
+                            <div class="controller-ui-paging">
+                                <button type="button" (click)="stepControllerUi(-1)" aria-controls="controller-ui-preview"
+                                        [attr.aria-label]="'controller_ui.previous' | translate">←</button>
+                                <span aria-live="polite" aria-atomic="true">
+                                    {{ 'controller_ui.views.' + controllerUiView().key + '.label' | translate }}
+                                    · {{ controllerUiIndex() + 1 }} / {{ controllerUiViews.length }}
+                                </span>
+                                <button type="button" (click)="stepControllerUi(1)" aria-controls="controller-ui-preview"
+                                        [attr.aria-label]="'controller_ui.next' | translate">→</button>
+                            </div>
+                            <p>{{ 'controller_ui.caption' | translate }}</p>
+                        </figcaption>
+                    </figure>
+                    </details>
+                    <div class="controller-ui-links">
+                        <a [href]="sourceControllerUiUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'controller_ui.guide' | translate }} ↗
+                        </a>
+                        <a href="#hero">{{ 'controller_ui.hardware' | translate }} ↑</a>
+                    </div>
+                </div>
+            </section>
+
             <section id="how-it-works" class="steps">
                 <div class="wrap">
                     <h2>{{ 'steps.title' | translate }}</h2>
+                    <app-access-demo />
                     <ol>
                         @for (n of [1, 2, 3]; track n) {
                             <li>
@@ -349,55 +405,6 @@ interface ComparisonRow {
                                 <p>{{ 'integrations.' + n + '.text' | translate }}</p>
                             </article>
                         }
-                    </div>
-                </div>
-            </section>
-
-            <section id="controller-ui" class="controller-ui" aria-labelledby="controller-ui-title">
-                <div class="wrap">
-                    <h2 id="controller-ui-title">{{ 'controller_ui.title' | translate }}</h2>
-                    <p class="lede">{{ 'controller_ui.lede' | translate }}</p>
-                    <div class="controller-ui-demo">
-                        <a class="btn primary" [href]="controllerUiDemoUrl()" target="_blank" rel="noopener noreferrer">
-                            {{ 'controller_ui.live' | translate }} ↗
-                        </a>
-                        <p>{{ 'controller_ui.live_note' | translate }}</p>
-                    </div>
-                    <div class="controller-ui-views" role="group" [attr.aria-label]="'controller_ui.sections' | translate">
-                        @for (view of controllerUiViews; track view.key; let i = $index) {
-                            <button type="button" [class.is-selected]="controllerUiIndex() === i"
-                                    [attr.aria-pressed]="controllerUiIndex() === i"
-                                    aria-controls="controller-ui-preview" (click)="controllerUiIndex.set(i)">
-                                {{ 'controller_ui.views.' + view.key + '.label' | translate }}
-                            </button>
-                        }
-                    </div>
-                    <figure id="controller-ui-preview" class="controller-ui-preview">
-                        <a [href]="controllerUiView().src" target="_blank" rel="noopener noreferrer"
-                           [attr.aria-label]="('controller_ui.open_image' | translate) + ': ' + ('controller_ui.views.' + controllerUiView().key + '.label' | translate)">
-                            <img [src]="controllerUiView().src"
-                                 [alt]="'controller_ui.views.' + controllerUiView().key + '.alt' | translate"
-                                 width="1280" height="720" loading="lazy" decoding="async" />
-                        </a>
-                        <figcaption>
-                            <div class="controller-ui-paging">
-                                <button type="button" (click)="stepControllerUi(-1)" aria-controls="controller-ui-preview"
-                                        [attr.aria-label]="'controller_ui.previous' | translate">←</button>
-                                <span aria-live="polite" aria-atomic="true">
-                                    {{ 'controller_ui.views.' + controllerUiView().key + '.label' | translate }}
-                                    · {{ controllerUiIndex() + 1 }} / {{ controllerUiViews.length }}
-                                </span>
-                                <button type="button" (click)="stepControllerUi(1)" aria-controls="controller-ui-preview"
-                                        [attr.aria-label]="'controller_ui.next' | translate">→</button>
-                            </div>
-                            <p>{{ 'controller_ui.caption' | translate }}</p>
-                        </figcaption>
-                    </figure>
-                    <div class="controller-ui-links">
-                        <a [href]="sourceControllerUiUrl()" target="_blank" rel="noopener noreferrer">
-                            {{ 'controller_ui.guide' | translate }} ↗
-                        </a>
-                        <a href="#hero">{{ 'controller_ui.hardware' | translate }} ↑</a>
                     </div>
                 </div>
             </section>
@@ -557,33 +564,34 @@ interface ComparisonRow {
                     <h2>{{ 'source.title' | translate }}</h2>
                     <p class="lede">{{ 'source.lede' | translate }}</p>
                     <p class="released">{{ 'source.released' | translate }}</p>
-                    <p class="released-cta">
-                        <a [attr.href]="sourceReleasedUrl" target="_blank" rel="noopener noreferrer">
-                            {{ 'source.open_repo' | translate }} →
+                    <div class="source-links">
+                        <a class="btn-primary" [href]="sourceReleasedUrl" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.open_repo' | translate }} ↗
                         </a>
-                    </p>
-                    <p class="cta">
-                        <a [attr.href]="sourceDocumentationUrl()" target="_blank" rel="noopener noreferrer">
+                        <a class="btn-secondary" [href]="sourceDocumentationUrl()" target="_blank" rel="noopener noreferrer">
                             {{ 'source.documentation' | translate }} →
                         </a>
-                    </p>
-                    <p class="cta">
-                        <a [attr.href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">
+                        <a class="btn-secondary" [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">
                             {{ 'source.wiring' | translate }} →
                         </a>
-                    </p>
-                    <p>{{ 'source.license_note' | translate }}</p>
-                    <p class="cta">
-                        <a [attr.href]="sourceLicensingUrl()" target="_blank" rel="noopener noreferrer">
-                            {{ 'source.licensing' | translate }} →
-                        </a>
-                        ·
-                        <a [attr.href]="sourceContributingUrl()" target="_blank" rel="noopener noreferrer">
-                            {{ 'source.contributing' | translate }} →
-                        </a>
-                    </p>
+                    </div>
+                    <div class="source-license">
+                        <h3>{{ 'source.license_title' | translate }}</h3>
+                        <p>{{ 'source.license_note' | translate }}</p>
+                        <div class="source-legal-links">
+                            <a [href]="sourceLicensingUrl()" target="_blank" rel="noopener noreferrer">
+                                {{ 'source.licensing' | translate }} →
+                            </a>
+                            <a [href]="sourceContributingUrl()" target="_blank" rel="noopener noreferrer">
+                                {{ 'source.contributing' | translate }} →
+                            </a>
+                        </div>
+                    </div>
                     <div id="evidence" class="source-evidence" aria-labelledby="evidence-title">
                         <h3 id="evidence-title">{{ 'source.evidence.title' | translate }}</h3>
+                        <div class="evidence-grid">
+                        <div class="evidence-copy">
+                        <p class="evidence-intro">{{ 'source.evidence.lede' | translate }}</p>
                         <p class="evidence-meta">
                             Mayday / Ilia Arestov · {{ 'source.evidence.snapshot' | translate }}
                             <a [attr.href]="sourceEvidenceSnapshotUrl" target="_blank" rel="noopener noreferrer">24e218e</a>
@@ -601,7 +609,19 @@ interface ComparisonRow {
                                 {{ 'source.evidence.verify' | translate }} →
                             </a>
                         </p>
-                        <details>
+                        <a class="deposit-project-link" href="https://deposit.mayday.software/" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.evidence.project' | translate }} ↗
+                        </a>
+                        </div>
+                        <figure class="deposit-visual">
+                            <a [href]="depositSummaryImage()" target="_blank" rel="noopener noreferrer">
+                                <img [src]="depositSummaryImage()" width="1000" height="800" loading="lazy"
+                                     [alt]="'source.evidence.image_alt' | translate" />
+                            </a>
+                            <figcaption>{{ 'source.evidence.image_caption' | translate }}</figcaption>
+                        </figure>
+                        </div>
+                        <details class="evidence-digest">
                             <summary>{{ 'source.evidence.digest' | translate }}</summary>
                             <code>{{ sourceEvidenceManifestDigest }}</code>
                             <p>
@@ -651,6 +671,12 @@ interface ComparisonRow {
                     <h2>{{ 'contact.title' | translate }}</h2>
                     <p class="lede">{{ 'contact.lede' | translate }}</p>
                     <ul class="contact-list">
+                        <li>
+                            <span class="label">{{ 'contact.github_label' | translate }}</span>
+                            <a href="https://github.com/ilia-ae/aliro-mayday/issues" target="_blank" rel="noopener noreferrer">
+                                {{ 'contact.github_link' | translate }} ↗
+                            </a>
+                        </li>
                         <li>
                             <span class="label">{{ 'contact.email_label' | translate }}</span>
                             <a href="mailto:aliro.mayday&#64;ilia.ae">aliro.mayday&#64;ilia.ae</a>
@@ -1150,6 +1176,10 @@ interface ComparisonRow {
                 align-items: center;
                 padding: 0.875rem 1.5rem;
                 border-radius: var(--btn-radius);
+                border: 1px solid var(--border-strong);
+                max-width: 100%;
+                min-height: 48px;
+                line-height: 1.5;
                 font-weight: 600;
                 font-size: 0.9375rem;
                 text-decoration: none;
@@ -1549,10 +1579,35 @@ interface ComparisonRow {
             }
 
             .controller-ui-demo {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1rem 1.5rem;
+                margin: 0 0 1.25rem;
+            }
+            .controller-ui-frame {
+                display: block;
+                width: 100%;
+                height: clamp(36rem, 78svh, 50rem);
+                border: 1px solid var(--border-strong);
+                border-radius: var(--card-radius);
+                background: #272732;
+            }
+            .controller-ui-screenshots {
                 margin: 1.5rem 0;
+                border: 1px solid var(--border);
+                border-radius: var(--card-radius);
+                padding: 1rem 1.25rem;
+            }
+            .controller-ui-screenshots summary {
+                min-height: 28px;
+                padding: 0.25rem 0;
+                cursor: pointer;
+                font-weight: 600;
             }
             .controller-ui-demo p {
-                margin: 0.75rem 0 0;
+                margin: 0;
+                flex: 1 1 24rem;
                 max-width: 44rem;
                 color: var(--fg-muted);
                 font-size: 0.875rem;
@@ -2095,48 +2150,46 @@ interface ComparisonRow {
             }
 
             /* ================ Published source ================ */
-            .source .released {
-                font-size: 1.0625rem;
-                color: var(--accent);
-                font-weight: 600;
-                margin: 0.5rem 0;
-            }
-            .source .released-cta {
-                margin: 0 0 1rem;
-            }
-            .source .released-cta a {
-                display: inline-block;
-                padding: 0.875rem 1.5rem;
-                background: var(--accent);
-                color: var(--accent-ink);
-                border-radius: var(--btn-radius);
-                font-weight: 600;
+            #source .released {
                 font-size: 0.9375rem;
-                text-decoration: none;
+                color: var(--fg-muted);
+                margin: 0 0 1.25rem;
+                max-width: 64ch;
             }
-            .source .released-cta a:hover {
-                background: var(--accent-hover);
+            .source-links,
+            .source-legal-links {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.75rem;
             }
-            /* Public documentation links share the primary button proportions. */
-            .source .cta {
-                margin: 1.5rem 0 0;
+            .source-links a {
+                min-height: 48px;
+                max-width: 100%;
+                line-height: 1.5;
             }
-            .source .cta a {
-                display: inline-block;
-                padding: 0.875rem 1.5rem;
-                background: var(--accent);
-                color: var(--accent-ink);
-                border-radius: var(--btn-radius);
-                font-weight: 600;
-                font-size: 0.9375rem;
-                text-decoration: none;
-                transition: background-color 150ms ease;
+            .source-license {
+                margin-top: 2rem;
+                max-width: 52rem;
+                padding-top: 1.75rem;
+                border-top: 1px solid var(--border);
             }
-            .source .cta a:hover {
-                background: var(--accent-hover);
+            .source-license p {
+                margin: 0.75rem 0 1rem;
+                max-width: 68ch;
+                color: var(--fg-muted);
+                line-height: 1.7;
+            }
+            .source-legal-links {
+                column-gap: 1.5rem;
+            }
+            .source-legal-links a {
+                display: inline-flex;
+                align-items: center;
+                min-height: 44px;
+                font-weight: 500;
             }
             .source-evidence {
-                max-width: 52rem;
                 margin-top: 2.5rem;
                 padding: clamp(1.25rem, 3vw, 2rem);
                 border: 1px solid var(--border);
@@ -2145,6 +2198,20 @@ interface ComparisonRow {
                 background: var(--bg-elevated);
                 scroll-margin-top: 6rem;
             }
+            .evidence-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+                gap: 2rem;
+                align-items: start;
+            }
+            .evidence-copy { min-width: 0; }
+            .source-evidence .evidence-intro { line-height: 1.7; margin: 0 0 1rem; }
+            .deposit-project-link { display: inline-flex; align-items: center; min-height: 44px; }
+            .deposit-visual { margin: 0; }
+            .deposit-visual img { width: 100%; height: auto; border-radius: 0.75rem; }
+            .deposit-visual figcaption { margin-top: 0.75rem; color: var(--fg-muted); font-size: 0.8125rem; line-height: 1.6; }
+            .evidence-digest { border-top: 1px solid var(--border); margin-top: 1.5rem; padding-top: 1rem; }
+            @media (max-width: 48rem) { .evidence-grid { grid-template-columns: 1fr; } .deposit-visual { max-width: 30rem; } }
             .source-evidence h3 {
                 margin: 0 0 0.75rem;
                 font-size: 1.375rem;
@@ -2153,7 +2220,11 @@ interface ComparisonRow {
                 color: var(--fg-muted);
                 font-size: 0.9375rem;
             }
+            .source-evidence p + p {
+                margin-top: 1rem;
+            }
             .source-evidence ul {
+                margin: 1rem 0;
                 padding-left: 1.25rem;
                 line-height: 1.7;
             }
@@ -2176,6 +2247,7 @@ interface ComparisonRow {
                 background: var(--accent-hover);
             }
             .source-evidence summary {
+                padding: 0.5rem 0;
                 cursor: pointer;
                 color: var(--fg-muted);
             }
@@ -2296,7 +2368,7 @@ interface ComparisonRow {
             }
             .contact-list a {
                 font-weight: 500;
-                word-break: break-all;
+                overflow-wrap: anywhere;
                 color: var(--accent);
             }
             .contact-list a:hover {
@@ -2590,7 +2662,7 @@ export class LandingPage {
         key: string;
         href: string;
     }> = [
-        { num: '01', key: 'nav.migration', href: '#migration' },
+        { num: '01', key: 'nav.demo', href: '#controller-ui' },
         { num: '02', key: 'nav.about', href: '#about' },
         { num: '03', key: 'nav.faq', href: '#faq' },
         { num: '04', key: 'nav.plan', href: '#roadmap' },
@@ -2632,6 +2704,11 @@ export class LandingPage {
     readonly controllerUiDemoUrl = computed(() =>
         `/demo/index.html?lang=${this.language.lang()}#/`
     );
+    private readonly sanitizer = inject(DomSanitizer);
+    // Only this fixed same-origin path and the validated language enum are used.
+    readonly controllerUiEmbedUrl = computed(() =>
+        this.sanitizer.bypassSecurityTrustResourceUrl(this.controllerUiDemoUrl())
+    );
     readonly sourceControllerUiUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/controller-ui-debug${this.language.lang() === 'ru' ? '.ru' : ''}.md`
     );
@@ -2643,6 +2720,9 @@ export class LandingPage {
     );
     readonly sourceEvidenceUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/provenance/2026-10-15/README${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly depositSummaryImage = computed(() =>
+        `/images/aliro-deposit-summary-${this.language.lang()}.svg`
     );
     readonly sourceEvidenceSnapshotUrl = 'https://github.com/ilia-ae/aliro-mayday/tree/24e218ef1ea83dafd47447e0393ddd5cd949ccaa';
     readonly sourceEvidenceBundleUrl = '/proofs/aliro-snapshot-2026-10-15.zip';

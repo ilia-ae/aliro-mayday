@@ -137,7 +137,7 @@ test.describe('links + privacy route', () => {
             els.map((e) => (e as HTMLAnchorElement).getAttribute('href'))
         );
         expect(hrefs).toEqual([
-            '#migration',
+            '#controller-ui',
             '#about',
             '#faq',
             '#roadmap',

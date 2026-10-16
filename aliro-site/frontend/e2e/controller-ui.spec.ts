@@ -4,6 +4,7 @@ for (const lang of ['en', 'ru']) {
     test(`controller interface screenshot and local launch guide in ${lang}`, async ({ page }) => {
         await page.goto(`/?lang=${lang}#controller-ui`);
         const section = page.locator('#controller-ui');
+        await section.locator('.controller-ui-screenshots > summary').click();
         const title = lang === 'ru' ? 'Веб-интерфейс контроллера' : 'Controller web interface';
         await expect(section.getByRole('heading', { name: title })).toBeVisible();
         await expect(section.locator('figcaption')).toContainText(lang === 'ru' ? 'Демонстрационные данные' : 'Sample data');
@@ -23,6 +24,7 @@ for (const lang of ['en', 'ru']) {
     test(`all six screenshots switch, wrap and retain the selected view across languages in ${lang}`, async ({ page }) => {
         await page.goto(`/?lang=${lang}#controller-ui`);
         const section = page.locator('#controller-ui');
+        await section.locator('.controller-ui-screenshots > summary').click();
         const views = lang === 'ru'
             ? ['Обзор', 'MQTT', 'Действия', 'Система', 'Обновление', 'Журнал']
             : ['Overview', 'MQTT', 'Actions', 'System', 'OTA update', 'Logs'];

@@ -17,13 +17,14 @@
         "plan": "Plan",
         "source": "Source",
         "faq": "FAQ",
-        "contact": "Contact"
+        "contact": "Contact",
+        "demo": "Demo"
     },
     "hero": {
         "eyebrow": "Open standard · 2026",
         "title": "Your door key lives in your phone",
         "lede": "An experimental NFC controller built on ESP32-S3 and PN532. An existing iPhone key works on the bench; Samsung Wallet through SmartThings is being prepared for testing. Source code and wiring diagrams are public.",
-        "cta_primary": "Get in touch",
+        "cta_primary": "Explore the panel",
         "cta_secondary": "View source code"
     },
     "demo_stand": {
@@ -161,7 +162,7 @@
     },
     "stack": {
         "title": "Technology stack",
-        "lede": "What the controller is built on and what it plugs into — open standards, proven silicon, and the integrations people actually use.",
+        "lede": "Components of the working prototype and future directions. Planned integrations are labelled below.",
         "groups": {
             "standards": "Standards and protocols",
             "hardware": "Hardware and crypto",
@@ -186,11 +187,11 @@
             },
             "ble": {
                 "name": "Bluetooth LE",
-                "tag": "Approach-and-wake"
+                "tag": "Matter commissioning; access planned"
             },
             "uwb": {
                 "name": "UWB",
-                "tag": "Hands-free entry (later)"
+                "tag": "Hands-free access — planned"
             },
             "esp32": {
                 "name": "ESP32-S3",
@@ -210,35 +211,35 @@
             },
             "mqtt": {
                 "name": "MQTT",
-                "tag": "Telemetry and alerts"
+                "tag": "Panel settings; integration testing pending"
             },
             "http": {
                 "name": "HTTP + WebSocket API",
-                "tag": "Local control"
+                "tag": "Local diagnostics and logs"
             },
             "telegram": {
                 "name": "Telegram",
-                "tag": "Bot + Mini App"
+                "tag": "Bot and Mini App — planned"
             },
             "prometheus": {
                 "name": "Prometheus",
-                "tag": "Metrics"
+                "tag": "Metrics export — planned"
             },
             "grafana": {
                 "name": "Grafana",
-                "tag": "Ready-made dashboards"
+                "tag": "Dashboards — planned"
             },
             "homeassistant": {
                 "name": "Home Assistant",
-                "tag": "Automations"
+                "tag": "Matter integration; acceptance pending"
             },
             "frigate": {
                 "name": "Frigate NVR",
-                "tag": "Camera-recording triggers"
+                "tag": "Event-triggered recording — planned"
             },
             "onvif": {
                 "name": "ONVIF / Hikvision / Dahua",
-                "tag": "Direct camera integration"
+                "tag": "Camera integration — planned"
             }
         }
     },
@@ -440,8 +441,8 @@
     },
     "source": {
         "title": "Source code is public",
-        "lede": "The public aliro-mayday repository contains firmware, access-policy and revocation checks, tests and English/Russian documentation. The old repository and device backups remain private.",
-        "released": "A clean snapshot was published on 13 October 2026; current fixes and wiring diagrams are in main.",
+        "lede": "Firmware, access checks, key revocation, tests and documentation in English and Russian are available in the public repository.",
+        "released": "The current version is in main. Start with the documentation and wiring guide.",
         "open_repo": "View code on GitHub",
         "documentation": "Documentation",
         "wiring": "Wiring diagram and pins",
@@ -449,18 +450,23 @@
         "licensing": "License v1.1 and permitted uses",
         "contributing": "Contributing and authorship",
         "evidence": {
-            "title": "Snapshot timestamp evidence",
+            "title": "Source snapshot deposit",
             "snapshot": "15 October 2026 source snapshot",
-            "verified": "Signed timestamps for this source snapshot have been verified.",
-            "pending": "Three calendar receipts. A verified Bitcoin block is not yet included in the published package.",
-            "scope": "The timestamps cover this specific snapshot and the authorship statement “Mayday / Ilia Arestov”. The full verification record explains their scope and the rights retained by third-party authors.",
-            "download": "Download proof bundle (ZIP)",
-            "verify": "Proofs and independent verification",
+            "verified": "Two independent services timestamped this snapshot. Their signatures and the file digest have been verified.",
+            "pending": "Requests were submitted. A verified Bitcoin block attestation is not yet included in this bundle.",
+            "scope": "The bundle lets you verify the date and integrity of this exact code version. It is not a separate copyright registration; third-party components retain their authors and licences.",
+            "download": "Download the proofs",
+            "verify": "How to verify independently",
             "digest": "Manifest SHA-256 and verification record",
             "manifest": "View manifest",
             "record": "View verification record",
-            "archive_checksum": "ZIP checksum"
-        }
+            "archive_checksum": "ZIP checksum",
+            "lede": "On 15 October 2026, we recorded an exact source snapshot and the Mayday / Ilia Arestov authorship statement using our deposit.mayday service.",
+            "project": "About our deposit service",
+            "image_alt": "Aliro deposit summary: 15 October 2026, Mayday / Ilia Arestov, snapshot 24e218e, timestamps verified; Bitcoin attestation pending",
+            "image_caption": "Snapshot summary. Original proofs are in the ZIP bundle."
+        },
+        "license_title": "Use and licensing"
     },
     "changelog": {
         "title": "What's new",
@@ -486,12 +492,14 @@
         }
     },
     "contact": {
-        "title": "Get in touch",
-        "lede": "Interested in using this, need customisation, want to collaborate, or just have a question — reach out directly. Usual reply time is under 24 hours.",
-        "email_label": "Email",
+        "title": "Contribute or discuss a deployment",
+        "lede": "Code, build instructions and the demo are public. Report bugs and discuss technical questions on GitHub. For commercial licensing or a custom deployment, email us.",
+        "email_label": "Licensing & deployment",
         "mayday_label": "Main site",
         "mayday_host": "ilia.ae",
-        "mayday_url": "https://ilia.ae/en/"
+        "mayday_url": "https://ilia.ae/en/",
+        "github_label": "Development",
+        "github_link": "Questions and bug reports on GitHub"
     },
     "privacy_page": {
         "title": "Privacy policy",
@@ -561,7 +569,7 @@
     "status": {
         "title": "What we're building",
         "p1": "On 15 October 2026, the owner confirmed that the existing iPhone key works after the firmware update. The controller recorded three authenticated taps, zero failures and both locked and unlocked Matter states. The key and pairing were preserved.",
-        "p2": "The supported tests pass: 15 of 15. Access rights, revocation and persistence are implemented; Samsung Wallet on Fold 7, Google Wallet, a physical relay and Aliro BLE/UWB remain unverified.",
+        "p2": "Automated checks for access rights, revocation and persistence pass. Samsung Wallet on Fold 7, Google Wallet, a physical relay and Aliro BLE/UWB remain unverified.",
         "cta": "View code and implementation limits →"
     },
     "controller_ui": {
@@ -600,7 +608,22 @@
                 "alt": "System logs containing explicitly synthetic demo entries"
             }
         },
-        "live": "Open live demo",
-        "live_note": "Explore the actual panel in your browser with sample data. Changes are not saved; no controller is connected."
+        "live": "Open panel in a new tab",
+        "live_note": "Explore the actual firmware web panel below with sample data. Switch sections and edit fields. Saving and device commands are disabled; no controller is connected.",
+        "frame_title": "Live controller web panel demo",
+        "screenshots": "Browse screenshots of all sections"
+    },
+    "access_demo": {
+        "label": "The interaction · animation",
+        "play": "Play the tap sequence",
+        "reset": "Reset the sequence",
+        "note": "A schematic demonstration with no device connection. On the bench, firmware changes Matter DoorLock state; a physical lock output still needs to be added.",
+        "states": {
+            "0": "The lock is closed",
+            "1": "Bring the phone to the reader",
+            "2": "Check the key and access rights",
+            "3": "Access granted",
+            "4": "The door opens · simulation"
+        }
     }
 }

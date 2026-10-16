@@ -13,7 +13,7 @@ for (const lang of ['en', 'ru']) {
         const link = page.locator('#controller-ui .controller-ui-demo a');
         await expect(link).toBeVisible();
         await expect(link).toHaveAttribute('href', `/demo/index.html?lang=${lang}#/`);
-        await expect(link).toContainText(lang === 'ru' ? 'Открыть живое демо' : 'Open live demo');
+        await expect(link).toContainText(lang === 'ru' ? 'Открыть панель отдельно' : 'Open panel in a new tab');
     });
 }
 

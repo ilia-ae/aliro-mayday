@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800" viewBox="0 0 1000 800" role="img" aria-labelledby="title description">
+<title id="title">Source snapshot deposit</title><desc id="description">15 October 2026 · 2,396 files. Mayday / Ilia Arestov. DigiCert + FreeTSA. Bitcoin: attestation pending.</desc>
+<defs><linearGradient id="paper" x2="1" y2="1"><stop stop-color="#fff9ed"/><stop offset="1" stop-color="#ffe9b7"/></linearGradient></defs>
+<style>text{font-family:Arial,Helvetica,sans-serif}.label{fill:#685831;font-size:20px;letter-spacing:2px}.value{fill:#201e19;font-size:32px;font-weight:600}</style>
+<rect width="1000" height="800" rx="28" fill="url(#paper)"/>
+<rect x="30" y="30" width="940" height="740" rx="16" fill="none" stroke="#ddbb71"/>
+<rect x="64" y="62" width="54" height="54" rx="13" fill="#e99a08"/>
+<path d="M91 73v23m-10-9 10 10 10-10M77 104h28" fill="none" stroke="#241e0f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="138" y="89" fill="#201e19" font-size="31" font-weight="700">deposit.mayday</text>
+<text x="138" y="119" fill="#685831" font-size="20">Source snapshot deposit</text>
+<text x="64" y="185" class="label">PROJECT</text><text x="64" y="225" class="value">aliro.mayday</text><text x="64" y="280" class="label">AUTHORSHIP STATEMENT</text><text x="64" y="320" class="value">Mayday / Ilia Arestov</text><text x="64" y="375" class="label">SNAPSHOT</text><text x="64" y="415" class="value">24e218e · 15 October 2026 · 2,396 files</text>
+<line x1="64" x2="936" y1="451" y2="451" stroke="#ddbb71"/>
+<text x="64" y="492" class="label">VERIFIED TIMESTAMPS</text>
+<text x="64" y="532" class="value">DigiCert + FreeTSA · 15.10.2026</text>
+<text x="64" y="574" fill="#685831" font-size="25">Bitcoin: attestation pending</text>
+<text x="64" y="625" class="label">SHA-256</text>
+<g fill="#201e19" font-family="monospace" font-size="22"><text x="64" y="658">9f51d5b701905d34c7a22910c80c2950</text><text x="64" y="687">451cfa3cf9402e8485947b90ff13af2c</text></g>
+<text x="64" y="741" fill="#685831" font-size="22">Snapshot summary · original evidence in the proof bundle</text>
+</svg>
