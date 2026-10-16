@@ -14,6 +14,8 @@ for (const lang of ['en', 'ru']) for (const theme of ['light', 'dark']) {
         await page.goto(`/demo/index.html?lang=${lang}#/actions`);
         await page.getByRole('button', { name: t('Relay control'), exact: true }).click();
         await page.getByRole('heading', { name: t('Relay control'), exact: true }).waitFor();
+        const guide = `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/access-integrations${lang === 'ru' ? '.ru' : ''}.md`;
+        await expect(page.getByRole('link', { name: `${t('Relay wiring and setup')} ↗`, exact: true })).toHaveAttribute('href', `${guide}#relay-setup`);
         await page.getByRole('spinbutton', { name: t('Pulse duration (ms)') }).fill('100');
         await page.getByRole('button', { name: t('Save integration settings'), exact: true }).click();
         await expect(page.getByRole('status').filter({ hasText: t('Integration settings saved. Relay output starts inactive.') })).toBeVisible();
@@ -23,6 +25,7 @@ for (const lang of ['en', 'ru']) for (const theme of ['light', 'dark']) {
         await page.getByRole('button', { name: t('Simulate denied access'), exact: true }).click();
         await expect(page.getByText(t('Logical state: {state}').replace('{state}', t('Unlocked')), { exact: false })).toBeVisible();
         await page.getByRole('button', { name: t('Telegram integration'), exact: true }).click();
+        await expect(page.getByRole('link', { name: `${t('Telegram setup guide')} ↗`, exact: true })).toHaveAttribute('href', `${guide}#telegram-setup`);
         await expect(page.getByLabel(t('Bot token'))).toBeDisabled();
         await expect(page.getByRole('button', { name: /\/unlock/ })).toHaveCount(0);
         await page.getByRole('button', { name: t('Queue test notification'), exact: true }).click();

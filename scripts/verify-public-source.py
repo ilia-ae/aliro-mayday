@@ -25,6 +25,7 @@ CURRENT_DOCS = (
     "docs/controller-ui-debug.md", "docs/controller-ui-debug.ru.md",
     "docs/provenance/2026-10-15/README.md", "docs/provenance/2026-10-15/README.ru.md",
     "docs/wiring.ru.md", "docs/wiring.md",
+    "docs/access-integrations.md", "docs/access-integrations.ru.md",
     "docs/samsung-bench-preparation-2026-10-14.ru.md",
     "docs/samsung-bench-preparation-2026-10-14.md",
     "docs/aliro-access-policy-2026-10-14.ru.md",

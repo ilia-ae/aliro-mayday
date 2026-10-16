@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1110" viewBox="0 0 1200 1110" role="img" aria-labelledby="title desc">
+<title id="title">Relay connection · GPIO4 example</title>
+<desc id="desc">For a 3.3 V compatible relay module and a power-to-unlock DC lock. GPIO4 to IN, GND to GND. Separate module supply. Lock supply + to COM, NO to lock +, lock − to supply −. NC unused.</desc>
+<!-- Copyright (c) 2026 Mayday / Ilia Arestov. See /LICENSE. -->
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17243b}.muted{fill:#526177}.mono{font-family:monospace}.wire{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<rect width="1200" height="1110" fill="#f6f8fb"/>
+<text x="40" y="48" font-size="30" font-weight="700">Relay connection · GPIO4 example</text>
+<text x="40" y="81" font-size="18" class="muted">For a 3.3 V compatible relay module and a power-to-unlock DC lock.</text>
+<rect x="40" y="102" width="1120" height="42" rx="12" fill="#fff4d6" stroke="#b4c2d4"/>
+<text x="56" y="129" font-size="17" font-weight="700">New firmware required · real controller not updated · relay disabled by default</text>
+<text x="40" y="184" font-size="23" font-weight="700">1 · Control signal and relay-module power</text>
+<rect x="40" y="207" width="270" height="204" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<rect x="710" y="207" width="450" height="204" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="62" y="243" font-size="23" font-weight="700">ESP32-S3</text>
+<text x="62" y="386" font-size="17" class="muted">Board supply: USB</text>
+<text x="732" y="243" font-size="22" font-weight="700">Relay module + driver</text>
+<text x="288" y="292" font-size="20" text-anchor="end" class="mono">GPIO4</text>
+<path d="M310 286 H710" class="wire" stroke="#7865be"/>
+<circle cx="310" cy="286" r="5" fill="#7865be"/>
+<circle cx="710" cy="286" r="5" fill="#7865be"/>
+<text x="730" y="292" font-size="18" >IN · accepts 3.3 V logic</text>
+<text x="288" y="351" font-size="20" text-anchor="end" class="mono">GND</text>
+<path d="M310 345 H710" class="wire" stroke="#515d70"/>
+<circle cx="310" cy="345" r="5" fill="#515d70"/>
+<circle cx="710" cy="345" r="5" fill="#515d70"/>
+<text x="730" y="351" font-size="18" >GND · signal ground</text>
+<text x="505" y="276" font-size="17" text-anchor="middle" class="muted">3.3 V</text>
+<text x="730" y="371" font-size="13" class="muted">GND labels = one electrical node</text>
+<rect x="710" y="466" width="450" height="74" rx="12" fill="#eef2f8" stroke="#b4c2d4"/>
+<text x="732" y="493" font-size="19" font-weight="700">Relay-module supply</text>
+<text x="732" y="520" font-size="16" class="muted">Voltage/current per module</text>
+<path d="M970 466 V411" class="wire" stroke="#bf3d50"/>
+<path d="M1110 466 V411" class="wire" stroke="#515d70"/>
+<text x="970" y="448" font-size="21" text-anchor="middle">+</text>
+<text x="1110" y="448" font-size="21" text-anchor="middle">−</text>
+<text x="970" y="395" font-size="16" text-anchor="middle" class="mono">VCC</text>
+<text x="1110" y="395" font-size="16" text-anchor="middle" class="mono">GND</text>
+<text x="40" y="452" font-size="18" font-weight="700">HIGH-trigger example: LOW = inactive.</text>
+<text x="40" y="485" font-size="17" class="muted">Set the inactive input level with an external pull resistor per module.</text>
+<text x="40" y="592" font-size="23" font-weight="700">2 · Contacts switch the lock supply</text>
+<rect x="40" y="628" width="250" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="60" y="666" font-size="21" font-weight="700">Lock DC supply</text>
+<text x="60" y="698" font-size="16" class="muted">Rated for your lock</text>
+<rect x="440" y="628" width="330" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="460" y="666" font-size="21" font-weight="700">Same relay · contacts</text>
+<text x="460" y="696" font-size="16" class="muted">Shown inactive / NO open</text>
+<rect x="930" y="628" width="230" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="950" y="666" font-size="21" font-weight="700">DC lock</text>
+<text x="950" y="697" font-size="15" class="muted">Power applied → unlock</text>
+<text x="269" y="742" font-size="23" text-anchor="end">+</text>
+<text x="269" y="799" font-size="23" text-anchor="end">−</text>
+<text x="954" y="742" font-size="23" >+</text>
+<text x="954" y="799" font-size="23" >−</text>
+<path d="M290 735 H490" class="wire" stroke="#bf3d50"/>
+<path d="M490 735 H540 L650 710" class="wire" stroke="#17243b"/>
+<circle cx="540" cy="735" r="5" fill="#17243b"/>
+<circle cx="690" cy="735" r="6" fill="#fff" stroke="#17243b" stroke-width="3"/>
+<path d="M696 735 H930" class="wire" stroke="#bf3d50"/>
+<text x="490" y="720" font-size="17" text-anchor="middle" class="mono">COM</text>
+<text x="690" y="720" font-size="17" text-anchor="middle" class="mono">NO</text>
+<text x="460" y="802" font-size="16" class="muted">NC: unused in this example</text>
+<path d="M930 792 H818 V887 H330 V792 H290" class="wire" stroke="#515d70"/>
+<path d="M875 735 V752" class="wire" stroke="#bf3d50"/>
+<path d="M875 782 V792 H930" class="wire" stroke="#515d70"/>
+<circle cx="875" cy="735" r="5" fill="#bf3d50"/>
+<circle cx="875" cy="792" r="5" fill="#515d70"/>
+<rect x="859" y="752" width="32" height="30" rx="3" fill="#f0e8d4" stroke="#526177"/><path d="M859 758 H891" stroke="#17243b" stroke-width="5"/>
+<text x="900" y="772" font-size="16" class="mono">D1*</text>
+<text x="40" y="933" font-size="18" font-weight="700">D1*: suppression across the lock</text>
+<text x="40" y="963" font-size="17" >For a bare DC coil: diode band (cathode) to +; anode to −.</text>
+<text x="40" y="993" font-size="17" class="muted">* Use the lock manufacturer’s specified diode/TVS. Not a generic AC-lock circuit.</text>
+<rect x="40" y="1020" width="1120" height="68" rx="12" fill="#eef2f8" stroke="#b4c2d4"/>
+<text x="56" y="1047" font-size="17" font-weight="700">GPIO4 is an example, not a preset. Never connect a coil or lock power to GPIO.</text>
+<text x="56" y="1074" font-size="16" class="muted">Maglocks and OPEN/EXIT dry-contact inputs require their own wiring; see the guide.</text>
+</svg>

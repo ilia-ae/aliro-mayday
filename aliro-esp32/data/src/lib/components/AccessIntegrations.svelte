@@ -1,8 +1,9 @@
 <!-- Copyright (c) 2026 Mayday / Ilia Arestov. See /LICENSE. -->
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { t } from '$lib/stores/i18n.svelte';
+  import { t, language } from '$lib/stores/i18n.svelte';
   let { section }: { section: 'relay' | 'telegram' } = $props();
+  const guideUrl = $derived(`https://github.com/ilia-ae/aliro-mayday/blob/main/docs/access-integrations${language.current === 'ru' ? '.ru' : ''}.md#${section === 'relay' ? 'relay-setup' : 'telegram-setup'}`);
   type Settings = {
     relayEnabled: boolean; relayPin: number; activeHigh: boolean; pulse: boolean; pulseMs: number;
     telegramEnabled: boolean; notifyDenied: boolean; chatId: string;
@@ -73,6 +74,7 @@
     {#if !status.authEnabled}<p class="alert alert-warning">{t('Enable panel authentication before changing integrations.')}</p>{/if}
     {#if section === 'relay'}
       <h2 class="text-xl font-bold">{t('Relay control')}</h2>
+      <p class="text-sm"><a class="link link-primary" href={guideUrl} target="_blank" rel="noopener noreferrer">{t('Relay wiring and setup')} ↗</a></p>
       <p class="text-sm text-base-content/70">{t('Runs after an accepted Matter or NFC lock-state change. Disabled by default; existing keys and pairing are unchanged.')}</p>
       <div class="grid sm:grid-cols-2 gap-4">
         <label class="fieldset min-w-0"><span class="label">{t('Relay output')}</span><select class="select w-full" bind:value={settings.relayEnabled}><option value={false}>{t('Disabled')}</option><option value={true}>{t('Enabled')}</option></select></label>
@@ -86,6 +88,7 @@
       <p class="text-sm text-base-content/70">{t('A pulse only releases the output; it does not report a physically closed door or automatically change the Matter lock state.')}</p>
     {:else}
       <h2 class="text-xl font-bold">{t('Telegram integration')}</h2>
+      <p class="text-sm"><a class="link link-primary" href={guideUrl} target="_blank" rel="noopener noreferrer">{t('Telegram setup guide')} ↗</a></p>
       <p class="text-sm text-base-content/70">{t('Notifications use verified HTTPS in a background worker. Bot tokens are write-only and are never returned by the API.')}</p>
       {#if !status.httpsEnabled}<p class="alert alert-warning">{t('Enable panel HTTPS before entering a bot token.')}</p>{/if}
       <div class="grid sm:grid-cols-2 gap-4">

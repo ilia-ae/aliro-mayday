@@ -468,7 +468,8 @@
             "image_alt": "Aliro deposit summary: 15 October 2026, Mayday / Ilia Arestov, snapshot 24e218e, timestamps verified; Bitcoin attestation pending",
             "image_caption": "Snapshot summary. Original proofs are in the ZIP bundle."
         },
-        "license_title": "Use and licensing"
+        "license_title": "Use and licensing",
+        "setup": "Relay and Telegram setup"
     },
     "changelog": {
         "title": "What's new",

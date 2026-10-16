@@ -2,6 +2,8 @@
 
 [Русский](wiring.ru.md) · [Documentation](README.md)
 
+[Relay: GPIO4 example](#relay-gpio4-example) · [Telegram setup](access-integrations.md#telegram-setup)
+
 This diagram describes the **current `aliro-esp32/` firmware**. `GPIO` labels
 are ESP32 signal numbers, not positions on a pin header. Find each contact by
 the marking on your board. Connector positions in the drawing are schematic.
@@ -65,6 +67,58 @@ this guide and the current firmware are authoritative for this build.
   The installed controller has not been updated or tested with a physical relay.
 - Power, boot and USB pins are not spare actuator outputs. GPIO14 is not used
   as a PN532 IRQ by this firmware.
+
+## Relay: GPIO4 example
+
+**This is preparation for a later firmware update. The installed controller
+stays unchanged.** There is no preset relay pin: GPIO4 is a selectable example
+for the current DevKitC profile, provided nothing else on your board uses it.
+
+![Relay control and lock-power connections](images/aliro-relay.en.svg)
+
+The diagram assumes a relay **module with a driver, a 3.3 V compatible input
+and a HIGH trigger**, plus a low-voltage DC lock that releases when powered.
+Connector positions are schematic. Read the terminal labels on the real module.
+
+| From | To | Meaning |
+| --- | --- | --- |
+| ESP32 `GPIO4` | Relay-module `IN` / `SIG` | Control signal only |
+| ESP32 `GND` | Relay-module `GND` | Signal reference |
+| Relay-module supply `+` | Module `VCC` / `DC+` | Use the module's rated supply, not GPIO4 |
+| Relay-module supply `−` | Module `GND` / `DC−` | Same ground as ESP32 in this non-isolated example |
+| Lock supply `+` | Relay contact `COM` | Start of the switched lock circuit |
+| Relay contact `NO` | Lock `+` | Power reaches the lock when the relay is active |
+| Lock `−` | Lock supply `−` | Lock-power return |
+| Relay contact `NC` | Leave disconnected | Unused for this power-to-unlock example |
+
+The two module `GND` labels in the drawing are **one electrical node**, not a
+promise of two physical pins. The lock circuit is switched through isolated
+contacts; its supply negative does not need a connection to ESP32 for that reason.
+An optically isolated module may need different ground/jumper wiring: follow
+its manufacturer rather than defeating the isolation.
+
+For this HIGH-trigger example, hold the input LOW during boot with the module's
+specified pull-down. For a compatible LOW-trigger module, choose **LOW** in the
+panel and use the specified inactive pull-up to **3.3 V**, never a 5 V pull-up on
+ESP32 GPIO. A bare relay coil needs a separate transistor/MOSFET driver and coil
+suppression; it cannot replace the compatible module shown here.
+
+For a simple inductive DC lock, use the manufacturer's suppression diode/TVS.
+Where a flyback diode is specified, connect its **banded end (cathode) to lock +**
+and its anode to lock −. The relay coil also needs its own suppression, normally
+provided by the driver module. Do not apply this diode example to an AC lock.
+Select contact and supply ratings for the lock's switching/inrush current.
+
+| Lock interface | Connection approach |
+| --- | --- |
+| DC strike that opens when powered | `COM`/`NO` power circuit above; unlock pulse if the lock permits it |
+| Controller with a voltage-free `OPEN` / `EXIT` input | Put `COM`/`NO` across the designated input terminals; **do not inject lock-supply voltage into that input** |
+| Magnetic or other power-to-lock lock | Needs its own manufacturer circuit and release behavior; this `NO` example is not its wiring recipe |
+
+After the later update, choose **Actions → Relay control → GPIO4**, set the
+actual trigger level, and start with **Unlock pulse → 1000 ms** only if the lock
+allows that pulse. See [the complete setup steps](access-integrations.md#relay-setup).
+Do not move wires while the current USB-powered stand is running.
 
 ## Assemble without changing the working firmware
 

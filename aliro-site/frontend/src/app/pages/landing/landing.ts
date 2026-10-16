@@ -581,6 +581,9 @@ interface ComparisonRow {
                         <a class="btn-secondary" [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">
                             {{ 'source.wiring' | translate }} →
                         </a>
+                        <a class="btn-secondary" [href]="sourceSetupUrl()" target="_blank" rel="noopener noreferrer">
+                            {{ 'source.setup' | translate }} →
+                        </a>
                     </div>
                     <div class="source-license">
                         <h3>{{ 'source.license_title' | translate }}</h3>
@@ -2781,6 +2784,9 @@ export class LandingPage {
     readonly sourceEvidenceRecordUrl = 'https://github.com/ilia-ae/aliro-mayday/blob/main/docs/provenance/2026-10-15/verification.json';
     readonly sourceWiringUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/wiring${this.language.lang() === 'ru' ? '.ru' : ''}.md`
+    );
+    readonly sourceSetupUrl = computed(() =>
+        `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/access-integrations${this.language.lang() === 'ru' ? '.ru' : ''}.md`
     );
 
     constructor() {

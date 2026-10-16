@@ -8,7 +8,7 @@
     },
     {
       "path": ".github/workflows/source-and-nfc.yml",
-      "sha256": "8c9e1db79a463e723f23ca7acb08e5d5daa4531bde46e1f085a8b53919f5f8b9"
+      "sha256": "14eb39c9e65e1cc3b24ef8f84272960952611d58547bf3fb94165d86744d10c3"
     },
     {
       "path": ".gitignore",
@@ -8056,7 +8056,7 @@
     },
     {
       "path": "aliro-esp32/data/src/lib/components/AccessIntegrations.svelte",
-      "sha256": "653da6b5bedf42711f81e76790c2a68cdfdaa6d4aa1fe706f4e9ce058c211edb"
+      "sha256": "6ab5bb683fa4ca4b87829662fd2e80c7ffb396f1e642e26130b03181ff77138e"
     },
     {
       "path": "aliro-esp32/data/src/lib/components/AppActions.svelte",
@@ -8132,7 +8132,7 @@
     },
     {
       "path": "aliro-esp32/data/src/lib/i18n/ru.json",
-      "sha256": "b1793e7e56a9dc47b93a1b9b7c069b4172d6bca79d729bee71b050486f9c39ae"
+      "sha256": "8958cf558465bbb1efc947804a3de3dc99dd5a7cc951a49051ffb7ac5f24a45b"
     },
     {
       "path": "aliro-esp32/data/src/lib/index.ts",
@@ -8548,7 +8548,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/controller-integrations.spec.ts",
-      "sha256": "b8902eda82f43be740b1f66d8bcf78741394e9c225c3bb8d8d15b35ef16c597c"
+      "sha256": "cc547281c12ea39996a913a7ad949d5e0ed22628d6464a559e42d312056d528e"
     },
     {
       "path": "aliro-site/frontend/e2e/controller-live-demo.spec.ts",
@@ -8596,7 +8596,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/source.spec.ts",
-      "sha256": "293cf6e0529c6b04407a4e7640dea7824ab3cfecde11deb000aae98aa5bef11a"
+      "sha256": "214c081b320c85754c5d2a2226285df1792a01ee8b2dd8c11e6f625f538a9ff9"
     },
     {
       "path": "aliro-site/frontend/e2e/theme.spec.ts",
@@ -8632,11 +8632,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "df20fd5ab406dde4f9a9b66bdee6cd138a7cc601f2c095f7f2cf1ed08f2e3ba5"
+      "sha256": "bf60e08ae28842c92a4901b7065fe6309e64425501a0c52192639578e49c6611"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "4cb209870ad4895a48d2cd80976a15b26b559a8e4cd1688c4d656dc9a06de56a"
+      "sha256": "571b28831eb346855045d5fe98bbb27294ec8b47b9aeb702bf10ab6aa6089114"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8748,7 +8748,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app/pages/landing/landing.ts",
-      "sha256": "8f41ae001ac6abd4b847453cc5128e48cb0d3f1e5f6c59f68dc146d41b9a5e46"
+      "sha256": "d8e68c46d34351325b35d15e618dafd11a1aa6a733b3f0acc4f3a95d5db13f0d"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",
@@ -8916,19 +8916,19 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "87db22b751672b83fe9890b6feadd684df23f2ef738dbe0aef81f7a8dc2b5052"
+      "sha256": "d1d4508ec02fae8993b7f92e2de708e1dbe4985d7f78c064a1b1186dc247851a"
     },
     {
       "path": "docs/README.ru.md",
-      "sha256": "e5173b3f6eed1074e9e66dcfd29b46cb3ae60d98dbfabf7a26502bd333692bfb"
+      "sha256": "7c062a52673d66ecb95a414a87768d5d891a96f3683af7cf329e9d6f51cd3186"
     },
     {
       "path": "docs/access-integrations.md",
-      "sha256": "ed512aefe9d4ac5256cd23f307b53df61624a2c58366c7b5d7582c875a46320b"
+      "sha256": "870b140275647256291a648f130bf7f5b79e3348d2a26d12534a85a89de55e42"
     },
     {
       "path": "docs/access-integrations.ru.md",
-      "sha256": "7c2581a59265d18832a4222c854cb12db9ec7113be223b51f8a0219355100e38"
+      "sha256": "9fb99afa6430c66e34b06b6d3a66e00cb7f636f1df9c1788eaa81780dd8cc114"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
@@ -8987,12 +8987,20 @@
       "sha256": "de11a1a96ffacce7506da2343b01a1480857d0269218ad4e67b37d9385a75875"
     },
     {
+      "path": "docs/images/aliro-relay.en.svg",
+      "sha256": "1748751f0478be3a70f5ace801ac6f6dde545d5224cb0e52f408fb63ac1d2f98"
+    },
+    {
+      "path": "docs/images/aliro-relay.ru.svg",
+      "sha256": "c1f86f39818b5dc69ee88d814db40e75d49e9d5779de71f71fb3de8643fc177f"
+    },
+    {
       "path": "docs/images/aliro-wiring.en.svg",
-      "sha256": "fa509d1edf93e0f6baf0fdda3d9fe22de90f66c95d90150c2d11ae9acc6d6da2"
+      "sha256": "9cc733d252960d86cfaeef0f3b63c14d2b678406a3772d8310404e0778205993"
     },
     {
       "path": "docs/images/aliro-wiring.ru.svg",
-      "sha256": "faf1c9b72674bd71622a620a651e8dd1dbea50752085b88dc0979e6b2c8a8092"
+      "sha256": "733f282ba6124c0a0dbbff5223f52e739c25d0e1c80235358d440da2163eeec1"
     },
     {
       "path": "docs/licensing-inventory-2026-10-15.json",
@@ -9080,11 +9088,11 @@
     },
     {
       "path": "docs/wiring.md",
-      "sha256": "3cbac93616ebe80977a369b530181eb48bd22c67754aa5aa7997d1b7bddacb03"
+      "sha256": "4621ba22dba2b0a1f33bb5fca9278a9d403ef25607965ba34389734421b4f546"
     },
     {
       "path": "docs/wiring.ru.md",
-      "sha256": "12ab4e4e4a9657968ac7b0a713ec291bd554f9a0947e8130dcd5566962cf89b2"
+      "sha256": "55a198025004485d095b5477b982c7ebbeebff56b8e3475839951441eb95a2da"
     },
     {
       "path": "homekey-esp32/.clangd",
@@ -9807,6 +9815,10 @@
       "sha256": "b32f23b5f516c8a5c4b08490b57b04b83b8dc73a2dad458ac4a843e8f3e1f6fd"
     },
     {
+      "path": "scripts/telegram-chat-id.py",
+      "sha256": "0c6fda6d6b59fb8b9c3c21b51bcb77be0f00dfe61e1b9111daf81d3f42240c6a"
+    },
+    {
       "path": "scripts/tests/controller-ui-browser-demo.test.mjs",
       "sha256": "77dc63e8ccc8e0e7546c066795a0613441fc2b7915d4650630d76b51e1ed5331"
     },
@@ -9823,8 +9835,12 @@
       "sha256": "63b3009eb91c214f3399acbcfcf9ead776accdb22b865a6a4776740c14c78b21"
     },
     {
+      "path": "scripts/tests/test_telegram_chat_id.py",
+      "sha256": "9f0dc8f48fdb2f1f69e8bf93d77861d0ae049c90bec64e6a0e9d9da828716a70"
+    },
+    {
       "path": "scripts/verify-public-source.py",
-      "sha256": "b80f5859fbe3be94fde76c62a804d05f84043e183bc1d591064fba85871f6226"
+      "sha256": "063584e439413a3227b01abb48ae83e448ac8890edb15d0a6357ab19ed2b9318"
     },
     {
       "path": "smartkey-esp32-patch/README.md",

@@ -14,6 +14,8 @@ test.describe('public source access', () => {
             await expect(section.locator(`a[href$="/docs/${index}"]`)).toBeVisible();
             const wiring = lang === 'ru' ? 'wiring.ru.md' : 'wiring.md';
             await expect(section.locator(`a[href$="/docs/${wiring}"]`)).toBeVisible();
+            const setup = lang === 'ru' ? 'access-integrations.ru.md' : 'access-integrations.md';
+            await expect(section.locator(`a[href$="/docs/${setup}"]`)).toBeVisible();
             const suffix = lang === 'ru' ? '.ru' : '';
             await expect(section.locator(`a[href$="/docs/licensing${suffix}.md"]`)).toBeVisible();
             await expect(section.locator(`a[href$="/CONTRIBUTING${suffix}.md"]`)).toBeVisible();

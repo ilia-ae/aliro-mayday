@@ -14,6 +14,7 @@ Russian translations use `.ru.md` or `README.ru.md`.
 | Snapshot timestamps and independent verification | [Evidence](provenance/2026-10-15/README.md) | [Русский](provenance/2026-10-15/README.ru.md) |
 | SDK setup, build, update and rollback | [Firmware guide](../aliro-esp32/README.md) | [Русский](../aliro-esp32/README.ru.md) |
 | GPIO, NFC SPI, display and buttons | [Wiring](wiring.md) | [Русский](wiring.ru.md) |
+| Relay wiring, GPIO4 example and Telegram notifications | [Setup guide](access-integrations.md) | [Русский](access-integrations.ru.md) |
 | Demo stand photos and retouching notes | [Photos](demo-stand.md) | [Русский](demo-stand.ru.md) |
 | Local web UI launch, debugging and screenshot gallery | [UI debug guide](controller-ui-debug.md) | [Русский](controller-ui-debug.ru.md) |
 | Document rights, revocation and persistence | [Access policy](aliro-access-policy-2026-10-14.md) | [Русский](aliro-access-policy-2026-10-14.ru.md) |

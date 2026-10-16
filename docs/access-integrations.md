@@ -7,24 +7,43 @@ source and disabled by default on a real controller. The working iPhone firmware
 has **not** been replaced; physical relay operation and live Telegram delivery
 still need a separate hardware acceptance test.
 
-## Relay setup
+<a id="relay-setup"></a>
+## Relay setup, step by step
 
-Open **Actions → Relay control**. Choose an available GPIO, active HIGH/LOW,
-then either an unlock pulse (100–30000 ms) or follow the logical lock state.
-Save explicitly to enable the output. A save, boot or disable starts inactive;
-a saved unlocked state does not energize the relay at boot. Existing legacy
-`gpioAction*` settings do not enable this new driver automatically.
+The [connection table and relay diagram](wiring.md#relay-gpio4-example) show
+**GPIO4 → IN** and a separate **COM/NO lock-power circuit**. That is an example
+for a compatible module, not an automatic pin assignment or confirmation of
+an unknown relay/lock model.
 
-The conservative ESP32-S3 DevKitC allowlist is GPIO4–7, 14–18, 21, 38 and 47.
-Pins used by configured NFC, Ethernet and control/status connections are also
-reserved at boot. GPIO8/9, 10–13, 19/20, flash/PSRAM, strapping pins and GPIO48
-cannot be selected. Check the actual board revision before wiring.
+1. With power removed, identify your module's `IN`, `GND`, `VCC` and contact
+   `COM`/`NO`/`NC`. Verify input compatibility with **3.3 V**, the active HIGH/LOW
+   level and the module/lock supply ratings.
+2. Use the diagram only if its power-to-unlock DC lock example matches your
+   hardware. Prepare the external driver supply, contact circuit and specified
+   suppression. Leave the installed working controller unchanged for now.
+3. **After the separately authorized firmware update**, enable panel
+   authentication in **System → Security**. Open **Actions → Relay control**.
+4. Choose **Relay GPIO = GPIO4** if free. Set **Active output level = HIGH** for
+   the module in the example; use LOW only for an actual LOW-trigger module.
+5. Choose **Relay mode = Unlock pulse**, **Pulse duration = 1000 ms**, provided
+   the lock permits that pulse. Turn **Relay output = Enabled** and select
+   **Save integration settings**. The output starts inactive.
+6. First check the relay indication/contacts without a powered lock, then
+   connect the correctly rated lock circuit with power removed. On the later
+   hardware test, an accepted NFC/Matter unlock activates the output, its timer
+   releases it, and locking cancels it. A denied key must not activate it.
 
-Connect the selected GPIO to the **logic input of an external relay driver**,
-with a common signal ground and a compatible 3.3 V input. Use a separate supply
-for the relay/lock, a suitable flyback path for an inductive load, and an external
-pull resistor that holds the inactive level during reset or power loss. Do not
-connect a coil directly to an ESP32 GPIO. See the [wiring guide](wiring.md).
+Use **Follow logical lock state** only for an actuator intended for continuous
+operation: output active while logically unlocked, inactive while locked. A
+pulse ending does not claim that the door is physically closed or change the
+Matter logical state automatically.
+
+A save, boot or disable starts inactive; a saved unlocked state does not energize
+the relay at boot. Legacy `gpioAction*` settings do not enable the new driver.
+The available DevKitC GPIOs are 4–7, 14–18, 21, 38 and 47, excluding additional
+pins reserved by the board configuration. The diagram's GPIO4 must remain free.
+
+### Implementation details
 
 Accepted Matter, physical-button and authenticated NFC state changes drive the
 same output. Aliro credential validation and the seven-argument Matter
@@ -38,20 +57,109 @@ The older NFC/NeoPixel and State Triggers controls are retained as legacy
 configuration. The Arduino `HardwareManager` remains excluded from this target;
 configure the new native driver in **Relay control** instead.
 
-## Telegram: notifications only
+<a id="telegram-setup"></a>
+## Telegram setup, step by step
 
-Create a dedicated bot with Telegram's BotFather, start a chat with it and obtain
-the numeric chat ID. Groups may receive alerts if the bot has permission. This
-firmware does not poll incoming messages, install a webhook or accept bot commands.
-Telegram cannot open the lock.
+**Notifications only:** lock/unlock state changes and optional NFC denials.
+There are no incoming commands, webhook requirement, Mini App or server to
+run separately. A new bot staying silent after `/start` is expected.
 
-Enable panel authentication in **System → Security** and configure HTTPS with a
-trusted certificate before entering the token. Then open **Actions → Telegram
-integration**, enter the token/chat ID and enable notifications. Lock/unlock
-state changes are sent; denied NFC access is a separate opt-in. A test button
-**queues a real notification on a controller**. The panel shows successful
-`sendMessage` responses and dropped events; queue acceptance is not delivery.
-No actual bot was contacted during development of this change.
+### 1. Create your notification bot
+
+1. In Telegram, open the official [@BotFather](https://t.me/BotFather).
+2. Send `/newbot`, choose its display name and an available username ending in
+   `bot`. Keep the returned **bot token** private, like a password.
+3. Open **your new bot**, press **Start** or send `/start`. This allows it to
+   send notifications to your private chat. No answer is required from the bot.
+
+Telegram's [bot tutorial](https://core.telegram.org/bots/tutorial#obtain-your-bot-token)
+describes creation. Do not put a real token in screenshots, GitHub, this website's
+demo or a browser URL. The real token belongs in the real controller's HTTPS panel.
+
+### 2. Obtain the numeric chat ID locally
+
+From the root of your downloaded/cloned repository, run:
+
+```sh
+python3 scripts/telegram-chat-id.py
+```
+
+Python 3 is the only requirement. Paste the token into the hidden prompt in
+**your own local terminal**. The tool makes one verified HTTPS `getUpdates`
+request to Telegram and prints only chat IDs/types. It does not save the token,
+print messages/names, send messages, acknowledge updates or change webhook/filter
+settings. No token belongs in the command itself or shell history.
+
+Copy the ID beside `private`, for example `424242` (example only).
+For a group: add your bot, send `/start@your_bot_username` in that group and run
+the tool again. Copy the ID beside `group`/`supergroup`, **including its minus
+sign**. Leave group privacy mode enabled; grant only the permission to send
+messages. Forum topic-specific delivery is not configured by this panel.
+
+An empty result means: send a fresh `/start` and retry manually. For an existing
+webhook/poller conflict, use a new dedicated bot; the helper will not remove an
+existing integration. Details: [getUpdates](https://core.telegram.org/bots/api#getupdates)
+and [group privacy](https://core.telegram.org/bots/faq#what-messages-will-my-bot-get).
+
+### 3. Prepare the real panel's login and HTTPS after the update
+
+These actions are for the **later hardware setup**, not the public demo:
+
+1. In **System → Security**, set a panel username/password, enable authentication,
+   save and sign in again after its reboot.
+2. Prepare a PEM server certificate for the controller's DNS name (with its
+   chain if needed), its matching PEM private key, and a browser-trusted issuer.
+   A local CA is possible when trusted on your device. A name mismatch or an
+   untrusted certificate needs correcting before entering a bot token.
+3. In your trusted local setup network, select **Enable HTTPS** to reveal the
+   certificate controls. Upload **Certificate File** and **Private Key File**
+   **before saving the HTTPS setting**. Leave **CA Certificate File (Optional)**
+   empty for ordinary browser login: in this server it is a *client-authentication*
+   CA, not a place to install the browser's trust anchor.
+4. Save. After the reboot, open `https://<the certificate's controller DNS name>/`
+   on port 443, sign in, and confirm the browser trusts the connection. Plain
+   HTTP/AP recovery mode cannot accept a bot token.
+
+### 4. Enable and test notifications
+
+In **Actions → Telegram integration**, fill in:
+
+| Panel field | Value |
+| --- | --- |
+| Telegram notifications | Enabled |
+| Numeric chat ID | Your private/group ID from step 2 |
+| Bot token | The token from BotFather |
+| Notify about denied NFC access | Enable only if you want denial alerts |
+
+Select **Save integration settings**, then **Queue test notification** once.
+Expect a message like:
+
+```text
+Aliro A1B2C3
+Telegram test notification
+No door-position sensor is configured.
+```
+
+The controller ID will differ. `Delivered` increases after Telegram accepts
+`sendMessage`; a queue confirmation alone is not delivery. On the later hardware
+test, accepted lock/unlock changes generate notifications; a denied NFC tap
+notifies only when enabled and does not activate the relay.
+
+In the public demo, these buttons change **synthetic data only**. The bot token
+field is disabled; do not use your real credentials there. You can rehearse the
+UI now without a controller or a Telegram account.
+
+### If something does not work
+
+| Symptom | Check |
+| --- | --- |
+| Token field unavailable / authentication required | Use the real panel after its update; enable authentication and actual HTTPS. Demo token entry is intentionally disabled |
+| Waiting for system time | Let the controller synchronize its clock and check Internet/DNS access |
+| Queued, but Delivered does not increase | Check the Telegram status, bot token, chat ID including minus sign, whether Start was pressed, whether the bot is blocked and group send permissions |
+| Dropped increases / rate limit | Check connectivity/credentials and wait for backoff; failed events are not a guaranteed delivery queue |
+| Group stopped receiving after an upgrade to supergroup | Obtain its current numeric ID again and save it |
+
+### Token storage and network behavior
 
 The token is write-only: a blank field keeps it, and explicit deletion removes
 it after notifications are disabled. It is stored in a separate NVS namespace,

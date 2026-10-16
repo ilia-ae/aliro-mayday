@@ -473,5 +473,7 @@
   "Incomplete integration request.": "Запрос интеграции получен не полностью.",
   "Do not enter real bot credentials in the demo.": "Не вводите настоящие данные бота в демо.",
   "Demo preview — sample data. Relay and Telegram simulations stay in this browser; no controller is connected.": "Демо-панель с примерными данными. Симуляции реле и Telegram выполняются в браузере; контроллер не подключён.",
-  "This GPIO is already used by the board configuration.": "Этот GPIO уже занят в конфигурации платы."
+  "This GPIO is already used by the board configuration.": "Этот GPIO уже занят в конфигурации платы.",
+  "Relay wiring and setup": "Схема подключения и настройка реле",
+  "Telegram setup guide": "Настройка уведомлений Telegram"
 }
