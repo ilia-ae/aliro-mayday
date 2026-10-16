@@ -44,6 +44,11 @@ The panel header identifies the controller. The ordinary UI uses its existing
 Reader ID and also receives the diagnostics view; simulation controls remain
 limited to hosted/local demo builds. Telegram is not connected.
 
+The shared controller panel now offers EN/RU (English by default) and light,
+dark and system themes. Embedded language and theme are synchronized with the
+homepage in both directions without reloading the panel or discarding edits.
+Raw firmware diagnostics and device identifiers retain their source values.
+
 ## Source and deployment
 
 The canonical public source is `aliro-site/` in `ilia-ae/aliro-mayday`.
@@ -68,7 +73,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **111 tests**, with **5 explicit skips**.
+The complete browser suite passed **131 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 

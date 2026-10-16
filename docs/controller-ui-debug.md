@@ -12,8 +12,9 @@ a wallet or a physical lock. Example access outcomes are explicitly simulated.
 
 [Open the panel](https://aliro.mayday.software/demo/index.html?lang=en#/).
 Explore all six sections and nested settings, edit fields without saving, and
-view synthetic logs. The panel itself is currently in English; the demo banner
-return link and simulation controls follow the selected EN/RU language.
+view synthetic logs. The complete panel supports English and Russian with a
+visible EN/RU switch. English is the default; a valid `?lang=en` / `?lang=ru`
+parameter overrides the saved panel language.
 
 This is a separate build of the actual UI. HTTP responses and device events are
 created in the browser: there are no API requests, network WebSockets or controller
@@ -28,6 +29,27 @@ The [homepage](https://aliro.mayday.software/?lang=en#controller-ui) embeds this
 same isolated demo below the stand photo. The screenshots remain in a collapsible
 gallery. The tap/door visualisation and panel share the same browser-only simulation
 and event log; both remain independent of physical hardware.
+
+## Language and appearance
+
+EN/RU and the light, dark and system theme controls are shared by the controller,
+local debug preview and hosted demo, including the initial network setup page.
+Selections apply in the browser without reloading forms or sending device commands.
+The ordinary panel saves them under `aliro-ui-language` and `aliro-ui-theme` in
+browser storage; blocked storage does not prevent switching. Legacy dracula / autumn
+choices remain supported. The system theme follows operating-system changes.
+
+The embedded demo and homepage synchronize language and theme in both directions.
+Messages must come from the same-origin parent/iframe window and use a supported
+language or theme. Changing preferences keeps the selected route, edited fields,
+files and simulated reader state. Standalone panels keep their own preferences.
+
+English text is the source key; Russian translations are in
+`aliro-esp32/data/src/lib/i18n/ru.json`. Raw firmware logs, IDs, SSIDs, topic names,
+filenames and unknown backend diagnostics retain their original values. Known UI
+errors and client-generated OTA messages are localized at display time. Preference
+changes do not alter API fields, credentials, pairing or firmware configuration.
+The standard itself and upstream documents are outside this interface translation.
 
 ## PN532 simulation, event trace and controller identity
 
@@ -123,7 +145,8 @@ operation described in the [firmware guide](../aliro-esp32/README.md).
 ## Screenshot gallery
 
 Six actual browser screenshots, captured on **16 October 2026** using the local
-demo workflow. Each shows the initial view of a main navigation section.
+demo workflow. They show the English interface in the Mayday dark theme; the live panel also
+supports Russian and light/system themes.
 [Switch screenshots on the website](https://aliro.mayday.software/?lang=en#controller-ui),
 or expand a section below. Click an image to open it at full size.
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from '$lib/stores/i18n.svelte';
 	import { onDestroy, onMount } from "svelte";
 	import ws, { type WebSocketEvent } from "$lib/services/ws.js";
 	import type { ApiResponse, Either, OTAStatus } from "$lib/types/api";
@@ -70,11 +71,11 @@
 	);
 
 	function formatBytes(bytes: number) {
-		if (bytes === 0) return "0 Bytes";
+		if (bytes === 0) return t("0 Bytes");
 		const k = 1024;
 		const sizes = ["Bytes", "KB", "MB", "GB"];
 		const i = Math.floor(Math.log(bytes) / Math.log(k));
-		return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+		return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + t(sizes[i]);
 	}
 
 	function addLog(type: string, message: string) {
@@ -358,9 +359,9 @@
 <div class="flex flex-col pt-6 gap-6 max-w-6xl mx-auto">
 	<!-- Page Header -->
 	<div>
-		<h1 class="text-2xl font-bold text-base-content">OTA Update</h1>
+		<h1 class="text-2xl font-bold text-base-content">{t("OTA Update")}</h1>
 		<p class="text-base-content/60 text-sm">
-			Update firmware and filesystem over-the-air.
+			{t("Update firmware and filesystem over-the-air.")}
 		</p>
 	</div>
 
@@ -384,9 +385,9 @@
 					</svg>
 				</div>
 				<div>
-					<h2 class="card-title text-base">Device Information</h2>
+					<h2 class="card-title text-base">{t("Device Information")}</h2>
 					<p class="text-xs text-base-content/60">
-						Current firmware and partition status
+						{t("Current firmware and partition status")}
 					</p>
 				</div>
 			</div>
@@ -394,15 +395,15 @@
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
 				<div class="bg-base-300/50 rounded-lg p-3">
 					<div class="text-xs text-base-content/60 mb-1">
-						Current Version
+						{t("Current Version")}
 					</div>
 					<div class="text-sm font-medium">
-						{otaStatus.current_version || "Unknown"}
+						{otaStatus.current_version || t("Unknown")}
 					</div>
 				</div>
 
 				<div class="bg-base-300/50 rounded-lg p-3">
-					<div class="text-xs text-base-content/60 mb-1">Chip Model</div>
+					<div class="text-xs text-base-content/60 mb-1">{t("Chip Model")}</div>
 					<div class="text-sm font-medium">
 						{getChipModelString(chipModel)}
 					</div>
@@ -410,19 +411,19 @@
 
 				<div class="bg-base-300/50 rounded-lg p-3">
 					<div class="text-xs text-base-content/60 mb-1">
-						Running Partition
+						{t("Running Partition")}
 					</div>
 					<div class="text-sm font-medium">
-						{otaStatus.running_partition || "Unknown"}
+						{otaStatus.running_partition || t("Unknown")}
 					</div>
 				</div>
 
 				<div class="bg-base-300/50 rounded-lg p-3">
 					<div class="text-xs text-base-content/60 mb-1">
-						Update Partition
+						{t("Update Partition")}
 					</div>
 					<div class="text-sm font-medium">
-						{otaStatus.next_update_partition || "Unknown"}
+						{otaStatus.next_update_partition || t("Unknown")}
 					</div>
 				</div>
 			</div>
@@ -450,16 +451,16 @@
 						</svg>
 					</div>
 					<div>
-						<h2 class="card-title text-base">Firmware</h2>
+						<h2 class="card-title text-base">{t("Firmware")}</h2>
 						<p class="text-xs text-base-content/60">
-							Upload compiled firmware binary
+							{t("Upload compiled firmware binary")}
 						</p>
 					</div>
 				</div>
 
 				<div class="form-control">
 					<label class="label py-1" for="firmware-input">
-						<span class="label-text text-xs">Firmware File (.bin)</span>
+						<span class="label-text text-xs">{t("Firmware File (.bin)")}</span>
 					</label>
 					<input
 						id="firmware-input"
@@ -472,7 +473,7 @@
 					/>
 					<label class="label py-1" for="firmware-input">
 						<span class="label-text-alt text-xs">
-							Select compiled firmware binary (.bin)
+							{t("Select compiled firmware binary (.bin)")}
 						</span>
 					</label>
 				</div>
@@ -505,7 +506,7 @@
 								onclick={clearFirmwareFile}
 								disabled={isDisabled}
 								class="btn btn-ghost btn-xs btn-circle"
-								aria-label="Clear firmware file"
+								aria-label={t("Clear firmware file")}
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -529,7 +530,7 @@
 				<button
 					onclick={() => uploadFirmware()}
 					disabled={!canUploadFirmware}
-					class="btn btn-sm w-full mt-4 btn-primary text-white border-0"
+					class="btn btn-sm w-full mt-4 btn-primary border-0"
 				>
 					{#if uploading && currentUploadType === "firmware"}
 						<span class="loading loading-spinner loading-xs"></span>
@@ -548,8 +549,8 @@
 						</svg>
 					{/if}
 					{uploading && currentUploadType === "firmware"
-						? "Uploading..."
-						: "Upload Firmware"}
+						? t("Uploading...")
+						: t("Upload Firmware")}
 				</button>
 			</div>
 		</div>
@@ -574,16 +575,16 @@
 						</svg>
 					</div>
 					<div>
-						<h2 class="card-title text-base">Filesystem</h2>
+						<h2 class="card-title text-base">{t("Filesystem")}</h2>
 						<p class="text-xs text-base-content/60">
-							Upload filesystem binary
+							{t("Upload filesystem binary")}
 						</p>
 					</div>
 				</div>
 
 				<div class="form-control">
 					<label class="label py-1" for="littlefs-input">
-						<span class="label-text text-xs">LittleFS File (.bin)</span>
+						<span class="label-text text-xs">{t("LittleFS File (.bin)")}</span>
 					</label>
 					<input
 						id="littlefs-input"
@@ -596,7 +597,7 @@
 					/>
 					<label class="label py-1" for="littlefs-input">
 						<span class="label-text-alt text-xs">
-							Select filesystem binary (.bin)
+							{t("Select filesystem binary (.bin)")}
 						</span>
 					</label>
 				</div>
@@ -629,7 +630,7 @@
 								onclick={clearLittlefsFile}
 								disabled={isDisabled}
 								class="btn btn-ghost btn-xs btn-circle"
-								aria-label="Clear LittleFS file"
+								aria-label={t("Clear LittleFS file")}
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -653,7 +654,7 @@
 				<button
 					onclick={() => uploadLittleFS()}
 					disabled={!canUploadLittleFS}
-					class="btn btn-sm w-full mt-4 btn-primary text-white border-0"
+					class="btn btn-sm w-full mt-4 btn-primary border-0"
 				>
 					{#if uploading && currentUploadType === "littlefs"}
 						<span class="loading loading-spinner loading-xs"></span>
@@ -672,8 +673,8 @@
 						</svg>
 					{/if}
 					{uploading && currentUploadType === "littlefs"
-						? "Uploading..."
-						: "Upload LittleFS"}
+						? t("Uploading...")
+						: t("Upload LittleFS")}
 				</button>
 			</div>
 		</div>
@@ -684,7 +685,7 @@
 		<button
 			onclick={uploadBoth}
 			disabled={!canUploadBoth}
-			class="btn btn-md w-full btn-primary text-white border-0"
+			class="btn btn-md w-full btn-primary border-0"
 		>
 			{#if uploading && sequentialUpload}
 				<span class="loading loading-spinner loading-sm"></span>
@@ -702,7 +703,7 @@
 					<line x1="12" y1="3" x2="12" y2="15" />
 				</svg>
 			{/if}
-			{uploading && sequentialUpload ? uploadStepText : "Upload Both"}
+			{uploading && sequentialUpload ? t(uploadStepText) : t("Upload Both")}
 		</button>
 	{/if}
 
@@ -711,7 +712,7 @@
 		<div class="card bg-base-200">
 			<div class="card-body py-4">
 				<div class="flex justify-between text-sm mb-2">
-					<span>{currentUploadStep} Progress</span>
+					<span>{t(currentUploadStep)} {t("Progress")}</span>
 					<span>{Math.round(progressPercent)}%</span>
 				</div>
 				<progress
@@ -744,8 +745,8 @@
 				/>
 			</svg>
 			<div>
-				<h3 class="font-bold">Upload Error</h3>
-				<div class="text-xs">{otaStatus.error}</div>
+				<h3 class="font-bold">{t("Upload Error")}</h3>
+				<div class="text-xs">{t(otaStatus.error)}</div>
 			</div>
 		</div>
 	{/if}
@@ -753,10 +754,10 @@
 	<!-- Upload Log -->
 	<div class="card bg-base-200">
 		<div class="card-body">
-			<h2 class="card-title text-base mb-4">Upload Log</h2>
+			<h2 class="card-title text-base mb-4">{t("Upload Log")}</h2>
 			{#if otaLogs.length === 0}
 				<div class="text-center py-8 text-base-content/50 text-sm">
-					No log entries yet
+					{t("No log entries yet")}
 				</div>
 			{:else}
 				<div class="space-y-2 max-h-60 overflow-y-auto">
@@ -770,7 +771,7 @@
 										class:text-error={log.type === "error"}
 										class:text-info={log.type === "info"}
 									>
-										{log.message}
+										{t(log.message)}
 									</div>
 									<div class="text-xs text-base-content/50 mt-1">
 										{log.timestamp}

@@ -35,13 +35,13 @@ for (const lang of ['en', 'ru']) {
     test(`embedded panel, source evidence and contact paths work in ${lang}`, async ({ page, request }) => {
         await page.goto(`/?lang=${lang}#controller-ui`);
         const frame = page.frameLocator('#controller-ui iframe');
-        await expect(frame.getByRole('heading', { name: 'Dashboard', exact: true })).toBeVisible();
+        await expect(frame.getByRole('heading', { name: lang === 'ru' ? 'Обзор' : 'Dashboard', exact: true })).toBeVisible();
         await expect(frame.getByText('Demo reader', { exact: true })).toBeVisible();
         const iframe = page.locator('#controller-ui iframe');
         await expect(iframe).toHaveAttribute('src', `/demo/index.html?lang=${lang}#/`);
-        if ((page.viewportSize()?.width || 1280) < 1024) await frame.locator('label[aria-label="Menu"]').click();
-        await frame.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'MQTT', exact: true }).click();
-        await expect(frame.getByRole('heading', { name: /^MQTT Settings/ })).toBeVisible();
+        if ((page.viewportSize()?.width || 1280) < 1024) await frame.locator('label.drawer-button[for="main-content-drawer"]').click();
+        await frame.getByRole('navigation').getByRole('link', { name: 'MQTT', exact: true }).click();
+        await expect(frame.getByRole('heading', { name: lang === 'ru' ? /^Настройки MQTT/ : /^MQTT Settings/ })).toBeVisible();
         await expect(frame.getByPlaceholder('192.168.1.100')).toHaveValue('mqtt.example.invalid');
         const evidence = page.locator('#evidence');
         await evidence.scrollIntoViewIfNeeded();

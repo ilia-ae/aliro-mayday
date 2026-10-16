@@ -54,6 +54,12 @@ export class ThemeService {
         } catch {
             // localStorage may be blocked (private mode, some embeddings)
         }
+        // An explicit URL preset should follow a later user selection too.
+        const url = new URL(location.href);
+        if (url.searchParams.has('theme')) {
+            url.searchParams.set('theme', theme);
+            history.replaceState(history.state, '', url);
+        }
         const dark =
             theme === 'dark' || (theme === 'auto' && this.systemDark());
         this.applyDark(dark);

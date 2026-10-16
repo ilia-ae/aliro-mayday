@@ -30,6 +30,11 @@ export class LanguageService {
     async use(lang: Lang): Promise<void> {
         this.lang.set(lang);
         document.documentElement.lang = lang;
+        const url = new URL(location.href);
+        if (url.searchParams.has('lang')) {
+            url.searchParams.set('lang', lang);
+            history.replaceState(history.state, '', url);
+        }
         try {
             localStorage.setItem(STORAGE_KEY, lang);
         } catch {

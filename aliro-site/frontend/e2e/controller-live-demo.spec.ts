@@ -2,9 +2,9 @@ import { expect, test, type Page } from '@playwright/test';
 
 async function navigatePanel(page: Page, name: string) {
     if ((page.viewportSize()?.width || 1280) < 1024) {
-        await page.locator('label[aria-label="Menu"]').click();
+        await page.locator('label.drawer-button[for="main-content-drawer"]').click();
     }
-    await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name, exact: true }).click();
+    await page.getByRole('navigation').getByRole('link', { name, exact: true }).click();
 }
 
 for (const lang of ['en', 'ru']) {
@@ -26,41 +26,41 @@ test('live panel navigates all sections, nested settings and logs without networ
     page.on('websocket', socket => sockets.push(socket.url()));
     await page.goto('/demo/index.html?lang=ru#/');
     await expect(page.getByRole('note')).toContainText('Демо-панель');
-    await expect(page.getByRole('heading', { name: 'Dashboard', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Обзор', exact: true })).toBeVisible();
     await expect(page.getByText('Demo reader', { exact: true })).toBeVisible();
     await expect(page.getByText('Aliro demo stand', { exact: true }).last()).toBeVisible();
 
     await navigatePanel(page, 'MQTT');
-    await expect(page.getByRole('heading', { name: /^MQTT Settings/ })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /^Настройки MQTT/ })).toBeVisible();
     await expect(page.getByPlaceholder('192.168.1.100')).toHaveValue('mqtt.example.invalid');
-    await page.getByRole('button', { name: 'Topics', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'Broker', exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Топики', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Брокер', exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'SSL/TLS', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'Save & Apply changes', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Сохранить и применить', exact: true })).toBeVisible();
 
-    await navigatePanel(page, 'Actions');
-    await expect(page.getByRole('heading', { name: 'Hardware Actions', exact: true })).toBeVisible();
-    await page.getByRole('button', { name: 'State Triggers', exact: true }).click();
+    await navigatePanel(page, 'Действия');
+    await expect(page.getByRole('heading', { name: 'Аппаратные действия', exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'События состояния', exact: true }).click();
 
-    await navigatePanel(page, 'System');
-    await expect(page.getByRole('heading', { name: /^System Settings/ })).toBeVisible();
-    await page.getByRole('button', { name: 'Hardware', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Hardware Configuration', exact: true })).toBeVisible();
-    await page.getByRole('button', { name: 'Security', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Web Authentication', exact: true })).toBeVisible();
+    await navigatePanel(page, 'Система');
+    await expect(page.getByRole('heading', { name: /^Системные настройки/ })).toBeVisible();
+    await page.getByRole('button', { name: 'Оборудование', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Настройки оборудования', exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Безопасность', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Вход в веб-панель', exact: true })).toBeVisible();
 
-    await navigatePanel(page, 'OTA Update');
-    await expect(page.getByRole('heading', { name: 'OTA Update', exact: true })).toBeVisible();
+    await navigatePanel(page, 'Обновление OTA');
+    await expect(page.getByRole('heading', { name: 'Обновление OTA', exact: true })).toBeVisible();
     await expect(page.getByText('Demo preview', { exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Upload Firmware', exact: true })).toBeDisabled();
+    await expect(page.getByRole('button', { name: 'Загрузить прошивку', exact: true })).toBeDisabled();
 
-    await navigatePanel(page, 'Logs');
-    await expect(page.getByRole('heading', { name: 'System Logs', exact: true })).toBeVisible();
+    await navigatePanel(page, 'Журнал');
+    await expect(page.getByRole('heading', { name: 'Системный журнал', exact: true })).toBeVisible();
     await expect(page.getByText('Sample log stream — no hardware connected').first()).toBeVisible();
     await expect(page).toHaveURL(/demo\/index.html\?lang=ru#\/logs$/);
     await page.reload();
     await expect(page.getByRole('note')).toContainText('Демо-панель');
-    await expect(page.getByRole('heading', { name: 'System Logs', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Системный журнал', exact: true })).toBeVisible();
     expect(requests).toEqual([]);
     expect(sockets).toEqual([]);
 });

@@ -1,31 +1,20 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-	import {
-		getCurrentTheme,
-		toggleTheme,
-		initTheme,
-		logoSrc,
-	} from "$lib/stores/theme.svelte.js";
+  import { t, panelHref } from '$lib/stores/i18n.svelte';
+  import { logoSrc } from '$lib/stores/theme.svelte';
 	import { websocketState } from "$lib/stores/websocket.svelte";
-	import { p } from "sv-router/generated";
 	import { isActiveLink } from 'sv-router';
   import ControllerIdentity from './ControllerIdentity.svelte';
 
 	let { onClose, id } = $props();
-  function panelHref(path: '/' | '/mqtt' | '/actions' | '/misc' | '/ota' | '/logs') {
-    return __WEB_DEMO__ ? `${location.pathname}${location.search}#${path}` : p(path);
-  }
 
 
-	onMount(() => {
-		initTheme();
-	});
+
 </script>
 
 <div
 	class="lg:bg-base-200 bg-base-100 text-base-content w-64 lg:w-full max-lg:h-dvh h-full flex flex-col overflow-hidden"
 	role="navigation"
-	aria-label="Main navigation"
+	aria-label={t("Main navigation")}
 	{id}
 >
 	<!-- Header Section -->
@@ -60,10 +49,10 @@
 						class:text-warning={websocketState.state ==
 							"reconnecting"}
 						>{websocketState.state == "open"
-							? "Online"
+							? t("Online")
 							: websocketState.state == "reconnecting"
-								? "Reconnecting"
-								: "Offline"}</span
+								? t("Reconnecting")
+								: t("Offline")}</span
 					>
 				</div>
 			</div>
@@ -94,7 +83,7 @@
 						d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 					/>
 				</svg>
-				Info
+				{t("Info")}
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
@@ -122,7 +111,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-6 w-6 mr-1">
           <path fill-rule="evenodd" d="M9.58 1.077a.75.75 0 0 1 .405.82L9.165 6h4.085a.75.75 0 0 1 .567 1.241l-6.5 7.5a.75.75 0 0 1-1.302-.638L6.835 10H2.75a.75.75 0 0 1-.567-1.241l6.5-7.5a.75.75 0 0 1 .897-.182Z" clip-rule="evenodd" />
         </svg>
-				Actions
+				{t("Actions")}
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
@@ -148,7 +137,7 @@
 						d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
 					/>
 				</svg>
-				System
+				{t("System")}
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
@@ -168,7 +157,7 @@
 						d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
 					/>
 				</svg>
-				OTA Update
+				{t("OTA Update")}
 			</a>
 		</li>
 		<li class="my-1" role="menuitem">
@@ -188,49 +177,10 @@
 						d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
 					/>
 				</svg>
-				Logs
+				{t("Logs")}
 			</a>
 		</li>
 	</ul>
   <div class="divider mb-0"></div>
 	<!-- Footer Section -->
-	<div class="flex self-start justify-between p-4">
-		<label class="swap swap-rotate" aria-label="Toggle theme">
-			<input
-				type="checkbox"
-				onclick={toggleTheme}
-				checked={getCurrentTheme() !== "dracula"}
-			/>
-			<svg
-				class="swap-on w-5 h-5"
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				stroke-width="2"
-				aria-hidden="true"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-				/>
-			</svg>
-			<svg
-				class="swap-off w-5 h-5"
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				stroke-width="2"
-				aria-hidden="true"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-				/>
-			</svg>
-		</label>
-	</div>
 </div>

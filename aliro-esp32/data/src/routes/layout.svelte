@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { t, language } from '$lib/stores/i18n.svelte';
+  import PanelPreferences from '$lib/components/PanelPreferences.svelte';
 	import '@/app.css';
 	import { onMount, onDestroy } from 'svelte';
 	import { getLoadingState, updateSystemInfo } from '$lib/stores/system.svelte.js';
@@ -18,7 +20,6 @@
 
 	let { children } = $props();
   let drawerOpen = $state(false);
-  const demoRussian = __WEB_DEMO__ && new URLSearchParams(location.search).get('lang') === 'ru';
 	let unsubscribeMessages : (() => void) | null = null;
 
   const isCaptivePortal = $derived(route.pathname.startsWith('/captive-portal'));
@@ -88,7 +89,7 @@
     <!-- Mobile Navbar -->
     <div class="navbar bg-base-100 lg:hidden sticky top-0 z-9999">
       <div class="navbar-start w-full">
-        <label for="main-content-drawer" class="btn btn-ghost drawer-button lg:hidden" aria-label="Menu">
+        <label for="main-content-drawer" class="btn btn-ghost drawer-button lg:hidden" aria-label={t("Menu")}>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
@@ -101,7 +102,7 @@
               <div class="status animate-ping" class:status-success={websocketState.connected} class:status-error={!websocketState.connected} class:status-warning={websocketState.state == "reconnecting"}></div>
               <div class="status" class:status-success={websocketState.connected} class:status-error={!websocketState.connected} class:status-warning={websocketState.state == "reconnecting"}></div>
             </div>
-            <span class="text-sm" class:text-success={websocketState.connected} class:text-error={!websocketState.connected} class:text-warning={websocketState.state == "reconnecting"}>{websocketState.state == "open" ? 'Online' : websocketState.state == "reconnecting" ? "Reconnecting" : 'Offline'}</span>
+            <span class="text-sm" class:text-success={websocketState.connected} class:text-error={!websocketState.connected} class:text-warning={websocketState.state == "reconnecting"}>{websocketState.state == "open" ? t('Online') : websocketState.state == "reconnecting" ? t("Reconnecting") : t('Offline')}</span>
           </div>
         </div>
       </div>
@@ -112,17 +113,18 @@
       <input id="main-content-drawer" type="checkbox" class="drawer-toggle" bind:checked={drawerOpen} />
       <!-- Sidebar -->
       <div class="drawer-side max-lg:fixed max-lg:top-16 max-lg:bottom-0 max-lg:left-0 max-lg:z-50 max-lg:h-[calc(100dvh-4rem)] h-screen flex flex-col overflow-hidden">
-        <label for="main-content-drawer" aria-label="close sidebar" class="drawer-overlay w-full h-full absolute"></label>
+        <label for="main-content-drawer" aria-label={t("close sidebar")} class="drawer-overlay w-full h-full absolute"></label>
         <NavigationMenu onClose={() => drawerOpen = false} id="main-navigation" />
       </div>
       <div class="drawer-content h-full w-full">
         <!-- Content -->
         <main id="main-content" class="px-6 h-full overflow-y-auto bg-base-100" class:flex={route.pathname === '/logs'} class:flex-col={route.pathname === '/logs'}>
+        <PanelPreferences />
         {#if __DEMO__}
-          <div role="note" class="alert alert-info shrink-0 mt-5 flex flex-wrap justify-between gap-3">
-            <span>{demoRussian ? 'Демо-панель — демонстрационные данные. Контроллер не подключён; изменения не сохраняются.' : 'Demo preview — sample data. No controller connected; changes are disabled.'}</span>
+          <div role="note" class="alert bg-base-200 border border-base-content/15 shrink-0 mt-2 flex flex-wrap justify-between gap-3">
+            <span>{t('Demo preview — sample data. No controller connected; changes are disabled.')}</span>
             {#if __WEB_DEMO__}
-              <a class="link whitespace-nowrap" target="_blank" rel="noopener noreferrer" href={demoRussian ? '/?lang=ru#controller-ui' : '/?lang=en#controller-ui'}>{demoRussian ? 'К проекту ↗' : 'Project website ↗'}</a>
+              <a class="link whitespace-nowrap" target="_blank" rel="noopener noreferrer" href={`/?lang=${language.current}#controller-ui`}>{t('Project website ↗')}</a>
             {/if}
           </div>
         {/if}

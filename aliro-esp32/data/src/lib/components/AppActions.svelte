@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from '$lib/stores/i18n.svelte';
   import { saveConfig } from '$lib/services/api';
   import type { ActionsConfig } from '$lib/types/api';
   import { diff } from '$lib/utils/objDiff';
@@ -25,7 +26,7 @@
     } catch (e) {
       const message = e instanceof Error ? e.message : String(e);
       error = message;
-      alert(`Error saving config: ${message}`);
+      alert(t(`Error saving config: ${message}`));
     }
   };
 
@@ -52,14 +53,14 @@
           d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
         />
       </svg>
-      Hardware Actions
+      {t("Hardware Actions")}
     </h1>
-    <p class="text-sm text-base-content/60">Configure GPIO and NeoPixel actions for NFC and state events.</p>
+    <p class="text-sm text-base-content/60">{t("Configure GPIO and NeoPixel actions for NFC and state events.")}</p>
   </div>
 
   {#if !actions && error}
     <div class="text-center text-error">
-      <p>Error: {error}</p>
+      <p>{t("Error:")} {t(error)}</p>
     </div>
   {:else if actions}
     <form onsubmit={saveActionsConfig} class="max-w-5xl">
@@ -84,7 +85,7 @@
               d="M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 0 1 1.06 0Z"
             />
           </svg>
-          <span class="text-[10px] sm:text-xs mt-0.5">NFC Triggers</span>
+          <span class="text-[10px] sm:text-xs mt-0.5">{t("NFC Triggers")}</span>
         </button>
         <button
           type="button"
@@ -105,7 +106,7 @@
               d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
             />
           </svg>
-          <span class="text-[10px] sm:text-xs mt-0.5">State Triggers</span>
+          <span class="text-[10px] sm:text-xs mt-0.5">{t("State Triggers")}</span>
         </button>
       </div>
 
@@ -129,14 +130,14 @@
                       d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
                     />
                   </svg>
-                  Pixel
+                  {t("Pixel")}
                 </div>
                 <div class="collapse-content">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">GPIO Pin</span>
+                        <span class="label-text">{t("GPIO Pin")}</span>
                       </label>
                       <input
                         type="number"
@@ -148,7 +149,7 @@
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">Pixel Type</span>
+                        <span class="label-text">{t("Pixel Type")}</span>
                       </label>
                       <select
                         bind:value={actionsConfig.neoPixelType}
@@ -168,7 +169,7 @@
                     <!-- Auth Success Group -->
                     <fieldset class="fieldset border-base-300 rounded-box flex-1 border p-4">
                       <legend class="fieldset-legend flex items-center gap-2">
-                        Auth Success
+                        {t("Auth Success")}
                         <div
                           class="w-4 h-4 rounded border border-base-300"
                           style="background-color: rgb({actionsConfig.neopixelSuccessColor[0][1] ?? 0}, {actionsConfig.neopixelSuccessColor[1][1] ?? 0}, {actionsConfig.neopixelSuccessColor[2][1] ?? 0});"
@@ -177,7 +178,7 @@
                       <div class="form-control mb-4">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Timeout (ms)</span>
+                          <span class="label-text">{t("Timeout (ms)")}</span>
                         </label>
                         <input
                           type="number"
@@ -189,7 +190,7 @@
                       <div class="form-control">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Color</span>
+                          <span class="label-text">{t("Color")}</span>
                         </label>
                         <div class="flex gap-2">
                           <div class="form-control flex-1">
@@ -241,7 +242,7 @@
                     <!-- Auth Failure Group -->
                     <fieldset class="fieldset border-base-300 rounded-box flex-1 border p-4">
                       <legend class="fieldset-legend flex items-center gap-2">
-                        Auth Failure
+                        {t("Auth Failure")}
                         <div
                           class="w-4 h-4 rounded border border-base-300"
                           style="background-color: rgb({actionsConfig.neopixelFailureColor[0][1] ?? 0}, {actionsConfig.neopixelFailureColor[1][1] ?? 0}, {actionsConfig.neopixelFailureColor[2][1] ?? 0});"
@@ -250,7 +251,7 @@
                       <div class="form-control mb-4">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Timeout (ms)</span>
+                          <span class="label-text">{t("Timeout (ms)")}</span>
                         </label>
                         <input
                           type="number"
@@ -262,7 +263,7 @@
                       <div class="form-control">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Color</span>
+                          <span class="label-text">{t("Color")}</span>
                         </label>
                         <div class="flex gap-2">
                           <div class="form-control flex-1">
@@ -314,7 +315,7 @@
                     <!-- Tag Event Group -->
                     <fieldset class="fieldset border-base-300 rounded-box flex-1 border p-4">
                       <legend class="fieldset-legend flex items-center gap-2">
-                        Tag Event
+                        {t("Tag Event")}
                         <div
                           class="w-4 h-4 rounded border border-base-300"
                           style="background-color: rgb({actionsConfig.neopixelTagEventColor[0][1] ?? 0}, {actionsConfig.neopixelTagEventColor[1][1] ?? 0}, {actionsConfig.neopixelTagEventColor[2][1] ?? 0});"
@@ -323,7 +324,7 @@
                       <div class="form-control mb-4">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Timeout (ms)</span>
+                          <span class="label-text">{t("Timeout (ms)")}</span>
                         </label>
                         <input
                           type="number"
@@ -335,7 +336,7 @@
                       <div class="form-control">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Color</span>
+                          <span class="label-text">{t("Color")}</span>
                         </label>
                         <div class="flex gap-2">
                           <div class="form-control flex-1">
@@ -403,28 +404,28 @@
                       d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
                     />
                   </svg>
-                  Simple GPIO
+                  {t("Simple GPIO")}
                 </div>
                 <div class="collapse-content flex flex-col gap-2">
                   <div class="collapse collapse-plus bg-base-100">
                     <h3
                       class="collapse-title text-base md:text-lg font-bold"
                     >
-                      HomeKey Authentication
+                      {t("HomeKey Authentication")}
                     </h3>
                     <input type="checkbox" name="hk-auth-collapse" />
                     <div class="collapse-content">
                       <div class="flex flex-wrap justify-around gap-2 mb-4">
                         <fieldset
-                          class="fieldset border-base-300 rounded-box w-xs border p-4"
+                          class="fieldset border-base-300 rounded-box w-full max-w-xs min-w-0 border p-4"
                         >
                           <legend class="fieldset-legend"
-                            >Auth Success</legend
+                            >{t("Auth Success")}</legend
                           >
                           <div class="form-control mb-4">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">GPIO Pin</span>
+                              <span class="label-text">{t("GPIO Pin")}</span>
                             </label>
                             <input
                               type="number"
@@ -436,7 +437,7 @@
                           <div class="form-control mb-4">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">Timeout (ms)</span>
+                              <span class="label-text">{t("Timeout (ms)")}</span>
                             </label>
                             <input
                               type="number"
@@ -448,27 +449,27 @@
                           <div class="form-control mb-4">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">GPIO State</span>
+                              <span class="label-text">{t("GPIO State")}</span>
                             </label>
                             <select
                               bind:value={actionsConfig.nfcSuccessHL}
                               class="select select-bordered w-full"
                             >
-                              <option value={false}>LOW</option>
-                              <option value={true}>HIGH</option>
+                              <option value={false}>{t("LOW")}</option>
+                              <option value={true}>{t("HIGH")}</option>
                             </select>
                           </div>
                         </fieldset>
                         <fieldset
-                          class="fieldset border-base-300 rounded-box w-xs border p-4"
+                          class="fieldset border-base-300 rounded-box w-full max-w-xs min-w-0 border p-4"
                         >
                           <legend class="fieldset-legend"
-                            >Auth Failure</legend
+                            >{t("Auth Failure")}</legend
                           >
                           <div class="form-control mb-4">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">GPIO Pin</span>
+                              <span class="label-text">{t("GPIO Pin")}</span>
                             </label>
                             <input
                               type="number"
@@ -480,7 +481,7 @@
                           <div class="form-control mb-4">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">Timeout (ms)</span>
+                              <span class="label-text">{t("Timeout (ms)")}</span>
                             </label>
                             <input
                               type="number"
@@ -492,14 +493,14 @@
                           <div class="form-control mb-4">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">GPIO State</span>
+                              <span class="label-text">{t("GPIO State")}</span>
                             </label>
                             <select
                               bind:value={actionsConfig.nfcFailHL}
                               class="select select-bordered w-full"
                             >
-                              <option value={false}>LOW</option>
-                              <option value={true}>HIGH</option>
+                              <option value={false}>{t("LOW")}</option>
+                              <option value={true}>{t("HIGH")}</option>
                             </select>
                           </div>
                         </fieldset>
@@ -508,14 +509,14 @@
                         <h3
                           class="collapse-title text-base md:text-lg font-bold"
                         >
-                          Second action on success
+                          {t("Second action on success")}
                         </h3>
                         <input type="checkbox" name="2nd-action-collapse" />
                         <div class="collapse-content flex flex-col gap-4">
                           <div class="form-control">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">Initiator Pin</span>
+                              <span class="label-text">{t("Initiator Pin")}</span>
                             </label>
                             <input
                               type="number"
@@ -530,7 +531,7 @@
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
                               <span class="label-text"
-                                >Initiator Timeout (ms)</span
+                                >{t("Initiator Timeout (ms)")}</span
                               >
                             </label>
                             <input
@@ -548,7 +549,7 @@
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
                               <span class="label-text"
-                                >Feedback LED Pin</span
+                                >{t("Feedback LED Pin")}</span
                               >
                             </label>
                             <input
@@ -565,7 +566,7 @@
                           <div class="form-control">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">GPIO Pin</span>
+                              <span class="label-text">{t("GPIO Pin")}</span>
                             </label>
                             <input
                               type="number"
@@ -577,7 +578,7 @@
                           <div class="form-control">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">Timeout (ms)</span>
+                              <span class="label-text">{t("Timeout (ms)")}</span>
                             </label>
                             <input
                               type="number"
@@ -589,7 +590,7 @@
                           <div class="form-control">
                             <!-- svelte-ignore a11y_label_has_associated_control -->
                             <label class="label">
-                              <span class="label-text">GPIO State</span>
+                              <span class="label-text">{t("GPIO State")}</span>
                             </label>
                             <select
                               bind:value={
@@ -597,8 +598,8 @@
                               }
                               class="select select-bordered w-full"
                             >
-                              <option value={0}>LOW</option>
-                              <option value={1}>HIGH</option>
+                              <option value={0}>{t("LOW")}</option>
+                              <option value={1}>{t("HIGH")}</option>
                             </select>
                           </div>
                         </div>
@@ -609,14 +610,14 @@
                     <h3
                       class="collapse-title text-base md:text-lg font-bold"
                     >
-                      NFC Tag Event
+                      {t("NFC Tag Event")}
                     </h3>
                     <input type="checkbox" name="tag-event-collapse" />
                     <div class="collapse-content">
                       <div class="form-control mb-4">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">GPIO Pin</span>
+                          <span class="label-text">{t("GPIO Pin")}</span>
                         </label>
                         <input
                           type="number"
@@ -628,7 +629,7 @@
                       <div class="form-control mb-4">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">Timeout (ms)</span>
+                          <span class="label-text">{t("Timeout (ms)")}</span>
                         </label>
                         <input
                           type="number"
@@ -640,14 +641,14 @@
                       <div class="form-control mb-4">
                         <!-- svelte-ignore a11y_label_has_associated_control -->
                         <label class="label">
-                          <span class="label-text">GPIO State</span>
+                          <span class="label-text">{t("GPIO State")}</span>
                         </label>
                         <select
                           bind:value={actionsConfig.tagEventHL}
                           class="select select-bordered w-full"
                         >
-                          <option value={false}>LOW</option>
-                          <option value={true}>HIGH</option>
+                          <option value={false}>{t("LOW")}</option>
+                          <option value={true}>{t("HIGH")}</option>
                         </select>
                       </div>
                     </div>
@@ -678,14 +679,14 @@
                       d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"
                     />
                   </svg>
-                  Simple GPIO
+                  {t("Simple GPIO")}
                 </div>
                 <div class="collapse-content">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">GPIO Pin</span>
+                        <span class="label-text">{t("GPIO Pin")}</span>
                       </label>
                       <input
                         type="number"
@@ -697,48 +698,48 @@
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">GPIO State - Locked</span>
+                        <span class="label-text">{t("GPIO State - Locked")}</span>
                       </label>
                       <select
                         bind:value={actionsConfig.gpioActionLockState}
                         class="select select-bordered w-full"
                       >
-                        <option value={false}>LOW</option>
-                        <option value={true}>HIGH</option>
+                        <option value={false}>{t("LOW")}</option>
+                        <option value={true}>{t("HIGH")}</option>
                       </select>
                     </div>
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">GPIO State - Unlocked</span
+                        <span class="label-text">{t("GPIO State - Unlocked")}</span
                         >
                       </label>
                       <select
                         bind:value={actionsConfig.gpioActionUnlockState}
                         class="select select-bordered w-full"
                       >
-                        <option value={false}>LOW</option>
-                        <option value={true}>HIGH</option>
+                        <option value={false}>{t("LOW")}</option>
+                        <option value={true}>{t("HIGH")}</option>
                       </select>
                     </div>
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">Actionable by HomeKey</span
+                        <span class="label-text">{t("Actionable by HomeKey")}</span
                         >
                       </label>
                       <select
                         bind:value={actionsConfig.hkGpioControlledState}
                         class="select select-bordered w-full"
                       >
-                        <option value={false}>Disabled</option>
-                        <option value={true}>Enabled</option>
+                        <option value={false}>{t("Disabled")}</option>
+                        <option value={true}>{t("Enabled")}</option>
                       </select>
                     </div>
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">Momentary state</span>
+                        <span class="label-text">{t("Momentary state")}</span>
                       </label>
                       <select
                         bind:value={
@@ -746,17 +747,17 @@
                         }
                         class="select select-bordered w-full"
                       >
-                        <option value={0}>Disabled</option>
-                        <option value={1}>Home App Only</option>
-                        <option value={2}>Home Key Only</option>
-                        <option value={3}>Home App + Home Key</option>
+                        <option value={0}>{t("Disabled")}</option>
+                        <option value={1}>{t("Home App Only")}</option>
+                        <option value={2}>{t("Home Key Only")}</option>
+                        <option value={3}>{t("Home App + Home Key")}</option>
                       </select>
                     </div>
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
                         <span class="label-text"
-                          >Momentary timeout (ms)</span
+                          >{t("Momentary timeout (ms)")}</span
                         >
                       </label>
                       <input
@@ -773,26 +774,26 @@
               </div>
               <div class="collapse collapse-arrow bg-base-200">
                 <input type="checkbox" name="state-collapse" />
-                <div class="collapse-title font-medium">Dummy</div>
+                <div class="collapse-title font-medium">{t("Dummy")}</div>
                 <div class="collapse-content">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">Status</span>
+                        <span class="label-text">{t("Status")}</span>
                       </label>
                       <select
                         bind:value={actionsConfig.hkDumbSwitchMode}
                         class="select select-bordered w-full"
                       >
-                        <option value={false}>Disabled</option>
-                        <option value={true}>Enabled</option>
+                        <option value={false}>{t("Disabled")}</option>
+                        <option value={true}>{t("Enabled")}</option>
                       </select>
                     </div>
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
-                        <span class="label-text">Momentary state</span>
+                        <span class="label-text">{t("Momentary state")}</span>
                       </label>
                       <select
                         bind:value={
@@ -800,17 +801,17 @@
                         }
                         class="select select-bordered w-full"
                       >
-                        <option value={0}>Disabled</option>
-                        <option value={1}>Home App Only</option>
-                        <option value={2}>Home Key Only</option>
-                        <option value={3}>Home App + Home Key</option>
+                        <option value={0}>{t("Disabled")}</option>
+                        <option value={1}>{t("Home App Only")}</option>
+                        <option value={2}>{t("Home Key Only")}</option>
+                        <option value={3}>{t("Home App + Home Key")}</option>
                       </select>
                     </div>
                     <div class="form-control">
                       <!-- svelte-ignore a11y_label_has_associated_control -->
                       <label class="label">
                         <span class="label-text"
-                          >Momentary timeout (ms)</span
+                          >{t("Momentary timeout (ms)")}</span
                         >
                       </label>
                       <input
@@ -829,9 +830,9 @@
       {/if}
 
       <!-- Action Buttons -->
-      <div class="flex gap-3 mt-6">
-        <button type="submit" class="btn btn-primary">Save & Apply changes</button>
-        <button type="button" class="btn btn-ghost" onclick={resetForm}>Reset</button>
+      <div class="flex flex-wrap gap-3 mt-6">
+        <button type="submit" class="btn btn-primary">{t("Save & Apply changes")}</button>
+        <button type="button" class="btn btn-ghost" onclick={resetForm}>{t("Reset")}</button>
       </div>
     </form>
   {/if}

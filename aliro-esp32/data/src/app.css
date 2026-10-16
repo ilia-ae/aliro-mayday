@@ -3,3 +3,63 @@
 @plugin "daisyui" {
     themes: dracula --prefersdark --default, autumn;
 }
+/* Mayday colours shared by the real panel and its browser demo. Existing
+   daisyUI theme IDs are retained for compatibility with saved preferences. */
+[data-theme="dracula"], [data-theme="autumn"] {
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --color-secondary: var(--color-primary);
+  --color-secondary-content: var(--color-primary-content);
+  --color-accent: var(--color-primary);
+  --color-accent-content: var(--color-primary-content);
+  --depth: 0;
+  --noise: 0;
+}
+[data-theme="dracula"] {
+  color-scheme: dark;
+  --color-base-100: #0b0b0c;
+  --color-base-200: #141416;
+  --color-base-300: #303034;
+  --color-base-content: #ededee;
+  --color-primary: #55b786;
+  --color-primary-content: #082317;
+  --color-neutral: #27272b;
+  --color-neutral-content: #ededee;
+  --color-info: #82c0d5;
+  --color-info-content: #cbe9f6;
+  --color-success: #77d39d;
+  --color-success-content: #092318;
+  --color-warning: #edbc6b;
+  --color-warning-content: #30200a;
+  --color-error: #f39b90;
+  --color-error-content: #370d07;
+}
+[data-theme="autumn"] {
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #f4f5f4;
+  --color-base-300: #d3d7d4;
+  --color-base-content: #191c1a;
+  --color-primary: #246641;
+  --color-primary-content: #ffffff;
+  --color-neutral: #e2e8e3;
+  --color-neutral-content: #191c1a;
+  --color-info: #225e75;
+  --color-info-content: #ffffff;
+  --color-success: #246641;
+  --color-success-content: #ffffff;
+  --color-warning: #86540b;
+  --color-warning-content: #ffffff;
+  --color-error: #ac3227;
+  --color-error-content: #ffffff;
+}
+
+/* Long translated hints stay inside a narrow controller viewport. */
+.tooltip-bottom[data-tip]::before {
+  max-width: min(16rem, calc(100vw - 3rem));
+  left: auto;
+  right: 0;
+  transform: translateY(var(--tt-pos, -0.25rem));
+  overflow-wrap: anywhere;
+}

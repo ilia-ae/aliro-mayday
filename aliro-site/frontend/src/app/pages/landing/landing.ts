@@ -221,7 +221,7 @@ interface ComparisonRow {
                     </div>
                     <iframe #controllerFrame class="controller-ui-frame" [src]="controllerUiEmbedUrl()"
                             [title]="'controller_ui.frame_title' | translate"
-                            aria-describedby="controller-demo-note" loading="lazy" referrerpolicy="no-referrer"></iframe>
+                            aria-describedby="controller-demo-note" (load)="syncDemoTheme(); syncDemoLanguage()" loading="lazy" referrerpolicy="no-referrer"></iframe>
                     <details class="controller-ui-screenshots">
                         <summary>{{ 'controller_ui.screenshots' | translate }}</summary>
                     <div class="controller-ui-views" role="group" [attr.aria-label]="'controller_ui.sections' | translate">
@@ -2671,6 +2671,23 @@ export class LandingPage {
     readonly demoReader = signal({ locked: true, result: 'idle', tap_count: 0, controller_id: 'DEMO-01' });
     readonly demoTrace = signal<{ tag: string; msg: string; level: string; ts: number }[]>([]);
 
+    syncDemoLanguage(): void {
+        const language = this.language.lang();
+        this.controllerFrame?.nativeElement.contentWindow?.postMessage({
+            type: 'aliro-demo-language', language
+        }, location.origin);
+    }
+
+    syncDemoTheme(): void {
+        // Read both signals even before the lazy iframe exists so the effect
+        // continues tracking theme and operating-system changes.
+        const mode = this.theme.theme();
+        const resolved = this.theme.isDark() ? 'dark' : 'light';
+        this.controllerFrame?.nativeElement.contentWindow?.postMessage({
+            type: 'aliro-demo-theme', mode, resolved
+        }, location.origin);
+    }
+
     sendDemoTap(scenario: string): void {
         if (!['valid', 'revoked', 'unknown'].includes(scenario)) return;
         this.controllerFrame?.nativeElement.contentWindow?.postMessage({
@@ -2738,8 +2755,9 @@ export class LandingPage {
     );
     private readonly sanitizer = inject(DomSanitizer);
     // Only this fixed same-origin path and the validated language enum are used.
+    private readonly initialPanelLanguage = this.language.lang();
     readonly controllerUiEmbedUrl = computed(() =>
-        this.sanitizer.bypassSecurityTrustResourceUrl(this.controllerUiDemoUrl())
+        this.sanitizer.bypassSecurityTrustResourceUrl(`/demo/index.html?lang=${this.initialPanelLanguage}#/`)
     );
     readonly sourceControllerUiUrl = computed(() =>
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/controller-ui-debug${this.language.lang() === 'ru' ? '.ru' : ''}.md`
@@ -2769,8 +2787,17 @@ export class LandingPage {
         const destroyRef = inject(DestroyRef);
         const onDemoState = (event: MessageEvent) => {
             const data = event.data;
-            if (event.origin !== location.origin || event.source !== this.controllerFrame?.nativeElement.contentWindow
-                || data?.type !== 'aliro-demo-state' || data.simulated !== true || data.controller_id !== 'DEMO-01'
+            if (event.origin !== location.origin || event.source !== this.controllerFrame?.nativeElement.contentWindow) return;
+            if (data?.type === 'aliro-demo-theme-ready') { this.syncDemoTheme(); this.syncDemoLanguage(); return; }
+            if (data?.type === 'aliro-demo-language-request' && ['en', 'ru'].includes(data.language)) {
+                void this.language.use(data.language);
+                return;
+            }
+            if (data?.type === 'aliro-demo-theme-request' && ['auto', 'light', 'dark'].includes(data.mode)) {
+                this.theme.set(data.mode);
+                return;
+            }
+            if (data?.type !== 'aliro-demo-state' || data.simulated !== true || data.controller_id !== 'DEMO-01'
                 || typeof data.locked !== 'boolean' || !['idle', 'granted', 'revoked', 'unknown'].includes(data.result)
                 || !Number.isSafeInteger(data.tap_count) || data.tap_count < 0) return;
             const previous = this.demoReader();
@@ -2784,6 +2811,8 @@ export class LandingPage {
                 this.demoTrace.update(trace => [...trace, ...events].slice(-60));
             }
         };
+        effect(() => this.syncDemoTheme());
+        effect(() => this.syncDemoLanguage());
         window.addEventListener('message', onDemoState);
         destroyRef.onDestroy(() => window.removeEventListener('message', onDemoState));
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t, locale } from '$lib/stores/i18n.svelte';
 	import type { CertificatesStatus } from '$lib/types/api';
 	import { CertificateType } from "$lib/types/api"
 	import { deleteCertificate, getCertificateStatus, uploadCertificate } from '$lib/services/api';
@@ -223,7 +224,7 @@
 	}
 
 	async function handleDelete() {
-		if (!confirm('This will delete your custom certificate, private key, and CA certificate (if present). Continue?')) {
+		if (!confirm(t('This will delete your custom certificate, private key, and CA certificate (if present). Continue?'))) {
 			return;
 		}
 
@@ -256,7 +257,7 @@
 
 	function formatDate(dateStr: string): string {
 		try {
-			return new Date(dateStr).toLocaleDateString();
+			return new Date(dateStr).toLocaleDateString(locale());
 		} catch {
 			return dateStr;
 		}
@@ -267,7 +268,7 @@
 	<!-- Certificate Status Display -->
 	<div class="py-3 px-3 bg-base-100 rounded-lg">
 		<div class="flex items-center justify-between mb-3">
-			<h4 class="text-sm font-medium">Certificates</h4>
+			<h4 class="text-sm font-medium">{t("Certificates")}</h4>
 			{#if hasCustomCert}
 			<button
 				type="button"
@@ -291,39 +292,39 @@
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
 					</svg>
-					<span class="font-medium text-info">{mode === "https" ? "Server" : "Client"} Certificate Present</span>
+					<span class="font-medium text-info">{mode === "https" ? t("Server") : t("Client")} {t("Certificate Present")}</span>
 				</div>
 				{#if certInfo.issuer}
 					<div class="flex flex-col">
-						<span class="text-base-content/60">Issuer</span>
+						<span class="text-base-content/60">{t("Issuer")}</span>
 						<span class="font-mono truncate" title={certInfo.issuer}>{certInfo.issuer}</span>
 					</div>
 				{/if}
 
 				{#if certInfo.subject}
 					<div class="flex flex-col">
-						<span class="text-base-content/60">Subject</span>
+						<span class="text-base-content/60">{t("Subject")}</span>
 						<span class="font-mono truncate" title={certInfo.subject}>{certInfo.subject}</span>
 					</div>
 				{/if}
 
 				{#if certInfo.serial}
 					<div class="flex flex-col">
-						<span class="text-base-content/60">Serial number</span>
+						<span class="text-base-content/60">{t("Serial number")}</span>
 						<span class="font-mono break-words" title={certInfo.serial}>{certInfo.serial}</span>
 					</div>
 				{/if}
 
 				{#if certInfo.fingerprint}
 					<div class="flex flex-col">
-						<span class="text-base-content/60">SHA256 Fingerprint</span>
+						<span class="text-base-content/60">{t("SHA256 Fingerprint")}</span>
 						<span class="font-mono break-words" title={certInfo.fingerprint}>{certInfo.fingerprint}</span>
 					</div>
 				{/if}
 
 				{#if certInfo.expiration?.from && certInfo.expiration?.to}
 					<div class="flex flex-col">
-						<span class="text-base-content/60">Valid Period</span>
+						<span class="text-base-content/60">{t("Valid Period")}</span>
 						<span class="font-mono">
 							{formatDate(certInfo.expiration.from)} - {formatDate(certInfo.expiration.to)}
 						</span>
@@ -332,7 +333,7 @@
 
 				{#if keyInfo?.keyType}
 					<div class="flex flex-col">
-						<span class="text-base-content/60">Key Type</span>
+						<span class="text-base-content/60">{t("Key Type")}</span>
 						<span class="font-mono truncate">
 							{keyInfo.keyType}
 						</span>
@@ -343,8 +344,8 @@
 										<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 									</svg>
 									<div>
-										<p class="text-sm font-medium text-warning">Switch to EC if possible</p>
-										<p class="text-xs text-base-content/60">RSA is computationally intensive and significantly slows down requests processing times</p>
+										<p class="text-sm font-medium text-warning">{t("Switch to EC if possible")}</p>
+										<p class="text-xs text-base-content/60">{t("RSA is computationally intensive and significantly slows down requests processing times")}</p>
 									</div>
 								</div>
 							</div>
@@ -358,18 +359,18 @@
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 						</svg>
-						<span class="text-success">Private key matches certificate</span>
+						<span class="text-success">{t("Private key matches certificate")}</span>
 					{:else if hasCustomCert}
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 						</svg>
-						<span class="text-error">Private key does not match certificate</span>
+						<span class="text-error">{t("Private key does not match certificate")}</span>
 					{/if}
 				</div>
 			</div>
 
 		{:else}
-			<p class="text-xs text-base-content/60 italic">No certificate information available</p>
+			<p class="text-xs text-base-content/60 italic">{t("No certificate information available")}</p>
 		{/if}
     <!-- CA Certificate Section -->
     {#if caCertInfo}
@@ -379,36 +380,36 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
-          <span class="font-medium text-info">CA Certificate Present</span>
+          <span class="font-medium text-info">{t("CA Certificate Present")}</span>
         </div>
         {#if caCertInfo.issuer}
           <div class="flex flex-col">
-            <span class="text-base-content/60">Issuer</span>
+            <span class="text-base-content/60">{t("Issuer")}</span>
             <span class="font-mono truncate" title={caCertInfo.issuer}>{caCertInfo.issuer}</span>
           </div>
         {/if}
         {#if caCertInfo.subject}
           <div class="flex flex-col">
-            <span class="text-base-content/60">Subject</span>
+            <span class="text-base-content/60">{t("Subject")}</span>
             <span class="font-mono truncate" title={caCertInfo.subject}>{caCertInfo.subject}</span>
           </div>
         {/if}
         {#if caCertInfo.serial}
           <div class="flex flex-col">
-            <span class="text-base-content/60">Serial number</span>
+            <span class="text-base-content/60">{t("Serial number")}</span>
             <span class="font-mono break-words" title={caCertInfo.serial}>{caCertInfo.serial}</span>
           </div>
         {/if}
 
         {#if caCertInfo.fingerprint}
           <div class="flex flex-col">
-            <span class="text-base-content/60">SHA256 Fingerprint</span>
+            <span class="text-base-content/60">{t("SHA256 Fingerprint")}</span>
             <span class="font-mono break-words" title={caCertInfo.fingerprint}>{caCertInfo.fingerprint}</span>
           </div>
         {/if}
         {#if caCertInfo.expiration?.from && caCertInfo.expiration?.to}
           <div class="flex flex-col">
-            <span class="text-base-content/60">Valid Period</span>
+            <span class="text-base-content/60">{t("Valid Period")}</span>
             <span class="font-mono">
               {formatDate(caCertInfo.expiration.from)} - {formatDate(caCertInfo.expiration.to)}
             </span>
@@ -424,14 +425,14 @@
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 			</svg>
-			<span class="text-xs">Certificate has expired! Please upload a new certificate.</span>
+			<span class="text-xs">{t("Certificate has expired! Please upload a new certificate.")}</span>
 		</div>
 	{:else if isExpiringSoon()}
 		<div class="alert alert-warning alert-sm py-2">
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 			</svg>
-			<span class="text-xs">Certificate expires soon. Consider renewing.</span>
+			<span class="text-xs">{t("Certificate expires soon. Consider renewing.")}</span>
 		</div>
 	{/if}
 
@@ -441,20 +442,20 @@
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 			</svg>
-			<span class="text-xs">CA certificate has expired! Please upload a new CA certificate.</span>
+			<span class="text-xs">{t("CA certificate has expired! Please upload a new CA certificate.")}</span>
 		</div>
 	{:else if isCaExpiringSoon()}
 		<div class="alert alert-warning alert-sm py-2">
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 			</svg>
-			<span class="text-xs">CA certificate expires soon. Consider renewing.</span>
+			<span class="text-xs">{t("CA certificate expires soon. Consider renewing.")}</span>
 		</div>
 	{/if}
 
 	<!-- File Upload Section -->
 	<div class="space-y-3 py-2 px-3 bg-base-100 rounded-lg">
-		<h4 class="text-sm font-medium">Upload Certificate</h4>
+		<h4 class="text-sm font-medium">{t("Upload Certificate")}</h4>
 		<!-- Help Text -->
 		<div class="border-l-4 border-info bg-gradient-to-r from-info/10 to-transparent rounded-r-lg p-3 shadow-sm">
 			<div class="flex items-start gap-2">
@@ -462,16 +463,16 @@
 					<path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 				</svg>
 				<div class="space-y-1.5">
-					<p class="text-xs font-semibold text-base-content">Certificate Requirements</p>
+					<p class="text-xs font-semibold text-base-content">{t("Certificate Requirements")}</p>
 					<ul class="text-xs text-base-content/75 list-disc list-inside space-y-0.5">
-						<li>Must be in PEM format</li>
-						<li>Supported keys: RSA (2048+ bits) and SECP256R1 (P-256)</li>
+						<li>{t("Must be in PEM format")}</li>
+						<li>{t("Supported keys: RSA (2048+ bits) and SECP256R1 (P-256)")}</li>
 						{#if mode === 'mqtt'}
-							<li><strong>CA certificate</strong> is required for verifying the MQTT broker's identity</li>
-							<li><strong>Client certificate + key</strong> are only needed for mutual TLS (mTLS) authentication</li>
+							<li><strong>{t("CA certificate")}</strong> {t("is required for verifying the MQTT broker's identity")}</li>
+							<li><strong>{t("Client certificate + key")}</strong> {t("are only needed for mutual TLS (mTLS) authentication")}</li>
 						{:else}
-							<li><strong>Server certificate + private key</strong> are required for HTTPS operation</li>
-							<li><strong>CA certificate</strong> is only needed if requiring client certificate validation (mTLS)</li>
+							<li><strong>{t("Server certificate + private key")}</strong> {t("are required for HTTPS operation")}</li>
+							<li><strong>{t("CA certificate")}</strong> {t("is only needed if requiring client certificate validation (mTLS)")}</li>
 						{/if}
 					</ul>
 				</div>
@@ -481,7 +482,7 @@
 			<!-- Certificate File Input -->
 			<div class="form-control">
 				<label class="label" for="cert-file-input">
-					<span class="label-text text-xs">{certLabel} (.pem, .crt, .cer){mode === 'mqtt' ? ' - Optional' : ''}</span>
+					<span class="label-text text-xs">{t(certLabel)} (.pem, .crt, .cer){mode === 'mqtt' ? t(' - Optional') : ''}</span>
 				</label>
 				<input
 					id="cert-file-input"
@@ -493,7 +494,7 @@
 					disabled={isUploading}
 				/>
 				{#if selectedCertFile}
-					<p class="text-xs text-success mt-1">Selected: {selectedCertFile.name}</p>
+					<p class="text-xs text-success mt-1">{t("Selected:")} {selectedCertFile.name}</p>
 				{/if}
 				{#if uploadProgress.cert > 0}
 					<progress class="progress progress-primary w-full mt-2" value={uploadProgress.cert} max="100"></progress>
@@ -503,7 +504,7 @@
 			<!-- Private Key File Input -->
 			<div class="form-control">
 				<label class="label" for="key-file-input">
-					<span class="label-text text-xs">{keyLabel} (.pem, .key){mode === 'mqtt' ? ' - Optional' : ''}</span>
+					<span class="label-text text-xs">{t(keyLabel)} (.pem, .key){mode === 'mqtt' ? t(' - Optional') : ''}</span>
 				</label>
 				<input
 					id="key-file-input"
@@ -515,7 +516,7 @@
 					disabled={isUploading}
 				/>
 				{#if selectedKeyFile}
-					<p class="text-xs text-success mt-1">Selected: {selectedKeyFile.name}</p>
+					<p class="text-xs text-success mt-1">{t("Selected:")} {selectedKeyFile.name}</p>
 				{/if}
 				{#if uploadProgress.key > 0}
 					<progress class="progress progress-primary w-full mt-2" value={uploadProgress.key} max="100"></progress>
@@ -526,7 +527,7 @@
 		<!-- CA Certificate File Input - Full width for both modes -->
 		<div class="form-control mt-3">
 			<label class="label" for="ca-file-input">
-				<span class="label-text text-xs">{caLabel} (.pem, .crt, .cer)</span>
+				<span class="label-text text-xs">{t(caLabel)} (.pem, .crt, .cer)</span>
 			</label>
 			<input
 				id="ca-file-input"
@@ -538,7 +539,7 @@
 				disabled={isUploading}
 			/>
 			{#if selectedCaFile}
-				<p class="text-xs text-success mt-1">Selected: {selectedCaFile.name}</p>
+				<p class="text-xs text-success mt-1">{t("Selected:")} {selectedCaFile.name}</p>
 			{/if}
 			{#if uploadProgress.ca > 0}
 				<progress class="progress progress-primary w-full mt-2" value={uploadProgress.ca} max="100"></progress>
@@ -554,12 +555,12 @@
 		>
 			{#if isUploading}
 				<span class="loading loading-spinner loading-xs"></span>
-				Uploading...
+				{t("Uploading...")}
 			{:else}
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
 				</svg>
-				Upload
+				{t("Upload")}
 			{/if}
 		</button>
 	</div>

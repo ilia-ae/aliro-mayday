@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from '$lib/stores/i18n.svelte';
 	import type { EthConfig, NfcGpioPinsPreset } from '$lib/types/api';
     import { derived } from 'svelte/store';
 	import SpiEthernetNote from './SpiEthernetNote.svelte';
@@ -106,14 +107,14 @@
 						{/if}
 					</span>
 					<span class="text-xs font-medium {nfcConnected ? 'text-success' : 'text-error'}">
-						{nfcConnected ? 'Connected' : 'Disconnected'}
+						{nfcConnected ? t('Connected') : t('Disconnected')}
 					</span>
 				</div>
 			{/if}
 		</div>
 		<div class="form-control mb-2">
 			<label class="label" for="nfcPreset">
-				<span class="label-text text-xs">Preset</span>
+				<span class="label-text text-xs">{t("Preset")}</span>
 			</label>
 			<select
 				id="nfcPreset"
@@ -127,13 +128,13 @@
 						<option value={i}>{preset.name}</option>
 					{/each}
 				{/if}
-				<option value={255}>Custom</option>
+				<option value={255}>{t("Custom")}</option>
 			</select>
 		</div>
 		<div class="grid grid-cols-4 gap-2">
 			<div class="form-control">
 				<label class="label" for="nfcSsPin">
-					<span class="label-text text-xs">SS Pin</span>
+					<span class="label-text text-xs">{t("SS Pin")}</span>
 				</label>
 				<input
 					id="nfcSsPin"
@@ -146,7 +147,7 @@
 			</div>
 			<div class="form-control">
 				<label class="label" for="nfcSckPin">
-					<span class="label-text text-xs">SCK Pin</span>
+					<span class="label-text text-xs">{t("SCK Pin")}</span>
 				</label>
 				<input
 					id="nfcSckPin"
@@ -159,7 +160,7 @@
 			</div>
 			<div class="form-control">
 				<label class="label" for="nfcMisoPin">
-					<span class="label-text text-xs">MISO Pin</span>
+					<span class="label-text text-xs">{t("MISO Pin")}</span>
 				</label>
 				<input
 					id="nfcMisoPin"
@@ -172,7 +173,7 @@
 			</div>
 			<div class="form-control">
 				<label class="label" for="nfcMosiPin">
-					<span class="label-text text-xs">MOSI Pin</span>
+					<span class="label-text text-xs">{t("MOSI Pin")}</span>
 				</label>
 				<input
 					id="nfcMosiPin"
@@ -188,12 +189,12 @@
 
 	<!-- Ethernet Configuration -->
 	<div class="py-2 px-3 bg-base-100 rounded-lg">
-		<p class="text-sm font-medium mb-2">Ethernet Configuration</p>
+		<p class="text-sm font-medium mb-2">{t("Ethernet Configuration")}</p>
 
 		<div class="flex items-center justify-between mb-3">
 			<div>
-				<p class="text-sm font-medium">Enable Ethernet</p>
-				<p class="text-xs text-base-content/60">Use wired Ethernet instead of WiFi</p>
+				<p class="text-sm font-medium">{t("Enable Ethernet")}</p>
+				<p class="text-xs text-base-content/60">{t("Use wired Ethernet instead of WiFi")}</p>
 			</div>
 			<input
 				type="checkbox"
@@ -210,7 +211,7 @@
 			{/if}
 			<div class="form-control">
 				<label class="label" for="ethPreset">
-					<span class="label-text text-xs">Board Preset</span>
+					<span class="label-text text-xs">{t("Board Preset")}</span>
 				</label>
 				<select
 					id="ethPreset"
@@ -224,13 +225,13 @@
 							<option value={i}>{preset.name}</option>
 						{/each}
 					{/if}
-					<option value={255}>Custom</option>
+					<option value={255}>{t("Custom")}</option>
 				</select>
 			</div>
 
 			<div class="form-control">
 				<label class="label" for="ethPhyType">
-					<span class="label-text text-xs">PHY Type</span>
+					<span class="label-text text-xs">{t("PHY Type")}</span>
 				</label>
 				<select
 					id="ethPhyType"
@@ -249,11 +250,11 @@
 
 			{#if currentEthChip()?.emac}
 				<div class="py-2 px-3 bg-base-100 rounded-lg">
-					<p class="text-sm font-medium mb-2">RMII Configuration</p>
+					<p class="text-sm font-medium mb-2">{t("RMII Configuration")}</p>
 					<div class="grid grid-cols-2 md:grid-cols-3 gap-2">
 						<div class="form-control">
 							<label class="label" for="ethPhyAddr">
-								<span class="label-text text-xs">PHY Address</span>
+								<span class="label-text text-xs">{t("PHY Address")}</span>
 							</label>
 							<input
 								id="ethPhyAddr"
@@ -266,7 +267,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethPinMdc">
-								<span class="label-text text-xs">Pin MDC</span>
+								<span class="label-text text-xs">{t("Pin MDC")}</span>
 							</label>
 							<input
 								id="ethPinMdc"
@@ -279,7 +280,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethPinMdio">
-								<span class="label-text text-xs">Pin MDIO</span>
+								<span class="label-text text-xs">{t("Pin MDIO")}</span>
 							</label>
 							<input
 								id="ethPinMdio"
@@ -292,7 +293,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethPinPower">
-								<span class="label-text text-xs">Pin Power</span>
+								<span class="label-text text-xs">{t("Pin Power")}</span>
 							</label>
 							<input
 								id="ethPinPower"
@@ -305,7 +306,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethRmiiClock">
-								<span class="label-text text-xs">RMII Clock</span>
+								<span class="label-text text-xs">{t("RMII Clock")}</span>
 							</label>
 							<select
 								id="ethRmiiClock"
@@ -324,11 +325,11 @@
 				</div>
 			{:else}
 				<div class="py-2 px-3 bg-base-100 rounded-lg">
-					<p class="text-sm font-medium mb-2">SPI Configuration</p>
+					<p class="text-sm font-medium mb-2">{t("SPI Configuration")}</p>
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-2">
 						<div class="form-control">
 							<label class="label" for="ethSpiBus">
-								<span class="label-text text-xs">SPI Bus</span>
+								<span class="label-text text-xs">{t("SPI Bus")}</span>
 							</label>
 							<select
 								id="ethSpiBus"
@@ -345,7 +346,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethSpiFreq">
-								<span class="label-text text-xs">Freq (MHz)</span>
+								<span class="label-text text-xs">{t("Freq (MHz)")}</span>
 							</label>
 							<input
 								id="ethSpiFreq"
@@ -358,7 +359,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethCsPin">
-								<span class="label-text text-xs">CS Pin</span>
+								<span class="label-text text-xs">{t("CS Pin")}</span>
 							</label>
 							<input
 								id="ethCsPin"
@@ -371,7 +372,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethIrqPin">
-								<span class="label-text text-xs">IRQ Pin</span>
+								<span class="label-text text-xs">{t("IRQ Pin")}</span>
 							</label>
 							<input
 								id="ethIrqPin"
@@ -384,7 +385,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethRstPin">
-								<span class="label-text text-xs">RST Pin</span>
+								<span class="label-text text-xs">{t("RST Pin")}</span>
 							</label>
 							<input
 								id="ethRstPin"
@@ -397,7 +398,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethSckPin">
-								<span class="label-text text-xs">SCK Pin</span>
+								<span class="label-text text-xs">{t("SCK Pin")}</span>
 							</label>
 							<input
 								id="ethSckPin"
@@ -410,7 +411,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethMisoPin">
-								<span class="label-text text-xs">MISO Pin</span>
+								<span class="label-text text-xs">{t("MISO Pin")}</span>
 							</label>
 							<input
 								id="ethMisoPin"
@@ -423,7 +424,7 @@
 						</div>
 						<div class="form-control">
 							<label class="label" for="ethMosiPin">
-								<span class="label-text text-xs">MOSI Pin</span>
+								<span class="label-text text-xs">{t("MOSI Pin")}</span>
 							</label>
 							<input
 								id="ethMosiPin"

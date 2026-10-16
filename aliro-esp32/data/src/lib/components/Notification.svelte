@@ -1,4 +1,5 @@
 <script>
+  import { t } from '$lib/stores/i18n.svelte';
   import { notifications } from "../stores/notifications.svelte.js";
 
   /**
@@ -25,7 +26,7 @@
   class="toast toast-bottom"
   role="region"
   aria-live="polite"
-  aria-label="Notifications"
+  aria-label={t("Notifications")}
 >
   {#each notifications.notifications as notification (notification.id)}
     <div
@@ -34,11 +35,11 @@
       aria-atomic="true"
       aria-live="assertive"
     >
-      <span>{notification.message}</span>
+      <span>{t(notification.message)}</span>
       <button
         class="btn btn-sm btn-circle btn-ghost"
         onclick={() => notifications.remove(notification.id)}
-        aria-label="Close notification"
+        aria-label={t("Close notification")}
       >
         ✕
       </button>

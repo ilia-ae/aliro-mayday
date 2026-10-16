@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function visitLogs(page: Page) {
-    if ((page.viewportSize()?.width || 1280) < 1024) await page.locator('label[aria-label="Menu"]').click();
-    await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Logs', exact: true }).click();
+    if ((page.viewportSize()?.width || 1280) < 1024) await page.locator('label.drawer-button[for="main-content-drawer"]').click();
+    await page.getByRole('navigation').getByRole('link', { name: /^(Logs|Журнал)$/, exact: true }).click();
 }
 
 for (const lang of ['en', 'ru']) {
@@ -16,7 +16,7 @@ for (const lang of ['en', 'ru']) {
         const tap = simulator.getByRole('button', { name: lang === 'ru' ? 'Приложить телефон' : 'Tap the phone', exact: true });
         const scenario = simulator.getByRole('combobox');
         await expect(page.locator('[data-controller-identity]:visible')).toContainText('DEMO-01');
-        await expect(page.getByRole('region', { name: 'NFC diagnostics' })).toBeVisible();
+        await expect(page.getByRole('region', { name: lang === 'ru' ? 'Диагностика NFC' : 'NFC diagnostics' })).toBeVisible();
         await tap.click();
         await expect(simulator.getByRole('status')).toContainText(lang === 'ru' ? 'Доступ разрешён' : 'Access granted');
         await expect(simulator.getByRole('status')).toContainText(lang === 'ru' ? 'открыт' : 'unlocked');
@@ -24,12 +24,12 @@ for (const lang of ['en', 'ru']) {
         await tap.click();
         await expect(simulator.getByRole('status')).toContainText(lang === 'ru' ? 'Доступ запрещён' : 'Access denied');
         await expect(simulator.getByRole('status')).toContainText(lang === 'ru' ? 'открыт' : 'unlocked');
-        await expect(page.getByRole('region', { name: 'NFC diagnostics' })).toContainText('revoked example key');
+        await expect(page.getByRole('region', { name: lang === 'ru' ? 'Диагностика NFC' : 'NFC diagnostics' })).toContainText('revoked example key');
         await scenario.selectOption('valid');
         await tap.click();
         await expect(simulator.getByRole('status')).toContainText(lang === 'ru' ? 'закрыт' : 'locked');
         await visitLogs(page);
-        await expect(page.getByRole('log', { name: 'Controller event log' })).toContainText('SIMULATED DEMO-01');
+        await expect(page.getByRole('log', { name: lang === 'ru' ? 'Журнал событий контроллера' : 'Controller event log' })).toContainText('SIMULATED DEMO-01');
         await expect(page.locator('[data-controller-identity]:visible')).toContainText('DEMO-01');
         expect(requests).toEqual([]);
         expect(sockets).toEqual([]);

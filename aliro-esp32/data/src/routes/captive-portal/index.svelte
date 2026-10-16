@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from '$lib/stores/i18n.svelte';
 	import { route } from 'sv-router/generated';
 	import { saveCaptivePortalConfig, rebootDevice, scanWiFi } from '$lib/services/api';
 	import type { CaptivePortalConfig, WiFiNetwork, EthConfig, NfcGpioPinsPreset } from '$lib/types/api';
@@ -183,14 +184,14 @@
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 			</svg>
 			<div>
-				<span class="font-bold">WiFi connection successful!</span>
-				<div class="text-sm">Configuration saved. The device is now rebooting and will connect to your network...</div>
+				<span class="font-bold">{t("WiFi connection successful!")}</span>
+				<div class="text-sm">{t("Configuration saved. The device is now rebooting and will connect to your network...")}</div>
 			</div>
 		</div>
 		{:else}
-			<h2 class="card-title text-2xl justify-center mb-2">Configure Your Device</h2>
+			<h2 class="card-title text-2xl justify-center mb-2">{t("Configure Your Device")}</h2>
 			<p class="text-base-content/70 text-center mb-6">
-				Enter your WiFi credentials and device settings to get started.
+				{t("Enter your WiFi credentials and device settings to get started.")}
 			</p>
 			<form onsubmit={handleSubmit} class="space-y-4">
 				<!-- Tabs -->
@@ -203,7 +204,7 @@
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
 						</svg>
-						<span class="text-[10px] sm:text-xs mt-0.5">WiFi & HomeKit</span>
+						<span class="text-[10px] sm:text-xs mt-0.5">{t("WiFi & HomeKit")}</span>
 					</button>
 					<button
 						type="button"
@@ -225,7 +226,7 @@
 							<path d="M19 12h-2" stroke-linecap="round"/>
 							<path d="M19 15h-2" stroke-linecap="round"/>
 						</svg>
-						<span class="text-[10px] sm:text-xs mt-0.5">Hardware</span>
+						<span class="text-[10px] sm:text-xs mt-0.5">{t("Hardware")}</span>
 					</button>
 				</div>
 
@@ -235,14 +236,14 @@
 					<!-- WiFi SSID -->
 					<div class="form-control">
 						<label class="label" for="wifiSsid">
-							<span class="label-text font-medium">WiFi Network Name (SSID)</span>
+							<span class="label-text font-medium">{t("WiFi Network Name (SSID)")}</span>
 						</label>
 						<div class="flex gap-2">
 							<input
 								type="text"
 								id="wifiSsid"
 								bind:value={config.wifiSsid}
-								placeholder="Enter or select your WiFi name"
+								placeholder={t("Enter or select your WiFi name")}
 								class="input input-bordered flex-1"
 								maxlength="32"
 								disabled={loading}
@@ -252,7 +253,7 @@
 								class="btn btn-outline btn-square"
 								onclick={handleScan}
 								disabled={scanning || loading}
-								title="Scan for networks"
+								title={t("Scan for networks")}
 							>
 								{#if scanning}
 									<span class="loading loading-spinner loading-sm"></span>
@@ -266,7 +267,7 @@
 						{#if showNetworkList && networks.length > 0}
 							<div class="mt-2 border border-base-300 rounded-lg overflow-hidden max-h-48 overflow-y-auto bg-base-100">
 								<div class="px-3 py-2 bg-base-200 text-xs font-medium text-base-content/70 border-b border-base-300">
-									Found {networks.length} network{networks.length === 1 ? '' : 's'} - Click to select
+									{t('Networks found: {count} — click to select', { count: networks.length })}
 								</div>
 								{#each networks as network (network.ssid)}
 									<button
@@ -280,7 +281,7 @@
 											</svg>
 											<span class="truncate">{network.ssid}</span>
 											{#if network.auth === 'OPEN'}
-												<span class="badge badge-sm badge-ghost">Open</span>
+												<span class="badge badge-sm badge-ghost">{t('Open network')}</span>
 											{/if}
 										</div>
 										<div class="flex items-center gap-1 shrink-0 text-xs text-base-content/60">
@@ -302,7 +303,7 @@
 									class="w-full text-center px-3 py-2 text-sm text-base-content/60 hover:bg-base-200 border-t border-base-300"
 									onclick={() => showNetworkList = false}
 								>
-									Close list
+									{t("Close list")}
 								</button>
 							</div>
 						{:else if showNetworkList && networks.length === 0}
@@ -310,7 +311,7 @@
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 								</svg>
-								<span>No networks found</span>
+								<span>{t("No networks found")}</span>
 							</div>
 						{/if}
 					</div>
@@ -318,13 +319,13 @@
 					<!-- WiFi Password -->
 					<div class="form-control">
 						<label class="label" for="wifiPassword">
-							<span class="label-text font-medium">WiFi Password</span>
+							<span class="label-text font-medium">{t("WiFi Password")}</span>
 						</label>
 						<input
 							type="password"
 							id="wifiPassword"
 							bind:value={config.wifiPassword}
-							placeholder="Enter your WiFi password"
+							placeholder={t("Enter your WiFi password")}
 							class="input input-bordered w-full"
 							maxlength="64"
 							disabled={loading}
@@ -334,26 +335,26 @@
 					<!-- HomeKit Setup Code -->
 					<div class="form-control">
 						<label class="label" for="setupCode">
-							<span class="label-text font-medium">HomeKit Setup Code</span>
+							<span class="label-text font-medium">{t("HomeKit Setup Code")}</span>
 						</label>
 						<input
 							type="text"
 							id="setupCode"
 							bind:value={config.setupCode}
-							placeholder="8-digit code"
+							placeholder={t("8-digit code")}
 							class="input input-bordered w-full font-mono tracking-wider"
 							maxlength="8"
 							disabled={loading}
 						/>
 						<div class="label">
-							<span class="label-text-alt text-base-content/60">Exactly 8 digits required</span>
+							<span class="label-text-alt text-base-content/60">{t("Exactly 8 digits required")}</span>
 						</div>
 					</div>
 
 					<!-- HomeKey Color -->
 					<div class="form-control">
 						<label class="label" for="hkColor">
-							<span class="label-text font-medium">HomeKey Finish Color</span>
+							<span class="label-text font-medium">{t("HomeKey Finish Color")}</span>
 						</label>
 						<input type="hidden" id="hkColor" value={config.hk_key_color} />
 						<div class="grid grid-cols-2 gap-2">
@@ -364,7 +365,7 @@
 									onclick={() => config.hk_key_color = color.value}
 									disabled={loading}
 								>
-									{color.label}
+									{t(color.label)}
 								</button>
 							{/each}
 						</div>
@@ -376,8 +377,8 @@
 				{#if activeTab === 'hardware'}
 					<div class="space-y-4">
 						<div>
-							<h3 class="text-sm font-semibold">Hardware Configuration</h3>
-							<p class="text-xs text-base-content/60">Configure GPIO pins for PN532 NFC reader and optional Ethernet connectivity.</p>
+							<h3 class="text-sm font-semibold">{t("Hardware Configuration")}</h3>
+							<p class="text-xs text-base-content/60">{t("Configure GPIO pins for PN532 NFC reader and optional Ethernet connectivity.")}</p>
 						</div>
 
 						<HardwareConfig
@@ -410,7 +411,7 @@
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
 						</svg>
-						<span>{error}</span>
+						<span>{t(error)}</span>
 					</div>
 				{/if}
 
@@ -422,14 +423,14 @@
 				>
 					{#if loading}
 						<span class="loading loading-spinner loading-sm"></span>
-						Attempting connection...
+						{t("Attempting connection...")}
 					{:else if saved}
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 							<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
 						</svg>
-						Connected! Rebooting...
+						{t("Connected! Rebooting...")}
 					{:else}
-						Connect & Save
+						{t("Connect & Save")}
 					{/if}
 				</button>
 			</form>

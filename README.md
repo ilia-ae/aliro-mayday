@@ -21,6 +21,7 @@ source snapshot dated **13 October 2026**, with new Git history.
 ## Local web UI
 
 [Open the live panel demo](https://aliro.mayday.software/demo/index.html?lang=en#/): sample data, no controller connection.
+The shared panel supports EN/RU (English by default) and light, dark and system themes.
 
 Run the actual interface with sample data: `cd aliro-esp32/data` → `bun run debug` (from the repository root). Requires Bun 1.3.13 and Node.js 22.12+; Node 24 LTS is recommended. The script does not connect to or flash a controller.
 
