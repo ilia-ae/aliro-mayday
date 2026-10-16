@@ -1,4 +1,5 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ViewportScroller } from '@angular/common';
 import {
     ApplicationConfig,
     inject,
@@ -39,6 +40,12 @@ export const appConfig: ApplicationConfig = {
         // Block first paint until initial translations are loaded so the
         // user never sees raw keys like "hero.title" before real strings.
         provideAppInitializer(() => inject(LanguageService).init()),
+        // Router-driven fragment jumps use their own offset, separate from CSS
+        // scroll-padding. Keep direct evidence links below the sticky topbar.
+        provideAppInitializer(() => inject(ViewportScroller).setOffset(() => [
+            0,
+            (document.querySelector('.topbar')?.getBoundingClientRect().height ?? 64) + 16
+        ])),
         provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'

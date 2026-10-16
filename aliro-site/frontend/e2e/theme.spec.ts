@@ -27,6 +27,22 @@ test.describe('theme', () => {
         await expect(page.locator('html')).not.toHaveClass(/app-dark/);
     });
 
+    test('auto reconciles a system theme change before application startup', async ({ page }) => {
+        let release!: () => void;
+        const bundleGate = new Promise<void>(resolve => { release = resolve; });
+        await page.route('**/main-*.js', async route => {
+            await bundleGate;
+            await route.continue();
+        });
+        await page.emulateMedia({ colorScheme: 'dark' });
+        await page.goto('/?lang=en&theme=auto', { waitUntil: 'commit' });
+        await expect(page.locator('html')).toHaveClass(/app-dark/);
+        await page.emulateMedia({ colorScheme: 'light' });
+        release();
+        await expect(page.getByRole('button', { name: 'Switch to light theme', exact: true })).toBeVisible();
+        await expect(page.locator('html')).not.toHaveClass(/app-dark/);
+    });
+
     test('cycle button walks light → dark → auto → light', async ({
         page
     }) => {

@@ -8452,11 +8452,11 @@
     },
     {
       "path": "aliro-site/README.md",
-      "sha256": "f2cd7c688f78f1b78fd337d053985108e81d67d858b0291e3a746beb49744aa1"
+      "sha256": "9d5246b9502afe7c9282a9026c55beb088d04ebce9870808fb7be4cabe3dd299"
     },
     {
       "path": "aliro-site/README.ru.md",
-      "sha256": "ca955891e13edd94e9afe1b41c99560443421b6749db495911be4dbf24467b9a"
+      "sha256": "057773d4d66211098ec128a37afc2640af325a317457b343b8c8bc2ebec12ae5"
     },
     {
       "path": "aliro-site/frontend/.gitignore",
@@ -8484,7 +8484,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/landing-layout.spec.ts",
-      "sha256": "7253340bda35f1ffece7d64c47b868f570546ce993f1a849e63b90e494dc562b"
+      "sha256": "8e44c4dbe52a338a37923a4d4544c7964995d041ebbf4eac32fe54bdbf5d5efd"
     },
     {
       "path": "aliro-site/frontend/e2e/links.spec.ts",
@@ -8508,7 +8508,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/theme.spec.ts",
-      "sha256": "5c7dd35fe8c394a8d95a2fc193ac11de819d4e434d53267a80a65f620f967177"
+      "sha256": "857d5549be7205ed298aba9217afdc323cf3da6c66ab622f71d79cd8677392fb"
     },
     {
       "path": "aliro-site/frontend/ngsw-config.json",
@@ -8644,7 +8644,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app.config.ts",
-      "sha256": "a5895764d1e5551f0e79ef726149e399b9bfdbc9106361bc70db4843da2892b3"
+      "sha256": "e6dfe24b917e281c101ca0dd7983c592346eee915e4e779838bba756d7a90122"
     },
     {
       "path": "aliro-site/frontend/src/app.routes.ts",
@@ -8676,7 +8676,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app/shared/services/theme.service.ts",
-      "sha256": "82a7128be42d7a94a1e48d3333a36f3ae813fb0a273086e8e2f3b72e1fc332df"
+      "sha256": "c19182f65cad5821949aa00ea3d19a9703bbba42e6a74d90a6cdf385bb43d12d"
     },
     {
       "path": "aliro-site/frontend/src/index.html",
@@ -8692,7 +8692,7 @@
     },
     {
       "path": "aliro-site/frontend/src/styles.scss",
-      "sha256": "08ccad068edfb3d136581cfc012eb660a49d2eea0b0149cb2e3415601dad2bd2"
+      "sha256": "acc69035ffe1e1068f1f7c2c48aeb1ce6f29becdc9f1f8c7f27fb68d71266a52"
     },
     {
       "path": "aliro-site/frontend/tsconfig.app.json",

@@ -59,6 +59,17 @@ for (const lang of ['en', 'ru']) {
         await expect(contact.locator('a[href="https://github.com/ilia-ae/aliro-mayday/issues"]')).toBeVisible();
         await expect(contact).not.toContainText(/24 hours|суток/);
     });
+
+    test(`direct deposit link keeps its heading below the sticky header in ${lang}`, async ({ page }) => {
+        await page.emulateMedia({ reducedMotion: 'reduce' });
+        await page.goto(`/?lang=${lang}#evidence`);
+        await expect(page.locator('#evidence h3')).toBeInViewport();
+        await expect.poll(() => page.evaluate(() => {
+            const heading = document.querySelector('#evidence h3')!.getBoundingClientRect();
+            const header = document.querySelector('.topbar')!.getBoundingClientRect();
+            return heading.top - header.bottom;
+        })).toBeGreaterThanOrEqual(16);
+    });
 }
 
 test('tap animation is keyboard controlled, progresses to open, and resets', async ({ page }) => {

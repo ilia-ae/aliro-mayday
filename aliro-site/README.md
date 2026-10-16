@@ -63,7 +63,7 @@ npx playwright install chromium --only-shell
 npx playwright test
 ```
 
-The complete browser suite passed **95 tests**, with **5 explicit skips**.
+The complete browser suite passed **101 tests**, with **5 explicit skips**.
 Source links and language switching were also checked after final copy edits.
 Tests cover the website, not a connected lock or wallet.
 

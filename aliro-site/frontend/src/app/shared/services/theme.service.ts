@@ -29,6 +29,9 @@ export class ThemeService {
                 if (this.theme() === 'auto') this.applyDark(e.matches);
             });
         }
+        // The system theme can change after the inline pre-paint script but
+        // before Angular starts listening. Reconcile the initial DOM as well.
+        this.applyDark(this.isDark());
     }
 
     /* auto → light → dark → auto. Matches the deposit.mayday cycle so
