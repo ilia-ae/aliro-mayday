@@ -16,6 +16,9 @@ The reference uses a 5 V module supply, HIGH control and R1 = 10 kΩ to ground,
 plus a separate 12 V power-to-unlock bench lock. GPIO4 still requires explicit
 selection; another module must meet the documented compatibility requirements.
 
+The [shopping list with product links and quantities](wiring.md#shopping-list)
+is kept beside that diagram, in one place.
+
 1. With power removed, identify DFR0473's `D` (control), `−` (GND), `+` (5 V)
    and contact `COM`/`NO`/`NC`; leave `N/A` unused. Verify input compatibility with **3.3 V**, the active HIGH/LOW
    level and the module/lock supply ratings.

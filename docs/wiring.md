@@ -2,7 +2,7 @@
 
 [Русский](wiring.ru.md) · [Documentation](README.md)
 
-[Relay: GPIO4 example](#relay-gpio4-example) · [Telegram setup](access-integrations.md#telegram-setup)
+[Relay: GPIO4 example](#relay-gpio4-example) · [Shopping list](#shopping-list) · [Telegram setup](access-integrations.md#telegram-setup)
 
 This diagram describes the **current `aliro-esp32/` firmware**. `GPIO` labels
 are ESP32 signal numbers, not positions on a pin header. Find each contact by
@@ -76,7 +76,8 @@ for the current DevKitC profile, provided nothing else on your board uses it.
 
 ![Relay control and lock-power connections](images/aliro-relay.en.svg)
 
-### Reference parts to use
+<a id="shopping-list"></a>
+### Shopping list for the reference build
 
 Use **one DFRobot Gravity DFR0473 mechanical relay module**, powered at **5 V**,
 with its built-in driver and **HIGH** control input. Its control pin is marked
@@ -84,14 +85,25 @@ with its built-in driver and **HIGH** control input. Its control pin is marked
 logic compatibility; this is our concrete reference, not a requirement to use
 a particular brand.
 
-| Part | Reference specification |
-| --- | --- |
-| Relay | DFRobot DFR0473, one mechanical changeover relay with driver |
-| Module supply | Regulated **5 V DC, at least 0.5 A**, separate from the lock |
-| R1 | **10 kΩ** from module `D` to module `−` / ESP32 `GND` |
-| Demo lock | **12 V DC, power-to-unlock**, supports a 1-second pulse; select a small bench actuator rated at no more than 1 A for this example |
-| Lock supply | Sized for that lock and its inrush; e.g. **12 V DC, 2 A** for a compatible ≤1 A bench lock |
-| Load suppression | Diode/TVS specified for the chosen DC lock, as shown below |
+This list is for a **12 V DC power-to-unlock bench lock rated at no more than
+1 A and permitting a 1-second pulse**. The lock itself is not selected here;
+check its supply and inrush requirements before connecting it.
+
+| Buy | Quantity | Purpose / specification |
+| --- | --- | --- |
+| [DFRobot DFR0473 relay module](https://www.dfrobot.com/product-1572.html) | 1 | Mechanical changeover relay with driver; 3.3 V HIGH control |
+| [Mean Well GST18E05-P1J supply](https://www.digikey.com/en/products/detail/mean-well-usa-inc/GST18E05-P1J/7703622) | 1 | **5 V DC, 3 A** for the relay module; the reference needs at least 0.5 A |
+| [Mean Well GST25E12-P1J supply](https://www.digikey.com/en/products/detail/mean-well-usa-inc/GST25E12-P1J/7703666) | 1 | **12 V DC, 2.08 A** for a compatible bench lock, including its inrush |
+| [10 kΩ, 0.25 W resistor](https://www.adafruit.com/product/2784) | 1 needed; sold in a pack | R1, from module `D` to module `−` / ESP32 `GND` |
+| Dupont [female–female](https://www.adafruit.com/product/266) and [female–male](https://www.adafruit.com/product/5018) jumper wires | 1 small pack of each | Short signal connections; not the lock-power path |
+| [20 AWG (about 0.5 mm²) stranded copper wire](https://www.pololu.com/product/2652/) | About 2–3 m total; preferably red and black | Short bench lock-power connections; the linked spool is larger than needed |
+| [5.5 × 2.1 mm female DC jack to screw-terminal adapter](https://www.adafruit.com/product/368) | 2 | Connect both supplies without cutting off their plugs |
+| [1N4001 suppression diode](https://www.adafruit.com/product/755) | 1 needed; sold in a pack | For a simple DC coil without built-in suppression, only if allowed by the lock's instructions; otherwise use its specified diode/TVS |
+
+The two listed supplies have **EU plugs** and centre-positive 5.5 × 2.1 mm DC
+outputs. Product links are concrete examples: equivalent parts can be bought
+locally by model/specification. Prices and stock can change. The standard
+DFR0473 kit includes a Gravity sensor cable; check the seller's bundle.
 
 The module's 5 V input supply is separate from the **3.3 V GPIO signal**. Do not
 connect the external 5 V supply to the USB-powered ESP32's 5 V rail in this

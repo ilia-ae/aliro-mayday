@@ -8924,11 +8924,11 @@
     },
     {
       "path": "docs/access-integrations.md",
-      "sha256": "5ddcf1a705326f4f0bcb5054ee8c459e1340e8641b7a140ff0935bcc2303c68c"
+      "sha256": "a771a9c4fdaa5943b8838b7b59461bade5561821ee1d2a41f003d5339afa1c96"
     },
     {
       "path": "docs/access-integrations.ru.md",
-      "sha256": "46061a63eefd116e6ac487b8dbba56cbeae1a94134be62916382341d536a94ac"
+      "sha256": "1c72df390317decaae230894b94cb949d75092c548d6e958d8c37818ab8b722e"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
@@ -9088,11 +9088,11 @@
     },
     {
       "path": "docs/wiring.md",
-      "sha256": "35f57f5a9031f79d96c7f8aad4e6d6b1be87e22bdbf7688475a6bd250c813cf0"
+      "sha256": "17f5a41ba554d4c838b1727f4f328a17c6ceed3e6075e18ec1bc15c0cf196876"
     },
     {
       "path": "docs/wiring.ru.md",
-      "sha256": "0e7fa3bbe7ad8217d09767c0a6d57bc4b026febdf17c79770ef2dc7c8bae4489"
+      "sha256": "69f9e459b2de94be8dbabc05a5372548289d827b5512d97914206d37bd77e8aa"
     },
     {
       "path": "homekey-esp32/.clangd",
