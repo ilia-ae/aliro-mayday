@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1110" viewBox="0 0 1200 1110" role="img" aria-labelledby="title desc">
+<title id="title">Подключение реле · DFR0473 + GPIO4</title>
+<desc id="desc">Базовый вариант: DFR0473 с питанием 5 В; отдельный замок 12 В, открытие от питания. GPIO4 к D, GND к −, отдельные 5 В к +. R1 10 кОм от D к GND. Плюс питания замка к COM, NO к плюсу замка; минус замка к минусу его питания. NC свободен.</desc>
+<!-- Copyright (c) 2026 Mayday / Ilia Arestov. See /LICENSE. -->
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#17243b}.muted{fill:#526177}.mono{font-family:monospace}.wire{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<rect width="1200" height="1110" fill="#f6f8fb"/>
+<text x="40" y="48" font-size="30" font-weight="700">Подключение реле · DFR0473 + GPIO4</text>
+<text x="40" y="81" font-size="18" class="muted">Базовый вариант: DFR0473 с питанием 5 В; отдельный замок 12 В, открытие от питания.</text>
+<rect x="40" y="102" width="1120" height="42" rx="12" fill="#fff4d6" stroke="#b4c2d4"/>
+<text x="56" y="129" font-size="17" font-weight="700">Нужна новая прошивка · контроллер не обновлён · реле по умолчанию выключено</text>
+<text x="40" y="184" font-size="23" font-weight="700">1 · Управляющий сигнал и питание релейного модуля</text>
+<rect x="40" y="207" width="270" height="204" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<rect x="710" y="207" width="450" height="204" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="62" y="243" font-size="23" font-weight="700">ESP32-S3</text>
+<text x="62" y="386" font-size="17" class="muted">Питание платы: USB</text>
+<text x="732" y="243" font-size="22" font-weight="700">DFRobot DFR0473</text>
+<text x="288" y="292" font-size="20" text-anchor="end" class="mono">GPIO4</text>
+<path d="M310 286 H710" class="wire" stroke="#7865be"/>
+<circle cx="310" cy="286" r="5" fill="#7865be"/>
+<circle cx="710" cy="286" r="5" fill="#7865be"/>
+<text x="730" y="292" font-size="18" >D · управление, логика 3,3 В</text>
+<text x="288" y="351" font-size="20" text-anchor="end" class="mono">GND</text>
+<path d="M310 345 H710" class="wire" stroke="#515d70"/>
+<circle cx="310" cy="345" r="5" fill="#515d70"/>
+<circle cx="710" cy="345" r="5" fill="#515d70"/>
+<text x="730" y="351" font-size="18" >− · GND / сигнальная земля</text>
+<text x="505" y="276" font-size="17" text-anchor="middle" class="muted">3.3 V</text>
+<path d="M590 286 V304" class="wire" stroke="#515d70"/>
+<path d="M590 326 V345" class="wire" stroke="#515d70"/>
+<circle cx="590" cy="286" r="5" fill="#7865be"/>
+<circle cx="590" cy="345" r="5" fill="#515d70"/>
+<rect x="585" y="304" width="10" height="22" fill="#fff" stroke="#515d70" stroke-width="2"/>
+<text x="605" y="321" font-size="14" class="mono">R1 10k</text>
+<text x="730" y="371" font-size="13" class="muted">Обе подписи − (GND) — одна электрическая точка</text>
+<rect x="710" y="466" width="450" height="74" rx="12" fill="#eef2f8" stroke="#b4c2d4"/>
+<text x="732" y="493" font-size="19" font-weight="700">Отдельное питание модуля: 5 В</text>
+<text x="732" y="520" font-size="16" class="muted">Стабилизированные 5 В DC, от 0,5 А</text>
+<path d="M970 466 V411" class="wire" stroke="#bf3d50"/>
+<path d="M1110 466 V411" class="wire" stroke="#515d70"/>
+<text x="970" y="448" font-size="21" text-anchor="middle">+</text>
+<text x="1110" y="448" font-size="21" text-anchor="middle">−</text>
+<text x="970" y="395" font-size="16" text-anchor="middle" class="mono">+ (VCC)</text>
+<text x="1110" y="395" font-size="16" text-anchor="middle" class="mono">− (GND)</text>
+<text x="40" y="452" font-size="18" font-weight="700">В панели: HIGH · LOW = неактивно.</text>
+<text x="40" y="485" font-size="17" class="muted">R1 = 10 кОм между D и − (GND): удерживает LOW при загрузке.</text>
+<text x="40" y="592" font-size="23" font-weight="700">2 · Контакты коммутируют питание замка</text>
+<rect x="40" y="628" width="250" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="60" y="666" font-size="21" font-weight="700">БП замка · 12 В DC</text>
+<text x="60" y="698" font-size="16" class="muted">Ток по паспорту замка</text>
+<rect x="440" y="628" width="330" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="460" y="666" font-size="21" font-weight="700">То же реле · контакты</text>
+<text x="460" y="696" font-size="16" class="muted">Неактивно / NO разомкнут</text>
+<rect x="930" y="628" width="230" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
+<text x="950" y="666" font-size="21" font-weight="700">DC-замок</text>
+<text x="950" y="697" font-size="15" class="muted">Подали питание → открыт</text>
+<text x="269" y="742" font-size="23" text-anchor="end">+</text>
+<text x="269" y="799" font-size="23" text-anchor="end">−</text>
+<text x="954" y="742" font-size="23" >+</text>
+<text x="954" y="799" font-size="23" >−</text>
+<path d="M290 735 H490" class="wire" stroke="#bf3d50"/>
+<path d="M490 735 H540 L650 710" class="wire" stroke="#17243b"/>
+<circle cx="540" cy="735" r="5" fill="#17243b"/>
+<circle cx="690" cy="735" r="6" fill="#fff" stroke="#17243b" stroke-width="3"/>
+<path d="M696 735 H930" class="wire" stroke="#bf3d50"/>
+<text x="490" y="720" font-size="17" text-anchor="middle" class="mono">COM</text>
+<text x="690" y="720" font-size="17" text-anchor="middle" class="mono">NO</text>
+<text x="460" y="802" font-size="16" class="muted">NC: в примере не используется</text>
+<path d="M930 792 H818 V887 H330 V792 H290" class="wire" stroke="#515d70"/>
+<path d="M875 735 V752" class="wire" stroke="#bf3d50"/>
+<path d="M875 782 V792 H930" class="wire" stroke="#515d70"/>
+<circle cx="875" cy="735" r="5" fill="#bf3d50"/>
+<circle cx="875" cy="792" r="5" fill="#515d70"/>
+<rect x="859" y="752" width="32" height="30" rx="3" fill="#f0e8d4" stroke="#526177"/><path d="M859 758 H891" stroke="#17243b" stroke-width="5"/>
+<text x="900" y="772" font-size="16" class="mono">D1*</text>
+<text x="40" y="933" font-size="18" font-weight="700">D1*: защита параллельно замку</text>
+<text x="40" y="963" font-size="17" >Для простой DC-катушки: полоска диода (катод) к +; анод к −.</text>
+<text x="40" y="993" font-size="17" class="muted">* Диод/TVS — по инструкции замка. Эта схема не предназначена для AC-замка.</text>
+<rect x="40" y="1020" width="1120" height="68" rx="12" fill="#eef2f8" stroke="#b4c2d4"/>
+<text x="56" y="1047" font-size="17" font-weight="700">GPIO4 — пример, не готовая настройка. Нельзя подключать катушку или питание замка к GPIO.</text>
+<text x="56" y="1074" font-size="16" class="muted">Для магнитного замка и входа OPEN/EXIT нужна своя схема — см. инструкцию.</text>
+</svg>

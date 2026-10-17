@@ -12,6 +12,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AccessDemo } from './access-demo';
+import { RelayShopping } from './relay-shopping';
 import { LanguageService } from '@/app/shared/services/language.service';
 import { ThemeService } from '@/app/shared/services/theme.service';
 
@@ -29,7 +30,7 @@ interface ComparisonRow {
 @Component({
     selector: 'app-landing',
     standalone: true,
-    imports: [TranslatePipe, RouterLink, AccessDemo],
+    imports: [TranslatePipe, RouterLink, AccessDemo, RelayShopping],
     template: `
         <a class="skip-link" href="#main-content">
             {{ 'nav.skip_to_content' | translate }}
@@ -581,10 +582,14 @@ interface ComparisonRow {
                         <a class="btn-secondary" [href]="sourceWiringUrl()" target="_blank" rel="noopener noreferrer">
                             {{ 'source.wiring' | translate }} →
                         </a>
+                        <a class="btn-secondary" href="#shopping-list">
+                            {{ 'source.shopping' | translate }} ↓
+                        </a>
                         <a class="btn-secondary" [href]="sourceSetupUrl()" target="_blank" rel="noopener noreferrer">
                             {{ 'source.setup' | translate }} →
                         </a>
                     </div>
+                    <app-relay-shopping />
                     <div class="source-license">
                         <h3>{{ 'source.license_title' | translate }}</h3>
                         <p>{{ 'source.license_note' | translate }}</p>

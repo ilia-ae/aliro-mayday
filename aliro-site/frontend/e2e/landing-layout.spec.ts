@@ -46,10 +46,12 @@ for (const lang of ['en', 'ru']) {
         const evidence = page.locator('#evidence');
         await evidence.scrollIntoViewIfNeeded();
         await expect(evidence.locator('.deposit-visual img')).toHaveJSProperty('complete', true);
-        await expect(evidence.locator('.deposit-visual img')).toHaveJSProperty('naturalWidth', 1000);
+        // WebKit reports the rendered SVG width; verify loading here and the source dimensions below.
+        await expect.poll(() => evidence.locator('.deposit-visual img').evaluate(img => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
         await expect(evidence.locator('a[href="https://deposit.mayday.software/"]')).toBeVisible();
         const image = await request.get(`/images/aliro-deposit-summary-${lang}.svg`);
         const xml = await image.text();
+        expect(xml).toMatch(/<svg\b[^>]*\bwidth="1000"/);
         expect(xml).toContain('24e218e');
         expect(xml).toContain('9f51d5b701905d34c7a22910c80c2950');
         expect(xml).toContain('Mayday / Ilia Arestov');
@@ -91,8 +93,10 @@ test('tap animation is keyboard controlled, progresses to open, and resets', asy
 
 test('reduced motion shows the result immediately without animated transforms', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/?lang=ru#how-it-works');
+    // Initialise the lazy demo iframe before testing the linked animation, including on WebKit.
+    await page.goto('/?lang=ru#controller-ui');
     const animation = page.locator('app-access-demo');
+    await expect(animation.getByRole('button')).toBeEnabled();
     await animation.getByRole('button').click();
     await expect(animation.getByRole('status')).toContainText('Дверь открывается');
     expect(await animation.locator('.door').evaluate(el => getComputedStyle(el).transitionDuration)).toBe('0s');

@@ -8572,7 +8572,7 @@
     },
     {
       "path": "aliro-site/frontend/e2e/landing-layout.spec.ts",
-      "sha256": "8be4cc08916345e866901d4360116eb31e7b6edf57de2e162e7925b24f6a2af0"
+      "sha256": "44fe999c6728ff08f5a7537874df7634bc68f64f72c3174e5deacf5ceb2cf09e"
     },
     {
       "path": "aliro-site/frontend/e2e/links.spec.ts",
@@ -8632,11 +8632,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "bf60e08ae28842c92a4901b7065fe6309e64425501a0c52192639578e49c6611"
+      "sha256": "847df83f91450fd79ae5b1550f370da0364f728cf2e3a42bf0d9610c63e0f27d"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "571b28831eb346855045d5fe98bbb27294ec8b47b9aeb702bf10ab6aa6089114"
+      "sha256": "69160e12e89863f1f938780e2a2118f2947b762b59af837a7eb73a6e3aeaa68f"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8653,6 +8653,14 @@
     {
       "path": "aliro-site/frontend/public/images/aliro-deposit-summary-ru.svg",
       "sha256": "890c3a9fe0b1125cb01908d0a0599608db99a1908b77ca5bab3bad85964f370a"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/aliro-relay.en.svg",
+      "sha256": "9a604634da8480ef553888330000aa9eba63f90c122d31bda256dfa7d69db666"
+    },
+    {
+      "path": "aliro-site/frontend/public/images/aliro-relay.ru.svg",
+      "sha256": "57d6e889f11366a74c1b6ab05e4606f84e9cae959c2f11403447078fecf6bda4"
     },
     {
       "path": "aliro-site/frontend/public/images/controller-actions-demo.jpg",
@@ -8748,7 +8756,11 @@
     },
     {
       "path": "aliro-site/frontend/src/app/pages/landing/landing.ts",
-      "sha256": "d8e68c46d34351325b35d15e618dafd11a1aa6a733b3f0acc4f3a95d5db13f0d"
+      "sha256": "b43a7c628c9ebdcd8fbd43e4d9dddc445d31f31ecc51a06859d501c20947a446"
+    },
+    {
+      "path": "aliro-site/frontend/src/app/pages/landing/relay-shopping.ts",
+      "sha256": "b5b66eccceaed4e55faaebd2e957e6b458dbc98ccedb47d09fd2aa0f8bbd59ed"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",

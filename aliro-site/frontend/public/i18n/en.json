@@ -469,7 +469,60 @@
             "image_caption": "Snapshot summary. Original proofs are in the ZIP bundle."
         },
         "license_title": "Use and licensing",
-        "setup": "Relay and Telegram setup"
+        "setup": "Relay and Telegram setup",
+        "shopping": "Shopping list"
+    },
+    "lock_shopping": {
+        "title": "Lock wiring and shopping list",
+        "intro": "For a 12 V DC bench lock that opens when powered, draws no more than 1 A and permits a 1-second pulse. Check the chosen lock’s supply and inrush requirements.",
+        "diagram_alt": "DFR0473 relay wiring: GPIO4 to D, separate 5 V module supply and 12 V lock supply switched through COM/NO.",
+        "open_diagram": "Open the full wiring diagram",
+        "hardware_note": "Reference wiring for a future firmware update. The working controller has not been updated; physical relay operation still needs testing.",
+        "note": "Both supplies have EU plugs and centre-positive 5.5 × 2.1 mm outputs. Links show example parts; equivalents can be sourced locally. Prices and stock may change.",
+        "guide": "Full wiring guide and setup",
+        "items": {
+            "relay": {
+                "name": "DFRobot DFR0473 relay",
+                "quantity": "1",
+                "detail": "Mechanical relay with driver; 3.3 V HIGH control. Check that the seller includes the Gravity cable."
+            },
+            "supply5": {
+                "name": "Mean Well GST18E05-P1J",
+                "quantity": "1",
+                "detail": "5 V DC, 3 A supply for the relay module. The reference needs at least 0.5 A."
+            },
+            "supply12": {
+                "name": "Mean Well GST25E12-P1J",
+                "quantity": "1",
+                "detail": "12 V DC, 2.08 A supply for a compatible bench lock, including its inrush."
+            },
+            "resistor": {
+                "name": "10 kΩ, 0.25 W resistor",
+                "quantity": "1",
+                "detail": "R1 between D and GND. One resistor is needed; sold in a pack."
+            },
+            "jumpers": {
+                "name": "Dupont female–female",
+                "extra_name": "female–male",
+                "quantity": "1 pack each",
+                "detail": "Short signal connections. Use stranded power wire for the lock."
+            },
+            "wire": {
+                "name": "20 AWG stranded copper wire",
+                "quantity": "2–3 m",
+                "detail": "About 0.5 mm² for short bench power connections; preferably red and black. The linked spool is larger than needed."
+            },
+            "adapters": {
+                "name": "DC jack to screw-terminal adapter",
+                "quantity": "2",
+                "detail": "Female 5.5 × 2.1 mm sockets for both supplies, so their plugs can stay intact."
+            },
+            "diode": {
+                "name": "1N4001 suppression diode",
+                "quantity": "0–1",
+                "detail": "For a simple DC coil without built-in suppression, if its instructions allow it. Otherwise use the specified diode/TVS."
+            }
+        }
     },
     "changelog": {
         "title": "What's new",
