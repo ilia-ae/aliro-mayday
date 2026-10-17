@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1110" viewBox="0 0 1200 1110" role="img" aria-labelledby="title desc">
 <title id="title">Relay connection · DFR0473 + GPIO4</title>
-<desc id="desc">Reference: DFR0473 module powered at 5 V; separate 12 V power-to-unlock lock. GPIO4 to D, GND to −, separate 5 V to +. R1 10k from D to GND. Lock supply + to COM, NO to lock +; lock − to supply −. NC unused.</desc>
+<desc id="desc">Reference: DFR0473 (5 V) + ROB-15324 (12 V, 0.6 A); unlock pulse 1 s. GPIO4 to D, GND to −, separate 5 V to +. R1 10k from D to GND. Lock supply + to COM, NO to lock +; lock − to supply −. NC unused.</desc>
 <!-- Copyright (c) 2026 Mayday / Ilia Arestov. See /LICENSE. -->
 <style>text{font-family:Arial,Helvetica,sans-serif;fill:#17243b}.muted{fill:#526177}.mono{font-family:monospace}.wire{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
 <rect width="1200" height="1110" fill="#f6f8fb"/>
 <text x="40" y="48" font-size="30" font-weight="700">Relay connection · DFR0473 + GPIO4</text>
-<text x="40" y="81" font-size="18" class="muted">Reference: DFR0473 module powered at 5 V; separate 12 V power-to-unlock lock.</text>
+<text x="40" y="81" font-size="18" class="muted">Reference: DFR0473 (5 V) + ROB-15324 (12 V, 0.6 A); unlock pulse 1 s.</text>
 <rect x="40" y="102" width="1120" height="42" rx="12" fill="#fff4d6" stroke="#b4c2d4"/>
 <text x="56" y="129" font-size="17" font-weight="700">New firmware required · real controller not updated · relay disabled by default</text>
 <text x="40" y="184" font-size="23" font-weight="700">1 · Control signal and relay-module power</text>
@@ -46,13 +46,13 @@
 <text x="40" y="592" font-size="23" font-weight="700">2 · Contacts switch the lock supply</text>
 <rect x="40" y="628" width="250" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
 <text x="60" y="666" font-size="21" font-weight="700">Lock supply · 12 V DC</text>
-<text x="60" y="698" font-size="16" class="muted">Current rating per lock</text>
+<text x="60" y="698" font-size="16" class="muted">GST25E12-P1J · 2.08 A</text>
 <rect x="440" y="628" width="330" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
 <text x="460" y="666" font-size="21" font-weight="700">Same relay · contacts</text>
 <text x="460" y="696" font-size="16" class="muted">Shown inactive / NO open</text>
 <rect x="930" y="628" width="230" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
-<text x="950" y="666" font-size="21" font-weight="700">DC lock</text>
-<text x="950" y="697" font-size="15" class="muted">Power applied → unlock</text>
+<text x="950" y="666" font-size="21" font-weight="700">ROB-15324</text>
+<text x="950" y="697" font-size="15" class="muted">12 V / 0.6 A · pulse 1 s</text>
 <text x="269" y="742" font-size="23" text-anchor="end">+</text>
 <text x="269" y="799" font-size="23" text-anchor="end">−</text>
 <text x="954" y="742" font-size="23" >+</text>

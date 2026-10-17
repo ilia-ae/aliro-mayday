@@ -8632,11 +8632,11 @@
     },
     {
       "path": "aliro-site/frontend/public/i18n/en.json",
-      "sha256": "847df83f91450fd79ae5b1550f370da0364f728cf2e3a42bf0d9610c63e0f27d"
+      "sha256": "f1c4d32278dfc2809b2fe890908a7a1d7d08a824f28b6065f79ac3ed0a3710f5"
     },
     {
       "path": "aliro-site/frontend/public/i18n/ru.json",
-      "sha256": "69160e12e89863f1f938780e2a2118f2947b762b59af837a7eb73a6e3aeaa68f"
+      "sha256": "53c6aeb244b1cb3c07b3830c45fa45fe80b9334400b06d03a8456984686d851a"
     },
     {
       "path": "aliro-site/frontend/public/icon-192.png",
@@ -8656,11 +8656,11 @@
     },
     {
       "path": "aliro-site/frontend/public/images/aliro-relay.en.svg",
-      "sha256": "9a604634da8480ef553888330000aa9eba63f90c122d31bda256dfa7d69db666"
+      "sha256": "627749db32314c89b11c3f64a620c69c5d866a793e4e006324f7b788391aff5a"
     },
     {
       "path": "aliro-site/frontend/public/images/aliro-relay.ru.svg",
-      "sha256": "57d6e889f11366a74c1b6ab05e4606f84e9cae959c2f11403447078fecf6bda4"
+      "sha256": "95ca7ee3246ab9fa8291ef4546b18e02a7d48aad9e83d614cce35ffcfb72f47b"
     },
     {
       "path": "aliro-site/frontend/public/images/controller-actions-demo.jpg",
@@ -8760,7 +8760,7 @@
     },
     {
       "path": "aliro-site/frontend/src/app/pages/landing/relay-shopping.ts",
-      "sha256": "b5b66eccceaed4e55faaebd2e957e6b458dbc98ccedb47d09fd2aa0f8bbd59ed"
+      "sha256": "f19bc16e43ab24ec4407e72f20ba3313bd622246c8fc12a38f2031deef327b16"
     },
     {
       "path": "aliro-site/frontend/src/app/pages/privacy/privacy.ts",
@@ -8936,11 +8936,11 @@
     },
     {
       "path": "docs/access-integrations.md",
-      "sha256": "a771a9c4fdaa5943b8838b7b59461bade5561821ee1d2a41f003d5339afa1c96"
+      "sha256": "5e0534c4071dd2e0f8a6d7eb823c66fbd6b512b56f90fc788a007c707ae8a9c7"
     },
     {
       "path": "docs/access-integrations.ru.md",
-      "sha256": "1c72df390317decaae230894b94cb949d75092c548d6e958d8c37818ab8b722e"
+      "sha256": "183b4d7032b1d16306b6586ca5d577dcb76b142cabfb6eeab2201b9d4678a0f8"
     },
     {
       "path": "docs/aliro-access-policy-2026-10-14.md",
@@ -9000,11 +9000,11 @@
     },
     {
       "path": "docs/images/aliro-relay.en.svg",
-      "sha256": "9a604634da8480ef553888330000aa9eba63f90c122d31bda256dfa7d69db666"
+      "sha256": "627749db32314c89b11c3f64a620c69c5d866a793e4e006324f7b788391aff5a"
     },
     {
       "path": "docs/images/aliro-relay.ru.svg",
-      "sha256": "57d6e889f11366a74c1b6ab05e4606f84e9cae959c2f11403447078fecf6bda4"
+      "sha256": "95ca7ee3246ab9fa8291ef4546b18e02a7d48aad9e83d614cce35ffcfb72f47b"
     },
     {
       "path": "docs/images/aliro-wiring.en.svg",
@@ -9100,11 +9100,11 @@
     },
     {
       "path": "docs/wiring.md",
-      "sha256": "17f5a41ba554d4c838b1727f4f328a17c6ceed3e6075e18ec1bc15c0cf196876"
+      "sha256": "a6c5a87edbae2aa9e8a2f9bd9109987c76fbfec6bad6f43d808326c18b3d858c"
     },
     {
       "path": "docs/wiring.ru.md",
-      "sha256": "69f9e459b2de94be8dbabc05a5372548289d827b5512d97914206d37bd77e8aa"
+      "sha256": "1e5882cc3197e9d7728b3edd04dd0db3115903b9994a6e2bf0eea593824d62e4"
     },
     {
       "path": "homekey-esp32/.clangd",

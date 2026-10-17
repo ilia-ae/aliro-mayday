@@ -13,7 +13,8 @@ still need a separate hardware acceptance test.
 The [connection table and relay diagram](wiring.md#relay-gpio4-example) show
 **GPIO4 → D on DFRobot DFR0473** and a separate **COM/NO lock-power circuit**.
 The reference uses a 5 V module supply, HIGH control and R1 = 10 kΩ to ground,
-plus a separate 12 V power-to-unlock bench lock. GPIO4 still requires explicit
+plus a separate **SparkFun ROB-15324** bench latch (**12 V DC, 600 mA**),
+which retracts when powered. GPIO4 still requires explicit
 selection; another module must meet the documented compatibility requirements.
 
 The [shopping list with product links and quantities](wiring.md#shopping-list)
@@ -29,16 +30,17 @@ is kept beside that diagram, in one place.
    authentication in **System → Security**. Open **Actions → Relay control**.
 4. Choose **Relay GPIO = GPIO4** if free. Set **Active output level = HIGH** for
    the module in the example; use LOW only for an actual LOW-trigger module.
-5. Choose **Relay mode = Unlock pulse**, **Pulse duration = 1000 ms**, provided
-   the lock permits that pulse. Turn **Relay output = Enabled** and select
+5. For ROB-15324, choose **Relay mode = Unlock pulse**, **Pulse duration = 1000 ms**.
+   Its specified activation time is 1–10 seconds; do not use continuous output.
+   For a different lock, check its permitted pulse and duty cycle. Turn **Relay output = Enabled** and select
    **Save integration settings**. The output starts inactive.
 6. First check the relay indication/contacts without a powered lock, then
    connect the correctly rated lock circuit with power removed. On the later
    hardware test, an accepted NFC/Matter unlock activates the output, its timer
    releases it, and locking cancels it. A denied key must not activate it.
 
-Use **Follow logical lock state** only for an actuator intended for continuous
-operation: output active while logically unlocked, inactive while locked. A
+Do not use **Follow logical lock state** with ROB-15324. That mode is only
+for an actuator intended for continuous operation: output active while logically unlocked, inactive while locked. A
 pulse ending does not claim that the door is physically closed or change the
 Matter logical state automatically.
 

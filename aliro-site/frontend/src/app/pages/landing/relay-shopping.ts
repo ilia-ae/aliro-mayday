@@ -95,6 +95,7 @@ export class RelayShopping {
         `https://github.com/ilia-ae/aliro-mayday/blob/main/docs/wiring${this.language.lang() === 'ru' ? '.ru' : ''}.md#shopping-list`
     );
     readonly parts: ReadonlyArray<ShoppingPart> = [
+        { key: 'lock', href: 'https://www.sparkfun.com/solenoid-12v-latch-lock.html' },
         { key: 'relay', href: 'https://www.dfrobot.com/product-1572.html' },
         { key: 'supply5', href: 'https://www.digikey.com/en/products/detail/mean-well-usa-inc/GST18E05-P1J/7703622' },
         { key: 'supply12', href: 'https://www.digikey.com/en/products/detail/mean-well-usa-inc/GST25E12-P1J/7703666' },

@@ -85,12 +85,24 @@ with its built-in driver and **HIGH** control input. Its control pin is marked
 logic compatibility; this is our concrete reference, not a requirement to use
 a particular brand.
 
-This list is for a **12 V DC power-to-unlock bench lock rated at no more than
-1 A and permitting a 1-second pulse**. The lock itself is not selected here;
-check its supply and inrush requirements before connecting it.
+For the bench, use a **[SparkFun ROB-15324 solenoid latch](https://www.sparkfun.com/solenoid-12v-latch-lock.html)**:
+**12 V DC, 600 mA**, with a 10 mm bolt. Power retracts the bolt; removing power
+extends it. It fits the listed 12 V / 2.08 A supply and COM/NO circuit.
+
+Set **Unlock pulse = 1000 ms** for this model. SparkFun specifies **1–10 seconds
+per activation**; it is not a continuous-duty lock. **Do not use Follow logical
+lock state** for this solenoid, and allow it to cool between bench trials.
+See the [manufacturer's installation drawing](https://cdn.sparkfun.com/assets/9/b/9/e/0/NI-11_instruction.pdf).
+The selection is based on documentation; physical operation is not yet tested.
+
+The supplied 250 mm two-wire lead ends in a 2-pin JST plug. Use a matching
+mating lead, or remove the plug with power disconnected and terminate the wires
+for the screw terminals. Check the actual connector and polarity; a Dupont
+jumper is not a lock-power cable.
 
 | Buy | Quantity | Purpose / specification |
 | --- | --- | --- |
+| [SparkFun ROB-15324 solenoid latch](https://www.sparkfun.com/solenoid-12v-latch-lock.html) | 1 | **12 V DC, 600 mA**; power-to-unlock, 10 mm bolt; use a **1-second unlock pulse**, not continuous power |
 | [DFRobot DFR0473 relay module](https://www.dfrobot.com/product-1572.html) | 1 | Mechanical changeover relay with driver; 3.3 V HIGH control |
 | [Mean Well GST18E05-P1J supply](https://www.digikey.com/en/products/detail/mean-well-usa-inc/GST18E05-P1J/7703622) | 1 | **5 V DC, 3 A** for the relay module; the reference needs at least 0.5 A |
 | [Mean Well GST25E12-P1J supply](https://www.digikey.com/en/products/detail/mean-well-usa-inc/GST25E12-P1J/7703666) | 1 | **12 V DC, 2.08 A** for a compatible bench lock, including its inrush |
@@ -157,8 +169,8 @@ Select contact and supply ratings for the lock's switching/inrush current.
 | Magnetic or other power-to-lock lock | Needs its own manufacturer circuit and release behavior; this `NO` example is not its wiring recipe |
 
 After the later update, choose **Actions → Relay control → GPIO4**, set the
-actual trigger level, and start with **Unlock pulse → 1000 ms** only if the lock
-allows that pulse. See [the complete setup steps](access-integrations.md#relay-setup).
+actual trigger level, and set **Unlock pulse → 1000 ms** for ROB-15324.
+For another lock, check its permitted pulse and duty cycle first. See [the complete setup steps](access-integrations.md#relay-setup).
 Do not move wires while the current USB-powered stand is running.
 
 ## Assemble without changing the working firmware

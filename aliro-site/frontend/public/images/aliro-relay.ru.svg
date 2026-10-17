@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1110" viewBox="0 0 1200 1110" role="img" aria-labelledby="title desc">
 <title id="title">Подключение реле · DFR0473 + GPIO4</title>
-<desc id="desc">Базовый вариант: DFR0473 с питанием 5 В; отдельный замок 12 В, открытие от питания. GPIO4 к D, GND к −, отдельные 5 В к +. R1 10 кОм от D к GND. Плюс питания замка к COM, NO к плюсу замка; минус замка к минусу его питания. NC свободен.</desc>
+<desc id="desc">Базовый вариант: DFR0473 (5 В) + ROB-15324 (12 В, 0,6 А); импульс 1 с. GPIO4 к D, GND к −, отдельные 5 В к +. R1 10 кОм от D к GND. Плюс питания замка к COM, NO к плюсу замка; минус замка к минусу его питания. NC свободен.</desc>
 <!-- Copyright (c) 2026 Mayday / Ilia Arestov. See /LICENSE. -->
 <style>text{font-family:Arial,Helvetica,sans-serif;fill:#17243b}.muted{fill:#526177}.mono{font-family:monospace}.wire{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
 <rect width="1200" height="1110" fill="#f6f8fb"/>
 <text x="40" y="48" font-size="30" font-weight="700">Подключение реле · DFR0473 + GPIO4</text>
-<text x="40" y="81" font-size="18" class="muted">Базовый вариант: DFR0473 с питанием 5 В; отдельный замок 12 В, открытие от питания.</text>
+<text x="40" y="81" font-size="18" class="muted">Базовый вариант: DFR0473 (5 В) + ROB-15324 (12 В, 0,6 А); импульс 1 с.</text>
 <rect x="40" y="102" width="1120" height="42" rx="12" fill="#fff4d6" stroke="#b4c2d4"/>
 <text x="56" y="129" font-size="17" font-weight="700">Нужна новая прошивка · контроллер не обновлён · реле по умолчанию выключено</text>
 <text x="40" y="184" font-size="23" font-weight="700">1 · Управляющий сигнал и питание релейного модуля</text>
@@ -46,13 +46,13 @@
 <text x="40" y="592" font-size="23" font-weight="700">2 · Контакты коммутируют питание замка</text>
 <rect x="40" y="628" width="250" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
 <text x="60" y="666" font-size="21" font-weight="700">БП замка · 12 В DC</text>
-<text x="60" y="698" font-size="16" class="muted">Ток по паспорту замка</text>
+<text x="60" y="698" font-size="16" class="muted">GST25E12-P1J · 2,08 А</text>
 <rect x="440" y="628" width="330" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
 <text x="460" y="666" font-size="21" font-weight="700">То же реле · контакты</text>
 <text x="460" y="696" font-size="16" class="muted">Неактивно / NO разомкнут</text>
 <rect x="930" y="628" width="230" height="200" rx="12" fill="#fff" stroke="#b4c2d4"/>
-<text x="950" y="666" font-size="21" font-weight="700">DC-замок</text>
-<text x="950" y="697" font-size="15" class="muted">Подали питание → открыт</text>
+<text x="950" y="666" font-size="21" font-weight="700">ROB-15324</text>
+<text x="950" y="697" font-size="15" class="muted">12 В / 0,6 А · импульс 1 с</text>
 <text x="269" y="742" font-size="23" text-anchor="end">+</text>
 <text x="269" y="799" font-size="23" text-anchor="end">−</text>
 <text x="954" y="742" font-size="23" >+</text>

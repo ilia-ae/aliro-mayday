@@ -474,13 +474,18 @@
     },
     "lock_shopping": {
         "title": "Lock wiring and shopping list",
-        "intro": "For a 12 V DC bench lock that opens when powered, draws no more than 1 A and permits a 1-second pulse. Check the chosen lock’s supply and inrush requirements.",
+        "intro": "Reference bench latch: SparkFun ROB-15324, 12 V DC / 600 mA. Power retracts its 10 mm bolt; removing power extends it. Use a 1-second unlock pulse; this solenoid is not rated for continuous power.",
         "diagram_alt": "DFR0473 relay wiring: GPIO4 to D, separate 5 V module supply and 12 V lock supply switched through COM/NO.",
         "open_diagram": "Open the full wiring diagram",
         "hardware_note": "Reference wiring for a future firmware update. The working controller has not been updated; physical relay operation still needs testing.",
         "note": "Both supplies have EU plugs and centre-positive 5.5 × 2.1 mm outputs. Links show example parts; equivalents can be sourced locally. Prices and stock may change.",
         "guide": "Full wiring guide and setup",
         "items": {
+            "lock": {
+                "name": "SparkFun ROB-15324 solenoid latch",
+                "quantity": "1",
+                "detail": "12 V DC, 600 mA; power-to-unlock. Set Unlock pulse to 1000 ms. Rated for 1–10 s activations; do not use Follow logical lock state. Let it cool between trials."
+            },
             "relay": {
                 "name": "DFRobot DFR0473 relay",
                 "quantity": "1",
